@@ -1,0 +1,4708 @@
+{
+  "stockTrendMap": {
+    "AMKD12D10-XB": [
+      {
+        "curDate": "2024-12-11",
+        "sku": "AMKD12D10-XB",
+        "currentStock": 18,
+        "totalInStockQty": 617,
+        "totalOutStockQty": 953
+      },
+      {
+        "curDate": "2024-12-12",
+        "sku": "AMKD12D10-XB",
+        "currentStock": 18,
+        "totalInStockQty": 373,
+        "totalOutStockQty": 747
+      },
+      {
+        "curDate": "2024-12-13",
+        "sku": "AMKD12D10-XB",
+        "currentStock": 18,
+        "totalInStockQty": 733,
+        "totalOutStockQty": 918
+      },
+      {
+        "curDate": "2024-12-14",
+        "sku": "AMKD12D10-XB",
+        "currentStock": 18,
+        "totalInStockQty": 496,
+        "totalOutStockQty": 471
+      },
+      {
+        "curDate": "2024-12-15",
+        "sku": "AMKD12D10-XB",
+        "currentStock": 18,
+        "totalInStockQty": 480,
+        "totalOutStockQty": 731
+      },
+      {
+        "curDate": "2024-12-16",
+        "sku": "AMKD12D10-XB",
+        "currentStock": 18,
+        "totalInStockQty": 718,
+        "totalOutStockQty": 18
+      },
+      {
+        "curDate": "2024-12-17",
+        "sku": "AMKD12D10-XB",
+        "currentStock": 18,
+        "totalInStockQty": 680,
+        "totalOutStockQty": 966
+      },
+      {
+        "curDate": "2024-12-18",
+        "sku": "AMKD12D10-XB",
+        "currentStock": 18,
+        "totalInStockQty": 799,
+        "totalOutStockQty": 192
+      },
+      {
+        "curDate": "2024-12-19",
+        "sku": "AMKD12D10-XB",
+        "currentStock": 18,
+        "totalInStockQty": 651,
+        "totalOutStockQty": 118
+      },
+      {
+        "curDate": "2024-12-20",
+        "sku": "AMKD12D10-XB",
+        "currentStock": 18,
+        "totalInStockQty": 333,
+        "totalOutStockQty": 406
+      },
+      {
+        "curDate": "2024-12-21",
+        "sku": "AMKD12D10-XB",
+        "currentStock": 18,
+        "totalInStockQty": 471,
+        "totalOutStockQty": 241
+      },
+      {
+        "curDate": "2024-12-22",
+        "sku": "AMKD12D10-XB",
+        "currentStock": 18,
+        "totalInStockQty": 506,
+        "totalOutStockQty": 552
+      },
+      {
+        "curDate": "2024-12-23",
+        "sku": "AMKD12D10-XB",
+        "currentStock": 18,
+        "totalInStockQty": 990,
+        "totalOutStockQty": 724
+      },
+      {
+        "curDate": "2024-12-24",
+        "sku": "AMKD12D10-XB",
+        "currentStock": 18,
+        "totalInStockQty": 213,
+        "totalOutStockQty": 726
+      },
+      {
+        "curDate": "2024-12-25",
+        "sku": "AMKD12D10-XB",
+        "currentStock": 18,
+        "totalInStockQty": 239,
+        "totalOutStockQty": 602
+      },
+      {
+        "curDate": "2024-12-26",
+        "sku": "AMKD12D10-XB",
+        "currentStock": 18,
+        "totalInStockQty": 876,
+        "totalOutStockQty": 584
+      },
+      {
+        "curDate": "2024-12-27",
+        "sku": "AMKD12D10-XB",
+        "currentStock": 18,
+        "totalInStockQty": 666,
+        "totalOutStockQty": 433
+      }
+    ],
+    "AMKD12D10-L": [
+      {
+        "curDate": "2024-12-11",
+        "sku": "AMKD12D10-L",
+        "currentStock": 23,
+        "totalInStockQty": 974,
+        "totalOutStockQty": 743
+      },
+      {
+        "curDate": "2024-12-12",
+        "sku": "AMKD12D10-L",
+        "currentStock": 23,
+        "totalInStockQty": 794,
+        "totalOutStockQty": 792
+      },
+      {
+        "curDate": "2024-12-13",
+        "sku": "AMKD12D10-L",
+        "currentStock": 23,
+        "totalInStockQty": 912,
+        "totalOutStockQty": 162
+      },
+      {
+        "curDate": "2024-12-14",
+        "sku": "AMKD12D10-L",
+        "currentStock": 23,
+        "totalInStockQty": 925,
+        "totalOutStockQty": 799
+      },
+      {
+        "curDate": "2024-12-15",
+        "sku": "AMKD12D10-L",
+        "currentStock": 23,
+        "totalInStockQty": 801,
+        "totalOutStockQty": 67
+      },
+      {
+        "curDate": "2024-12-16",
+        "sku": "AMKD12D10-L",
+        "currentStock": 23,
+        "totalInStockQty": 380,
+        "totalOutStockQty": 80
+      },
+      {
+        "curDate": "2024-12-17",
+        "sku": "AMKD12D10-L",
+        "currentStock": 23,
+        "totalInStockQty": 641,
+        "totalOutStockQty": 567
+      },
+      {
+        "curDate": "2024-12-18",
+        "sku": "AMKD12D10-L",
+        "currentStock": 23,
+        "totalInStockQty": 728,
+        "totalOutStockQty": 534
+      },
+      {
+        "curDate": "2024-12-19",
+        "sku": "AMKD12D10-L",
+        "currentStock": 23,
+        "totalInStockQty": 342,
+        "totalOutStockQty": 76
+      },
+      {
+        "curDate": "2024-12-20",
+        "sku": "AMKD12D10-L",
+        "currentStock": 23,
+        "totalInStockQty": 425,
+        "totalOutStockQty": 43
+      },
+      {
+        "curDate": "2024-12-21",
+        "sku": "AMKD12D10-L",
+        "currentStock": 23,
+        "totalInStockQty": 799,
+        "totalOutStockQty": 332
+      },
+      {
+        "curDate": "2024-12-22",
+        "sku": "AMKD12D10-L",
+        "currentStock": 23,
+        "totalInStockQty": 865,
+        "totalOutStockQty": 391
+      },
+      {
+        "curDate": "2024-12-23",
+        "sku": "AMKD12D10-L",
+        "currentStock": 23,
+        "totalInStockQty": 836,
+        "totalOutStockQty": 268
+      },
+      {
+        "curDate": "2024-12-24",
+        "sku": "AMKD12D10-L",
+        "currentStock": 23,
+        "totalInStockQty": 911,
+        "totalOutStockQty": 155
+      },
+      {
+        "curDate": "2024-12-25",
+        "sku": "AMKD12D10-L",
+        "currentStock": 23,
+        "totalInStockQty": 548,
+        "totalOutStockQty": 508
+      },
+      {
+        "curDate": "2024-12-26",
+        "sku": "AMKD12D10-L",
+        "currentStock": 19,
+        "totalInStockQty": 588,
+        "totalOutStockQty": 4
+      },
+      {
+        "curDate": "2024-12-27",
+        "sku": "AMKD12D10-L",
+        "currentStock": 19,
+        "totalInStockQty": 203,
+        "totalOutStockQty": 580
+      }
+    ],
+    "AMKD12D10-O": [
+      {
+        "curDate": "2024-12-11",
+        "sku": "AMKD12D10-O",
+        "currentStock": 74,
+        "totalInStockQty": 984,
+        "totalOutStockQty": 216
+      },
+      {
+        "curDate": "2024-12-12",
+        "sku": "AMKD12D10-O",
+        "currentStock": 74,
+        "totalInStockQty": 104,
+        "totalOutStockQty": 57
+      },
+      {
+        "curDate": "2024-12-13",
+        "sku": "AMKD12D10-O",
+        "currentStock": 74,
+        "totalInStockQty": 181,
+        "totalOutStockQty": 628
+      },
+      {
+        "curDate": "2024-12-14",
+        "sku": "AMKD12D10-O",
+        "currentStock": 74,
+        "totalInStockQty": 964,
+        "totalOutStockQty": 213
+      },
+      {
+        "curDate": "2024-12-15",
+        "sku": "AMKD12D10-O",
+        "currentStock": 74,
+        "totalInStockQty": 701,
+        "totalOutStockQty": 844
+      },
+      {
+        "curDate": "2024-12-16",
+        "sku": "AMKD12D10-O",
+        "currentStock": 74,
+        "totalInStockQty": 211,
+        "totalOutStockQty": 337
+      },
+      {
+        "curDate": "2024-12-17",
+        "sku": "AMKD12D10-O",
+        "currentStock": 74,
+        "totalInStockQty": 27,
+        "totalOutStockQty": 495
+      },
+      {
+        "curDate": "2024-12-18",
+        "sku": "AMKD12D10-O",
+        "currentStock": 74,
+        "totalInStockQty": 600,
+        "totalOutStockQty": 966
+      },
+      {
+        "curDate": "2024-12-19",
+        "sku": "AMKD12D10-O",
+        "currentStock": 74,
+        "totalInStockQty": 454,
+        "totalOutStockQty": 795
+      },
+      {
+        "curDate": "2024-12-20",
+        "sku": "AMKD12D10-O",
+        "currentStock": 74,
+        "totalInStockQty": 626,
+        "totalOutStockQty": 684
+      },
+      {
+        "curDate": "2024-12-21",
+        "sku": "AMKD12D10-O",
+        "currentStock": 74,
+        "totalInStockQty": 159,
+        "totalOutStockQty": 4
+      },
+      {
+        "curDate": "2024-12-22",
+        "sku": "AMKD12D10-O",
+        "currentStock": 74,
+        "totalInStockQty": 630,
+        "totalOutStockQty": 320
+      },
+      {
+        "curDate": "2024-12-23",
+        "sku": "AMKD12D10-O",
+        "currentStock": 74,
+        "totalInStockQty": 957,
+        "totalOutStockQty": 173
+      },
+      {
+        "curDate": "2024-12-24",
+        "sku": "AMKD12D10-O",
+        "currentStock": 74,
+        "totalInStockQty": 88,
+        "totalOutStockQty": 632
+      },
+      {
+        "curDate": "2024-12-25",
+        "sku": "AMKD12D10-O",
+        "currentStock": 74,
+        "totalInStockQty": 199,
+        "totalOutStockQty": 32
+      },
+      {
+        "curDate": "2024-12-26",
+        "sku": "AMKD12D10-O",
+        "currentStock": 74,
+        "totalInStockQty": 688,
+        "totalOutStockQty": 572
+      },
+      {
+        "curDate": "2024-12-27",
+        "sku": "AMKD12D10-O",
+        "currentStock": 74,
+        "totalInStockQty": 168,
+        "totalOutStockQty": 294
+      }
+    ],
+    "AMKD12D10-G": [
+      {
+        "curDate": "2024-12-11",
+        "sku": "AMKD12D10-G",
+        "currentStock": 15,
+        "totalInStockQty": 978,
+        "totalOutStockQty": 147
+      },
+      {
+        "curDate": "2024-12-12",
+        "sku": "AMKD12D10-G",
+        "currentStock": 15,
+        "totalInStockQty": 354,
+        "totalOutStockQty": 731
+      },
+      {
+        "curDate": "2024-12-13",
+        "sku": "AMKD12D10-G",
+        "currentStock": 15,
+        "totalInStockQty": 326,
+        "totalOutStockQty": 756
+      },
+      {
+        "curDate": "2024-12-14",
+        "sku": "AMKD12D10-G",
+        "currentStock": 15,
+        "totalInStockQty": 255,
+        "totalOutStockQty": 372
+      },
+      {
+        "curDate": "2024-12-15",
+        "sku": "AMKD12D10-G",
+        "currentStock": 15,
+        "totalInStockQty": 269,
+        "totalOutStockQty": 520
+      },
+      {
+        "curDate": "2024-12-16",
+        "sku": "AMKD12D10-G",
+        "currentStock": 15,
+        "totalInStockQty": 868,
+        "totalOutStockQty": 71
+      },
+      {
+        "curDate": "2024-12-17",
+        "sku": "AMKD12D10-G",
+        "currentStock": 15,
+        "totalInStockQty": 540,
+        "totalOutStockQty": 413
+      },
+      {
+        "curDate": "2024-12-18",
+        "sku": "AMKD12D10-G",
+        "currentStock": 15,
+        "totalInStockQty": 328,
+        "totalOutStockQty": 222
+      },
+      {
+        "curDate": "2024-12-19",
+        "sku": "AMKD12D10-G",
+        "currentStock": 15,
+        "totalInStockQty": 143,
+        "totalOutStockQty": 572
+      },
+      {
+        "curDate": "2024-12-20",
+        "sku": "AMKD12D10-G",
+        "currentStock": 15,
+        "totalInStockQty": 144,
+        "totalOutStockQty": 581
+      },
+      {
+        "curDate": "2024-12-21",
+        "sku": "AMKD12D10-G",
+        "currentStock": 15,
+        "totalInStockQty": 774,
+        "totalOutStockQty": 900
+      },
+      {
+        "curDate": "2024-12-22",
+        "sku": "AMKD12D10-G",
+        "currentStock": 15,
+        "totalInStockQty": 105,
+        "totalOutStockQty": 239
+      },
+      {
+        "curDate": "2024-12-23",
+        "sku": "AMKD12D10-G",
+        "currentStock": 15,
+        "totalInStockQty": 610,
+        "totalOutStockQty": 368
+      },
+      {
+        "curDate": "2024-12-24",
+        "sku": "AMKD12D10-G",
+        "currentStock": 15,
+        "totalInStockQty": 337,
+        "totalOutStockQty": 359
+      },
+      {
+        "curDate": "2024-12-25",
+        "sku": "AMKD12D10-G",
+        "currentStock": 15,
+        "totalInStockQty": 520,
+        "totalOutStockQty": 973
+      },
+      {
+        "curDate": "2024-12-26",
+        "sku": "AMKD12D10-G",
+        "currentStock": 15,
+        "totalInStockQty": 206,
+        "totalOutStockQty": 124
+      },
+      {
+        "curDate": "2024-12-27",
+        "sku": "AMKD12D10-G",
+        "currentStock": 15,
+        "totalInStockQty": 509,
+        "totalOutStockQty": 174
+      }
+    ],
+    "AMKD12D10-MC": [
+      {
+        "curDate": "2024-12-11",
+        "sku": "AMKD12D10-MC",
+        "currentStock": 118,
+        "totalInStockQty": 569,
+        "totalOutStockQty": 906
+      },
+      {
+        "curDate": "2024-12-12",
+        "sku": "AMKD12D10-MC",
+        "currentStock": 118,
+        "totalInStockQty": 696,
+        "totalOutStockQty": 70
+      },
+      {
+        "curDate": "2024-12-13",
+        "sku": "AMKD12D10-MC",
+        "currentStock": 118,
+        "totalInStockQty": 645,
+        "totalOutStockQty": 927
+      },
+      {
+        "curDate": "2024-12-14",
+        "sku": "AMKD12D10-MC",
+        "currentStock": 118,
+        "totalInStockQty": 16,
+        "totalOutStockQty": 394
+      },
+      {
+        "curDate": "2024-12-15",
+        "sku": "AMKD12D10-MC",
+        "currentStock": 118,
+        "totalInStockQty": 458,
+        "totalOutStockQty": 602
+      },
+      {
+        "curDate": "2024-12-16",
+        "sku": "AMKD12D10-MC",
+        "currentStock": 118,
+        "totalInStockQty": 948,
+        "totalOutStockQty": 146
+      },
+      {
+        "curDate": "2024-12-17",
+        "sku": "AMKD12D10-MC",
+        "currentStock": 118,
+        "totalInStockQty": 593,
+        "totalOutStockQty": 137
+      },
+      {
+        "curDate": "2024-12-18",
+        "sku": "AMKD12D10-MC",
+        "currentStock": 118,
+        "totalInStockQty": 817,
+        "totalOutStockQty": 441
+      },
+      {
+        "curDate": "2024-12-19",
+        "sku": "AMKD12D10-MC",
+        "currentStock": 118,
+        "totalInStockQty": 248,
+        "totalOutStockQty": 909
+      },
+      {
+        "curDate": "2024-12-20",
+        "sku": "AMKD12D10-MC",
+        "currentStock": 118,
+        "totalInStockQty": 68,
+        "totalOutStockQty": 448
+      },
+      {
+        "curDate": "2024-12-21",
+        "sku": "AMKD12D10-MC",
+        "currentStock": 118,
+        "totalInStockQty": 918,
+        "totalOutStockQty": 564
+      },
+      {
+        "curDate": "2024-12-22",
+        "sku": "AMKD12D10-MC",
+        "currentStock": 118,
+        "totalInStockQty": 83,
+        "totalOutStockQty": 815
+      },
+      {
+        "curDate": "2024-12-23",
+        "sku": "AMKD12D10-MC",
+        "currentStock": 118,
+        "totalInStockQty": 808,
+        "totalOutStockQty": 968
+      },
+      {
+        "curDate": "2024-12-24",
+        "sku": "AMKD12D10-MC",
+        "currentStock": 118,
+        "totalInStockQty": 63,
+        "totalOutStockQty": 729
+      },
+      {
+        "curDate": "2024-12-25",
+        "sku": "AMKD12D10-MC",
+        "currentStock": 118,
+        "totalInStockQty": 487,
+        "totalOutStockQty": 738
+      },
+      {
+        "curDate": "2024-12-26",
+        "sku": "AMKD12D10-MC",
+        "currentStock": 118,
+        "totalInStockQty": 843,
+        "totalOutStockQty": 670
+      },
+      {
+        "curDate": "2024-12-27",
+        "sku": "AMKD12D10-MC",
+        "currentStock": 118,
+        "totalInStockQty": 678,
+        "totalOutStockQty": 919
+      }
+    ],
+    "AMKD12D10-P": [
+      {
+        "curDate": "2024-12-11",
+        "sku": "AMKD12D10-P",
+        "currentStock": 76,
+        "totalInStockQty": 573,
+        "totalOutStockQty": 847
+      },
+      {
+        "curDate": "2024-12-12",
+        "sku": "AMKD12D10-P",
+        "currentStock": 76,
+        "totalInStockQty": 970,
+        "totalOutStockQty": 5
+      },
+      {
+        "curDate": "2024-12-13",
+        "sku": "AMKD12D10-P",
+        "currentStock": 76,
+        "totalInStockQty": 947,
+        "totalOutStockQty": 508
+      },
+      {
+        "curDate": "2024-12-14",
+        "sku": "AMKD12D10-P",
+        "currentStock": 76,
+        "totalInStockQty": 906,
+        "totalOutStockQty": 839
+      },
+      {
+        "curDate": "2024-12-15",
+        "sku": "AMKD12D10-P",
+        "currentStock": 76,
+        "totalInStockQty": 308,
+        "totalOutStockQty": 702
+      },
+      {
+        "curDate": "2024-12-16",
+        "sku": "AMKD12D10-P",
+        "currentStock": 76,
+        "totalInStockQty": 468,
+        "totalOutStockQty": 529
+      },
+      {
+        "curDate": "2024-12-17",
+        "sku": "AMKD12D10-P",
+        "currentStock": 76,
+        "totalInStockQty": 875,
+        "totalOutStockQty": 937
+      },
+      {
+        "curDate": "2024-12-18",
+        "sku": "AMKD12D10-P",
+        "currentStock": 76,
+        "totalInStockQty": 9,
+        "totalOutStockQty": 289
+      },
+      {
+        "curDate": "2024-12-19",
+        "sku": "AMKD12D10-P",
+        "currentStock": 76,
+        "totalInStockQty": 246,
+        "totalOutStockQty": 709
+      },
+      {
+        "curDate": "2024-12-20",
+        "sku": "AMKD12D10-P",
+        "currentStock": 76,
+        "totalInStockQty": 108,
+        "totalOutStockQty": 462
+      },
+      {
+        "curDate": "2024-12-21",
+        "sku": "AMKD12D10-P",
+        "currentStock": 76,
+        "totalInStockQty": 628,
+        "totalOutStockQty": 674
+      },
+      {
+        "curDate": "2024-12-22",
+        "sku": "AMKD12D10-P",
+        "currentStock": 76,
+        "totalInStockQty": 274,
+        "totalOutStockQty": 629
+      },
+      {
+        "curDate": "2024-12-23",
+        "sku": "AMKD12D10-P",
+        "currentStock": 76,
+        "totalInStockQty": 157,
+        "totalOutStockQty": 653
+      },
+      {
+        "curDate": "2024-12-24",
+        "sku": "AMKD12D10-P",
+        "currentStock": 76,
+        "totalInStockQty": 521,
+        "totalOutStockQty": 193
+      },
+      {
+        "curDate": "2024-12-25",
+        "sku": "AMKD12D10-P",
+        "currentStock": 76,
+        "totalInStockQty": 926,
+        "totalOutStockQty": 251
+      },
+      {
+        "curDate": "2024-12-26",
+        "sku": "AMKD12D10-P",
+        "currentStock": 76,
+        "totalInStockQty": 287,
+        "totalOutStockQty": 115
+      },
+      {
+        "curDate": "2024-12-27",
+        "sku": "AMKD12D10-P",
+        "currentStock": 76,
+        "totalInStockQty": 627,
+        "totalOutStockQty": 917
+      }
+    ],
+    "AMKD12D10-R": [
+      {
+        "curDate": "2024-12-11",
+        "sku": "AMKD12D10-R",
+        "currentStock": 74,
+        "totalInStockQty": 656,
+        "totalOutStockQty": 84
+      },
+      {
+        "curDate": "2024-12-12",
+        "sku": "AMKD12D10-R",
+        "currentStock": 74,
+        "totalInStockQty": 646,
+        "totalOutStockQty": 620
+      },
+      {
+        "curDate": "2024-12-13",
+        "sku": "AMKD12D10-R",
+        "currentStock": 74,
+        "totalInStockQty": 197,
+        "totalOutStockQty": 468
+      },
+      {
+        "curDate": "2024-12-14",
+        "sku": "AMKD12D10-R",
+        "currentStock": 74,
+        "totalInStockQty": 681,
+        "totalOutStockQty": 60
+      },
+      {
+        "curDate": "2024-12-15",
+        "sku": "AMKD12D10-R",
+        "currentStock": 74,
+        "totalInStockQty": 10,
+        "totalOutStockQty": 885
+      },
+      {
+        "curDate": "2024-12-16",
+        "sku": "AMKD12D10-R",
+        "currentStock": 74,
+        "totalInStockQty": 952,
+        "totalOutStockQty": 41
+      },
+      {
+        "curDate": "2024-12-17",
+        "sku": "AMKD12D10-R",
+        "currentStock": 74,
+        "totalInStockQty": 51,
+        "totalOutStockQty": 261
+      },
+      {
+        "curDate": "2024-12-18",
+        "sku": "AMKD12D10-R",
+        "currentStock": 74,
+        "totalInStockQty": 952,
+        "totalOutStockQty": 174
+      },
+      {
+        "curDate": "2024-12-19",
+        "sku": "AMKD12D10-R",
+        "currentStock": 74,
+        "totalInStockQty": 48,
+        "totalOutStockQty": 950
+      },
+      {
+        "curDate": "2024-12-20",
+        "sku": "AMKD12D10-R",
+        "currentStock": 74,
+        "totalInStockQty": 525,
+        "totalOutStockQty": 77
+      },
+      {
+        "curDate": "2024-12-21",
+        "sku": "AMKD12D10-R",
+        "currentStock": 74,
+        "totalInStockQty": 506,
+        "totalOutStockQty": 642
+      },
+      {
+        "curDate": "2024-12-22",
+        "sku": "AMKD12D10-R",
+        "currentStock": 74,
+        "totalInStockQty": 746,
+        "totalOutStockQty": 395
+      },
+      {
+        "curDate": "2024-12-23",
+        "sku": "AMKD12D10-R",
+        "currentStock": 74,
+        "totalInStockQty": 278,
+        "totalOutStockQty": 931
+      },
+      {
+        "curDate": "2024-12-24",
+        "sku": "AMKD12D10-R",
+        "currentStock": 74,
+        "totalInStockQty": 898,
+        "totalOutStockQty": 394
+      },
+      {
+        "curDate": "2024-12-25",
+        "sku": "AMKD12D10-R",
+        "currentStock": 74,
+        "totalInStockQty": 791,
+        "totalOutStockQty": 279
+      },
+      {
+        "curDate": "2024-12-26",
+        "sku": "AMKD12D10-R",
+        "currentStock": 74,
+        "totalInStockQty": 785,
+        "totalOutStockQty": 694
+      },
+      {
+        "curDate": "2024-12-27",
+        "sku": "AMKD12D10-R",
+        "currentStock": 74,
+        "totalInStockQty": 945,
+        "totalOutStockQty": 437
+      }
+    ],
+    "AMKD12D10-PU": [
+      {
+        "curDate": "2024-12-11",
+        "sku": "AMKD12D10-PU",
+        "currentStock": 180,
+        "totalInStockQty": 759,
+        "totalOutStockQty": 142
+      },
+      {
+        "curDate": "2024-12-12",
+        "sku": "AMKD12D10-PU",
+        "currentStock": 180,
+        "totalInStockQty": 226,
+        "totalOutStockQty": 606
+      },
+      {
+        "curDate": "2024-12-13",
+        "sku": "AMKD12D10-PU",
+        "currentStock": 180,
+        "totalInStockQty": 646,
+        "totalOutStockQty": 668
+      },
+      {
+        "curDate": "2024-12-14",
+        "sku": "AMKD12D10-PU",
+        "currentStock": 180,
+        "totalInStockQty": 157,
+        "totalOutStockQty": 411
+      },
+      {
+        "curDate": "2024-12-15",
+        "sku": "AMKD12D10-PU",
+        "currentStock": 180,
+        "totalInStockQty": 704,
+        "totalOutStockQty": 818
+      },
+      {
+        "curDate": "2024-12-16",
+        "sku": "AMKD12D10-PU",
+        "currentStock": 180,
+        "totalInStockQty": 586,
+        "totalOutStockQty": 82
+      },
+      {
+        "curDate": "2024-12-17",
+        "sku": "AMKD12D10-PU",
+        "currentStock": 180,
+        "totalInStockQty": 314,
+        "totalOutStockQty": 195
+      },
+      {
+        "curDate": "2024-12-18",
+        "sku": "AMKD12D10-PU",
+        "currentStock": 180,
+        "totalInStockQty": 189,
+        "totalOutStockQty": 625
+      },
+      {
+        "curDate": "2024-12-19",
+        "sku": "AMKD12D10-PU",
+        "currentStock": 180,
+        "totalInStockQty": 586,
+        "totalOutStockQty": 46
+      },
+      {
+        "curDate": "2024-12-20",
+        "sku": "AMKD12D10-PU",
+        "currentStock": 180,
+        "totalInStockQty": 218,
+        "totalOutStockQty": 82
+      },
+      {
+        "curDate": "2024-12-21",
+        "sku": "AMKD12D10-PU",
+        "currentStock": 180,
+        "totalInStockQty": 565,
+        "totalOutStockQty": 615
+      },
+      {
+        "curDate": "2024-12-22",
+        "sku": "AMKD12D10-PU",
+        "currentStock": 180,
+        "totalInStockQty": 501,
+        "totalOutStockQty": 320
+      },
+      {
+        "curDate": "2024-12-23",
+        "sku": "AMKD12D10-PU",
+        "currentStock": 180,
+        "totalInStockQty": 432,
+        "totalOutStockQty": 826
+      },
+      {
+        "curDate": "2024-12-24",
+        "sku": "AMKD12D10-PU",
+        "currentStock": 180,
+        "totalInStockQty": 217,
+        "totalOutStockQty": 509
+      },
+      {
+        "curDate": "2024-12-25",
+        "sku": "AMKD12D10-PU",
+        "currentStock": 180,
+        "totalInStockQty": 246,
+        "totalOutStockQty": 801
+      },
+      {
+        "curDate": "2024-12-26",
+        "sku": "AMKD12D10-PU",
+        "currentStock": 180,
+        "totalInStockQty": 106,
+        "totalOutStockQty": 925
+      },
+      {
+        "curDate": "2024-12-27",
+        "sku": "AMKD12D10-PU",
+        "currentStock": 180,
+        "totalInStockQty": 797,
+        "totalOutStockQty": 417
+      }
+    ]
+  },
+  "inStockDetailMap": {
+    "AMKD12D10-XB": [
+      {
+        "curDate": "2024-12-11",
+        "sku": "AMKD12D10-XB",
+        "purchaseInStockQty": 419,
+        "otherInStockQty": 691,
+        "details": [],
+        "tranOrderInQty": 268
+      },
+      {
+        "curDate": "2024-12-12",
+        "sku": "AMKD12D10-XB",
+        "purchaseInStockQty": 721,
+        "otherInStockQty": 553,
+        "details": [],
+        "tranOrderInQty": 80
+      },
+      {
+        "curDate": "2024-12-13",
+        "sku": "AMKD12D10-XB",
+        "purchaseInStockQty": 584,
+        "otherInStockQty": 677,
+        "details": [],
+        "tranOrderInQty": 142
+      },
+      {
+        "curDate": "2024-12-14",
+        "sku": "AMKD12D10-XB",
+        "purchaseInStockQty": 142,
+        "otherInStockQty": 915,
+        "details": [],
+        "tranOrderInQty": 610
+      },
+      {
+        "curDate": "2024-12-15",
+        "sku": "AMKD12D10-XB",
+        "purchaseInStockQty": 901,
+        "otherInStockQty": 888,
+        "details": [],
+        "tranOrderInQty": 523
+      },
+      {
+        "curDate": "2024-12-16",
+        "sku": "AMKD12D10-XB",
+        "purchaseInStockQty": 808,
+        "otherInStockQty": 20,
+        "details": [],
+        "tranOrderInQty": 540
+      },
+      {
+        "curDate": "2024-12-17",
+        "sku": "AMKD12D10-XB",
+        "purchaseInStockQty": 744,
+        "otherInStockQty": 466,
+        "details": [],
+        "tranOrderInQty": 526
+      },
+      {
+        "curDate": "2024-12-18",
+        "sku": "AMKD12D10-XB",
+        "purchaseInStockQty": 397,
+        "otherInStockQty": 487,
+        "details": [],
+        "tranOrderInQty": 257
+      },
+      {
+        "curDate": "2024-12-19",
+        "sku": "AMKD12D10-XB",
+        "purchaseInStockQty": 505,
+        "otherInStockQty": 589,
+        "details": [],
+        "tranOrderInQty": 951
+      },
+      {
+        "curDate": "2024-12-20",
+        "sku": "AMKD12D10-XB",
+        "purchaseInStockQty": 621,
+        "otherInStockQty": 546,
+        "details": [],
+        "tranOrderInQty": 604
+      },
+      {
+        "curDate": "2024-12-21",
+        "sku": "AMKD12D10-XB",
+        "purchaseInStockQty": 376,
+        "otherInStockQty": 853,
+        "details": [],
+        "tranOrderInQty": 165
+      },
+      {
+        "curDate": "2024-12-22",
+        "sku": "AMKD12D10-XB",
+        "purchaseInStockQty": 809,
+        "otherInStockQty": 600,
+        "details": [],
+        "tranOrderInQty": 110
+      },
+      {
+        "curDate": "2024-12-23",
+        "sku": "AMKD12D10-XB",
+        "purchaseInStockQty": 825,
+        "otherInStockQty": 27,
+        "details": [],
+        "tranOrderInQty": 928
+      },
+      {
+        "curDate": "2024-12-24",
+        "sku": "AMKD12D10-XB",
+        "purchaseInStockQty": 136,
+        "otherInStockQty": 657,
+        "details": [],
+        "tranOrderInQty": 416
+      },
+      {
+        "curDate": "2024-12-25",
+        "sku": "AMKD12D10-XB",
+        "purchaseInStockQty": 698,
+        "otherInStockQty": 55,
+        "details": [],
+        "tranOrderInQty": 839
+      },
+      {
+        "curDate": "2024-12-26",
+        "sku": "AMKD12D10-XB",
+        "purchaseInStockQty": 557,
+        "otherInStockQty": 913,
+        "details": [],
+        "tranOrderInQty": 959
+      },
+      {
+        "curDate": "2024-12-27",
+        "sku": "AMKD12D10-XB",
+        "purchaseInStockQty": 934,
+        "otherInStockQty": 483,
+        "details": [],
+        "tranOrderInQty": 445
+      }
+    ],
+    "AMKD12D10-L": [
+      {
+        "curDate": "2024-12-11",
+        "sku": "AMKD12D10-L",
+        "purchaseInStockQty": 880,
+        "otherInStockQty": 922,
+        "details": [],
+        "tranOrderInQty": 522
+      },
+      {
+        "curDate": "2024-12-12",
+        "sku": "AMKD12D10-L",
+        "purchaseInStockQty": 806,
+        "otherInStockQty": 200,
+        "details": [],
+        "tranOrderInQty": 867
+      },
+      {
+        "curDate": "2024-12-13",
+        "sku": "AMKD12D10-L",
+        "purchaseInStockQty": 6,
+        "otherInStockQty": 742,
+        "details": [],
+        "tranOrderInQty": 832
+      },
+      {
+        "curDate": "2024-12-14",
+        "sku": "AMKD12D10-L",
+        "purchaseInStockQty": 732,
+        "otherInStockQty": 727,
+        "details": [],
+        "tranOrderInQty": 132
+      },
+      {
+        "curDate": "2024-12-15",
+        "sku": "AMKD12D10-L",
+        "purchaseInStockQty": 91,
+        "otherInStockQty": 220,
+        "details": [],
+        "tranOrderInQty": 92
+      },
+      {
+        "curDate": "2024-12-16",
+        "sku": "AMKD12D10-L",
+        "purchaseInStockQty": 424,
+        "otherInStockQty": 30,
+        "details": [],
+        "tranOrderInQty": 222
+      },
+      {
+        "curDate": "2024-12-17",
+        "sku": "AMKD12D10-L",
+        "purchaseInStockQty": 148,
+        "otherInStockQty": 477,
+        "details": [],
+        "tranOrderInQty": 792
+      },
+      {
+        "curDate": "2024-12-18",
+        "sku": "AMKD12D10-L",
+        "purchaseInStockQty": 146,
+        "otherInStockQty": 833,
+        "details": [],
+        "tranOrderInQty": 628
+      },
+      {
+        "curDate": "2024-12-19",
+        "sku": "AMKD12D10-L",
+        "purchaseInStockQty": 763,
+        "otherInStockQty": 834,
+        "details": [],
+        "tranOrderInQty": 665
+      },
+      {
+        "curDate": "2024-12-20",
+        "sku": "AMKD12D10-L",
+        "purchaseInStockQty": 763,
+        "otherInStockQty": 876,
+        "details": [],
+        "tranOrderInQty": 983
+      },
+      {
+        "curDate": "2024-12-21",
+        "sku": "AMKD12D10-L",
+        "purchaseInStockQty": 451,
+        "otherInStockQty": 993,
+        "details": [],
+        "tranOrderInQty": 745
+      },
+      {
+        "curDate": "2024-12-22",
+        "sku": "AMKD12D10-L",
+        "purchaseInStockQty": 973,
+        "otherInStockQty": 14,
+        "details": [],
+        "tranOrderInQty": 984
+      },
+      {
+        "curDate": "2024-12-23",
+        "sku": "AMKD12D10-L",
+        "purchaseInStockQty": 629,
+        "otherInStockQty": 589,
+        "details": [],
+        "tranOrderInQty": 499
+      },
+      {
+        "curDate": "2024-12-24",
+        "sku": "AMKD12D10-L",
+        "purchaseInStockQty": 586,
+        "otherInStockQty": 598,
+        "details": [],
+        "tranOrderInQty": 228
+      },
+      {
+        "curDate": "2024-12-25",
+        "sku": "AMKD12D10-L",
+        "purchaseInStockQty": 702,
+        "otherInStockQty": 450,
+        "details": [],
+        "tranOrderInQty": 894
+      },
+      {
+        "curDate": "2024-12-26",
+        "sku": "AMKD12D10-L",
+        "purchaseInStockQty": 171,
+        "otherInStockQty": 555,
+        "details": [],
+        "tranOrderInQty": 69
+      },
+      {
+        "curDate": "2024-12-27",
+        "sku": "AMKD12D10-L",
+        "purchaseInStockQty": 410,
+        "otherInStockQty": 185,
+        "details": [],
+        "tranOrderInQty": 987
+      }
+    ],
+    "AMKD12D10-O": [
+      {
+        "curDate": "2024-12-11",
+        "sku": "AMKD12D10-O",
+        "purchaseInStockQty": 247,
+        "otherInStockQty": 754,
+        "details": [],
+        "tranOrderInQty": 872
+      },
+      {
+        "curDate": "2024-12-12",
+        "sku": "AMKD12D10-O",
+        "purchaseInStockQty": 768,
+        "otherInStockQty": 895,
+        "details": [],
+        "tranOrderInQty": 522
+      },
+      {
+        "curDate": "2024-12-13",
+        "sku": "AMKD12D10-O",
+        "purchaseInStockQty": 949,
+        "otherInStockQty": 655,
+        "details": [],
+        "tranOrderInQty": 6
+      },
+      {
+        "curDate": "2024-12-14",
+        "sku": "AMKD12D10-O",
+        "purchaseInStockQty": 575,
+        "otherInStockQty": 244,
+        "details": [],
+        "tranOrderInQty": 424
+      },
+      {
+        "curDate": "2024-12-15",
+        "sku": "AMKD12D10-O",
+        "purchaseInStockQty": 782,
+        "otherInStockQty": 234,
+        "details": [],
+        "tranOrderInQty": 590
+      },
+      {
+        "curDate": "2024-12-16",
+        "sku": "AMKD12D10-O",
+        "purchaseInStockQty": 513,
+        "otherInStockQty": 303,
+        "details": [],
+        "tranOrderInQty": 249
+      },
+      {
+        "curDate": "2024-12-17",
+        "sku": "AMKD12D10-O",
+        "purchaseInStockQty": 405,
+        "otherInStockQty": 486,
+        "details": [],
+        "tranOrderInQty": 370
+      },
+      {
+        "curDate": "2024-12-18",
+        "sku": "AMKD12D10-O",
+        "purchaseInStockQty": 111,
+        "otherInStockQty": 687,
+        "details": [],
+        "tranOrderInQty": 785
+      },
+      {
+        "curDate": "2024-12-19",
+        "sku": "AMKD12D10-O",
+        "purchaseInStockQty": 947,
+        "otherInStockQty": 973,
+        "details": [],
+        "tranOrderInQty": 728
+      },
+      {
+        "curDate": "2024-12-20",
+        "sku": "AMKD12D10-O",
+        "purchaseInStockQty": 978,
+        "otherInStockQty": 631,
+        "details": [],
+        "tranOrderInQty": 615
+      },
+      {
+        "curDate": "2024-12-21",
+        "sku": "AMKD12D10-O",
+        "purchaseInStockQty": 298,
+        "otherInStockQty": 894,
+        "details": [],
+        "tranOrderInQty": 733
+      },
+      {
+        "curDate": "2024-12-22",
+        "sku": "AMKD12D10-O",
+        "purchaseInStockQty": 809,
+        "otherInStockQty": 491,
+        "details": [],
+        "tranOrderInQty": 957
+      },
+      {
+        "curDate": "2024-12-23",
+        "sku": "AMKD12D10-O",
+        "purchaseInStockQty": 607,
+        "otherInStockQty": 123,
+        "details": [],
+        "tranOrderInQty": 657
+      },
+      {
+        "curDate": "2024-12-24",
+        "sku": "AMKD12D10-O",
+        "purchaseInStockQty": 727,
+        "otherInStockQty": 926,
+        "details": [],
+        "tranOrderInQty": 32
+      },
+      {
+        "curDate": "2024-12-25",
+        "sku": "AMKD12D10-O",
+        "purchaseInStockQty": 720,
+        "otherInStockQty": 79,
+        "details": [],
+        "tranOrderInQty": 317
+      },
+      {
+        "curDate": "2024-12-26",
+        "sku": "AMKD12D10-O",
+        "purchaseInStockQty": 719,
+        "otherInStockQty": 58,
+        "details": [],
+        "tranOrderInQty": 986
+      },
+      {
+        "curDate": "2024-12-27",
+        "sku": "AMKD12D10-O",
+        "purchaseInStockQty": 950,
+        "otherInStockQty": 782,
+        "details": [],
+        "tranOrderInQty": 201
+      }
+    ],
+    "AMKD12D10-G": [
+      {
+        "curDate": "2024-12-11",
+        "sku": "AMKD12D10-G",
+        "purchaseInStockQty": 590,
+        "otherInStockQty": 188,
+        "details": [],
+        "tranOrderInQty": 408
+      },
+      {
+        "curDate": "2024-12-12",
+        "sku": "AMKD12D10-G",
+        "purchaseInStockQty": 449,
+        "otherInStockQty": 861,
+        "details": [],
+        "tranOrderInQty": 165
+      },
+      {
+        "curDate": "2024-12-13",
+        "sku": "AMKD12D10-G",
+        "purchaseInStockQty": 829,
+        "otherInStockQty": 120,
+        "details": [],
+        "tranOrderInQty": 541
+      },
+      {
+        "curDate": "2024-12-14",
+        "sku": "AMKD12D10-G",
+        "purchaseInStockQty": 472,
+        "otherInStockQty": 617,
+        "details": [],
+        "tranOrderInQty": 933
+      },
+      {
+        "curDate": "2024-12-15",
+        "sku": "AMKD12D10-G",
+        "purchaseInStockQty": 491,
+        "otherInStockQty": 495,
+        "details": [],
+        "tranOrderInQty": 737
+      },
+      {
+        "curDate": "2024-12-16",
+        "sku": "AMKD12D10-G",
+        "purchaseInStockQty": 485,
+        "otherInStockQty": 442,
+        "details": [],
+        "tranOrderInQty": 11
+      },
+      {
+        "curDate": "2024-12-17",
+        "sku": "AMKD12D10-G",
+        "purchaseInStockQty": 35,
+        "otherInStockQty": 274,
+        "details": [],
+        "tranOrderInQty": 547
+      },
+      {
+        "curDate": "2024-12-18",
+        "sku": "AMKD12D10-G",
+        "purchaseInStockQty": 7,
+        "otherInStockQty": 444,
+        "details": [],
+        "tranOrderInQty": 723
+      },
+      {
+        "curDate": "2024-12-19",
+        "sku": "AMKD12D10-G",
+        "purchaseInStockQty": 241,
+        "otherInStockQty": 590,
+        "details": [],
+        "tranOrderInQty": 382
+      },
+      {
+        "curDate": "2024-12-20",
+        "sku": "AMKD12D10-G",
+        "purchaseInStockQty": 819,
+        "otherInStockQty": 760,
+        "details": [],
+        "tranOrderInQty": 263
+      },
+      {
+        "curDate": "2024-12-21",
+        "sku": "AMKD12D10-G",
+        "purchaseInStockQty": 490,
+        "otherInStockQty": 314,
+        "details": [],
+        "tranOrderInQty": 645
+      },
+      {
+        "curDate": "2024-12-22",
+        "sku": "AMKD12D10-G",
+        "purchaseInStockQty": 633,
+        "otherInStockQty": 789,
+        "details": [],
+        "tranOrderInQty": 564
+      },
+      {
+        "curDate": "2024-12-23",
+        "sku": "AMKD12D10-G",
+        "purchaseInStockQty": 802,
+        "otherInStockQty": 163,
+        "details": [],
+        "tranOrderInQty": 326
+      },
+      {
+        "curDate": "2024-12-24",
+        "sku": "AMKD12D10-G",
+        "purchaseInStockQty": 852,
+        "otherInStockQty": 910,
+        "details": [],
+        "tranOrderInQty": 137
+      },
+      {
+        "curDate": "2024-12-25",
+        "sku": "AMKD12D10-G",
+        "purchaseInStockQty": 517,
+        "otherInStockQty": 218,
+        "details": [],
+        "tranOrderInQty": 760
+      },
+      {
+        "curDate": "2024-12-26",
+        "sku": "AMKD12D10-G",
+        "purchaseInStockQty": 104,
+        "otherInStockQty": 731,
+        "details": [],
+        "tranOrderInQty": 249
+      },
+      {
+        "curDate": "2024-12-27",
+        "sku": "AMKD12D10-G",
+        "purchaseInStockQty": 255,
+        "otherInStockQty": 529,
+        "details": [],
+        "tranOrderInQty": 882
+      }
+    ],
+    "AMKD12D10-MC": [
+      {
+        "curDate": "2024-12-11",
+        "sku": "AMKD12D10-MC",
+        "purchaseInStockQty": 803,
+        "otherInStockQty": 145,
+        "details": [],
+        "tranOrderInQty": 732
+      },
+      {
+        "curDate": "2024-12-12",
+        "sku": "AMKD12D10-MC",
+        "purchaseInStockQty": 434,
+        "otherInStockQty": 734,
+        "details": [],
+        "tranOrderInQty": 330
+      },
+      {
+        "curDate": "2024-12-13",
+        "sku": "AMKD12D10-MC",
+        "purchaseInStockQty": 765,
+        "otherInStockQty": 55,
+        "details": [],
+        "tranOrderInQty": 650
+      },
+      {
+        "curDate": "2024-12-14",
+        "sku": "AMKD12D10-MC",
+        "purchaseInStockQty": 550,
+        "otherInStockQty": 436,
+        "details": [],
+        "tranOrderInQty": 382
+      },
+      {
+        "curDate": "2024-12-15",
+        "sku": "AMKD12D10-MC",
+        "purchaseInStockQty": 708,
+        "otherInStockQty": 314,
+        "details": [],
+        "tranOrderInQty": 624
+      },
+      {
+        "curDate": "2024-12-16",
+        "sku": "AMKD12D10-MC",
+        "purchaseInStockQty": 654,
+        "otherInStockQty": 186,
+        "details": [],
+        "tranOrderInQty": 909
+      },
+      {
+        "curDate": "2024-12-17",
+        "sku": "AMKD12D10-MC",
+        "purchaseInStockQty": 990,
+        "otherInStockQty": 177,
+        "details": [],
+        "tranOrderInQty": 258
+      },
+      {
+        "curDate": "2024-12-18",
+        "sku": "AMKD12D10-MC",
+        "purchaseInStockQty": 752,
+        "otherInStockQty": 146,
+        "details": [],
+        "tranOrderInQty": 681
+      },
+      {
+        "curDate": "2024-12-19",
+        "sku": "AMKD12D10-MC",
+        "purchaseInStockQty": 136,
+        "otherInStockQty": 930,
+        "details": [],
+        "tranOrderInQty": 162
+      },
+      {
+        "curDate": "2024-12-20",
+        "sku": "AMKD12D10-MC",
+        "purchaseInStockQty": 696,
+        "otherInStockQty": 541,
+        "details": [],
+        "tranOrderInQty": 814
+      },
+      {
+        "curDate": "2024-12-21",
+        "sku": "AMKD12D10-MC",
+        "purchaseInStockQty": 228,
+        "otherInStockQty": 13,
+        "details": [],
+        "tranOrderInQty": 547
+      },
+      {
+        "curDate": "2024-12-22",
+        "sku": "AMKD12D10-MC",
+        "purchaseInStockQty": 835,
+        "otherInStockQty": 915,
+        "details": [],
+        "tranOrderInQty": 113
+      },
+      {
+        "curDate": "2024-12-23",
+        "sku": "AMKD12D10-MC",
+        "purchaseInStockQty": 877,
+        "otherInStockQty": 855,
+        "details": [],
+        "tranOrderInQty": 215
+      },
+      {
+        "curDate": "2024-12-24",
+        "sku": "AMKD12D10-MC",
+        "purchaseInStockQty": 591,
+        "otherInStockQty": 731,
+        "details": [],
+        "tranOrderInQty": 341
+      },
+      {
+        "curDate": "2024-12-25",
+        "sku": "AMKD12D10-MC",
+        "purchaseInStockQty": 319,
+        "otherInStockQty": 305,
+        "details": [],
+        "tranOrderInQty": 804
+      },
+      {
+        "curDate": "2024-12-26",
+        "sku": "AMKD12D10-MC",
+        "purchaseInStockQty": 454,
+        "otherInStockQty": 639,
+        "details": [],
+        "tranOrderInQty": 946
+      },
+      {
+        "curDate": "2024-12-27",
+        "sku": "AMKD12D10-MC",
+        "purchaseInStockQty": 525,
+        "otherInStockQty": 244,
+        "details": [],
+        "tranOrderInQty": 312
+      }
+    ],
+    "AMKD12D10-P": [
+      {
+        "curDate": "2024-12-11",
+        "sku": "AMKD12D10-P",
+        "purchaseInStockQty": 313,
+        "otherInStockQty": 624,
+        "details": [],
+        "tranOrderInQty": 186
+      },
+      {
+        "curDate": "2024-12-12",
+        "sku": "AMKD12D10-P",
+        "purchaseInStockQty": 943,
+        "otherInStockQty": 324,
+        "details": [],
+        "tranOrderInQty": 271
+      },
+      {
+        "curDate": "2024-12-13",
+        "sku": "AMKD12D10-P",
+        "purchaseInStockQty": 23,
+        "otherInStockQty": 258,
+        "details": [],
+        "tranOrderInQty": 240
+      },
+      {
+        "curDate": "2024-12-14",
+        "sku": "AMKD12D10-P",
+        "purchaseInStockQty": 612,
+        "otherInStockQty": 392,
+        "details": [],
+        "tranOrderInQty": 745
+      },
+      {
+        "curDate": "2024-12-15",
+        "sku": "AMKD12D10-P",
+        "purchaseInStockQty": 755,
+        "otherInStockQty": 723,
+        "details": [],
+        "tranOrderInQty": 798
+      },
+      {
+        "curDate": "2024-12-16",
+        "sku": "AMKD12D10-P",
+        "purchaseInStockQty": 567,
+        "otherInStockQty": 150,
+        "details": [],
+        "tranOrderInQty": 38
+      },
+      {
+        "curDate": "2024-12-17",
+        "sku": "AMKD12D10-P",
+        "purchaseInStockQty": 704,
+        "otherInStockQty": 592,
+        "details": [],
+        "tranOrderInQty": 647
+      },
+      {
+        "curDate": "2024-12-18",
+        "sku": "AMKD12D10-P",
+        "purchaseInStockQty": 148,
+        "otherInStockQty": 48,
+        "details": [],
+        "tranOrderInQty": 508
+      },
+      {
+        "curDate": "2024-12-19",
+        "sku": "AMKD12D10-P",
+        "purchaseInStockQty": 537,
+        "otherInStockQty": 161,
+        "details": [],
+        "tranOrderInQty": 356
+      },
+      {
+        "curDate": "2024-12-20",
+        "sku": "AMKD12D10-P",
+        "purchaseInStockQty": 187,
+        "otherInStockQty": 492,
+        "details": [],
+        "tranOrderInQty": 928
+      },
+      {
+        "curDate": "2024-12-21",
+        "sku": "AMKD12D10-P",
+        "purchaseInStockQty": 587,
+        "otherInStockQty": 868,
+        "details": [],
+        "tranOrderInQty": 332
+      },
+      {
+        "curDate": "2024-12-22",
+        "sku": "AMKD12D10-P",
+        "purchaseInStockQty": 437,
+        "otherInStockQty": 289,
+        "details": [],
+        "tranOrderInQty": 93
+      },
+      {
+        "curDate": "2024-12-23",
+        "sku": "AMKD12D10-P",
+        "purchaseInStockQty": 5,
+        "otherInStockQty": 525,
+        "details": [],
+        "tranOrderInQty": 618
+      },
+      {
+        "curDate": "2024-12-24",
+        "sku": "AMKD12D10-P",
+        "purchaseInStockQty": 903,
+        "otherInStockQty": 935,
+        "details": [],
+        "tranOrderInQty": 154
+      },
+      {
+        "curDate": "2024-12-25",
+        "sku": "AMKD12D10-P",
+        "purchaseInStockQty": 499,
+        "otherInStockQty": 461,
+        "details": [],
+        "tranOrderInQty": 117
+      },
+      {
+        "curDate": "2024-12-26",
+        "sku": "AMKD12D10-P",
+        "purchaseInStockQty": 132,
+        "otherInStockQty": 311,
+        "details": [],
+        "tranOrderInQty": 67
+      },
+      {
+        "curDate": "2024-12-27",
+        "sku": "AMKD12D10-P",
+        "purchaseInStockQty": 615,
+        "otherInStockQty": 732,
+        "details": [],
+        "tranOrderInQty": 807
+      }
+    ],
+    "AMKD12D10-R": [
+      {
+        "curDate": "2024-12-11",
+        "sku": "AMKD12D10-R",
+        "purchaseInStockQty": 855,
+        "otherInStockQty": 618,
+        "details": [],
+        "tranOrderInQty": 721
+      },
+      {
+        "curDate": "2024-12-12",
+        "sku": "AMKD12D10-R",
+        "purchaseInStockQty": 703,
+        "otherInStockQty": 460,
+        "details": [],
+        "tranOrderInQty": 981
+      },
+      {
+        "curDate": "2024-12-13",
+        "sku": "AMKD12D10-R",
+        "purchaseInStockQty": 775,
+        "otherInStockQty": 9,
+        "details": [],
+        "tranOrderInQty": 715
+      },
+      {
+        "curDate": "2024-12-14",
+        "sku": "AMKD12D10-R",
+        "purchaseInStockQty": 782,
+        "otherInStockQty": 693,
+        "details": [],
+        "tranOrderInQty": 157
+      },
+      {
+        "curDate": "2024-12-15",
+        "sku": "AMKD12D10-R",
+        "purchaseInStockQty": 439,
+        "otherInStockQty": 108,
+        "details": [],
+        "tranOrderInQty": 749
+      },
+      {
+        "curDate": "2024-12-16",
+        "sku": "AMKD12D10-R",
+        "purchaseInStockQty": 390,
+        "otherInStockQty": 568,
+        "details": [],
+        "tranOrderInQty": 479
+      },
+      {
+        "curDate": "2024-12-17",
+        "sku": "AMKD12D10-R",
+        "purchaseInStockQty": 569,
+        "otherInStockQty": 893,
+        "details": [],
+        "tranOrderInQty": 159
+      },
+      {
+        "curDate": "2024-12-18",
+        "sku": "AMKD12D10-R",
+        "purchaseInStockQty": 617,
+        "otherInStockQty": 73,
+        "details": [],
+        "tranOrderInQty": 537
+      },
+      {
+        "curDate": "2024-12-19",
+        "sku": "AMKD12D10-R",
+        "purchaseInStockQty": 333,
+        "otherInStockQty": 310,
+        "details": [],
+        "tranOrderInQty": 256
+      },
+      {
+        "curDate": "2024-12-20",
+        "sku": "AMKD12D10-R",
+        "purchaseInStockQty": 698,
+        "otherInStockQty": 299,
+        "details": [],
+        "tranOrderInQty": 368
+      },
+      {
+        "curDate": "2024-12-21",
+        "sku": "AMKD12D10-R",
+        "purchaseInStockQty": 47,
+        "otherInStockQty": 520,
+        "details": [],
+        "tranOrderInQty": 87
+      },
+      {
+        "curDate": "2024-12-22",
+        "sku": "AMKD12D10-R",
+        "purchaseInStockQty": 158,
+        "otherInStockQty": 762,
+        "details": [],
+        "tranOrderInQty": 793
+      },
+      {
+        "curDate": "2024-12-23",
+        "sku": "AMKD12D10-R",
+        "purchaseInStockQty": 194,
+        "otherInStockQty": 88,
+        "details": [],
+        "tranOrderInQty": 641
+      },
+      {
+        "curDate": "2024-12-24",
+        "sku": "AMKD12D10-R",
+        "purchaseInStockQty": 255,
+        "otherInStockQty": 167,
+        "details": [],
+        "tranOrderInQty": 350
+      },
+      {
+        "curDate": "2024-12-25",
+        "sku": "AMKD12D10-R",
+        "purchaseInStockQty": 121,
+        "otherInStockQty": 131,
+        "details": [],
+        "tranOrderInQty": 387
+      },
+      {
+        "curDate": "2024-12-26",
+        "sku": "AMKD12D10-R",
+        "purchaseInStockQty": 829,
+        "otherInStockQty": 492,
+        "details": [],
+        "tranOrderInQty": 90
+      },
+      {
+        "curDate": "2024-12-27",
+        "sku": "AMKD12D10-R",
+        "purchaseInStockQty": 801,
+        "otherInStockQty": 275,
+        "details": [],
+        "tranOrderInQty": 8
+      }
+    ],
+    "AMKD12D10-PU": [
+      {
+        "curDate": "2024-12-11",
+        "sku": "AMKD12D10-PU",
+        "purchaseInStockQty": 148,
+        "otherInStockQty": 624,
+        "details": [],
+        "tranOrderInQty": 974
+      },
+      {
+        "curDate": "2024-12-12",
+        "sku": "AMKD12D10-PU",
+        "purchaseInStockQty": 131,
+        "otherInStockQty": 591,
+        "details": [],
+        "tranOrderInQty": 650
+      },
+      {
+        "curDate": "2024-12-13",
+        "sku": "AMKD12D10-PU",
+        "purchaseInStockQty": 8,
+        "otherInStockQty": 951,
+        "details": [],
+        "tranOrderInQty": 355
+      },
+      {
+        "curDate": "2024-12-14",
+        "sku": "AMKD12D10-PU",
+        "purchaseInStockQty": 310,
+        "otherInStockQty": 274,
+        "details": [],
+        "tranOrderInQty": 404
+      },
+      {
+        "curDate": "2024-12-15",
+        "sku": "AMKD12D10-PU",
+        "purchaseInStockQty": 165,
+        "otherInStockQty": 112,
+        "details": [],
+        "tranOrderInQty": 169
+      },
+      {
+        "curDate": "2024-12-16",
+        "sku": "AMKD12D10-PU",
+        "purchaseInStockQty": 119,
+        "otherInStockQty": 858,
+        "details": [],
+        "tranOrderInQty": 606
+      },
+      {
+        "curDate": "2024-12-17",
+        "sku": "AMKD12D10-PU",
+        "purchaseInStockQty": 959,
+        "otherInStockQty": 127,
+        "details": [],
+        "tranOrderInQty": 749
+      },
+      {
+        "curDate": "2024-12-18",
+        "sku": "AMKD12D10-PU",
+        "purchaseInStockQty": 989,
+        "otherInStockQty": 586,
+        "details": [],
+        "tranOrderInQty": 560
+      },
+      {
+        "curDate": "2024-12-19",
+        "sku": "AMKD12D10-PU",
+        "purchaseInStockQty": 511,
+        "otherInStockQty": 221,
+        "details": [],
+        "tranOrderInQty": 59
+      },
+      {
+        "curDate": "2024-12-20",
+        "sku": "AMKD12D10-PU",
+        "purchaseInStockQty": 168,
+        "otherInStockQty": 248,
+        "details": [],
+        "tranOrderInQty": 379
+      },
+      {
+        "curDate": "2024-12-21",
+        "sku": "AMKD12D10-PU",
+        "purchaseInStockQty": 727,
+        "otherInStockQty": 174,
+        "details": [],
+        "tranOrderInQty": 962
+      },
+      {
+        "curDate": "2024-12-22",
+        "sku": "AMKD12D10-PU",
+        "purchaseInStockQty": 626,
+        "otherInStockQty": 58,
+        "details": [],
+        "tranOrderInQty": 262
+      },
+      {
+        "curDate": "2024-12-23",
+        "sku": "AMKD12D10-PU",
+        "purchaseInStockQty": 759,
+        "otherInStockQty": 69,
+        "details": [],
+        "tranOrderInQty": 493
+      },
+      {
+        "curDate": "2024-12-24",
+        "sku": "AMKD12D10-PU",
+        "purchaseInStockQty": 798,
+        "otherInStockQty": 806,
+        "details": [],
+        "tranOrderInQty": 475
+      },
+      {
+        "curDate": "2024-12-25",
+        "sku": "AMKD12D10-PU",
+        "purchaseInStockQty": 39,
+        "otherInStockQty": 724,
+        "details": [],
+        "tranOrderInQty": 272
+      },
+      {
+        "curDate": "2024-12-26",
+        "sku": "AMKD12D10-PU",
+        "purchaseInStockQty": 653,
+        "otherInStockQty": 14,
+        "details": [],
+        "tranOrderInQty": 603
+      },
+      {
+        "curDate": "2024-12-27",
+        "sku": "AMKD12D10-PU",
+        "purchaseInStockQty": 909,
+        "otherInStockQty": 455,
+        "details": [],
+        "tranOrderInQty": 232
+      }
+    ]
+  },
+  "outStockDetailMap": {
+    "AMKD12D10-XB": [
+      {
+        "curDate": "2024-12-11",
+        "sku": "AMKD12D10-XB",
+        "directOrderOutStockQty": 201,
+        "shipmentOutStockQty": 331,
+        "tranOrderOutQty": 310,
+        "otherOutStockQty": 456,
+        "details": [],
+        "purOrderBackOutQty": 322,
+        "prodComOutQty": 308
+      },
+      {
+        "curDate": "2024-12-12",
+        "sku": "AMKD12D10-XB",
+        "directOrderOutStockQty": 828,
+        "shipmentOutStockQty": 658,
+        "tranOrderOutQty": 695,
+        "otherOutStockQty": 142,
+        "details": [],
+        "purOrderBackOutQty": 363,
+        "prodComOutQty": 324
+      },
+      {
+        "curDate": "2024-12-13",
+        "sku": "AMKD12D10-XB",
+        "directOrderOutStockQty": 243,
+        "shipmentOutStockQty": 310,
+        "tranOrderOutQty": 896,
+        "otherOutStockQty": 788,
+        "details": [],
+        "purOrderBackOutQty": 288,
+        "prodComOutQty": 828
+      },
+      {
+        "curDate": "2024-12-14",
+        "sku": "AMKD12D10-XB",
+        "directOrderOutStockQty": 924,
+        "shipmentOutStockQty": 409,
+        "tranOrderOutQty": 324,
+        "otherOutStockQty": 243,
+        "details": [],
+        "purOrderBackOutQty": 159,
+        "prodComOutQty": 135
+      },
+      {
+        "curDate": "2024-12-15",
+        "sku": "AMKD12D10-XB",
+        "directOrderOutStockQty": 652,
+        "shipmentOutStockQty": 38,
+        "tranOrderOutQty": 28,
+        "otherOutStockQty": 521,
+        "details": [],
+        "purOrderBackOutQty": 575,
+        "prodComOutQty": 24
+      },
+      {
+        "curDate": "2024-12-16",
+        "sku": "AMKD12D10-XB",
+        "directOrderOutStockQty": 524,
+        "shipmentOutStockQty": 567,
+        "tranOrderOutQty": 986,
+        "otherOutStockQty": 265,
+        "details": [],
+        "purOrderBackOutQty": 86,
+        "prodComOutQty": 423
+      },
+      {
+        "curDate": "2024-12-17",
+        "sku": "AMKD12D10-XB",
+        "directOrderOutStockQty": 683,
+        "shipmentOutStockQty": 250,
+        "tranOrderOutQty": 766,
+        "otherOutStockQty": 392,
+        "details": [],
+        "purOrderBackOutQty": 690,
+        "prodComOutQty": 95
+      },
+      {
+        "curDate": "2024-12-18",
+        "sku": "AMKD12D10-XB",
+        "directOrderOutStockQty": 352,
+        "shipmentOutStockQty": 931,
+        "tranOrderOutQty": 491,
+        "otherOutStockQty": 58,
+        "details": [],
+        "purOrderBackOutQty": 535,
+        "prodComOutQty": 235
+      },
+      {
+        "curDate": "2024-12-19",
+        "sku": "AMKD12D10-XB",
+        "directOrderOutStockQty": 606,
+        "shipmentOutStockQty": 417,
+        "tranOrderOutQty": 666,
+        "otherOutStockQty": 304,
+        "details": [],
+        "purOrderBackOutQty": 225,
+        "prodComOutQty": 54
+      },
+      {
+        "curDate": "2024-12-20",
+        "sku": "AMKD12D10-XB",
+        "directOrderOutStockQty": 997,
+        "shipmentOutStockQty": 611,
+        "tranOrderOutQty": 70,
+        "otherOutStockQty": 299,
+        "details": [],
+        "purOrderBackOutQty": 826,
+        "prodComOutQty": 7
+      },
+      {
+        "curDate": "2024-12-21",
+        "sku": "AMKD12D10-XB",
+        "directOrderOutStockQty": 129,
+        "shipmentOutStockQty": 126,
+        "tranOrderOutQty": 327,
+        "otherOutStockQty": 939,
+        "details": [],
+        "purOrderBackOutQty": 439,
+        "prodComOutQty": 953
+      },
+      {
+        "curDate": "2024-12-22",
+        "sku": "AMKD12D10-XB",
+        "directOrderOutStockQty": 927,
+        "shipmentOutStockQty": 302,
+        "tranOrderOutQty": 505,
+        "otherOutStockQty": 561,
+        "details": [],
+        "purOrderBackOutQty": 300,
+        "prodComOutQty": 988
+      },
+      {
+        "curDate": "2024-12-23",
+        "sku": "AMKD12D10-XB",
+        "directOrderOutStockQty": 412,
+        "shipmentOutStockQty": 860,
+        "tranOrderOutQty": 683,
+        "otherOutStockQty": 76,
+        "details": [],
+        "purOrderBackOutQty": 814,
+        "prodComOutQty": 430
+      },
+      {
+        "curDate": "2024-12-24",
+        "sku": "AMKD12D10-XB",
+        "directOrderOutStockQty": 330,
+        "shipmentOutStockQty": 80,
+        "tranOrderOutQty": 250,
+        "otherOutStockQty": 507,
+        "details": [],
+        "purOrderBackOutQty": 998,
+        "prodComOutQty": 837
+      },
+      {
+        "curDate": "2024-12-25",
+        "sku": "AMKD12D10-XB",
+        "directOrderOutStockQty": 242,
+        "shipmentOutStockQty": 796,
+        "tranOrderOutQty": 538,
+        "otherOutStockQty": 342,
+        "details": [],
+        "purOrderBackOutQty": 701,
+        "prodComOutQty": 583
+      },
+      {
+        "curDate": "2024-12-26",
+        "sku": "AMKD12D10-XB",
+        "directOrderOutStockQty": 217,
+        "shipmentOutStockQty": 252,
+        "tranOrderOutQty": 982,
+        "otherOutStockQty": 706,
+        "details": [],
+        "purOrderBackOutQty": 228,
+        "prodComOutQty": 546
+      },
+      {
+        "curDate": "2024-12-27",
+        "sku": "AMKD12D10-XB",
+        "directOrderOutStockQty": 137,
+        "shipmentOutStockQty": 861,
+        "tranOrderOutQty": 136,
+        "otherOutStockQty": 341,
+        "details": [],
+        "purOrderBackOutQty": 171,
+        "prodComOutQty": 829
+      }
+    ],
+    "AMKD12D10-L": [
+      {
+        "curDate": "2024-12-11",
+        "sku": "AMKD12D10-L",
+        "directOrderOutStockQty": 985,
+        "shipmentOutStockQty": 471,
+        "tranOrderOutQty": 733,
+        "otherOutStockQty": 820,
+        "details": [],
+        "purOrderBackOutQty": 143,
+        "prodComOutQty": 667
+      },
+      {
+        "curDate": "2024-12-12",
+        "sku": "AMKD12D10-L",
+        "directOrderOutStockQty": 13,
+        "shipmentOutStockQty": 613,
+        "tranOrderOutQty": 188,
+        "otherOutStockQty": 726,
+        "details": [],
+        "purOrderBackOutQty": 864,
+        "prodComOutQty": 376
+      },
+      {
+        "curDate": "2024-12-13",
+        "sku": "AMKD12D10-L",
+        "directOrderOutStockQty": 186,
+        "shipmentOutStockQty": 627,
+        "tranOrderOutQty": 825,
+        "otherOutStockQty": 112,
+        "details": [],
+        "purOrderBackOutQty": 366,
+        "prodComOutQty": 234
+      },
+      {
+        "curDate": "2024-12-14",
+        "sku": "AMKD12D10-L",
+        "directOrderOutStockQty": 289,
+        "shipmentOutStockQty": 440,
+        "tranOrderOutQty": 37,
+        "otherOutStockQty": 662,
+        "details": [],
+        "purOrderBackOutQty": 192,
+        "prodComOutQty": 75
+      },
+      {
+        "curDate": "2024-12-15",
+        "sku": "AMKD12D10-L",
+        "directOrderOutStockQty": 882,
+        "shipmentOutStockQty": 892,
+        "tranOrderOutQty": 328,
+        "otherOutStockQty": 786,
+        "details": [],
+        "purOrderBackOutQty": 798,
+        "prodComOutQty": 429
+      },
+      {
+        "curDate": "2024-12-16",
+        "sku": "AMKD12D10-L",
+        "directOrderOutStockQty": 455,
+        "shipmentOutStockQty": 48,
+        "tranOrderOutQty": 359,
+        "otherOutStockQty": 253,
+        "details": [],
+        "purOrderBackOutQty": 271,
+        "prodComOutQty": 180
+      },
+      {
+        "curDate": "2024-12-17",
+        "sku": "AMKD12D10-L",
+        "directOrderOutStockQty": 915,
+        "shipmentOutStockQty": 746,
+        "tranOrderOutQty": 904,
+        "otherOutStockQty": 381,
+        "details": [],
+        "purOrderBackOutQty": 636,
+        "prodComOutQty": 500
+      },
+      {
+        "curDate": "2024-12-18",
+        "sku": "AMKD12D10-L",
+        "directOrderOutStockQty": 219,
+        "shipmentOutStockQty": 85,
+        "tranOrderOutQty": 661,
+        "otherOutStockQty": 332,
+        "details": [],
+        "purOrderBackOutQty": 909,
+        "prodComOutQty": 365
+      },
+      {
+        "curDate": "2024-12-19",
+        "sku": "AMKD12D10-L",
+        "directOrderOutStockQty": 273,
+        "shipmentOutStockQty": 807,
+        "tranOrderOutQty": 727,
+        "otherOutStockQty": 112,
+        "details": [],
+        "purOrderBackOutQty": 352,
+        "prodComOutQty": 548
+      },
+      {
+        "curDate": "2024-12-20",
+        "sku": "AMKD12D10-L",
+        "directOrderOutStockQty": 527,
+        "shipmentOutStockQty": 778,
+        "tranOrderOutQty": 280,
+        "otherOutStockQty": 566,
+        "details": [],
+        "purOrderBackOutQty": 36,
+        "prodComOutQty": 137
+      },
+      {
+        "curDate": "2024-12-21",
+        "sku": "AMKD12D10-L",
+        "directOrderOutStockQty": 118,
+        "shipmentOutStockQty": 594,
+        "tranOrderOutQty": 857,
+        "otherOutStockQty": 12,
+        "details": [],
+        "purOrderBackOutQty": 835,
+        "prodComOutQty": 107
+      },
+      {
+        "curDate": "2024-12-22",
+        "sku": "AMKD12D10-L",
+        "directOrderOutStockQty": 641,
+        "shipmentOutStockQty": 562,
+        "tranOrderOutQty": 324,
+        "otherOutStockQty": 5,
+        "details": [],
+        "purOrderBackOutQty": 416,
+        "prodComOutQty": 129
+      },
+      {
+        "curDate": "2024-12-23",
+        "sku": "AMKD12D10-L",
+        "directOrderOutStockQty": 147,
+        "shipmentOutStockQty": 978,
+        "tranOrderOutQty": 888,
+        "otherOutStockQty": 659,
+        "details": [],
+        "purOrderBackOutQty": 833,
+        "prodComOutQty": 614
+      },
+      {
+        "curDate": "2024-12-24",
+        "sku": "AMKD12D10-L",
+        "directOrderOutStockQty": 908,
+        "shipmentOutStockQty": 290,
+        "tranOrderOutQty": 188,
+        "otherOutStockQty": 558,
+        "details": [],
+        "purOrderBackOutQty": 394,
+        "prodComOutQty": 425
+      },
+      {
+        "curDate": "2024-12-25",
+        "sku": "AMKD12D10-L",
+        "directOrderOutStockQty": 507,
+        "shipmentOutStockQty": 511,
+        "tranOrderOutQty": 156,
+        "otherOutStockQty": 856,
+        "details": [],
+        "purOrderBackOutQty": 771,
+        "prodComOutQty": 60
+      },
+      {
+        "curDate": "2024-12-26",
+        "sku": "AMKD12D10-L",
+        "directOrderOutStockQty": 4,
+        "shipmentOutStockQty": 672,
+        "tranOrderOutQty": 360,
+        "otherOutStockQty": 271,
+        "purOrderBackOutQty": 162,
+        "prodComOutQty": 850
+      },
+      {
+        "curDate": "2024-12-27",
+        "sku": "AMKD12D10-L",
+        "directOrderOutStockQty": 761,
+        "shipmentOutStockQty": 635,
+        "tranOrderOutQty": 406,
+        "otherOutStockQty": 197,
+        "details": [],
+        "purOrderBackOutQty": 381,
+        "prodComOutQty": 213
+      }
+    ],
+    "AMKD12D10-O": [
+      {
+        "curDate": "2024-12-11",
+        "sku": "AMKD12D10-O",
+        "directOrderOutStockQty": 49,
+        "shipmentOutStockQty": 193,
+        "tranOrderOutQty": 291,
+        "otherOutStockQty": 334,
+        "details": [],
+        "purOrderBackOutQty": 201,
+        "prodComOutQty": 371
+      },
+      {
+        "curDate": "2024-12-12",
+        "sku": "AMKD12D10-O",
+        "directOrderOutStockQty": 453,
+        "shipmentOutStockQty": 929,
+        "tranOrderOutQty": 769,
+        "otherOutStockQty": 531,
+        "details": [],
+        "purOrderBackOutQty": 681,
+        "prodComOutQty": 925
+      },
+      {
+        "curDate": "2024-12-13",
+        "sku": "AMKD12D10-O",
+        "directOrderOutStockQty": 467,
+        "shipmentOutStockQty": 441,
+        "tranOrderOutQty": 390,
+        "otherOutStockQty": 401,
+        "details": [],
+        "purOrderBackOutQty": 987,
+        "prodComOutQty": 308
+      },
+      {
+        "curDate": "2024-12-14",
+        "sku": "AMKD12D10-O",
+        "directOrderOutStockQty": 497,
+        "shipmentOutStockQty": 18,
+        "tranOrderOutQty": 289,
+        "otherOutStockQty": 953,
+        "details": [],
+        "purOrderBackOutQty": 32,
+        "prodComOutQty": 761
+      },
+      {
+        "curDate": "2024-12-15",
+        "sku": "AMKD12D10-O",
+        "directOrderOutStockQty": 379,
+        "shipmentOutStockQty": 625,
+        "tranOrderOutQty": 351,
+        "otherOutStockQty": 589,
+        "details": [],
+        "purOrderBackOutQty": 753,
+        "prodComOutQty": 327
+      },
+      {
+        "curDate": "2024-12-16",
+        "sku": "AMKD12D10-O",
+        "directOrderOutStockQty": 465,
+        "shipmentOutStockQty": 974,
+        "tranOrderOutQty": 466,
+        "otherOutStockQty": 602,
+        "details": [],
+        "purOrderBackOutQty": 478,
+        "prodComOutQty": 161
+      },
+      {
+        "curDate": "2024-12-17",
+        "sku": "AMKD12D10-O",
+        "directOrderOutStockQty": 920,
+        "shipmentOutStockQty": 757,
+        "tranOrderOutQty": 355,
+        "otherOutStockQty": 346,
+        "details": [],
+        "purOrderBackOutQty": 70,
+        "prodComOutQty": 935
+      },
+      {
+        "curDate": "2024-12-18",
+        "sku": "AMKD12D10-O",
+        "directOrderOutStockQty": 943,
+        "shipmentOutStockQty": 14,
+        "tranOrderOutQty": 324,
+        "otherOutStockQty": 488,
+        "details": [],
+        "purOrderBackOutQty": 329,
+        "prodComOutQty": 684
+      },
+      {
+        "curDate": "2024-12-19",
+        "sku": "AMKD12D10-O",
+        "directOrderOutStockQty": 271,
+        "shipmentOutStockQty": 153,
+        "tranOrderOutQty": 664,
+        "otherOutStockQty": 954,
+        "details": [],
+        "purOrderBackOutQty": 707,
+        "prodComOutQty": 616
+      },
+      {
+        "curDate": "2024-12-20",
+        "sku": "AMKD12D10-O",
+        "directOrderOutStockQty": 738,
+        "shipmentOutStockQty": 320,
+        "tranOrderOutQty": 479,
+        "otherOutStockQty": 473,
+        "details": [],
+        "purOrderBackOutQty": 907,
+        "prodComOutQty": 421
+      },
+      {
+        "curDate": "2024-12-21",
+        "sku": "AMKD12D10-O",
+        "directOrderOutStockQty": 598,
+        "shipmentOutStockQty": 772,
+        "tranOrderOutQty": 382,
+        "otherOutStockQty": 395,
+        "details": [],
+        "purOrderBackOutQty": 163,
+        "prodComOutQty": 474
+      },
+      {
+        "curDate": "2024-12-22",
+        "sku": "AMKD12D10-O",
+        "directOrderOutStockQty": 201,
+        "shipmentOutStockQty": 584,
+        "tranOrderOutQty": 521,
+        "otherOutStockQty": 97,
+        "details": [],
+        "purOrderBackOutQty": 30,
+        "prodComOutQty": 735
+      },
+      {
+        "curDate": "2024-12-23",
+        "sku": "AMKD12D10-O",
+        "directOrderOutStockQty": 662,
+        "shipmentOutStockQty": 984,
+        "tranOrderOutQty": 298,
+        "otherOutStockQty": 507,
+        "details": [],
+        "purOrderBackOutQty": 87,
+        "prodComOutQty": 157
+      },
+      {
+        "curDate": "2024-12-24",
+        "sku": "AMKD12D10-O",
+        "directOrderOutStockQty": 891,
+        "shipmentOutStockQty": 250,
+        "tranOrderOutQty": 114,
+        "otherOutStockQty": 22,
+        "details": [],
+        "purOrderBackOutQty": 881,
+        "prodComOutQty": 106
+      },
+      {
+        "curDate": "2024-12-25",
+        "sku": "AMKD12D10-O",
+        "directOrderOutStockQty": 663,
+        "shipmentOutStockQty": 716,
+        "tranOrderOutQty": 215,
+        "otherOutStockQty": 246,
+        "details": [],
+        "purOrderBackOutQty": 752,
+        "prodComOutQty": 616
+      },
+      {
+        "curDate": "2024-12-26",
+        "sku": "AMKD12D10-O",
+        "directOrderOutStockQty": 176,
+        "shipmentOutStockQty": 594,
+        "tranOrderOutQty": 291,
+        "otherOutStockQty": 952,
+        "details": [],
+        "purOrderBackOutQty": 375,
+        "prodComOutQty": 903
+      },
+      {
+        "curDate": "2024-12-27",
+        "sku": "AMKD12D10-O",
+        "directOrderOutStockQty": 36,
+        "shipmentOutStockQty": 535,
+        "tranOrderOutQty": 375,
+        "otherOutStockQty": 160,
+        "details": [],
+        "purOrderBackOutQty": 449,
+        "prodComOutQty": 279
+      }
+    ],
+    "AMKD12D10-G": [
+      {
+        "curDate": "2024-12-11",
+        "sku": "AMKD12D10-G",
+        "directOrderOutStockQty": 330,
+        "shipmentOutStockQty": 453,
+        "tranOrderOutQty": 732,
+        "otherOutStockQty": 788,
+        "details": [],
+        "purOrderBackOutQty": 636,
+        "prodComOutQty": 744
+      },
+      {
+        "curDate": "2024-12-12",
+        "sku": "AMKD12D10-G",
+        "directOrderOutStockQty": 813,
+        "shipmentOutStockQty": 126,
+        "tranOrderOutQty": 209,
+        "otherOutStockQty": 103,
+        "details": [],
+        "purOrderBackOutQty": 135,
+        "prodComOutQty": 164
+      },
+      {
+        "curDate": "2024-12-13",
+        "sku": "AMKD12D10-G",
+        "directOrderOutStockQty": 322,
+        "shipmentOutStockQty": 851,
+        "tranOrderOutQty": 995,
+        "otherOutStockQty": 896,
+        "details": [],
+        "purOrderBackOutQty": 418,
+        "prodComOutQty": 169
+      },
+      {
+        "curDate": "2024-12-14",
+        "sku": "AMKD12D10-G",
+        "directOrderOutStockQty": 857,
+        "shipmentOutStockQty": 908,
+        "tranOrderOutQty": 629,
+        "otherOutStockQty": 93,
+        "details": [],
+        "purOrderBackOutQty": 985,
+        "prodComOutQty": 206
+      },
+      {
+        "curDate": "2024-12-15",
+        "sku": "AMKD12D10-G",
+        "directOrderOutStockQty": 102,
+        "shipmentOutStockQty": 229,
+        "tranOrderOutQty": 691,
+        "otherOutStockQty": 750,
+        "details": [],
+        "purOrderBackOutQty": 859,
+        "prodComOutQty": 486
+      },
+      {
+        "curDate": "2024-12-16",
+        "sku": "AMKD12D10-G",
+        "directOrderOutStockQty": 783,
+        "shipmentOutStockQty": 835,
+        "tranOrderOutQty": 112,
+        "otherOutStockQty": 490,
+        "details": [],
+        "purOrderBackOutQty": 126,
+        "prodComOutQty": 586
+      },
+      {
+        "curDate": "2024-12-17",
+        "sku": "AMKD12D10-G",
+        "directOrderOutStockQty": 111,
+        "shipmentOutStockQty": 90,
+        "tranOrderOutQty": 32,
+        "otherOutStockQty": 102,
+        "details": [],
+        "purOrderBackOutQty": 557,
+        "prodComOutQty": 500
+      },
+      {
+        "curDate": "2024-12-18",
+        "sku": "AMKD12D10-G",
+        "directOrderOutStockQty": 238,
+        "shipmentOutStockQty": 407,
+        "tranOrderOutQty": 838,
+        "otherOutStockQty": 178,
+        "details": [],
+        "purOrderBackOutQty": 948,
+        "prodComOutQty": 557
+      },
+      {
+        "curDate": "2024-12-19",
+        "sku": "AMKD12D10-G",
+        "directOrderOutStockQty": 15,
+        "shipmentOutStockQty": 331,
+        "tranOrderOutQty": 95,
+        "otherOutStockQty": 199,
+        "details": [],
+        "purOrderBackOutQty": 895,
+        "prodComOutQty": 224
+      },
+      {
+        "curDate": "2024-12-20",
+        "sku": "AMKD12D10-G",
+        "directOrderOutStockQty": 775,
+        "shipmentOutStockQty": 47,
+        "tranOrderOutQty": 477,
+        "otherOutStockQty": 886,
+        "details": [],
+        "purOrderBackOutQty": 5,
+        "prodComOutQty": 764
+      },
+      {
+        "curDate": "2024-12-21",
+        "sku": "AMKD12D10-G",
+        "directOrderOutStockQty": 227,
+        "shipmentOutStockQty": 7,
+        "tranOrderOutQty": 812,
+        "otherOutStockQty": 37,
+        "details": [],
+        "purOrderBackOutQty": 524,
+        "prodComOutQty": 524
+      },
+      {
+        "curDate": "2024-12-22",
+        "sku": "AMKD12D10-G",
+        "directOrderOutStockQty": 596,
+        "shipmentOutStockQty": 278,
+        "tranOrderOutQty": 25,
+        "otherOutStockQty": 594,
+        "details": [],
+        "purOrderBackOutQty": 277,
+        "prodComOutQty": 748
+      },
+      {
+        "curDate": "2024-12-23",
+        "sku": "AMKD12D10-G",
+        "directOrderOutStockQty": 288,
+        "shipmentOutStockQty": 371,
+        "tranOrderOutQty": 356,
+        "otherOutStockQty": 459,
+        "details": [],
+        "purOrderBackOutQty": 235,
+        "prodComOutQty": 938
+      },
+      {
+        "curDate": "2024-12-24",
+        "sku": "AMKD12D10-G",
+        "directOrderOutStockQty": 306,
+        "shipmentOutStockQty": 562,
+        "tranOrderOutQty": 68,
+        "otherOutStockQty": 324,
+        "details": [],
+        "purOrderBackOutQty": 551,
+        "prodComOutQty": 491
+      },
+      {
+        "curDate": "2024-12-25",
+        "sku": "AMKD12D10-G",
+        "directOrderOutStockQty": 470,
+        "shipmentOutStockQty": 705,
+        "tranOrderOutQty": 522,
+        "otherOutStockQty": 477,
+        "details": [],
+        "purOrderBackOutQty": 432,
+        "prodComOutQty": 544
+      },
+      {
+        "curDate": "2024-12-26",
+        "sku": "AMKD12D10-G",
+        "directOrderOutStockQty": 78,
+        "shipmentOutStockQty": 247,
+        "tranOrderOutQty": 993,
+        "otherOutStockQty": 543,
+        "details": [],
+        "purOrderBackOutQty": 305,
+        "prodComOutQty": 198
+      },
+      {
+        "curDate": "2024-12-27",
+        "sku": "AMKD12D10-G",
+        "directOrderOutStockQty": 983,
+        "shipmentOutStockQty": 710,
+        "tranOrderOutQty": 945,
+        "otherOutStockQty": 114,
+        "details": [],
+        "purOrderBackOutQty": 184,
+        "prodComOutQty": 586
+      }
+    ],
+    "AMKD12D10-MC": [
+      {
+        "curDate": "2024-12-11",
+        "sku": "AMKD12D10-MC",
+        "directOrderOutStockQty": 623,
+        "shipmentOutStockQty": 95,
+        "tranOrderOutQty": 89,
+        "otherOutStockQty": 728,
+        "details": [],
+        "purOrderBackOutQty": 598,
+        "prodComOutQty": 933
+      },
+      {
+        "curDate": "2024-12-12",
+        "sku": "AMKD12D10-MC",
+        "directOrderOutStockQty": 327,
+        "shipmentOutStockQty": 945,
+        "tranOrderOutQty": 618,
+        "otherOutStockQty": 672,
+        "details": [],
+        "purOrderBackOutQty": 349,
+        "prodComOutQty": 448
+      },
+      {
+        "curDate": "2024-12-13",
+        "sku": "AMKD12D10-MC",
+        "directOrderOutStockQty": 670,
+        "shipmentOutStockQty": 426,
+        "tranOrderOutQty": 976,
+        "otherOutStockQty": 205,
+        "details": [],
+        "purOrderBackOutQty": 264,
+        "prodComOutQty": 345
+      },
+      {
+        "curDate": "2024-12-14",
+        "sku": "AMKD12D10-MC",
+        "directOrderOutStockQty": 297,
+        "shipmentOutStockQty": 314,
+        "tranOrderOutQty": 837,
+        "otherOutStockQty": 297,
+        "details": [],
+        "purOrderBackOutQty": 111,
+        "prodComOutQty": 306
+      },
+      {
+        "curDate": "2024-12-15",
+        "sku": "AMKD12D10-MC",
+        "directOrderOutStockQty": 441,
+        "shipmentOutStockQty": 938,
+        "tranOrderOutQty": 691,
+        "otherOutStockQty": 898,
+        "details": [],
+        "purOrderBackOutQty": 1000,
+        "prodComOutQty": 406
+      },
+      {
+        "curDate": "2024-12-16",
+        "sku": "AMKD12D10-MC",
+        "directOrderOutStockQty": 579,
+        "shipmentOutStockQty": 532,
+        "tranOrderOutQty": 901,
+        "otherOutStockQty": 716,
+        "details": [],
+        "purOrderBackOutQty": 870,
+        "prodComOutQty": 249
+      },
+      {
+        "curDate": "2024-12-17",
+        "sku": "AMKD12D10-MC",
+        "directOrderOutStockQty": 747,
+        "shipmentOutStockQty": 55,
+        "tranOrderOutQty": 518,
+        "otherOutStockQty": 465,
+        "details": [],
+        "purOrderBackOutQty": 497,
+        "prodComOutQty": 867
+      },
+      {
+        "curDate": "2024-12-18",
+        "sku": "AMKD12D10-MC",
+        "directOrderOutStockQty": 736,
+        "shipmentOutStockQty": 510,
+        "tranOrderOutQty": 214,
+        "otherOutStockQty": 477,
+        "details": [],
+        "purOrderBackOutQty": 133,
+        "prodComOutQty": 911
+      },
+      {
+        "curDate": "2024-12-19",
+        "sku": "AMKD12D10-MC",
+        "directOrderOutStockQty": 235,
+        "shipmentOutStockQty": 402,
+        "tranOrderOutQty": 383,
+        "otherOutStockQty": 468,
+        "details": [],
+        "purOrderBackOutQty": 853,
+        "prodComOutQty": 284
+      },
+      {
+        "curDate": "2024-12-20",
+        "sku": "AMKD12D10-MC",
+        "directOrderOutStockQty": 318,
+        "shipmentOutStockQty": 611,
+        "tranOrderOutQty": 111,
+        "otherOutStockQty": 865,
+        "details": [],
+        "purOrderBackOutQty": 30,
+        "prodComOutQty": 966
+      },
+      {
+        "curDate": "2024-12-21",
+        "sku": "AMKD12D10-MC",
+        "directOrderOutStockQty": 375,
+        "shipmentOutStockQty": 249,
+        "tranOrderOutQty": 80,
+        "otherOutStockQty": 411,
+        "details": [],
+        "purOrderBackOutQty": 338,
+        "prodComOutQty": 60
+      },
+      {
+        "curDate": "2024-12-22",
+        "sku": "AMKD12D10-MC",
+        "directOrderOutStockQty": 61,
+        "shipmentOutStockQty": 37,
+        "tranOrderOutQty": 928,
+        "otherOutStockQty": 505,
+        "details": [],
+        "purOrderBackOutQty": 535,
+        "prodComOutQty": 703
+      },
+      {
+        "curDate": "2024-12-23",
+        "sku": "AMKD12D10-MC",
+        "directOrderOutStockQty": 158,
+        "shipmentOutStockQty": 326,
+        "tranOrderOutQty": 89,
+        "otherOutStockQty": 221,
+        "details": [],
+        "purOrderBackOutQty": 652,
+        "prodComOutQty": 528
+      },
+      {
+        "curDate": "2024-12-24",
+        "sku": "AMKD12D10-MC",
+        "directOrderOutStockQty": 52,
+        "shipmentOutStockQty": 349,
+        "tranOrderOutQty": 209,
+        "otherOutStockQty": 893,
+        "details": [],
+        "purOrderBackOutQty": 583,
+        "prodComOutQty": 895
+      },
+      {
+        "curDate": "2024-12-25",
+        "sku": "AMKD12D10-MC",
+        "directOrderOutStockQty": 344,
+        "shipmentOutStockQty": 862,
+        "tranOrderOutQty": 63,
+        "otherOutStockQty": 93,
+        "details": [],
+        "purOrderBackOutQty": 865,
+        "prodComOutQty": 81
+      },
+      {
+        "curDate": "2024-12-26",
+        "sku": "AMKD12D10-MC",
+        "directOrderOutStockQty": 646,
+        "shipmentOutStockQty": 818,
+        "tranOrderOutQty": 429,
+        "otherOutStockQty": 882,
+        "details": [],
+        "purOrderBackOutQty": 125,
+        "prodComOutQty": 316
+      },
+      {
+        "curDate": "2024-12-27",
+        "sku": "AMKD12D10-MC",
+        "directOrderOutStockQty": 703,
+        "shipmentOutStockQty": 229,
+        "tranOrderOutQty": 311,
+        "otherOutStockQty": 420,
+        "details": [],
+        "purOrderBackOutQty": 2,
+        "prodComOutQty": 692
+      }
+    ],
+    "AMKD12D10-P": [
+      {
+        "curDate": "2024-12-11",
+        "sku": "AMKD12D10-P",
+        "directOrderOutStockQty": 964,
+        "shipmentOutStockQty": 626,
+        "tranOrderOutQty": 627,
+        "otherOutStockQty": 368,
+        "details": [],
+        "purOrderBackOutQty": 484,
+        "prodComOutQty": 975
+      },
+      {
+        "curDate": "2024-12-12",
+        "sku": "AMKD12D10-P",
+        "directOrderOutStockQty": 114,
+        "shipmentOutStockQty": 223,
+        "tranOrderOutQty": 291,
+        "otherOutStockQty": 138,
+        "details": [],
+        "purOrderBackOutQty": 574,
+        "prodComOutQty": 536
+      },
+      {
+        "curDate": "2024-12-13",
+        "sku": "AMKD12D10-P",
+        "directOrderOutStockQty": 323,
+        "shipmentOutStockQty": 551,
+        "tranOrderOutQty": 607,
+        "otherOutStockQty": 921,
+        "details": [],
+        "purOrderBackOutQty": 19,
+        "prodComOutQty": 551
+      },
+      {
+        "curDate": "2024-12-14",
+        "sku": "AMKD12D10-P",
+        "directOrderOutStockQty": 320,
+        "shipmentOutStockQty": 372,
+        "tranOrderOutQty": 272,
+        "otherOutStockQty": 286,
+        "details": [],
+        "purOrderBackOutQty": 847,
+        "prodComOutQty": 16
+      },
+      {
+        "curDate": "2024-12-15",
+        "sku": "AMKD12D10-P",
+        "directOrderOutStockQty": 94,
+        "shipmentOutStockQty": 631,
+        "tranOrderOutQty": 322,
+        "otherOutStockQty": 872,
+        "details": [],
+        "purOrderBackOutQty": 716,
+        "prodComOutQty": 378
+      },
+      {
+        "curDate": "2024-12-16",
+        "sku": "AMKD12D10-P",
+        "directOrderOutStockQty": 561,
+        "shipmentOutStockQty": 359,
+        "tranOrderOutQty": 708,
+        "otherOutStockQty": 631,
+        "details": [],
+        "purOrderBackOutQty": 355,
+        "prodComOutQty": 26
+      },
+      {
+        "curDate": "2024-12-17",
+        "sku": "AMKD12D10-P",
+        "directOrderOutStockQty": 937,
+        "shipmentOutStockQty": 850,
+        "tranOrderOutQty": 379,
+        "otherOutStockQty": 574,
+        "details": [],
+        "purOrderBackOutQty": 962,
+        "prodComOutQty": 663
+      },
+      {
+        "curDate": "2024-12-18",
+        "sku": "AMKD12D10-P",
+        "directOrderOutStockQty": 956,
+        "shipmentOutStockQty": 635,
+        "tranOrderOutQty": 439,
+        "otherOutStockQty": 884,
+        "details": [],
+        "purOrderBackOutQty": 389,
+        "prodComOutQty": 939
+      },
+      {
+        "curDate": "2024-12-19",
+        "sku": "AMKD12D10-P",
+        "directOrderOutStockQty": 789,
+        "shipmentOutStockQty": 919,
+        "tranOrderOutQty": 265,
+        "otherOutStockQty": 98,
+        "details": [],
+        "purOrderBackOutQty": 540,
+        "prodComOutQty": 447
+      },
+      {
+        "curDate": "2024-12-20",
+        "sku": "AMKD12D10-P",
+        "directOrderOutStockQty": 423,
+        "shipmentOutStockQty": 820,
+        "tranOrderOutQty": 943,
+        "otherOutStockQty": 942,
+        "details": [],
+        "purOrderBackOutQty": 574,
+        "prodComOutQty": 755
+      },
+      {
+        "curDate": "2024-12-21",
+        "sku": "AMKD12D10-P",
+        "directOrderOutStockQty": 293,
+        "shipmentOutStockQty": 46,
+        "tranOrderOutQty": 977,
+        "otherOutStockQty": 920,
+        "details": [],
+        "purOrderBackOutQty": 217,
+        "prodComOutQty": 186
+      },
+      {
+        "curDate": "2024-12-22",
+        "sku": "AMKD12D10-P",
+        "directOrderOutStockQty": 894,
+        "shipmentOutStockQty": 920,
+        "tranOrderOutQty": 207,
+        "otherOutStockQty": 803,
+        "details": [],
+        "purOrderBackOutQty": 29,
+        "prodComOutQty": 621
+      },
+      {
+        "curDate": "2024-12-23",
+        "sku": "AMKD12D10-P",
+        "directOrderOutStockQty": 416,
+        "shipmentOutStockQty": 88,
+        "tranOrderOutQty": 812,
+        "otherOutStockQty": 196,
+        "details": [],
+        "purOrderBackOutQty": 177,
+        "prodComOutQty": 132
+      },
+      {
+        "curDate": "2024-12-24",
+        "sku": "AMKD12D10-P",
+        "directOrderOutStockQty": 463,
+        "shipmentOutStockQty": 124,
+        "tranOrderOutQty": 484,
+        "otherOutStockQty": 622,
+        "details": [],
+        "purOrderBackOutQty": 254,
+        "prodComOutQty": 437
+      },
+      {
+        "curDate": "2024-12-25",
+        "sku": "AMKD12D10-P",
+        "directOrderOutStockQty": 941,
+        "shipmentOutStockQty": 830,
+        "tranOrderOutQty": 838,
+        "otherOutStockQty": 802,
+        "details": [],
+        "purOrderBackOutQty": 583,
+        "prodComOutQty": 285
+      },
+      {
+        "curDate": "2024-12-26",
+        "sku": "AMKD12D10-P",
+        "directOrderOutStockQty": 598,
+        "shipmentOutStockQty": 111,
+        "tranOrderOutQty": 120,
+        "otherOutStockQty": 631,
+        "details": [],
+        "purOrderBackOutQty": 491,
+        "prodComOutQty": 639
+      },
+      {
+        "curDate": "2024-12-27",
+        "sku": "AMKD12D10-P",
+        "directOrderOutStockQty": 719,
+        "shipmentOutStockQty": 801,
+        "tranOrderOutQty": 70,
+        "otherOutStockQty": 492,
+        "details": [],
+        "purOrderBackOutQty": 871,
+        "prodComOutQty": 349
+      }
+    ],
+    "AMKD12D10-R": [
+      {
+        "curDate": "2024-12-11",
+        "sku": "AMKD12D10-R",
+        "directOrderOutStockQty": 183,
+        "shipmentOutStockQty": 911,
+        "tranOrderOutQty": 19,
+        "otherOutStockQty": 134,
+        "details": [],
+        "purOrderBackOutQty": 163,
+        "prodComOutQty": 55
+      },
+      {
+        "curDate": "2024-12-12",
+        "sku": "AMKD12D10-R",
+        "directOrderOutStockQty": 322,
+        "shipmentOutStockQty": 118,
+        "tranOrderOutQty": 903,
+        "otherOutStockQty": 455,
+        "details": [],
+        "purOrderBackOutQty": 990,
+        "prodComOutQty": 524
+      },
+      {
+        "curDate": "2024-12-13",
+        "sku": "AMKD12D10-R",
+        "directOrderOutStockQty": 982,
+        "shipmentOutStockQty": 139,
+        "tranOrderOutQty": 188,
+        "otherOutStockQty": 9,
+        "details": [],
+        "purOrderBackOutQty": 809,
+        "prodComOutQty": 776
+      },
+      {
+        "curDate": "2024-12-14",
+        "sku": "AMKD12D10-R",
+        "directOrderOutStockQty": 43,
+        "shipmentOutStockQty": 333,
+        "tranOrderOutQty": 824,
+        "otherOutStockQty": 475,
+        "details": [],
+        "purOrderBackOutQty": 295,
+        "prodComOutQty": 48
+      },
+      {
+        "curDate": "2024-12-15",
+        "sku": "AMKD12D10-R",
+        "directOrderOutStockQty": 209,
+        "shipmentOutStockQty": 217,
+        "tranOrderOutQty": 792,
+        "otherOutStockQty": 224,
+        "details": [],
+        "purOrderBackOutQty": 80,
+        "prodComOutQty": 748
+      },
+      {
+        "curDate": "2024-12-16",
+        "sku": "AMKD12D10-R",
+        "directOrderOutStockQty": 210,
+        "shipmentOutStockQty": 250,
+        "tranOrderOutQty": 378,
+        "otherOutStockQty": 866,
+        "details": [],
+        "purOrderBackOutQty": 552,
+        "prodComOutQty": 923
+      },
+      {
+        "curDate": "2024-12-17",
+        "sku": "AMKD12D10-R",
+        "directOrderOutStockQty": 153,
+        "shipmentOutStockQty": 977,
+        "tranOrderOutQty": 909,
+        "otherOutStockQty": 22,
+        "details": [],
+        "purOrderBackOutQty": 768,
+        "prodComOutQty": 9
+      },
+      {
+        "curDate": "2024-12-18",
+        "sku": "AMKD12D10-R",
+        "directOrderOutStockQty": 477,
+        "shipmentOutStockQty": 214,
+        "tranOrderOutQty": 665,
+        "otherOutStockQty": 828,
+        "details": [],
+        "purOrderBackOutQty": 102,
+        "prodComOutQty": 64
+      },
+      {
+        "curDate": "2024-12-19",
+        "sku": "AMKD12D10-R",
+        "directOrderOutStockQty": 587,
+        "shipmentOutStockQty": 972,
+        "tranOrderOutQty": 726,
+        "otherOutStockQty": 640,
+        "details": [],
+        "purOrderBackOutQty": 582,
+        "prodComOutQty": 453
+      },
+      {
+        "curDate": "2024-12-20",
+        "sku": "AMKD12D10-R",
+        "directOrderOutStockQty": 21,
+        "shipmentOutStockQty": 811,
+        "tranOrderOutQty": 911,
+        "otherOutStockQty": 918,
+        "details": [],
+        "purOrderBackOutQty": 130,
+        "prodComOutQty": 72
+      },
+      {
+        "curDate": "2024-12-21",
+        "sku": "AMKD12D10-R",
+        "directOrderOutStockQty": 478,
+        "shipmentOutStockQty": 136,
+        "tranOrderOutQty": 964,
+        "otherOutStockQty": 506,
+        "details": [],
+        "purOrderBackOutQty": 642,
+        "prodComOutQty": 361
+      },
+      {
+        "curDate": "2024-12-22",
+        "sku": "AMKD12D10-R",
+        "directOrderOutStockQty": 167,
+        "shipmentOutStockQty": 536,
+        "tranOrderOutQty": 993,
+        "otherOutStockQty": 241,
+        "details": [],
+        "purOrderBackOutQty": 919,
+        "prodComOutQty": 660
+      },
+      {
+        "curDate": "2024-12-23",
+        "sku": "AMKD12D10-R",
+        "directOrderOutStockQty": 755,
+        "shipmentOutStockQty": 195,
+        "tranOrderOutQty": 599,
+        "otherOutStockQty": 308,
+        "details": [],
+        "purOrderBackOutQty": 199,
+        "prodComOutQty": 484
+      },
+      {
+        "curDate": "2024-12-24",
+        "sku": "AMKD12D10-R",
+        "directOrderOutStockQty": 13,
+        "shipmentOutStockQty": 807,
+        "tranOrderOutQty": 582,
+        "otherOutStockQty": 152,
+        "details": [],
+        "purOrderBackOutQty": 152,
+        "prodComOutQty": 287
+      },
+      {
+        "curDate": "2024-12-25",
+        "sku": "AMKD12D10-R",
+        "directOrderOutStockQty": 185,
+        "shipmentOutStockQty": 726,
+        "tranOrderOutQty": 874,
+        "otherOutStockQty": 397,
+        "details": [],
+        "purOrderBackOutQty": 208,
+        "prodComOutQty": 957
+      },
+      {
+        "curDate": "2024-12-26",
+        "sku": "AMKD12D10-R",
+        "directOrderOutStockQty": 594,
+        "shipmentOutStockQty": 370,
+        "tranOrderOutQty": 211,
+        "otherOutStockQty": 42,
+        "details": [],
+        "purOrderBackOutQty": 443,
+        "prodComOutQty": 684
+      },
+      {
+        "curDate": "2024-12-27",
+        "sku": "AMKD12D10-R",
+        "directOrderOutStockQty": 151,
+        "shipmentOutStockQty": 560,
+        "tranOrderOutQty": 467,
+        "otherOutStockQty": 72,
+        "details": [],
+        "purOrderBackOutQty": 363,
+        "prodComOutQty": 454
+      }
+    ],
+    "AMKD12D10-PU": [
+      {
+        "curDate": "2024-12-11",
+        "sku": "AMKD12D10-PU",
+        "directOrderOutStockQty": 867,
+        "shipmentOutStockQty": 615,
+        "tranOrderOutQty": 731,
+        "otherOutStockQty": 780,
+        "details": [],
+        "purOrderBackOutQty": 66,
+        "prodComOutQty": 832
+      },
+      {
+        "curDate": "2024-12-12",
+        "sku": "AMKD12D10-PU",
+        "directOrderOutStockQty": 141,
+        "shipmentOutStockQty": 163,
+        "tranOrderOutQty": 46,
+        "otherOutStockQty": 442,
+        "details": [],
+        "purOrderBackOutQty": 119,
+        "prodComOutQty": 569
+      },
+      {
+        "curDate": "2024-12-13",
+        "sku": "AMKD12D10-PU",
+        "directOrderOutStockQty": 201,
+        "shipmentOutStockQty": 642,
+        "tranOrderOutQty": 389,
+        "otherOutStockQty": 557,
+        "details": [],
+        "purOrderBackOutQty": 548,
+        "prodComOutQty": 340
+      },
+      {
+        "curDate": "2024-12-14",
+        "sku": "AMKD12D10-PU",
+        "directOrderOutStockQty": 534,
+        "shipmentOutStockQty": 160,
+        "tranOrderOutQty": 356,
+        "otherOutStockQty": 492,
+        "details": [],
+        "purOrderBackOutQty": 210,
+        "prodComOutQty": 996
+      },
+      {
+        "curDate": "2024-12-15",
+        "sku": "AMKD12D10-PU",
+        "directOrderOutStockQty": 876,
+        "shipmentOutStockQty": 64,
+        "tranOrderOutQty": 65,
+        "otherOutStockQty": 431,
+        "details": [],
+        "purOrderBackOutQty": 249,
+        "prodComOutQty": 839
+      },
+      {
+        "curDate": "2024-12-16",
+        "sku": "AMKD12D10-PU",
+        "directOrderOutStockQty": 423,
+        "shipmentOutStockQty": 380,
+        "tranOrderOutQty": 893,
+        "otherOutStockQty": 750,
+        "details": [],
+        "purOrderBackOutQty": 673,
+        "prodComOutQty": 749
+      },
+      {
+        "curDate": "2024-12-17",
+        "sku": "AMKD12D10-PU",
+        "directOrderOutStockQty": 826,
+        "shipmentOutStockQty": 841,
+        "tranOrderOutQty": 536,
+        "otherOutStockQty": 355,
+        "details": [],
+        "purOrderBackOutQty": 411,
+        "prodComOutQty": 133
+      },
+      {
+        "curDate": "2024-12-18",
+        "sku": "AMKD12D10-PU",
+        "directOrderOutStockQty": 366,
+        "shipmentOutStockQty": 979,
+        "tranOrderOutQty": 919,
+        "otherOutStockQty": 578,
+        "details": [],
+        "purOrderBackOutQty": 280,
+        "prodComOutQty": 172
+      },
+      {
+        "curDate": "2024-12-19",
+        "sku": "AMKD12D10-PU",
+        "directOrderOutStockQty": 390,
+        "shipmentOutStockQty": 213,
+        "tranOrderOutQty": 947,
+        "otherOutStockQty": 993,
+        "details": [],
+        "purOrderBackOutQty": 87,
+        "prodComOutQty": 811
+      },
+      {
+        "curDate": "2024-12-20",
+        "sku": "AMKD12D10-PU",
+        "directOrderOutStockQty": 290,
+        "shipmentOutStockQty": 658,
+        "tranOrderOutQty": 703,
+        "otherOutStockQty": 961,
+        "details": [],
+        "purOrderBackOutQty": 859,
+        "prodComOutQty": 334
+      },
+      {
+        "curDate": "2024-12-21",
+        "sku": "AMKD12D10-PU",
+        "directOrderOutStockQty": 98,
+        "shipmentOutStockQty": 955,
+        "tranOrderOutQty": 926,
+        "otherOutStockQty": 82,
+        "details": [],
+        "purOrderBackOutQty": 557,
+        "prodComOutQty": 383
+      },
+      {
+        "curDate": "2024-12-22",
+        "sku": "AMKD12D10-PU",
+        "directOrderOutStockQty": 759,
+        "shipmentOutStockQty": 28,
+        "tranOrderOutQty": 805,
+        "otherOutStockQty": 225,
+        "details": [],
+        "purOrderBackOutQty": 261,
+        "prodComOutQty": 586
+      },
+      {
+        "curDate": "2024-12-23",
+        "sku": "AMKD12D10-PU",
+        "directOrderOutStockQty": 970,
+        "shipmentOutStockQty": 206,
+        "tranOrderOutQty": 596,
+        "otherOutStockQty": 598,
+        "details": [],
+        "purOrderBackOutQty": 902,
+        "prodComOutQty": 595
+      },
+      {
+        "curDate": "2024-12-24",
+        "sku": "AMKD12D10-PU",
+        "directOrderOutStockQty": 133,
+        "shipmentOutStockQty": 291,
+        "tranOrderOutQty": 788,
+        "otherOutStockQty": 387,
+        "details": [],
+        "purOrderBackOutQty": 294,
+        "prodComOutQty": 71
+      },
+      {
+        "curDate": "2024-12-25",
+        "sku": "AMKD12D10-PU",
+        "directOrderOutStockQty": 943,
+        "shipmentOutStockQty": 357,
+        "tranOrderOutQty": 874,
+        "otherOutStockQty": 704,
+        "details": [],
+        "purOrderBackOutQty": 789,
+        "prodComOutQty": 88
+      },
+      {
+        "curDate": "2024-12-26",
+        "sku": "AMKD12D10-PU",
+        "directOrderOutStockQty": 787,
+        "shipmentOutStockQty": 581,
+        "tranOrderOutQty": 571,
+        "otherOutStockQty": 331,
+        "details": [],
+        "purOrderBackOutQty": 731,
+        "prodComOutQty": 225
+      },
+      {
+        "curDate": "2024-12-27",
+        "sku": "AMKD12D10-PU",
+        "directOrderOutStockQty": 744,
+        "shipmentOutStockQty": 787,
+        "tranOrderOutQty": 749,
+        "otherOutStockQty": 803,
+        "details": [],
+        "purOrderBackOutQty": 22,
+        "prodComOutQty": 86
+      }
+    ]
+  },
+  "sskuNotSaleMap": {
+    "AMKD12D10-XB": {
+      "isSale": 206,
+      "notSaleReason": "\u4ea7\u54c1\u9500\u91cf\u5dee",
+      "sku": "AMKD12D10-XB"
+    },
+    "AMKD12D10-L": {
+      "isSale": 854,
+      "notSaleReason": "\u4ea7\u54c1\u9500\u91cf\u5dee",
+      "notSaleTime": "2024-12-18",
+      "sku": "AMKD12D10-L"
+    },
+    "AMKD12D10-O": {
+      "isSale": true,
+      "notSaleReason": "",
+      "sku": "AMKD12D10-O"
+    },
+    "AMKD12D10-G": {
+      "isSale": 538,
+      "notSaleReason": "\u4ea7\u54c1\u9500\u91cf\u5dee",
+      "sku": "AMKD12D10-G"
+    },
+    "AMKD12D10-MC": {
+      "isSale": true,
+      "notSaleReason": "\u4ea7\u54c1\u9500\u91cf\u5dee",
+      "sku": "AMKD12D10-MC"
+    },
+    "AMKD12D10-P": {
+      "isSale": true,
+      "notSaleReason": "",
+      "sku": "AMKD12D10-P"
+    },
+    "AMKD12D10-PU": {
+      "isSale": true,
+      "notSaleReason": "",
+      "sku": "AMKD12D10-PU"
+    },
+    "AMKD12D10-R": {
+      "isSale": true,
+      "notSaleReason": "",
+      "sku": "AMKD12D10-R"
+    }
+  },
+  "pskuSaleTrendList": [
+    {
+      "curDate": "2024-12-11",
+      "productQty": 467,
+      "profit": 756,
+      "orderQty": 800
+    },
+    {
+      "curDate": "2024-12-12",
+      "productQty": 676,
+      "profit": 305,
+      "orderQty": 34
+    },
+    {
+      "curDate": "2024-12-13",
+      "productQty": 489,
+      "profit": 178,
+      "orderQty": 631
+    },
+    {
+      "curDate": "2024-12-14",
+      "productQty": 427,
+      "profit": 530,
+      "orderQty": 89
+    },
+    {
+      "curDate": "2024-12-15",
+      "productQty": 217,
+      "profit": 146,
+      "orderQty": 734
+    },
+    {
+      "curDate": "2024-12-16",
+      "productQty": 301,
+      "profit": 795,
+      "orderQty": 902
+    },
+    {
+      "curDate": "2024-12-17",
+      "productQty": 669,
+      "profit": 925,
+      "orderQty": 415
+    },
+    {
+      "curDate": "2024-12-18",
+      "productQty": 62,
+      "profit": 487,
+      "orderQty": 391
+    },
+    {
+      "curDate": "2024-12-19",
+      "productQty": 4,
+      "profit": 37.3928,
+      "orderQty": 2
+    },
+    {
+      "curDate": "2024-12-20",
+      "productQty": 473,
+      "profit": 123,
+      "orderQty": 968
+    },
+    {
+      "curDate": "2024-12-21",
+      "productQty": 983,
+      "profit": 157,
+      "orderQty": 185
+    },
+    {
+      "curDate": "2024-12-22",
+      "productQty": 114,
+      "profit": 38,
+      "orderQty": 808
+    },
+    {
+      "curDate": "2024-12-23",
+      "productQty": 209,
+      "profit": 85,
+      "orderQty": 962
+    },
+    {
+      "curDate": "2024-12-24",
+      "productQty": 194,
+      "profit": 484,
+      "orderQty": 447
+    },
+    {
+      "curDate": "2024-12-25",
+      "productQty": 111,
+      "profit": 903,
+      "orderQty": 890
+    },
+    {
+      "curDate": "2024-12-26",
+      "productQty": 279,
+      "profit": 317,
+      "orderQty": 111
+    },
+    {
+      "curDate": "2024-12-27",
+      "productQty": 590,
+      "profit": 179,
+      "orderQty": 840
+    }
+  ],
+  "sskuSaleTrendMap": {
+    "AMKD12D10-XB": [
+      {
+        "curDate": "2024-12-11",
+        "sku": "AMKD12D10-XB",
+        "productQty": 508,
+        "profit": 785,
+        "orderQty": 151
+      },
+      {
+        "curDate": "2024-12-12",
+        "sku": "AMKD12D10-XB",
+        "productQty": 841,
+        "profit": 857,
+        "orderQty": 789
+      },
+      {
+        "curDate": "2024-12-13",
+        "sku": "AMKD12D10-XB",
+        "productQty": 735,
+        "profit": 45,
+        "orderQty": 282
+      },
+      {
+        "curDate": "2024-12-14",
+        "sku": "AMKD12D10-XB",
+        "productQty": 311,
+        "profit": 22,
+        "orderQty": 920
+      },
+      {
+        "curDate": "2024-12-15",
+        "sku": "AMKD12D10-XB",
+        "productQty": 947,
+        "profit": 726,
+        "orderQty": 865
+      },
+      {
+        "curDate": "2024-12-16",
+        "sku": "AMKD12D10-XB",
+        "productQty": 67,
+        "profit": 40,
+        "orderQty": 597
+      },
+      {
+        "curDate": "2024-12-17",
+        "sku": "AMKD12D10-XB",
+        "productQty": 925,
+        "profit": 715,
+        "orderQty": 142
+      },
+      {
+        "curDate": "2024-12-18",
+        "sku": "AMKD12D10-XB",
+        "productQty": 834,
+        "profit": 154,
+        "orderQty": 669
+      },
+      {
+        "curDate": "2024-12-19",
+        "sku": "AMKD12D10-XB",
+        "productQty": 510,
+        "profit": 757,
+        "orderQty": 26
+      },
+      {
+        "curDate": "2024-12-20",
+        "sku": "AMKD12D10-XB",
+        "productQty": 413,
+        "profit": 835,
+        "orderQty": 864
+      },
+      {
+        "curDate": "2024-12-21",
+        "sku": "AMKD12D10-XB",
+        "productQty": 433,
+        "profit": 956,
+        "orderQty": 628
+      },
+      {
+        "curDate": "2024-12-22",
+        "sku": "AMKD12D10-XB",
+        "productQty": 445,
+        "profit": 569,
+        "orderQty": 323
+      },
+      {
+        "curDate": "2024-12-23",
+        "sku": "AMKD12D10-XB",
+        "productQty": 853,
+        "profit": 233,
+        "orderQty": 703
+      },
+      {
+        "curDate": "2024-12-24",
+        "sku": "AMKD12D10-XB",
+        "productQty": 779,
+        "profit": 685,
+        "orderQty": 587
+      },
+      {
+        "curDate": "2024-12-25",
+        "sku": "AMKD12D10-XB",
+        "productQty": 733,
+        "profit": 787,
+        "orderQty": 317
+      },
+      {
+        "curDate": "2024-12-26",
+        "sku": "AMKD12D10-XB",
+        "productQty": 240,
+        "profit": 804,
+        "orderQty": 830
+      },
+      {
+        "curDate": "2024-12-27",
+        "sku": "AMKD12D10-XB",
+        "productQty": 454,
+        "profit": 939,
+        "orderQty": 398
+      }
+    ],
+    "AMKD12D10-L": [
+      {
+        "curDate": "2024-12-11",
+        "sku": "AMKD12D10-L",
+        "productQty": 50,
+        "profit": 118,
+        "orderQty": 620
+      },
+      {
+        "curDate": "2024-12-12",
+        "sku": "AMKD12D10-L",
+        "productQty": 688,
+        "profit": 688,
+        "orderQty": 186
+      },
+      {
+        "curDate": "2024-12-13",
+        "sku": "AMKD12D10-L",
+        "productQty": 634,
+        "profit": 474,
+        "orderQty": 35
+      },
+      {
+        "curDate": "2024-12-14",
+        "sku": "AMKD12D10-L",
+        "productQty": 748,
+        "profit": 781,
+        "orderQty": 644
+      },
+      {
+        "curDate": "2024-12-15",
+        "sku": "AMKD12D10-L",
+        "productQty": 946,
+        "profit": 677,
+        "orderQty": 18
+      },
+      {
+        "curDate": "2024-12-16",
+        "sku": "AMKD12D10-L",
+        "productQty": 525,
+        "profit": 675,
+        "orderQty": 162
+      },
+      {
+        "curDate": "2024-12-17",
+        "sku": "AMKD12D10-L",
+        "productQty": 759,
+        "profit": 901,
+        "orderQty": 281
+      },
+      {
+        "curDate": "2024-12-18",
+        "sku": "AMKD12D10-L",
+        "productQty": 323,
+        "profit": 804,
+        "orderQty": 250
+      },
+      {
+        "curDate": "2024-12-19",
+        "sku": "AMKD12D10-L",
+        "productQty": 4,
+        "profit": 37.3928,
+        "orderQty": 2
+      },
+      {
+        "curDate": "2024-12-20",
+        "sku": "AMKD12D10-L",
+        "productQty": 966,
+        "profit": 94,
+        "orderQty": 551
+      },
+      {
+        "curDate": "2024-12-21",
+        "sku": "AMKD12D10-L",
+        "productQty": 805,
+        "profit": 28,
+        "orderQty": 136
+      },
+      {
+        "curDate": "2024-12-22",
+        "sku": "AMKD12D10-L",
+        "productQty": 821,
+        "profit": 847,
+        "orderQty": 751
+      },
+      {
+        "curDate": "2024-12-23",
+        "sku": "AMKD12D10-L",
+        "productQty": 217,
+        "profit": 397,
+        "orderQty": 260
+      },
+      {
+        "curDate": "2024-12-24",
+        "sku": "AMKD12D10-L",
+        "productQty": 342,
+        "profit": 382,
+        "orderQty": 546
+      },
+      {
+        "curDate": "2024-12-25",
+        "sku": "AMKD12D10-L",
+        "productQty": 696,
+        "profit": 926,
+        "orderQty": 992
+      },
+      {
+        "curDate": "2024-12-26",
+        "sku": "AMKD12D10-L",
+        "productQty": 638,
+        "profit": 141,
+        "orderQty": 992
+      },
+      {
+        "curDate": "2024-12-27",
+        "sku": "AMKD12D10-L",
+        "productQty": 705,
+        "profit": 35,
+        "orderQty": 331
+      }
+    ],
+    "AMKD12D10-O": [
+      {
+        "curDate": "2024-12-11",
+        "sku": "AMKD12D10-O",
+        "productQty": 107,
+        "profit": 945,
+        "orderQty": 640
+      },
+      {
+        "curDate": "2024-12-12",
+        "sku": "AMKD12D10-O",
+        "productQty": 640,
+        "profit": 209,
+        "orderQty": 105
+      },
+      {
+        "curDate": "2024-12-13",
+        "sku": "AMKD12D10-O",
+        "productQty": 651,
+        "profit": 575,
+        "orderQty": 448
+      },
+      {
+        "curDate": "2024-12-14",
+        "sku": "AMKD12D10-O",
+        "productQty": 720,
+        "profit": 462,
+        "orderQty": 645
+      },
+      {
+        "curDate": "2024-12-15",
+        "sku": "AMKD12D10-O",
+        "productQty": 159,
+        "profit": 226,
+        "orderQty": 968
+      },
+      {
+        "curDate": "2024-12-16",
+        "sku": "AMKD12D10-O",
+        "productQty": 347,
+        "profit": 476,
+        "orderQty": 253
+      },
+      {
+        "curDate": "2024-12-17",
+        "sku": "AMKD12D10-O",
+        "productQty": 822,
+        "profit": 597,
+        "orderQty": 368
+      },
+      {
+        "curDate": "2024-12-18",
+        "sku": "AMKD12D10-O",
+        "productQty": 711,
+        "profit": 227,
+        "orderQty": 287
+      },
+      {
+        "curDate": "2024-12-19",
+        "sku": "AMKD12D10-O",
+        "productQty": 46,
+        "profit": 696,
+        "orderQty": 704
+      },
+      {
+        "curDate": "2024-12-20",
+        "sku": "AMKD12D10-O",
+        "productQty": 751,
+        "profit": 665,
+        "orderQty": 148
+      },
+      {
+        "curDate": "2024-12-21",
+        "sku": "AMKD12D10-O",
+        "productQty": 888,
+        "profit": 259,
+        "orderQty": 8
+      },
+      {
+        "curDate": "2024-12-22",
+        "sku": "AMKD12D10-O",
+        "productQty": 486,
+        "profit": 547,
+        "orderQty": 226
+      },
+      {
+        "curDate": "2024-12-23",
+        "sku": "AMKD12D10-O",
+        "productQty": 967,
+        "profit": 905,
+        "orderQty": 892
+      },
+      {
+        "curDate": "2024-12-24",
+        "sku": "AMKD12D10-O",
+        "productQty": 91,
+        "profit": 15,
+        "orderQty": 762
+      },
+      {
+        "curDate": "2024-12-25",
+        "sku": "AMKD12D10-O",
+        "productQty": 979,
+        "profit": 878,
+        "orderQty": 453
+      },
+      {
+        "curDate": "2024-12-26",
+        "sku": "AMKD12D10-O",
+        "productQty": 788,
+        "profit": 492,
+        "orderQty": 336
+      },
+      {
+        "curDate": "2024-12-27",
+        "sku": "AMKD12D10-O",
+        "productQty": 729,
+        "profit": 948,
+        "orderQty": 53
+      }
+    ],
+    "AMKD12D10-G": [
+      {
+        "curDate": "2024-12-11",
+        "sku": "AMKD12D10-G",
+        "productQty": 907,
+        "profit": 174,
+        "orderQty": 273
+      },
+      {
+        "curDate": "2024-12-12",
+        "sku": "AMKD12D10-G",
+        "productQty": 999,
+        "profit": 569,
+        "orderQty": 995
+      },
+      {
+        "curDate": "2024-12-13",
+        "sku": "AMKD12D10-G",
+        "productQty": 182,
+        "profit": 745,
+        "orderQty": 543
+      },
+      {
+        "curDate": "2024-12-14",
+        "sku": "AMKD12D10-G",
+        "productQty": 78,
+        "profit": 64,
+        "orderQty": 753
+      },
+      {
+        "curDate": "2024-12-15",
+        "sku": "AMKD12D10-G",
+        "productQty": 843,
+        "profit": 723,
+        "orderQty": 176
+      },
+      {
+        "curDate": "2024-12-16",
+        "sku": "AMKD12D10-G",
+        "productQty": 385,
+        "profit": 559,
+        "orderQty": 898
+      },
+      {
+        "curDate": "2024-12-17",
+        "sku": "AMKD12D10-G",
+        "productQty": 886,
+        "profit": 748,
+        "orderQty": 151
+      },
+      {
+        "curDate": "2024-12-18",
+        "sku": "AMKD12D10-G",
+        "productQty": 841,
+        "profit": 21,
+        "orderQty": 778
+      },
+      {
+        "curDate": "2024-12-19",
+        "sku": "AMKD12D10-G",
+        "productQty": 342,
+        "profit": 317,
+        "orderQty": 551
+      },
+      {
+        "curDate": "2024-12-20",
+        "sku": "AMKD12D10-G",
+        "productQty": 181,
+        "profit": 527,
+        "orderQty": 755
+      },
+      {
+        "curDate": "2024-12-21",
+        "sku": "AMKD12D10-G",
+        "productQty": 132,
+        "profit": 803,
+        "orderQty": 997
+      },
+      {
+        "curDate": "2024-12-22",
+        "sku": "AMKD12D10-G",
+        "productQty": 488,
+        "profit": 599,
+        "orderQty": 891
+      },
+      {
+        "curDate": "2024-12-23",
+        "sku": "AMKD12D10-G",
+        "productQty": 985,
+        "profit": 465,
+        "orderQty": 40
+      },
+      {
+        "curDate": "2024-12-24",
+        "sku": "AMKD12D10-G",
+        "productQty": 390,
+        "profit": 925,
+        "orderQty": 743
+      },
+      {
+        "curDate": "2024-12-25",
+        "sku": "AMKD12D10-G",
+        "productQty": 526,
+        "profit": 346,
+        "orderQty": 165
+      },
+      {
+        "curDate": "2024-12-26",
+        "sku": "AMKD12D10-G",
+        "productQty": 451,
+        "profit": 986,
+        "orderQty": 951
+      },
+      {
+        "curDate": "2024-12-27",
+        "sku": "AMKD12D10-G",
+        "productQty": 652,
+        "profit": 7,
+        "orderQty": 459
+      }
+    ],
+    "AMKD12D10-MC": [
+      {
+        "curDate": "2024-12-11",
+        "sku": "AMKD12D10-MC",
+        "productQty": 515,
+        "profit": 821,
+        "orderQty": 231
+      },
+      {
+        "curDate": "2024-12-12",
+        "sku": "AMKD12D10-MC",
+        "productQty": 825,
+        "profit": 48,
+        "orderQty": 197
+      },
+      {
+        "curDate": "2024-12-13",
+        "sku": "AMKD12D10-MC",
+        "productQty": 393,
+        "profit": 388,
+        "orderQty": 396
+      },
+      {
+        "curDate": "2024-12-14",
+        "sku": "AMKD12D10-MC",
+        "productQty": 872,
+        "profit": 90,
+        "orderQty": 307
+      },
+      {
+        "curDate": "2024-12-15",
+        "sku": "AMKD12D10-MC",
+        "productQty": 905,
+        "profit": 108,
+        "orderQty": 864
+      },
+      {
+        "curDate": "2024-12-16",
+        "sku": "AMKD12D10-MC",
+        "productQty": 863,
+        "profit": 640,
+        "orderQty": 843
+      },
+      {
+        "curDate": "2024-12-17",
+        "sku": "AMKD12D10-MC",
+        "productQty": 671,
+        "profit": 849,
+        "orderQty": 175
+      },
+      {
+        "curDate": "2024-12-18",
+        "sku": "AMKD12D10-MC",
+        "productQty": 399,
+        "profit": 29,
+        "orderQty": 508
+      },
+      {
+        "curDate": "2024-12-19",
+        "sku": "AMKD12D10-MC",
+        "productQty": 737,
+        "profit": 472,
+        "orderQty": 922
+      },
+      {
+        "curDate": "2024-12-20",
+        "sku": "AMKD12D10-MC",
+        "productQty": 999,
+        "profit": 259,
+        "orderQty": 532
+      },
+      {
+        "curDate": "2024-12-21",
+        "sku": "AMKD12D10-MC",
+        "productQty": 327,
+        "profit": 394,
+        "orderQty": 855
+      },
+      {
+        "curDate": "2024-12-22",
+        "sku": "AMKD12D10-MC",
+        "productQty": 435,
+        "profit": 252,
+        "orderQty": 830
+      },
+      {
+        "curDate": "2024-12-23",
+        "sku": "AMKD12D10-MC",
+        "productQty": 349,
+        "profit": 433,
+        "orderQty": 850
+      },
+      {
+        "curDate": "2024-12-24",
+        "sku": "AMKD12D10-MC",
+        "productQty": 192,
+        "profit": 831,
+        "orderQty": 116
+      },
+      {
+        "curDate": "2024-12-25",
+        "sku": "AMKD12D10-MC",
+        "productQty": 644,
+        "profit": 371,
+        "orderQty": 456
+      },
+      {
+        "curDate": "2024-12-26",
+        "sku": "AMKD12D10-MC",
+        "productQty": 730,
+        "profit": 138,
+        "orderQty": 427
+      },
+      {
+        "curDate": "2024-12-27",
+        "sku": "AMKD12D10-MC",
+        "productQty": 659,
+        "profit": 839,
+        "orderQty": 462
+      }
+    ],
+    "AMKD12D10-P": [
+      {
+        "curDate": "2024-12-11",
+        "sku": "AMKD12D10-P",
+        "productQty": 399,
+        "profit": 217,
+        "orderQty": 174
+      },
+      {
+        "curDate": "2024-12-12",
+        "sku": "AMKD12D10-P",
+        "productQty": 483,
+        "profit": 759,
+        "orderQty": 55
+      },
+      {
+        "curDate": "2024-12-13",
+        "sku": "AMKD12D10-P",
+        "productQty": 465,
+        "profit": 74,
+        "orderQty": 935
+      },
+      {
+        "curDate": "2024-12-14",
+        "sku": "AMKD12D10-P",
+        "productQty": 600,
+        "profit": 131,
+        "orderQty": 970
+      },
+      {
+        "curDate": "2024-12-15",
+        "sku": "AMKD12D10-P",
+        "productQty": 114,
+        "profit": 464,
+        "orderQty": 978
+      },
+      {
+        "curDate": "2024-12-16",
+        "sku": "AMKD12D10-P",
+        "productQty": 569,
+        "profit": 42,
+        "orderQty": 932
+      },
+      {
+        "curDate": "2024-12-17",
+        "sku": "AMKD12D10-P",
+        "productQty": 965,
+        "profit": 396,
+        "orderQty": 377
+      },
+      {
+        "curDate": "2024-12-18",
+        "sku": "AMKD12D10-P",
+        "productQty": 172,
+        "profit": 373,
+        "orderQty": 610
+      },
+      {
+        "curDate": "2024-12-19",
+        "sku": "AMKD12D10-P",
+        "productQty": 808,
+        "profit": 328,
+        "orderQty": 65
+      },
+      {
+        "curDate": "2024-12-20",
+        "sku": "AMKD12D10-P",
+        "productQty": 873,
+        "profit": 500,
+        "orderQty": 628
+      },
+      {
+        "curDate": "2024-12-21",
+        "sku": "AMKD12D10-P",
+        "productQty": 354,
+        "profit": 49,
+        "orderQty": 760
+      },
+      {
+        "curDate": "2024-12-22",
+        "sku": "AMKD12D10-P",
+        "productQty": 928,
+        "profit": 194,
+        "orderQty": 967
+      },
+      {
+        "curDate": "2024-12-23",
+        "sku": "AMKD12D10-P",
+        "productQty": 578,
+        "profit": 149,
+        "orderQty": 557
+      },
+      {
+        "curDate": "2024-12-24",
+        "sku": "AMKD12D10-P",
+        "productQty": 422,
+        "profit": 515,
+        "orderQty": 553
+      },
+      {
+        "curDate": "2024-12-25",
+        "sku": "AMKD12D10-P",
+        "productQty": 758,
+        "profit": 497,
+        "orderQty": 79
+      },
+      {
+        "curDate": "2024-12-26",
+        "sku": "AMKD12D10-P",
+        "productQty": 782,
+        "profit": 163,
+        "orderQty": 865
+      },
+      {
+        "curDate": "2024-12-27",
+        "sku": "AMKD12D10-P",
+        "productQty": 151,
+        "profit": 621,
+        "orderQty": 295
+      }
+    ],
+    "AMKD12D10-R": [
+      {
+        "curDate": "2024-12-11",
+        "sku": "AMKD12D10-R",
+        "productQty": 452,
+        "profit": 7,
+        "orderQty": 242
+      },
+      {
+        "curDate": "2024-12-12",
+        "sku": "AMKD12D10-R",
+        "productQty": 742,
+        "profit": 15,
+        "orderQty": 550
+      },
+      {
+        "curDate": "2024-12-13",
+        "sku": "AMKD12D10-R",
+        "productQty": 319,
+        "profit": 568,
+        "orderQty": 115
+      },
+      {
+        "curDate": "2024-12-14",
+        "sku": "AMKD12D10-R",
+        "productQty": 556,
+        "profit": 510,
+        "orderQty": 444
+      },
+      {
+        "curDate": "2024-12-15",
+        "sku": "AMKD12D10-R",
+        "productQty": 194,
+        "profit": 81,
+        "orderQty": 547
+      },
+      {
+        "curDate": "2024-12-16",
+        "sku": "AMKD12D10-R",
+        "productQty": 162,
+        "profit": 909,
+        "orderQty": 976
+      },
+      {
+        "curDate": "2024-12-17",
+        "sku": "AMKD12D10-R",
+        "productQty": 221,
+        "profit": 370,
+        "orderQty": 293
+      },
+      {
+        "curDate": "2024-12-18",
+        "sku": "AMKD12D10-R",
+        "productQty": 3,
+        "profit": 989,
+        "orderQty": 440
+      },
+      {
+        "curDate": "2024-12-19",
+        "sku": "AMKD12D10-R",
+        "productQty": 411,
+        "profit": 14,
+        "orderQty": 104
+      },
+      {
+        "curDate": "2024-12-20",
+        "sku": "AMKD12D10-R",
+        "productQty": 530,
+        "profit": 939,
+        "orderQty": 603
+      },
+      {
+        "curDate": "2024-12-21",
+        "sku": "AMKD12D10-R",
+        "productQty": 924,
+        "profit": 865,
+        "orderQty": 435
+      },
+      {
+        "curDate": "2024-12-22",
+        "sku": "AMKD12D10-R",
+        "productQty": 437,
+        "profit": 174,
+        "orderQty": 372
+      },
+      {
+        "curDate": "2024-12-23",
+        "sku": "AMKD12D10-R",
+        "productQty": 367,
+        "profit": 145,
+        "orderQty": 671
+      },
+      {
+        "curDate": "2024-12-24",
+        "sku": "AMKD12D10-R",
+        "productQty": 438,
+        "profit": 429,
+        "orderQty": 973
+      },
+      {
+        "curDate": "2024-12-25",
+        "sku": "AMKD12D10-R",
+        "productQty": 970,
+        "profit": 480,
+        "orderQty": 708
+      },
+      {
+        "curDate": "2024-12-26",
+        "sku": "AMKD12D10-R",
+        "productQty": 843,
+        "profit": 147,
+        "orderQty": 284
+      },
+      {
+        "curDate": "2024-12-27",
+        "sku": "AMKD12D10-R",
+        "productQty": 87,
+        "profit": 40,
+        "orderQty": 917
+      }
+    ],
+    "AMKD12D10-PU": [
+      {
+        "curDate": "2024-12-11",
+        "sku": "AMKD12D10-PU",
+        "productQty": 959,
+        "profit": 301,
+        "orderQty": 726
+      },
+      {
+        "curDate": "2024-12-12",
+        "sku": "AMKD12D10-PU",
+        "productQty": 534,
+        "profit": 417,
+        "orderQty": 579
+      },
+      {
+        "curDate": "2024-12-13",
+        "sku": "AMKD12D10-PU",
+        "productQty": 282,
+        "profit": 353,
+        "orderQty": 457
+      },
+      {
+        "curDate": "2024-12-14",
+        "sku": "AMKD12D10-PU",
+        "productQty": 911,
+        "profit": 202,
+        "orderQty": 323
+      },
+      {
+        "curDate": "2024-12-15",
+        "sku": "AMKD12D10-PU",
+        "productQty": 983,
+        "profit": 430,
+        "orderQty": 319
+      },
+      {
+        "curDate": "2024-12-16",
+        "sku": "AMKD12D10-PU",
+        "productQty": 121,
+        "profit": 947,
+        "orderQty": 863
+      },
+      {
+        "curDate": "2024-12-17",
+        "sku": "AMKD12D10-PU",
+        "productQty": 355,
+        "profit": 410,
+        "orderQty": 532
+      },
+      {
+        "curDate": "2024-12-18",
+        "sku": "AMKD12D10-PU",
+        "productQty": 847,
+        "profit": 362,
+        "orderQty": 321
+      },
+      {
+        "curDate": "2024-12-19",
+        "sku": "AMKD12D10-PU",
+        "productQty": 773,
+        "profit": 940,
+        "orderQty": 6
+      },
+      {
+        "curDate": "2024-12-20",
+        "sku": "AMKD12D10-PU",
+        "productQty": 303,
+        "profit": 302,
+        "orderQty": 115
+      },
+      {
+        "curDate": "2024-12-21",
+        "sku": "AMKD12D10-PU",
+        "productQty": 534,
+        "profit": 562,
+        "orderQty": 650
+      },
+      {
+        "curDate": "2024-12-22",
+        "sku": "AMKD12D10-PU",
+        "productQty": 221,
+        "profit": 494,
+        "orderQty": 872
+      },
+      {
+        "curDate": "2024-12-23",
+        "sku": "AMKD12D10-PU",
+        "productQty": 242,
+        "profit": 899,
+        "orderQty": 960
+      },
+      {
+        "curDate": "2024-12-24",
+        "sku": "AMKD12D10-PU",
+        "productQty": 364,
+        "profit": 216,
+        "orderQty": 433
+      },
+      {
+        "curDate": "2024-12-25",
+        "sku": "AMKD12D10-PU",
+        "productQty": 996,
+        "profit": 764,
+        "orderQty": 558
+      },
+      {
+        "curDate": "2024-12-26",
+        "sku": "AMKD12D10-PU",
+        "productQty": 107,
+        "profit": 721,
+        "orderQty": 108
+      },
+      {
+        "curDate": "2024-12-27",
+        "sku": "AMKD12D10-PU",
+        "productQty": 166,
+        "profit": 257,
+        "orderQty": 429
+      }
+    ]
+  }
+}

@@ -1,0 +1,75 @@
+/* 基础样式重置 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background-color: #f5f7fa;
+  color: #333;
+}
+
+/* 容器样式 */
+.container {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  overflow-x: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 标签页样式 */
+.tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.tab {
+  padding: 8px 16px;
+  border: none;
+  background: #f5f7fa;
+  color: #666;
+  cursor: pointer;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.tab:hover {
+  background: #e6f7ff;
+  color: #1890ff;
+}
+
+.tab.active {
+  background: #1890ff;
+  color: white;
+  box-shadow: 0 2px 8px rgba(24, 144, 255, 0.2);
+}
+
+/* 图表容器样式 */
+.chart-container {
+  width: 1000px;
+  height: 500px;
+  border-radius: 8px;
+  background: #fff;
+  padding: 20px;
+  transition: all 0.3s ease;
+  min-width: 800px;
+  flex: 1;
+}
+
+.chart-container.active {
+  display: block;
+  animation: fadeIn 0.3s ease;
+}

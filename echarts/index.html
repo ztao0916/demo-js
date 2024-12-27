@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>销量趋势图表</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="tabs">
+      <button class="tab active">父SKU销量趋势</button>
+    </div>
+    <div id="parentChart" class="chart-container active"></div>
+  </div>
+
+  <!-- 先加载 ECharts -->
+  <script src="./echarts.min.js"></script>
+  <!-- 再加载业务代码 -->
+  <script src="./chart.js"></script>
+</body>
+
+</html>
