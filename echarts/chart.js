@@ -3,6 +3,9 @@ let parentChart, childChart, stockChart, inStockChart, outStockChart;
 let timeAxisData = [];
 let chartData = null;  // 存储获取到的数据
 
+// 添加一个标志位来防止循环触发
+let isZooming = false;
+
 // 获取数据
 async function fetchChartData() {
     if (chartData) return chartData;  // 如果已有数据，直接返回
@@ -18,6 +21,51 @@ async function fetchChartData() {
     }
 }
 
+// 修改同步函数
+function syncDataZoom(startValue, endValue) {
+    if (isZooming) return;  // 如果正在缩放，直接返回
+    
+    isZooming = true;  // 设置标志位
+    
+    const charts = {
+        parent: parentChart,
+        child: childChart,
+        stock: stockChart,
+        inStock: inStockChart,
+        outStock: outStockChart
+    };
+
+    // 遍历所有图表实例
+    Object.entries(charts).forEach(([type, chart]) => {
+        if (chart && type !== this.id) {  // 跳过触发事件的图表
+            chart.dispatchAction({
+                type: 'dataZoom',
+                start: startValue,
+                end: endValue
+            });
+        }
+    });
+    
+    // 重置标志位
+    setTimeout(() => {
+        isZooming = false;
+    }, 0);
+}
+
+// 修改事件监听函数
+function addDataZoomListener(chart, chartId) {
+    chart.on('datazoom', function(params) {
+        if (isZooming) return;  // 如果正在缩放，直接返回
+        
+        // 获取当前的缩放范围
+        const option = chart.getOption();
+        const dataZoom = option.dataZoom[0];
+        
+        // 同步其他图表的缩放
+        syncDataZoom.call({ id: chartId }, dataZoom.start, dataZoom.end);
+    });
+}
+
 // 等待 DOM 加载完成后初始化
 window.addEventListener('DOMContentLoaded', async function() {
     // 初始化所有图表实例
@@ -26,6 +74,13 @@ window.addEventListener('DOMContentLoaded', async function() {
     stockChart = echarts.init(document.getElementById('stockChart'));
     inStockChart = echarts.init(document.getElementById('inStockChart'));
     outStockChart = echarts.init(document.getElementById('outStockChart'));
+    
+    // 为每个图表添加 dataZoom 事件监听
+    addDataZoomListener(parentChart, 'parent');
+    addDataZoomListener(childChart, 'child');
+    addDataZoomListener(stockChart, 'stock');
+    addDataZoomListener(inStockChart, 'inStock');
+    addDataZoomListener(outStockChart, 'outStock');
     
     // 获取数据并渲染所有图表
     const data = await fetchChartData();
