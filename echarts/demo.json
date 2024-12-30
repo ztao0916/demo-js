@@ -3590,13 +3590,13 @@
   },
   "sskuNotSaleMap": {
     "AMKD12D10-XB": {
-      "isSale": 206,
+      "isSale": false,
       "notSaleReason": "\u4ea7\u54c1\u9500\u91cf\u5dee",
       "sku": "AMKD12D10-XB"
     },
     "AMKD12D10-L": {
-      "isSale": 854,
-      "notSaleReason": "\u4ea7\u54c1\u9500\u91cf\u5dee",
+      "isSale": false,
+      "notSaleReason": "不知道为啥禁售了",
       "notSaleTime": "2024-12-18",
       "sku": "AMKD12D10-L"
     },
@@ -3606,7 +3606,7 @@
       "sku": "AMKD12D10-O"
     },
     "AMKD12D10-G": {
-      "isSale": 538,
+      "isSale": false,
       "notSaleReason": "\u4ea7\u54c1\u9500\u91cf\u5dee",
       "sku": "AMKD12D10-G"
     },

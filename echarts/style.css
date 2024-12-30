@@ -59,17 +59,42 @@ body {
 
 /* 图表容器样式 */
 .chart-container {
-  width: 1000px;
-  height: 500px;
+  width: 100%;
+  height: 500px !important;
   border-radius: 8px;
   background: #fff;
   padding: 20px;
   transition: all 0.3s ease;
   min-width: 800px;
-  flex: 1;
+  display: none;
+  /* 默认隐藏所有图表 */
 }
 
 .chart-container.active {
   display: block;
-  animation: fadeIn 0.3s ease;
+  /* 只显示激活的图表 */
+}
+
+/* SKU选择器样式 */
+.sku-selector {
+  display: none;
+  margin-bottom: 20px;
+  padding: 0 20px;
+}
+
+.sku-selector.active {
+  display: block;
+}
+
+.sku-selector select {
+  width: 200px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  outline: none;
+  font-size: 14px;
+}
+
+.sku-selector select:hover {
+  border-color: #1890ff;
 }
