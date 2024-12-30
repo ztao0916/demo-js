@@ -20,16 +20,47 @@ async function fetchChartData() {
 
 // 等待 DOM 加载完成后初始化
 window.addEventListener('DOMContentLoaded', async function() {
-    // 初始化父SKU图表实例
+    // 初始化所有图表实例
     parentChart = echarts.init(document.getElementById('parentChart'));
-    // 初始化子SKU图表实例
     childChart = echarts.init(document.getElementById('childChart'));
     stockChart = echarts.init(document.getElementById('stockChart'));
     inStockChart = echarts.init(document.getElementById('inStockChart'));
     outStockChart = echarts.init(document.getElementById('outStockChart'));
     
-    // 获取数据并渲染父SKU图表
-    await initParentSKUChart();
+    // 获取数据并渲染所有图表
+    const data = await fetchChartData();
+    if (!data) return;
+
+    // 渲染父SKU图表
+    renderLineChart({
+        timeData: timeAxisData,
+        seriesData: data.pskuSaleTrendList
+    });
+
+    // 渲染子SKU图表
+    const firstChildSKU = Object.keys(data.sskuSaleTrendMap)[0];
+    if (firstChildSKU) {
+        initSKUSelector(Object.keys(data.sskuSaleTrendMap));
+        renderSKUData(firstChildSKU);
+    }
+
+    // 渲染出入库趋势图
+    const firstStockSKU = Object.keys(data.stockTrendMap)[0];
+    if (firstStockSKU) {
+        renderStockData(firstStockSKU);
+    }
+
+    // 渲染入库明细图
+    const firstInStockSKU = Object.keys(data.inStockDetailMap)[0];
+    if (firstInStockSKU) {
+        renderInStockData(firstInStockSKU);
+    }
+
+    // 渲染出库明细图
+    const firstOutStockSKU = Object.keys(data.outStockDetailMap)[0];
+    if (firstOutStockSKU) {
+        renderOutStockData(firstOutStockSKU);
+    }
 });
 
 // tab切换处理
@@ -52,19 +83,6 @@ function switchTab(type) {
     // 显示/隐藏SKU选择器
     const skuSelector = document.getElementById('skuSelector');
     skuSelector.style.display = (type === 'child' || type === 'stock' || type === 'inStock' || type === 'outStock') ? 'block' : 'none';
-
-    // 重新渲染对应图表
-    if (type === 'child') {
-        initChildSKUChart();
-    } else if (type === 'stock') {
-        initStockTrendChart();
-    } else if (type === 'inStock') {
-        initInStockDetailChart();
-    } else if (type === 'outStock') {
-        initOutStockDetailChart();
-    } else {
-        initParentSKUChart();
-    }
 
     // 触发resize以确保图表正确渲染
     const charts = { 
@@ -216,9 +234,20 @@ async function initChildSKUChart() {
 // 初始化SKU选择器
 function initSKUSelector(skuList) {
     const select = document.querySelector('#skuSelector select');
+    const currentValue = select.value;  // 保存当前选中的值
+    
+    // 如果当前没有选中值，但其他 tab 有选中值，则使用其他 tab 的选中值
+    const otherSelects = document.querySelectorAll('#skuSelector select');
+    const selectedValue = Array.from(otherSelects).find(s => s.value)?.value || currentValue;
+    
     select.innerHTML = skuList.map(sku => 
-        `<option value="${sku}">${sku}</option>`
+        `<option value="${sku}" ${sku === selectedValue ? 'selected' : ''}>${sku}</option>`
     ).join('');
+    
+    // 如果当前值不在新的选项中，触发 change 事件以更新图表
+    if (selectedValue && !skuList.includes(selectedValue)) {
+        select.dispatchEvent(new Event('change'));
+    }
 }
 
 // 切换SKU
@@ -226,17 +255,39 @@ async function switchSKU(sku) {
     const data = await fetchChartData();
     if (!data) return;
     
-    // 根据当前激活的tab决定渲染哪种图表
-    const activeTab = document.querySelector('.tab.active').textContent;
-    if (activeTab === '子SKU销量趋势') {
-        renderSKUData(sku);
-    } else if (activeTab === '出入库趋势') {
-        renderStockData(sku);
-    } else if (activeTab === '入库明细') {
-        renderInStockData(sku);
-    } else if (activeTab === '出库明细') {
-        renderOutStockData(sku);
-    }
+    // 同步所有 tab 的选择器并更新对应图表
+    const tabs = {
+        'child': {
+            map: data.sskuSaleTrendMap,
+            render: renderSKUData
+        },
+        'stock': {
+            map: data.stockTrendMap,
+            render: renderStockData
+        },
+        'inStock': {
+            map: data.inStockDetailMap,
+            render: renderInStockData
+        },
+        'outStock': {
+            map: data.outStockDetailMap,
+            render: renderOutStockData
+        }
+    };
+
+    // 遍历所有 tab
+    Object.entries(tabs).forEach(([tabType, { map, render }]) => {
+        // 如果该 SKU 在当前 tab 的数据中存在
+        if (map && map[sku]) {
+            // 更新选择器
+            const select = document.querySelector('#skuSelector select');
+            if (select && select.querySelector(`option[value="${sku}"]`)) {
+                select.value = sku;
+            }
+            // 更新图表
+            render(sku);
+        }
+    });
 }
 
 // 渲染指定SKU的数据
@@ -282,41 +333,20 @@ function renderChildLineChart({ timeData, seriesData, sku }) {
             trigger: 'axis',
             axisPointer: {
                 type: 'cross'
-            },
-            formatter: function(params) {
-                let result = `${params[0].axisValue}<br/>`;
-                
-                // 先检查是否是禁售时间点
-                if (notSaleInfo && notSaleInfo.notSaleTime === params[0].axisValue) {
-                    result += [
-                        `<span style="color: #ff4d4f">⚠ 禁售信息</span>`,
-                        `禁售原因: ${notSaleInfo.notSaleReason}`,
-                        `禁售时间: ${notSaleInfo.notSaleTime}`,
-                        `<br/>`  // 添加一个空行分隔
-                    ].join('<br/>');
-                }
-
-                // 添加常规数据点的提示
-                params.forEach(param => {
-                    if (param.seriesName) {  // 只处理数据系列
-                        const profit = param.seriesName === '商品数' ? 
-                            `利润: ${seriesData[param.dataIndex].profit}元` : '';
-                        result += `${param.marker}${param.seriesName}: ${param.value}${profit ? '<br/>' + profit : ''}<br/>`;
-                    }
-                });
-                return result;
             }
         },
         legend: {
             orient: 'vertical',
             right: '2%',
             top: 'middle',
-            data: ['商品数', '订单数']
+            data: ['商品数', '订单数', '利润'],
+            padding: [10, 50, 10, 10]
         },
         grid: {
             left: '3%',
-            right: '12%',
+            right: '20%',
             bottom: '15%',
+            top: '10%',
             containLabel: true
         },
         xAxis: {
@@ -329,16 +359,36 @@ function renderChildLineChart({ timeData, seriesData, sku }) {
                 }
             }
         },
-        yAxis: {
-            type: 'value',
-            name: '数量',
-            axisLine: {
-                show: true,
-                lineStyle: {
-                    color: '#333'
+        yAxis: [
+            {
+                type: 'value',
+                name: '数量',
+                position: 'left',
+                axisLine: {
+                    show: true,
+                    lineStyle: {
+                        color: '#5470C6'
+                    }
+                },
+                axisLabel: {
+                    formatter: '{value}'
+                }
+            },
+            {
+                type: 'value',
+                name: '利润',
+                position: 'right',
+                axisLine: {
+                    show: true,
+                    lineStyle: {
+                        color: '#91CC75'
+                    }
+                },
+                axisLabel: {
+                    formatter: '{value} 元'
                 }
             }
-        },
+        ],
         series: [
             {
                 name: '商品数',
@@ -367,6 +417,19 @@ function renderChildLineChart({ timeData, seriesData, sku }) {
                 name: '订单数',
                 type: 'line',
                 data: seriesData.map(item => item.orderQty),
+                smooth: true,
+                symbol: 'circle',
+                symbolSize: 8,
+                lineStyle: {
+                    width: 2,
+                    color: '#FAC858'
+                }
+            },
+            {
+                name: '利润',
+                type: 'line',
+                yAxisIndex: 1,  // 使用第二个y轴
+                data: seriesData.map(item => Number(item.profit)),
                 smooth: true,
                 symbol: 'circle',
                 symbolSize: 8,
@@ -649,20 +712,25 @@ function renderInStockDetailChart({ timeData, seriesData, sku }) {
                     if (param.seriesName) {
                         result += `${param.marker}${param.seriesName}: ${param.value}<br/>`;
                         
-                        // 如果是其他入库数，且当前时间点有明细数据，则显示明细
-                        if (param.seriesName === '其他入库数') {
+                        // 如果是其他入库，且当前时间点有明细数据，则显示明细
+                        if (param.seriesName === '其他入库') {
                             const currentData = seriesData[param.dataIndex];
-                            if (currentData.details && currentData.details.length > 0) {
-                                result += '<div style="margin-left: 20px; margin-top: 5px;">';
-                                result += '入库明细:<br/>';
+                            if (currentData && currentData.details && currentData.details.length > 0) {
+                                result += '<div style="margin: 10px 0;">';
+                                result += '<table style="width: 100%; border-collapse: collapse; color: #666;">';
+                                result += '<tr style="border-bottom: 1px solid #ccc; color: #333;">';
+                                result += '<th style="padding: 4px 8px; text-align: left;">类型</th>';
+                                result += '<th style="padding: 4px 8px; text-align: left;">数量</th>';
+                                result += '<th style="padding: 4px 8px; text-align: left;">审核人</th>';
+                                result += '</tr>';
                                 currentData.details.forEach(detail => {
-                                    result += [
-                                        `<br />类型: ${detail.stockType}`,
-                                        `数量: ${detail.num}`,
-                                        `审核人: ${detail.auditor}`,
-                                        '---'
-                                    ].join('<br/>');
+                                    result += '<tr style="border-bottom: 1px solid #eee;">';
+                                    result += `<td style="padding: 4px 8px;">${detail.stockType || '-'}</td>`;
+                                    result += `<td style="padding: 4px 8px;">${detail.num || 0}</td>`;
+                                    result += `<td style="padding: 4px 8px;">${detail.auditor || '-'}</td>`;
+                                    result += '</tr>';
                                 });
+                                result += '</table>';
                                 result += '</div>';
                             }
                         }
@@ -675,12 +743,14 @@ function renderInStockDetailChart({ timeData, seriesData, sku }) {
             orient: 'vertical',
             right: '2%',
             top: 'middle',
-            data: ['采购入库数', '其他入库数', '调拨入库数']
+            data: ['采购入库', '其他入库', '调拨入库'],
+            padding: [10, 50, 10, 10]  // 增加右侧内边距
         },
         grid: {
             left: '3%',
-            right: '12%',
+            right: '20%',  // 增加右侧留白
             bottom: '15%',
+            top: '10%',    // 增加顶部留白
             containLabel: true
         },
         xAxis: {
@@ -705,7 +775,7 @@ function renderInStockDetailChart({ timeData, seriesData, sku }) {
         },
         series: [
             {
-                name: '采购入库数',
+                name: '采购入库',
                 type: 'line',
                 data: seriesData.map(item => item.purchaseInStockQty),
                 smooth: true,
@@ -728,7 +798,7 @@ function renderInStockDetailChart({ timeData, seriesData, sku }) {
                 }
             },
             {
-                name: '其他入库数',
+                name: '其他入库',
                 type: 'line',
                 data: seriesData.map(item => item.otherInStockQty),
                 smooth: true,
@@ -740,7 +810,7 @@ function renderInStockDetailChart({ timeData, seriesData, sku }) {
                 }
             },
             {
-                name: '调拨入库数',
+                name: '调拨入库',
                 type: 'line',
                 data: seriesData.map(item => item.tranOrderInQty),
                 smooth: true,
@@ -849,17 +919,22 @@ function renderOutStockDetailChart({ timeData, seriesData, sku }) {
                         // 如果是其他出库，且当前时间点有明细数据，则显示明细
                         if (param.seriesName === '其他出库') {
                             const currentData = seriesData[param.dataIndex];
-                            if (currentData.details && currentData.details.length > 0) {
-                                result += '<div style="margin-left: 20px; margin-top: 5px;">';
-                                result += '出库明细:<br/>';
+                            if (currentData && currentData.details && currentData.details.length > 0) {
+                                result += '<div style="margin: 10px 0;">';
+                                result += '<table style="width: 100%; border-collapse: collapse; color: #666;">';
+                                result += '<tr style="border-bottom: 1px solid #ccc; color: #333;">';
+                                result += '<th style="padding: 4px 8px; text-align: left;">类型</th>';
+                                result += '<th style="padding: 4px 8px; text-align: left;">数量</th>';
+                                result += '<th style="padding: 4px 8px; text-align: left;">审核人</th>';
+                                result += '</tr>';
                                 currentData.details.forEach(detail => {
-                                    result += [
-                                        `<br />类型: ${detail.stockType}`,
-                                        `数量: ${detail.num}`,
-                                        `审核人: ${detail.auditor}`,
-                                        '---'
-                                    ].join('<br/>');
+                                    result += '<tr style="border-bottom: 1px solid #eee;">';
+                                    result += `<td style="padding: 4px 8px;">${detail.stockType || '-'}</td>`;
+                                    result += `<td style="padding: 4px 8px;">${detail.num || 0}</td>`;
+                                    result += `<td style="padding: 4px 8px;">${detail.auditor || '-'}</td>`;
+                                    result += '</tr>';
                                 });
+                                result += '</table>';
                                 result += '</div>';
                             }
                         }
