@@ -13,12 +13,18 @@
     <div class="tabs">
       <button class="tab active" onclick="switchTab('parent')">父SKU销量趋势</button>
       <button class="tab" onclick="switchTab('child')">子SKU销量趋势</button>
+      <button class="tab" onclick="switchTab('stock')">出入库趋势</button>
+      <button class="tab" onclick="switchTab('inStock')">入库明细</button>
+      <button class="tab" onclick="switchTab('outStock')">出库明细</button>
     </div>
     <div id="skuSelector" class="sku-selector">
       <select onchange="switchSKU(this.value)"></select>
     </div>
     <div id="parentChart" class="chart-container active"></div>
     <div id="childChart" class="chart-container"></div>
+    <div id="stockChart" class="chart-container"></div>
+    <div id="inStockChart" class="chart-container"></div>
+    <div id="outStockChart" class="chart-container"></div>
   </div>
 
   <!-- 先加载 ECharts -->

@@ -976,7 +976,35 @@
         "sku": "AMKD12D10-XB",
         "purchaseInStockQty": 419,
         "otherInStockQty": 691,
-        "details": [],
+        "details": [
+          {
+            "curDate": "2024-11-20",
+            "sku": "WYT112A75-1",
+            "stockType": "清库存调整单价入库",
+            "num": 1,
+            "auditorId": -1,
+            "auditor": "system",
+            "bizNo": "RQD2024112000005"
+          },
+          {
+            "curDate": "2024-11-21",
+            "sku": "WYT112A75-2",
+            "stockType": "采购入库",
+            "num": 2,
+            "auditorId": 1001,
+            "auditor": "张三",
+            "bizNo": "CG2024112100001"
+          },
+          {
+            "curDate": "2024-11-22",
+            "sku": "WYT112A75-3",
+            "stockType": "调拨入库",
+            "num": 3,
+            "auditorId": 1002,
+            "auditor": "李四",
+            "bizNo": "DB2024112200002"
+          }
+        ],
         "tranOrderInQty": 268
       },
       {
@@ -2084,7 +2112,35 @@
         "shipmentOutStockQty": 331,
         "tranOrderOutQty": 310,
         "otherOutStockQty": 456,
-        "details": [],
+        "details": [
+          {
+            "curDate": "2024-11-20",
+            "sku": "WYT112A75-1",
+            "stockType": "清库存调整单价入库",
+            "num": 1,
+            "auditorId": -1,
+            "auditor": "system",
+            "bizNo": "RQD2024112000005"
+          },
+          {
+            "curDate": "2024-11-21",
+            "sku": "WYT112A75-2",
+            "stockType": "采购入库",
+            "num": 2,
+            "auditorId": 1001,
+            "auditor": "张三",
+            "bizNo": "CG2024112100001"
+          },
+          {
+            "curDate": "2024-11-22",
+            "sku": "WYT112A75-3",
+            "stockType": "调拨入库",
+            "num": 3,
+            "auditorId": 1002,
+            "auditor": "李四",
+            "bizNo": "DB2024112200002"
+          }
+        ],
         "purOrderBackOutQty": 322,
         "prodComOutQty": 308
       },

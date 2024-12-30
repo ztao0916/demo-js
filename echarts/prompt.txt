@@ -1,0 +1,9 @@
+
+举例demo
+
+新增出库明细tab,数据是demo.json中的outStockDetailMap,里面每个SKU都有对应的数据结构,需要渲染成折线图,要求如下:
+1. x轴是时间轴,数据是timeAxisData
+2. y轴只有一个数量,每个sku要渲染 6 条折线,分别是直邮订单出库 currentStock,货件计划出库 totalInStockQty,调拨出库 totalOutStockQty,其他出库 currentStock,采购退回出库 totalInStockQty,组合品生产出库 totalOutStockQty
+3. 需要添加禁售子SKU竖线,数据取demo.json中的sskuNotSaleMap,如果sku一致,并且存在禁售时间notSaleTime,那么就在禁售时间那天渲染竖线,悬浮展示禁售原因notSaleReason和禁售时间
+4. 需要展示所有的sku折线图,可以通过点击切换其他的sku折线图,一次只允许展示一个SKU的折线图,一个SKU包括直邮订单出库,货件计划出库,调拨出库,其他出库 ,采购退回出库,组合品生产出库 6 条折线
+5. 如果details存在且不为空数组,那么悬浮在其他出库折线上的时候,需要展示入库类型stockType,数量num,审核人auditor
