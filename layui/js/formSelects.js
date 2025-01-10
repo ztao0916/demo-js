@@ -56,6 +56,9 @@
         ALL_PEOPLE = 'xm-select-allpeople',
         CZ = 'xm-cz',
         CZ_GROUP = 'xm-cz-group',
+        PAGE = 'xm-select-page',
+        PAGE_SIZE = 'xm-select-page-size',
+        CURRENT_PAGE = 'xm-select-current-page',
         TIPS = '请选择',
         data = {},
         events = {
@@ -187,6 +190,9 @@
                 isCreate: false,
                 placeholder: TIPS,
                 clearInput: false,
+                page: false, // 默认不分页
+                pageSize: 10, // 每页显示的条数
+                currentPage: 1, // 当前页码
             };
             this.select = null;
             this.values = [];
@@ -280,7 +286,10 @@
                     layverType: othis.attr('lay-verType'),
                     searchType: othis.attr(SEARCH_TYPE) == 'dl' ? 1 : 0,
                     showCount: othis.attr(SHOW_COUNT) - 0,
-                    allPeople: othis.attr(ALL_PEOPLE)
+                    allPeople: othis.attr(ALL_PEOPLE),
+                    page: othis.attr(PAGE),
+                    pageSize: othis.attr(PAGE_SIZE),
+                    currentPage: othis.attr(CURRENT_PAGE)
                 },
                 value = othis.find('option[selected]').toArray().map((option) => { //获取已选中的数据
                     return {
@@ -289,6 +298,7 @@
                     }
                 }),
                 fs = new FormSelects(options);
+                console.log('fs :>>>', fs);
 
             fs.values = value;
 
@@ -497,6 +507,7 @@
     }
 
     Common.prototype.renderData = function(id, dataArr, linkage, linkageWidth, isSearch, isReplace) {
+      console.log('config :>>>', data[id].config);
         if (linkage) { //渲染多级联动
             this.renderLinkage(id, dataArr, linkageWidth);
             return;
@@ -1731,6 +1742,9 @@
                 ajaxs[id] = $.extend(true, {}, ajaxs[id] || ajax, config), !common.check(id) && this.render(id),
                 data[id] && config.direction && (data[id].config.direction = config.direction),
                 data[id] && config.clearInput && (data[id].config.clearInput = true),
+                config.page && (data[id].config.page = true),
+                config.pageSize && (data[id].config.pageSize = config.pageSize),
+                config.currentPage && (data[id].config.currentPage = config.currentPage),
                 config.searchUrl && data[id] && common.triggerSearch($(`.${PNAME} dl[xid="${id}"]`).parents(`.${FORM_SELECT}`), true)
             ) : (
                 $.extend(true, ajax, config),
@@ -1772,6 +1786,9 @@
             closed: options.closed,
             template: options.template,
             clearInput: options.clearInput,
+            page: options.page,
+            pageSize: options.pageSize,
+            currentPage: options.currentPage
         } : {};
 
         options && options.searchType != undefined && (config.searchType = options.searchType == 'dl' ? 1 : 0);
