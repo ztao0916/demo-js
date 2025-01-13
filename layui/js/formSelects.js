@@ -199,7 +199,7 @@
         placeholder: TIPS,
         clearInput: false,
         page: false, // 默认不分页
-        pageSize: 10, // 每页显示的条数
+        pageSize: 1000, // 每页显示的条数
         currentPage: 1 // 当前页码
       }
       this.select = null
@@ -661,6 +661,9 @@
     isReplace
   ) {
     console.log('config :>>>', data[id].config)
+    if (!dataArr) {
+      dataArr = []
+    }
     if (linkage) {
       //渲染多级联动
       this.renderLinkage(id, dataArr, linkageWidth)
@@ -676,6 +679,22 @@
       .siblings('select')
     let ajaxConfig = ajaxs[id] ? ajaxs[id] : ajax
     let pcInput = reElem.find(`.${TDIV} input`)
+
+    // 确保 data[id] 存在
+    if (!data[id]) {
+      data[id] = {
+        config: {
+          isEmpty: false,
+          page: false,
+          pageSize: 10,
+          currentPage: 1
+        },
+        values: []
+      }
+    }
+
+    // 保存完整数据到config中
+    data[id].config.data = dataArr
 
     dataArr = this.exchangeData(id, dataArr)
     let values = []
@@ -870,8 +889,8 @@
     let childrenName = ajaxConfig['keyChildren']
     let disabledName = ajaxConfig['keyDis']
     // 确保 db[id] 和 arr 存在且是数组
-    // db[id] = db[id] || {}
-    // arr = Array.isArray(arr) ? arr : []
+    db[id] = db[id] || {}
+    arr = Array.isArray(arr) ? arr : []
     let result = this.getChildrenList(
       arr,
       childrenName,
@@ -889,10 +908,17 @@
     pid,
     disabled
   ) {
-    let result = [],
-      offset = 0
+    // 确保参数合法
+    if (!Array.isArray(arr)) {
+      return []
+    }
+
+    pid = pid || []
+    let result = []
+    let offset = 0
     for (let a = 0; a < arr.length; a++) {
       let item = arr[a]
+      if (!item) continue // 跳过空项
       if (item.type && item.type == 'optgroup') {
         result.push(item)
         continue
@@ -1425,18 +1451,68 @@
         this.handlerLabel(id, dd, !dd.hasClass(THIS))
         return false
       })
-    // 添加分页点击事件
+    // 修改分页点击事件处理
     $(target ? target : document)
       .off('click', `.${PAGE} span`)
       .on('click', `.${PAGE} span`, e => {
+        e.stopPropagation() // 阻止事件冒泡
         let $this = $(e.target)
+        // 如果点击的是页码信息span，直接返回
+        if ($this.hasClass('page-info')) {
+          return false
+        }
+
         let page = $this.data('page')
         let id = $this.parents('dl').attr('xid')
+        let fs = data[id]
 
-        if (id && page) {
-          data[id].config.currentPage = page
-          this.renderData(id, data[id].data)
+        if (!id || !fs || !page) {
+          return false
         }
+
+        // 更新当前页码
+        fs.config.currentPage = parseInt(page)
+        // 重新渲染数据
+        let renderData = fs.config.data || []
+        let start = (page - 1) * fs.config.pageSize
+        let end = start + fs.config.pageSize
+        let pageData = renderData.slice(start, end)
+
+        // 只更新选项列表部分
+        let dl = $(`dl[xid="${id}"]`)
+        let ajaxConfig = ajaxs[id] ? ajaxs[id] : ajax
+
+        // 渲染新的选项
+        let html = pageData
+          .map(item => {
+            return this.createDD(id, {
+              name: item[ajaxConfig.keyName],
+              value: item[ajaxConfig.keyVal],
+              disabled: item[ajaxConfig.keyDis],
+              type: item.type,
+              innerHTML: item[ajaxConfig.keyName]
+            })
+          })
+          .join('')
+        // 更新分页
+        let totalPages = Math.ceil(renderData.length / fs.config.pageSize)
+        html += this.renderPagination(id, page, totalPages)
+
+        // 更新内容
+        dl.find(`dd:not(.${FORM_SELECT_TIPS})`).remove()
+        dl.find(`.${PAGE}`).remove()
+        dl.append(html)
+
+        // 恢复已选中状态
+        if (fs.values && Array.isArray(fs.values)) {
+          fs.values.forEach(val => {
+            if (val && val.value) {
+              dl.find(`dd[lay-value="${val.value}"]`).addClass(THIS)
+            }
+          })
+        }
+
+        return false // 阻止事件默认行为
       })
   }
 
@@ -1625,11 +1701,29 @@
   }
 
   Common.prototype.handlerLabel = function (id, dd, isAdd, oval, notOn) {
+    if (!id) {
+      console.warn('handlerLabel: missing id')
+      return
+    }
     let div = $(`[xid="${id}"]`).prev().find(`.${LABEL}`)
-    let val = oval // 优先使用传入的值
+    if (!div.length) {
+      console.warn('handlerLabel: label container not found')
+      return
+    }
+    // 如果是分页按钮点击，直接返回
+    if (
+      dd &&
+      (dd.hasClass('page-prev') ||
+        dd.hasClass('page-next') ||
+        dd.hasClass('page-info'))
+    ) {
+      return
+    }
 
+    let val = oval // 优先使用传入的值
     // 只有在没有传入 oval 且有 dd 元素时才从 dd 获取值
     if (!oval && dd && dd[0]) {
+      console.warn('handlerLabel: label container not found')
       val = this.getItem(id, dd)
     }
 
