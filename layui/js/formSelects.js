@@ -359,7 +359,6 @@
             }
           }),
         fs = new FormSelects(options)
-      console.log('fs :>>>', fs)
 
       fs.values = value
 
@@ -484,7 +483,13 @@
     let fs = data[id],
       isCreate = fs.config.isCreate,
       reElem = $(`dl[xid="${id}"]`).parents(`.${FORM_SELECT}`)
-    //如果开启了远程搜索
+    //有输入内容,隐藏分页;否则显示分页
+    if (inputValue) {
+      reElem.find('.xm-select-page').hide()
+    } else {
+      reElem.find('.xm-select-page').show()
+    }
+    //如果开启了远程搜索(不做分页的逻辑变更,20250113改)
     if (searchUrl) {
       if (ajaxConfig.searchVal) {
         inputValue = ajaxConfig.searchVal
@@ -514,6 +519,20 @@
     } else {
       reElem.find(`dl .${DD_HIDE}`).removeClass(DD_HIDE)
       //遍历选项, 选择可以显示的值
+      //查询应该是基于完整的数据进行筛选, 而不是基于当前的选项, 所以需要获取完整的数据
+      let allData = fs.config.data || []
+      // 基于完整数据进行筛选, 不区分大小写, 如果输入值有逗号, 则表示多个值, 需要匹配多个值,精确匹配所有值,否则只匹配一个值,模糊匹配
+      let filteredData = allData.filter(item => {
+        return item.name.toLowerCase().includes(inputValue.toLowerCase())
+      })
+      //渲染选项
+      // this.renderData(
+      //   id,
+      //   filteredData,
+      //   fs.config.linkage == true,
+      //   fs.config.linkageWidth ? fs.config.linkageWidth : '100'
+      // )
+
       reElem.find(`dl dd:not(.${FORM_SELECT_TIPS})`).each((idx, item) => {
         let _item = $(item)
         let searchFun = events.filter[id] || data[id].config.filter
