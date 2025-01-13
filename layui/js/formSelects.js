@@ -764,6 +764,7 @@
 
   // 新增渲染分页的方法
   Common.prototype.renderPagination = function (id, currentPage, totalPages) {
+    currentPage = parseInt(currentPage)
     let html = `<div class="${PAGE}">`
 
     // 上一页
@@ -773,14 +774,8 @@
       }">上一页</span>`
     }
 
-    // 页码
-    for (let i = 1; i <= totalPages; i++) {
-      if (i === currentPage) {
-        html += `<span class="page-current">${i}</span>`
-      } else {
-        html += `<span class="page-num" data-page="${i}">${i}</span>`
-      }
-    }
+    // 当前页/总页数
+    html += `<span class="page-info">${currentPage}/${totalPages}</span>`
 
     // 下一页
     if (currentPage < totalPages) {
@@ -874,7 +869,9 @@
     let ajaxConfig = ajaxs[id] ? ajaxs[id] : ajax
     let childrenName = ajaxConfig['keyChildren']
     let disabledName = ajaxConfig['keyDis']
-    db[id] = {}
+    // 确保 db[id] 和 arr 存在且是数组
+    // db[id] = db[id] || {}
+    // arr = Array.isArray(arr) ? arr : []
     let result = this.getChildrenList(
       arr,
       childrenName,

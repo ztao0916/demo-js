@@ -788,17 +788,23 @@ div[xm-select-search-type="1"] .xm-select .xm-select-input {
   user-select: none;
 }
 
-.xm-select-page .page-current {
-  color: #009688;
-  font-weight: bold;
+.xm-select-page {
+  padding: 5px 10px;
+  text-align: center;
+  border-top: 1px solid #eee;
 }
 
-.xm-select-page .page-num:hover {
-  color: #009688;
+.xm-select-page span {
+  display: inline-block;
+  padding: 2px 8px;
+  margin: 0 3px;
+  cursor: pointer;
+  user-select: none;
 }
 
-.xm-select-page .page-split {
+.xm-select-page .page-info {
   cursor: default;
+  color: #666;
 }
 
 .xm-select-page .page-prev,
