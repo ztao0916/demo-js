@@ -679,7 +679,7 @@
     isSearch,
     isReplace
   ) {
-    console.log('config :>>>', data[id].config)
+    // console.log('config :>>>', data[id].config)
     if (!dataArr) {
       dataArr = []
     }
