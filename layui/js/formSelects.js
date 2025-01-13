@@ -483,12 +483,6 @@
     let fs = data[id],
       isCreate = fs.config.isCreate,
       reElem = $(`dl[xid="${id}"]`).parents(`.${FORM_SELECT}`)
-    //有输入内容,隐藏分页;否则显示分页
-    if (inputValue) {
-      reElem.find('.xm-select-page').hide()
-    } else {
-      reElem.find('.xm-select-page').show()
-    }
     //如果开启了远程搜索(不做分页的逻辑变更,20250113改)
     if (searchUrl) {
       if (ajaxConfig.searchVal) {
@@ -517,54 +511,66 @@
         }, delay)
       }
     } else {
-      reElem.find(`dl .${DD_HIDE}`).removeClass(DD_HIDE)
-      //遍历选项, 选择可以显示的值
-      //查询应该是基于完整的数据进行筛选, 而不是基于当前的选项, 所以需要获取完整的数据
-      let allData = fs.config.data || []
-      // 基于完整数据进行筛选, 不区分大小写, 如果输入值有逗号, 则表示多个值, 需要匹配多个值,精确匹配所有值,否则只匹配一个值,模糊匹配
-      let filteredData = allData.filter(item => {
-        return item.name.toLowerCase().includes(inputValue.toLowerCase())
-      })
-      //渲染选项
-      // this.renderData(
-      //   id,
-      //   filteredData,
-      //   fs.config.linkage == true,
-      //   fs.config.linkageWidth ? fs.config.linkageWidth : '100'
-      // )
+      //获取完整数据
+      let allData = [...(fs.config.data || [])]
 
-      reElem.find(`dl dd:not(.${FORM_SELECT_TIPS})`).each((idx, item) => {
-        let _item = $(item)
-        let searchFun = events.filter[id] || data[id].config.filter
-        if (
-          searchFun &&
-          searchFun(
-            id,
-            inputValue,
-            this.getItem(id, _item),
-            _item.hasClass(DISABLED)
-          ) == true
-        ) {
-          _item.addClass(DD_HIDE)
-        }
-      })
-      //控制分组名称
-      reElem.find('dl dt').each((index, item) => {
-        if (!$(item).nextUntil('dt', `:not(.${DD_HIDE})`).length) {
-          $(item).addClass(DD_HIDE)
-        }
-      })
+      //使用filterData进行搜索过滤
+      let filteredData = this.filterData(inputValue, allData)
+      console.log('filteredData :>>>', filteredData, allData)
+      //有搜索内容时,直接显示过滤结果,不分页
+      if (inputValue) {
+        //渲染过滤后的数据
+        this.renderData(id, filteredData, false, null, true, false, {
+          value: inputValue,
+          focus: true,
+          cursor: input.selectionStart
+        })
+        reElem.find('.xm-select-page').hide()
+      } else {
+        //无搜索内容时,恢复分页显示
+        reElem.find('.xm-select-page').show()
+        console.log('清空allData :>>>', allData)
+        //重新渲染原始数据,带分页
+        this.renderData(id, allData, false, null, false, false, {
+          value: '',
+          focus: true,
+          cursor: 0
+        })
+      }
       //动态创建
       this.create(id, isCreate, inputValue)
-      let shows = reElem.find(
-        `dl dd:not(.${FORM_SELECT_TIPS}):not(.${DD_HIDE})`
-      )
-      if (!shows.length) {
-        reElem.find(`dd.${FORM_NONE}`).addClass(FORM_EMPTY).text('无匹配项')
+      //处理无匹配项的显示
+      let dl = reElem.find('dl')
+      if (!filteredData.length) {
+        dl.find(`dd.${FORM_NONE}`).addClass(FORM_EMPTY).text('无匹配项')
       } else {
-        reElem.find(`dd.${FORM_NONE}`).removeClass(FORM_EMPTY)
+        dl.find(`dd.${FORM_NONE}`).removeClass(FORM_EMPTY)
       }
     }
+  }
+
+  Common.prototype.filterData = function (inputValue, data) {
+    if (!inputValue) {
+      return [...data] // 返回数据的浅拷贝
+    }
+
+    //支持逗号分隔的多个关键词精确匹配
+    let keywords = inputValue
+      .replace(/，/g, ',')
+      .split(',')
+      .map(k => k.trim())
+    if (keywords.length > 1) {
+      return data.filter(item => {
+        return keywords.includes(item.name)
+      })
+    }
+
+    //单个关键词模糊匹配
+    return data.filter(item => {
+      return (
+        item.name && item.name.toLowerCase().includes(inputValue.toLowerCase())
+      )
+    })
   }
 
   Common.prototype.isArray = function (obj) {
@@ -677,7 +683,8 @@
     linkage,
     linkageWidth,
     isSearch,
-    isReplace
+    isReplace,
+    preserveInput
   ) {
     // console.log('config :>>>', data[id].config)
     if (!dataArr) {
@@ -693,6 +700,11 @@
       return
     }
     let reElem = $(`.${PNAME} dl[xid="${id}"]`).parents(`.${FORM_SELECT}`)
+    // 如果是搜索操作，保存当前输入框状态
+    let inputState = null
+    if (preserveInput && typeof preserveInput === 'object') {
+      inputState = preserveInput
+    }
     let originalSelects = reElem
       .parents(`div[fs_id="${id}"]`)
       .siblings('select')
@@ -726,7 +738,7 @@
     }
 
     // 处理分页
-    let renderData = dataArr
+    let renderData = [...dataArr]
     if (pageConfig.page) {
       let start = (pageConfig.currentPage - 1) * pageConfig.pageSize
       let end = start + pageConfig.pageSize
@@ -760,7 +772,7 @@
       })
     )
     // 添加分页
-    if (pageConfig.page) {
+    if (!isSearch && pageConfig.page) {
       let totalPages = Math.ceil(dataArr.length / pageConfig.pageSize)
       html += this.renderPagination(id, pageConfig.currentPage, totalPages)
     }
@@ -796,6 +808,17 @@
         dl.find(`dd[lay-value="${item.value}"]`).addClass(THIS)
       })
       data[id].values = values
+    }
+    // 如果需要保持输入框状态
+    if (inputState) {
+      let newInput = reElem.find(`.${INPUT}`)
+      newInput.val(inputState.value)
+      if (inputState.focus) {
+        newInput.focus()
+        if (typeof inputState.cursor === 'number') {
+          newInput[0].setSelectionRange(inputState.cursor, inputState.cursor)
+        }
+      }
     }
     this.commonHandler(id, label)
   }
