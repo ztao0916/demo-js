@@ -512,11 +512,10 @@
       }
     } else {
       //获取完整数据
-      let allData = [...(fs.config.data || [])]
+      let allData = [...(data[id].allData || [])]
 
       //使用filterData进行搜索过滤
       let filteredData = this.filterData(inputValue, allData)
-      console.log('filteredData :>>>', filteredData, allData)
       //有搜索内容时,直接显示过滤结果,不分页
       if (inputValue) {
         //渲染过滤后的数据
@@ -529,7 +528,6 @@
       } else {
         //无搜索内容时,恢复分页显示
         reElem.find('.xm-select-page').show()
-        console.log('清空allData :>>>', allData)
         //重新渲染原始数据,带分页
         this.renderData(id, allData, false, null, false, false, {
           value: '',
@@ -2520,6 +2518,8 @@
     this.value(id, [])
     this.config(id, config)
     if (type == 'local') {
+      // 设置 allData 为 config.arr 的副本
+      data[id].allData = [...(config.arr || [])]
       common.renderData(
         id,
         config.arr,
