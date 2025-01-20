@@ -49,16 +49,6 @@
             selected: false,
             disabled: false
           }));
-          formSelects.config('shop', {
-            page: true,
-            pageSize: 800,
-            currentPage: 1,
-            clearInput: true,
-            filter: function (value, item) {
-              console.log('filter-value :>>>', value, item)
-              return true
-            }
-          });
 
           // 再渲染数据
           formSelects.data('shop', 'local', {

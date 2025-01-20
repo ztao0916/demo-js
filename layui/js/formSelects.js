@@ -228,6 +228,11 @@
     this.onreset()
   }
 
+  //定义一个方法: 接受参数id和arr
+  Common.prototype.setAllData = function (id, arr) {
+    data[id].allData = arr
+  }
+
   Common.prototype.appender = function () {
     //针对IE做的一些拓展
     //拓展Array map方法
@@ -350,7 +355,6 @@
       fs.values = value
 
       if (fs.config.init) {
-        fs.allData = fs.config.data
         fs.values = fs.config.init
           .map(item => {
             if (typeof item == 'object') {
@@ -471,6 +475,7 @@
     let fs = data[id],
       isCreate = fs.config.isCreate,
       reElem = $(`dl[xid="${id}"]`).parents(`.${FORM_SELECT}`)
+    console.log('fs :>>>', fs)
     //如果开启了远程搜索
     if (searchUrl) {
       if (ajaxConfig.searchVal) {
@@ -656,7 +661,6 @@
       this.renderReplace(id, dataArr)
       return
     }
-    console.log('dataArr :>>>', dataArr)
     let reElem = $(`.${PNAME} dl[xid="${id}"]`).parents(`.${FORM_SELECT}`)
     let originalSelects = reElem
       .parents(`div[fs_id="${id}"]`)
@@ -2291,6 +2295,8 @@
     this.value(id, [])
     this.config(id, config)
     if (type == 'local') {
+      //把config.arr复制给common.allData
+      common.setAllData(id, config.arr)
       common.renderData(
         id,
         config.arr,
