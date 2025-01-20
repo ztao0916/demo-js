@@ -45,11 +45,11 @@
         if (res.code === '0000') {
           const options = res.data.map(item => ({
             name: item.storeAcct,
-            value: item.id,
-            selected: false,
-            disabled: false
+            value: item.id
           }));
-
+          formSelects.config('shop', {
+            renderLimit: 100
+          })
           // 再渲染数据
           formSelects.data('shop', 'local', {
             arr: options

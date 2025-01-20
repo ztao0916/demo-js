@@ -161,7 +161,12 @@
         on: null, //select值发生变化
         opened: null,
         closed: null,
+        renderLimit: 1000, //添加最大渲染数量配置
         filter: (id, inputVal, val, isDisabled) => {
+          // 添加空值检查
+          if (!val || !val.name) {
+            return true
+          }
           let newInputVal = inputVal.replace(/，/g, ',')
           if (newInputVal.indexOf(',') > 0) {
             // 多个精确
@@ -671,7 +676,7 @@
     dataArr = this.exchangeData(id, dataArr)
     let values = []
     // 判断数据长度，超过1000条时只渲染前1000条
-    const RENDER_LIMIT = 1000
+    const RENDER_LIMIT = data[id].config.renderLimit
     let renderData = dataArr
     let showLoadMore = false
     if (dataArr.length > RENDER_LIMIT) {
@@ -2186,6 +2191,8 @@
             config.direction &&
             (data[id].config.direction = config.direction),
           data[id] && config.clearInput && (data[id].config.clearInput = true),
+          config.renderLimit &&
+            (data[id].config.renderLimit = config.renderLimit),
           config.searchUrl &&
             data[id] &&
             common.triggerSearch(
