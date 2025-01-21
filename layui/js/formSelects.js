@@ -480,90 +480,146 @@
     let fs = data[id],
       isCreate = fs.config.isCreate,
       reElem = $(`dl[xid="${id}"]`).parents(`.${FORM_SELECT}`)
-    let renderLimit = data[id].config.renderLimit
+    // let renderLimit = data[id].config.renderLimit
+    const allData = fs.allData || []
+    // 清除之前的定时器
+    if (fs.clearid) {
+      clearTimeout(fs.clearid)
+    }
     //如果开启了远程搜索
-    if (searchUrl) {
-      if (ajaxConfig.searchVal) {
-        inputValue = ajaxConfig.searchVal
-        ajaxConfig.searchVal = ''
-      }
-      if (
-        !ajaxConfig.beforeSearch ||
-        (ajaxConfig.beforeSearch &&
-          ajaxConfig.beforeSearch instanceof Function &&
-          ajaxConfig.beforeSearch(id, searchUrl, inputValue))
-      ) {
-        let delay = ajaxConfig.delay
-        if (ajaxConfig.first) {
-          ajaxConfig.first = false
-          delay = 10
+    fs.clearid = setTimeout(() => {
+      if (searchUrl) {
+        if (ajaxConfig.searchVal) {
+          inputValue = ajaxConfig.searchVal
+          ajaxConfig.searchVal = ''
         }
-        clearTimeout(fs.clearid)
-        fs.clearid = setTimeout(() => {
-          reElem.find(`dl > *:not(.${FORM_SELECT_TIPS})`).remove()
-          reElem
-            .find(`dd.${FORM_NONE}`)
-            .addClass(FORM_EMPTY)
-            .text('请输入要搜索的内容')
-          this.ajax(id, searchUrl, inputValue, false, null, true)
-        }, delay)
-      }
-    } else {
-      if (renderLimit <= 500) {
-        reElem.find(`dl .${DD_HIDE}`).removeClass(DD_HIDE)
-        //遍历选项, 选择可以显示的值
-        reElem.find(`dl dd:not(.${FORM_SELECT_TIPS})`).each((idx, item) => {
-          let _item = $(item)
-          let searchFun = events.filter[id] || data[id].config.filter
-          if (
-            searchFun &&
-            searchFun(
-              id,
-              inputValue,
-              this.getItem(id, _item),
-              _item.hasClass(DISABLED)
-            ) == true
-          ) {
-            _item.addClass(DD_HIDE)
+        if (
+          !ajaxConfig.beforeSearch ||
+          (ajaxConfig.beforeSearch &&
+            ajaxConfig.beforeSearch instanceof Function &&
+            ajaxConfig.beforeSearch(id, searchUrl, inputValue))
+        ) {
+          let delay = ajaxConfig.delay
+          if (ajaxConfig.first) {
+            ajaxConfig.first = false
+            delay = 10
           }
-        })
-        //控制分组名称
-        reElem.find('dl dt').each((index, item) => {
-          if (!$(item).nextUntil('dt', `:not(.${DD_HIDE})`).length) {
-            $(item).addClass(DD_HIDE)
-          }
-        })
-        //动态创建
-        this.create(id, isCreate, inputValue)
-        let shows = reElem.find(
-          `dl dd:not(.${FORM_SELECT_TIPS}):not(.${DD_HIDE})`
-        )
-        if (!shows.length) {
-          reElem.find(`dd.${FORM_NONE}`).addClass(FORM_EMPTY).text('无匹配项')
-        } else {
-          reElem.find(`dd.${FORM_NONE}`).removeClass(FORM_EMPTY)
+          clearTimeout(fs.clearid)
+          fs.clearid = setTimeout(() => {
+            reElem.find(`dl > *:not(.${FORM_SELECT_TIPS})`).remove()
+            reElem
+              .find(`dd.${FORM_NONE}`)
+              .addClass(FORM_EMPTY)
+              .text('请输入要搜索的内容')
+            this.ajax(id, searchUrl, inputValue, false, null, true)
+          }, delay)
         }
       } else {
-        //搜索全部数据,而不是基于已渲染dl
-        console.log('需要搜索全部数据哦 :>>>')
-        const allData = fs.allData || []
-        let searchResults = []
-
-        // 对所有数据进行搜索
-        allData.forEach(item => {
-          let searchFun = events.filter[id] || data[id].config.filter
-          if (
-            item &&
-            item.name &&
-            searchFun &&
-            !searchFun(id, inputValue, item, item.disabled)
-          ) {
-            searchResults.push(item)
+        reElem.find(`dl .${DD_HIDE}`).removeClass(DD_HIDE)
+        if (allData.length <= 1500) {
+          //遍历选项, 选择可以显示的值
+          reElem.find(`dl dd:not(.${FORM_SELECT_TIPS})`).each((idx, item) => {
+            let _item = $(item)
+            let searchFun = events.filter[id] || data[id].config.filter
+            if (
+              searchFun &&
+              searchFun(
+                id,
+                inputValue,
+                this.getItem(id, _item),
+                _item.hasClass(DISABLED)
+              ) == true
+            ) {
+              _item.addClass(DD_HIDE)
+            }
+          })
+          //控制分组名称
+          reElem.find('dl dt').each((index, item) => {
+            if (!$(item).nextUntil('dt', `:not(.${DD_HIDE})`).length) {
+              $(item).addClass(DD_HIDE)
+            }
+          })
+          //动态创建
+          this.create(id, isCreate, inputValue)
+          let shows = reElem.find(
+            `dl dd:not(.${FORM_SELECT_TIPS}):not(.${DD_HIDE})`
+          )
+          if (!shows.length) {
+            reElem.find(`dd.${FORM_NONE}`).addClass(FORM_EMPTY).text('无匹配项')
+          } else {
+            reElem.find(`dd.${FORM_NONE}`).removeClass(FORM_EMPTY)
           }
-        })
-        console.log('searchResults :>>>', searchResults)
+        } else {
+          //搜索全部数据,而不是基于已渲染dl
+          console.log('需要搜索全部数据哦 :>>>')
+          let searchResults = []
+
+          // 如果搜索词为空，直接使用前renderLimit条数据
+          if (!inputValue) {
+            searchResults = allData.slice(0, fs.config.renderLimit)
+          } else {
+            // 对所有数据进行搜索
+            allData.forEach(item => {
+              let searchFun = events.filter[id] || data[id].config.filter
+              if (
+                item &&
+                item.name &&
+                searchFun &&
+                !searchFun(id, inputValue, item, item.disabled)
+              ) {
+                searchResults.push(item)
+              }
+            })
+          }
+          console.log('searchResults :>>>', searchResults)
+          //创建新的dl
+          let dl_dom = reElem.find('dl[xid]')
+          // 保留tips相关元素，移除其他dd元素
+          dl_dom.find(`dd:not(.${FORM_SELECT_TIPS})`).remove()
+          // 创建文档片段来提高性能
+          let fragment = document.createDocumentFragment()
+          let tips = dl_dom.find(`.${FORM_SELECT_TIPS}`)[0]
+
+          // 渲染所有搜索结果
+          searchResults.forEach(item => {
+            let dd = $(
+              this.createDD(id, {
+                name: item.name,
+                value: item.value,
+                disabled: item.disabled,
+                type: item.type || '',
+                innerHTML: item.name
+              })
+            )[0] // 获取原生DOM节点
+            fragment.appendChild(dd)
+          })
+          // 如果是空搜索词且数据被截断，添加加载更多提示
+          if (!inputValue && allData.length > fs.config.renderLimit) {
+            let loadMoreTip =
+              $(`<dd class="load-more ${DISABLED}" style="text-align: center; padding: 5px 0; cursor: pointer; color: #999;">
+              还有${
+                allData.length - data[id].config.renderLimit
+              }条数据未显示，点击加载更多
+          </dd>`)[0]
+            //如果已经存在加载更多提示，则移除
+            if (dl_dom.find('.load-more').length) {
+              dl_dom.find('.load-more').remove()
+            }
+            fragment.appendChild(loadMoreTip)
+          }
+
+          // 将文档片段插入到tips元素之前
+          tips.parentNode.appendChild(fragment)
+
+          // 处理无匹配项的情况
+          if (searchResults.length === 0) {
+            dl_dom.find(`dd.${FORM_NONE}`).addClass(FORM_EMPTY).text('无匹配项')
+          } else {
+            dl_dom.find(`dd.${FORM_NONE}`).removeClass(FORM_EMPTY)
+          }
+        }
       }
-    }
+    }, 500)
   }
 
   Common.prototype.isArray = function (obj) {
