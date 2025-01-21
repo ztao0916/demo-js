@@ -546,6 +546,22 @@
       } else {
         //搜索全部数据,而不是基于已渲染dl
         console.log('需要搜索全部数据哦 :>>>')
+        const allData = fs.allData || []
+        let searchResults = []
+
+        // 对所有数据进行搜索
+        allData.forEach(item => {
+          let searchFun = events.filter[id] || data[id].config.filter
+          if (
+            item &&
+            item.name &&
+            searchFun &&
+            !searchFun(id, inputValue, item, item.disabled)
+          ) {
+            searchResults.push(item)
+          }
+        })
+        console.log('searchResults :>>>', searchResults)
       }
     }
   }
