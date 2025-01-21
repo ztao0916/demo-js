@@ -480,7 +480,7 @@
     let fs = data[id],
       isCreate = fs.config.isCreate,
       reElem = $(`dl[xid="${id}"]`).parents(`.${FORM_SELECT}`)
-    console.log('fs :>>>', fs)
+    let renderLimit = data[id].config.renderLimit
     //如果开启了远程搜索
     if (searchUrl) {
       if (ajaxConfig.searchVal) {
@@ -509,38 +509,43 @@
         }, delay)
       }
     } else {
-      reElem.find(`dl .${DD_HIDE}`).removeClass(DD_HIDE)
-      //遍历选项, 选择可以显示的值
-      reElem.find(`dl dd:not(.${FORM_SELECT_TIPS})`).each((idx, item) => {
-        let _item = $(item)
-        let searchFun = events.filter[id] || data[id].config.filter
-        if (
-          searchFun &&
-          searchFun(
-            id,
-            inputValue,
-            this.getItem(id, _item),
-            _item.hasClass(DISABLED)
-          ) == true
-        ) {
-          _item.addClass(DD_HIDE)
+      if (renderLimit <= 500) {
+        reElem.find(`dl .${DD_HIDE}`).removeClass(DD_HIDE)
+        //遍历选项, 选择可以显示的值
+        reElem.find(`dl dd:not(.${FORM_SELECT_TIPS})`).each((idx, item) => {
+          let _item = $(item)
+          let searchFun = events.filter[id] || data[id].config.filter
+          if (
+            searchFun &&
+            searchFun(
+              id,
+              inputValue,
+              this.getItem(id, _item),
+              _item.hasClass(DISABLED)
+            ) == true
+          ) {
+            _item.addClass(DD_HIDE)
+          }
+        })
+        //控制分组名称
+        reElem.find('dl dt').each((index, item) => {
+          if (!$(item).nextUntil('dt', `:not(.${DD_HIDE})`).length) {
+            $(item).addClass(DD_HIDE)
+          }
+        })
+        //动态创建
+        this.create(id, isCreate, inputValue)
+        let shows = reElem.find(
+          `dl dd:not(.${FORM_SELECT_TIPS}):not(.${DD_HIDE})`
+        )
+        if (!shows.length) {
+          reElem.find(`dd.${FORM_NONE}`).addClass(FORM_EMPTY).text('无匹配项')
+        } else {
+          reElem.find(`dd.${FORM_NONE}`).removeClass(FORM_EMPTY)
         }
-      })
-      //控制分组名称
-      reElem.find('dl dt').each((index, item) => {
-        if (!$(item).nextUntil('dt', `:not(.${DD_HIDE})`).length) {
-          $(item).addClass(DD_HIDE)
-        }
-      })
-      //动态创建
-      this.create(id, isCreate, inputValue)
-      let shows = reElem.find(
-        `dl dd:not(.${FORM_SELECT_TIPS}):not(.${DD_HIDE})`
-      )
-      if (!shows.length) {
-        reElem.find(`dd.${FORM_NONE}`).addClass(FORM_EMPTY).text('无匹配项')
       } else {
-        reElem.find(`dd.${FORM_NONE}`).removeClass(FORM_EMPTY)
+        //搜索全部数据,而不是基于已渲染dl
+        console.log('需要搜索全部数据哦 :>>>')
       }
     }
   }
