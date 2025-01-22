@@ -571,7 +571,6 @@
               }
             })
           }
-          console.log('searchResults :>>>', searchResults)
           //创建新的dl
           let dl_dom = reElem.find('dl[xid]')
           // 保留tips相关元素，移除其他dd元素
@@ -582,6 +581,8 @@
 
           // 渲染所有搜索结果
           searchResults.forEach(item => {
+            // 检查是否在选中项中
+            let isSelected = fs.values.some(val => val.value == item.value)
             let dd = $(
               this.createDD(id, {
                 name: item.name,
@@ -591,6 +592,10 @@
                 innerHTML: item.name
               })
             )[0] // 获取原生DOM节点
+            // 如果是选中项，添加THIS类
+            if (isSelected) {
+              $(dd).addClass(THIS)
+            }
             fragment.appendChild(dd)
           })
           // 如果是空搜索词且数据被截断，添加加载更多提示
@@ -1148,14 +1153,12 @@
     this.one()
 
     $(document).on('click', e => {
-      // console.log(FORM_TITLE,'FORM_TITLE on')
       if (!$(e.target).parents(`.${FORM_TITLE}`)[0]) {
         //清空input中的值
         $(`.${PNAME} dl .${DD_HIDE}`).removeClass(DD_HIDE)
         $(`.${PNAME} dl dd.${FORM_EMPTY}`).removeClass(FORM_EMPTY)
         $(`.${PNAME} dl dd.${TEMP}`).remove()
         $.each(data, (key, fs) => {
-          this.clearInput(key)
           if (!fs.values.length) {
             this.changePlaceHolder($(`div[FS_ID="${key}"] .${LABEL}`))
           }
