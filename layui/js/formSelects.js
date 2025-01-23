@@ -551,7 +551,7 @@
           }
         } else {
           //搜索全部数据,而不是基于已渲染dl
-          console.log('需要搜索全部数据哦 :>>>')
+          // console.log('需要搜索全部数据哦 :>>>')
           let searchResults = []
 
           // 如果搜索词为空，直接使用前renderLimit条数据
@@ -1159,7 +1159,49 @@
         $(`.${PNAME} dl dd.${FORM_EMPTY}`).removeClass(FORM_EMPTY)
         $(`.${PNAME} dl dd.${TEMP}`).remove()
         $.each(data, (key, fs) => {
-          if (!fs.values.length) {
+          if (fs.allData.length > 1500) {
+            //说明数据量比较大,关闭的时候需要重新渲染下拉框
+            let reElem = $(`dl[xid="${key}"]`).parents(`.${FORM_SELECT}`)
+            let currentData = fs.allData.slice(0, fs.config.renderLimit)
+            //创建新的dl
+            let dl_dom = reElem.find('dl[xid]')
+            // 保留tips相关元素，移除其他dd元素
+            dl_dom.find(`dd:not(.${FORM_SELECT_TIPS})`).remove()
+            // 创建文档片段来提高性能
+            let fragment = document.createDocumentFragment()
+            let tips = dl_dom.find(`.${FORM_SELECT_TIPS}`)[0]
+            currentData.forEach(item => {
+              // 检查是否在选中项中
+              let isSelected = fs.values.some(val => val.value == item.value)
+              let dd = $(
+                this.createDD(key, {
+                  name: item.name,
+                  value: item.value,
+                  disabled: item.disabled,
+                  type: item.type || '',
+                  innerHTML: item.name
+                })
+              )[0] // 获取原生DOM节点
+              // 如果是选中项，添加THIS类
+              if (isSelected) {
+                $(dd).addClass(THIS)
+              }
+              fragment.appendChild(dd)
+            })
+            let loadMoreTip =
+              $(`<dd class="load-more ${DISABLED}" style="text-align: center; padding: 5px 0; cursor: pointer; color: #999;">
+              还有${
+                fs.allData.length - fs.config.renderLimit
+              }条数据未显示，点击加载更多
+          </dd>`)[0]
+            //如果已经存在加载更多提示，则移除
+            if (dl_dom.find('.load-more').length) {
+              dl_dom.find('.load-more').remove()
+            }
+            fragment.appendChild(loadMoreTip)
+            // 将文档片段插入到tips元素之前
+            tips.parentNode.appendChild(fragment)
+          } else if (!fs.values.length) {
             this.changePlaceHolder($(`div[FS_ID="${key}"] .${LABEL}`))
           }
         })
