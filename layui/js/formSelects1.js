@@ -59,9 +59,6 @@
     ALL_PEOPLE = 'xm-select-allpeople',
     CZ = 'xm-cz',
     CZ_GROUP = 'xm-cz-group',
-    PAGE = 'xm-select-page',
-    PAGE_SIZE = 'xm-select-page-size',
-    CURRENT_PAGE = 'xm-select-current-page',
     TIPS = '请选择',
     data = {},
     events = {
@@ -197,10 +194,7 @@
         showCount: 0,
         isCreate: false,
         placeholder: TIPS,
-        clearInput: false,
-        page: false, // 默认不分页
-        pageSize: 1000, // 每页显示的条数
-        currentPage: 1 // 当前页码
+        clearInput: false
       }
       this.select = null
       this.values = []
@@ -316,10 +310,6 @@
   }
 
   Common.prototype.init = function (target) {
-    // 初始化 db 对象
-    if (!db) {
-      db = {}
-    }
     //初始化页面上已有的select
     $(target ? target : `select[${NAME}]`).each((index, select) => {
       let othis = $(select),
@@ -343,10 +333,7 @@
           layverType: othis.attr('lay-verType'),
           searchType: othis.attr(SEARCH_TYPE) == 'dl' ? 1 : 0,
           showCount: othis.attr(SHOW_COUNT) - 0,
-          allPeople: othis.attr(ALL_PEOPLE),
-          page: othis.attr(PAGE),
-          pageSize: othis.attr(PAGE_SIZE),
-          currentPage: othis.attr(CURRENT_PAGE)
+          allPeople: othis.attr(ALL_PEOPLE)
         },
         value = othis
           .find('option[selected]')
@@ -359,6 +346,7 @@
             }
           }),
         fs = new FormSelects(options)
+
       fs.values = value
 
       if (fs.config.init) {
@@ -403,27 +391,27 @@
       ]
       let isAllpelple = $(`select[xm-select=${id}]`).attr(ALL_PEOPLE) //存在全部人员，拉长组件宽度
       let reElem = $(`<div class="${FORM_SELECT}" ${SKIN}="${fs.config.skin}">
-					<input class="${HIDE_INPUT}" value="" name="${
+        <input class="${HIDE_INPUT}" value="" name="${
         fs.config.formname
       }" lay-verify="${fs.config.layverify}" lay-verType="${
         fs.config.layverType
       }" type="text" style="position: absolute;bottom: 0; z-index: -1;width: 100%; height: 100%; border: none; opacity: 0;"/>
-					<div class="${FORM_TITLE} ${fs.config.disabled ? DIS : ''}">
-						<div class="${FORM_INPUT} ${NAME}" ${heightStyle}>
-							${inputHtml.join('')}
-							<i class="${SANJIAO}"></i>
-						</div>
-						<div class="${TDIV}">
-							<input type="text" autocomplete="off" placeholder="${
-                fs.config.placeholder
-              }" readonly="readonly" unselectable="on" class="${FORM_INPUT}">
-						</div>
-						<div></div>
-					</div>
-					<dl xid="${id}" class="${DL} ${fs.config.radio ? RADIO : ''}" style="${
+        <div class="${FORM_TITLE} ${fs.config.disabled ? DIS : ''}">
+          <div class="${FORM_INPUT} ${NAME}" ${heightStyle}>
+            ${inputHtml.join('')}
+            <i class="${SANJIAO}"></i>
+          </div>
+          <div class="${TDIV}">
+            <input type="text" autocomplete="off" placeholder="${
+              fs.config.placeholder
+            }" readonly="readonly" unselectable="on" class="${FORM_INPUT}">
+          </div>
+          <div></div>
+        </div>
+        <dl xid="${id}" class="${DL} ${fs.config.radio ? RADIO : ''}" style="${
         isAllpelple ? 'min-width:380px;' : ''
       }">${dinfo}</dl>
-				</div>`)
+      </div>`)
 
       var $parent = $(`<div class="${PNAME}" FS_ID="${id}"></div>`)
       $parent.append(reElem)
@@ -482,7 +470,7 @@
     let fs = data[id],
       isCreate = fs.config.isCreate,
       reElem = $(`dl[xid="${id}"]`).parents(`.${FORM_SELECT}`)
-    //如果开启了远程搜索(不做分页的逻辑变更,20250113改)
+    //如果开启了远程搜索
     if (searchUrl) {
       if (ajaxConfig.searchVal) {
         inputValue = ajaxConfig.searchVal
@@ -510,64 +498,40 @@
         }, delay)
       }
     } else {
-      //获取完整数据
-      let allData = [...(data[id].allData || [])]
-
-      //使用filterData进行搜索过滤
-      let filteredData = this.filterData(inputValue, allData)
-      //有搜索内容时,直接显示过滤结果,不分页
-      if (inputValue) {
-        //渲染过滤后的数据
-        this.renderData(id, filteredData, false, null, true, false, {
-          value: inputValue,
-          focus: true,
-          cursor: input.selectionStart
-        })
-        reElem.find('.xm-select-page').hide()
-      } else {
-        //无搜索内容时,恢复分页显示
-        reElem.find('.xm-select-page').show()
-        //重新渲染原始数据,带分页
-        this.renderData(id, allData, false, null, false, false, {
-          value: '',
-          focus: true,
-          cursor: 0
-        })
-      }
+      reElem.find(`dl .${DD_HIDE}`).removeClass(DD_HIDE)
+      //遍历选项, 选择可以显示的值
+      reElem.find(`dl dd:not(.${FORM_SELECT_TIPS})`).each((idx, item) => {
+        let _item = $(item)
+        let searchFun = events.filter[id] || data[id].config.filter
+        if (
+          searchFun &&
+          searchFun(
+            id,
+            inputValue,
+            this.getItem(id, _item),
+            _item.hasClass(DISABLED)
+          ) == true
+        ) {
+          _item.addClass(DD_HIDE)
+        }
+      })
+      //控制分组名称
+      reElem.find('dl dt').each((index, item) => {
+        if (!$(item).nextUntil('dt', `:not(.${DD_HIDE})`).length) {
+          $(item).addClass(DD_HIDE)
+        }
+      })
       //动态创建
       this.create(id, isCreate, inputValue)
-      //处理无匹配项的显示
-      let dl = reElem.find('dl')
-      if (!filteredData.length) {
-        dl.find(`dd.${FORM_NONE}`).addClass(FORM_EMPTY).text('无匹配项')
+      let shows = reElem.find(
+        `dl dd:not(.${FORM_SELECT_TIPS}):not(.${DD_HIDE})`
+      )
+      if (!shows.length) {
+        reElem.find(`dd.${FORM_NONE}`).addClass(FORM_EMPTY).text('无匹配项')
       } else {
-        dl.find(`dd.${FORM_NONE}`).removeClass(FORM_EMPTY)
+        reElem.find(`dd.${FORM_NONE}`).removeClass(FORM_EMPTY)
       }
     }
-  }
-
-  Common.prototype.filterData = function (inputValue, data) {
-    if (!inputValue) {
-      return [...data] // 返回数据的浅拷贝
-    }
-
-    //支持逗号分隔的多个关键词精确匹配
-    let keywords = inputValue
-      .replace(/，/g, ',')
-      .split(',')
-      .map(k => k.trim())
-    if (keywords.length > 1) {
-      return data.filter(item => {
-        return keywords.includes(item.name)
-      })
-    }
-
-    //单个关键词模糊匹配
-    return data.filter(item => {
-      return (
-        item.name && item.name.toLowerCase().includes(inputValue.toLowerCase())
-      )
-    })
   }
 
   Common.prototype.isArray = function (obj) {
@@ -680,13 +644,8 @@
     linkage,
     linkageWidth,
     isSearch,
-    isReplace,
-    preserveInput
+    isReplace
   ) {
-    // console.log('config :>>>', data[id].config)
-    if (!dataArr) {
-      dataArr = []
-    }
     if (linkage) {
       //渲染多级联动
       this.renderLinkage(id, dataArr, linkageWidth)
@@ -697,84 +656,34 @@
       return
     }
     let reElem = $(`.${PNAME} dl[xid="${id}"]`).parents(`.${FORM_SELECT}`)
-    // 如果是搜索操作，保存当前输入框状态
-    let inputState = null
-    if (preserveInput && typeof preserveInput === 'object') {
-      inputState = preserveInput
-    }
     let originalSelects = reElem
       .parents(`div[fs_id="${id}"]`)
       .siblings('select')
     let ajaxConfig = ajaxs[id] ? ajaxs[id] : ajax
     let pcInput = reElem.find(`.${TDIV} input`)
 
-    // 确保 data[id] 存在
-    if (!data[id]) {
-      data[id] = {
-        config: {
-          isEmpty: false,
-          page: false,
-          pageSize: 10,
-          currentPage: 1
-        },
-        values: []
-      }
-    }
-
-    // 保存完整数据到config中
-    data[id].config.data = dataArr
-
     dataArr = this.exchangeData(id, dataArr)
     let values = []
-    // 分页相关配置
-    let fs = data[id]
-    let pageConfig = {
-      page: fs.config.page || false,
-      pageSize: fs.config.pageSize || 10,
-      currentPage: fs.config.currentPage || 1
-    }
-
-    // 处理分页
-    let renderData = [...dataArr]
-    if (pageConfig.page) {
-      let start = (pageConfig.currentPage - 1) * pageConfig.pageSize
-      let end = start + pageConfig.pageSize
-      renderData = dataArr.slice(start, end)
-    }
-    // 确保数据存储到 db 中
-    dataArr.forEach(item => {
-      if (!db[id]) {
-        db[id] = {}
-      }
-      db[id][item[ajaxConfig.keyVal]] = item
-    })
-
-    // 渲染选项
-    let html = this.renderSelect(
-      id,
-      pcInput.attr('placeholder') || pcInput.attr('back'),
-      renderData.map(item => {
-        let itemVal = $.extend({}, item, {
-          innerHTML: item[ajaxConfig.keyName],
-          value: item[ajaxConfig.keyVal],
-          sel: item[ajaxConfig.keySel],
-          disabled: item[ajaxConfig.keyDis],
-          type: item.type,
-          name: item[ajaxConfig.keyName]
+    reElem.find('dl').html(
+      this.renderSelect(
+        id,
+        pcInput.attr('placeholder') || pcInput.attr('back'),
+        dataArr.map(item => {
+          let itemVal = $.extend({}, item, {
+            innerHTML: item[ajaxConfig.keyName],
+            value: item[ajaxConfig.keyVal],
+            sel: item[ajaxConfig.keySel],
+            disabled: item[ajaxConfig.keyDis],
+            type: item.type,
+            name: item[ajaxConfig.keyName]
+          })
+          if (itemVal.sel) {
+            values.push(itemVal)
+          }
+          return itemVal
         })
-        if (itemVal.sel) {
-          values.push(itemVal)
-        }
-        return itemVal
-      })
+      )
     )
-    // 添加分页
-    if (!isSearch && pageConfig.page) {
-      let totalPages = Math.ceil(dataArr.length / pageConfig.pageSize)
-      html += this.renderPagination(id, pageConfig.currentPage, totalPages)
-    }
-    reElem.find('dl').html(html)
-
     //添加使用data方法渲染时同步select下的options Dom数据
     if (originalSelects.find('option').length == 0) {
       let options = ''
@@ -806,44 +715,7 @@
       })
       data[id].values = values
     }
-    // 如果需要保持输入框状态
-    if (inputState) {
-      let newInput = reElem.find(`.${INPUT}`)
-      newInput.val(inputState.value)
-      if (inputState.focus) {
-        newInput.focus()
-        if (typeof inputState.cursor === 'number') {
-          newInput[0].setSelectionRange(inputState.cursor, inputState.cursor)
-        }
-      }
-    }
     this.commonHandler(id, label)
-  }
-
-  // 新增渲染分页的方法
-  Common.prototype.renderPagination = function (id, currentPage, totalPages) {
-    currentPage = parseInt(currentPage)
-    let html = `<div class="${PAGE}">`
-
-    // 上一页
-    if (currentPage > 1) {
-      html += `<span class="page-prev" data-page="${
-        currentPage - 1
-      }">上一页</span>`
-    }
-
-    // 当前页/总页数
-    html += `<span class="page-info">${currentPage}/${totalPages}</span>`
-
-    // 下一页
-    if (currentPage < totalPages) {
-      html += `<span class="page-next" data-page="${
-        currentPage + 1
-      }">下一页</span>`
-    }
-
-    html += '</div>'
-    return html
   }
 
   Common.prototype.renderLinkage = function (id, dataArr, linkageWidth) {
@@ -927,9 +799,7 @@
     let ajaxConfig = ajaxs[id] ? ajaxs[id] : ajax
     let childrenName = ajaxConfig['keyChildren']
     let disabledName = ajaxConfig['keyDis']
-    // 确保 db[id] 和 arr 存在且是数组
-    db[id] = db[id] || {}
-    arr = Array.isArray(arr) ? arr : []
+    db[id] = {}
     let result = this.getChildrenList(
       arr,
       childrenName,
@@ -947,17 +817,10 @@
     pid,
     disabled
   ) {
-    // 确保参数合法
-    if (!Array.isArray(arr)) {
-      return []
-    }
-
-    pid = pid || []
-    let result = []
-    let offset = 0
+    let result = [],
+      offset = 0
     for (let a = 0; a < arr.length; a++) {
       let item = arr[a]
-      if (!item) continue // 跳过空项
       if (item.type && item.type == 'optgroup') {
         result.push(item)
         continue
@@ -1055,24 +918,24 @@
       return `<dd employee="${employee}"  lay-value="${item.value}" class="${
         item.disabled ? DISABLED : ''
       } ${clz ? clz : ''} ${employeeDisplay}" ${attr}>
-                        <div class="xm-unselect xm-form-checkbox ${
-                          item.disabled ? DISABLED : ''
-                        }"  style="margin-left: ${(pid.length - 1) * 20}px">
-                            <i class="${CHECKBOX_YES}"></i>
-                            <span name="${name}">${template}</span>
-                        </div>
-                    </dd>`
+                      <div class="xm-unselect xm-form-checkbox ${
+                        item.disabled ? DISABLED : ''
+                      }"  style="margin-left: ${(pid.length - 1) * 20}px">
+                          <i class="${CHECKBOX_YES}"></i>
+                          <span name="${name}">${template}</span>
+                      </div>
+                  </dd>`
     } else {
       return `<dd lay-value="${item.value}" class="${
         item.disabled ? DISABLED : ''
       } ${clz ? clz : ''}" ${attr}>
-                        <div class="xm-unselect xm-form-checkbox ${
-                          item.disabled ? DISABLED : ''
-                        }"  style="margin-left: ${(pid.length - 1) * 20}px">
-                            <i class="${CHECKBOX_YES}"></i>
-                            <span name="${name}">${template}</span>
-                        </div>
-                    </dd>`
+                      <div class="xm-unselect xm-form-checkbox ${
+                        item.disabled ? DISABLED : ''
+                      }"  style="margin-left: ${(pid.length - 1) * 20}px">
+                          <i class="${CHECKBOX_YES}"></i>
+                          <span name="${name}">${template}</span>
+                      </div>
+                  </dd>`
     }
   }
 
@@ -1490,69 +1353,6 @@
         this.handlerLabel(id, dd, !dd.hasClass(THIS))
         return false
       })
-    // 修改分页点击事件处理
-    $(target ? target : document)
-      .off('click', `.${PAGE} span`)
-      .on('click', `.${PAGE} span`, e => {
-        e.stopPropagation() // 阻止事件冒泡
-        let $this = $(e.target)
-        // 如果点击的是页码信息span，直接返回
-        if ($this.hasClass('page-info')) {
-          return false
-        }
-
-        let page = $this.data('page')
-        let id = $this.parents('dl').attr('xid')
-        let fs = data[id]
-
-        if (!id || !fs || !page) {
-          return false
-        }
-
-        // 更新当前页码
-        fs.config.currentPage = parseInt(page)
-        // 重新渲染数据
-        let renderData = fs.config.data || []
-        let start = (page - 1) * fs.config.pageSize
-        let end = start + fs.config.pageSize
-        let pageData = renderData.slice(start, end)
-
-        // 只更新选项列表部分
-        let dl = $(`dl[xid="${id}"]`)
-        let ajaxConfig = ajaxs[id] ? ajaxs[id] : ajax
-
-        // 渲染新的选项
-        let html = pageData
-          .map(item => {
-            return this.createDD(id, {
-              name: item[ajaxConfig.keyName],
-              value: item[ajaxConfig.keyVal],
-              disabled: item[ajaxConfig.keyDis],
-              type: item.type,
-              innerHTML: item[ajaxConfig.keyName]
-            })
-          })
-          .join('')
-        // 更新分页
-        let totalPages = Math.ceil(renderData.length / fs.config.pageSize)
-        html += this.renderPagination(id, page, totalPages)
-
-        // 更新内容
-        dl.find(`dd:not(.${FORM_SELECT_TIPS})`).remove()
-        dl.find(`.${PAGE}`).remove()
-        dl.append(html)
-
-        // 恢复已选中状态
-        if (fs.values && Array.isArray(fs.values)) {
-          fs.values.forEach(val => {
-            if (val && val.value) {
-              dl.find(`dd[lay-value="${val.value}"]`).addClass(THIS)
-            }
-          })
-        }
-
-        return false // 阻止事件默认行为
-      })
   }
 
   Common.prototype.addTreeHeight = function (dd, len) {
@@ -1570,11 +1370,6 @@
 
   let db = {}
   Common.prototype.getItem = function (id, value) {
-    // 确保 db[id] 存在
-    if (!db[id]) {
-      db[id] = {}
-    }
-
     if (value instanceof $) {
       if (value.is(`i[fsw="${NAME}"]`)) {
         let span = value.parent()
@@ -1585,7 +1380,6 @@
           }
         )
       }
-
       let val = value.attr('lay-value')
       return !db[id][val]
         ? (db[id][val] = {
@@ -1601,12 +1395,6 @@
         }
       )
     }
-
-    // 如果 value 是对象,直接返回
-    if (typeof value === 'object' && value !== null) {
-      return value
-    }
-
     return db[id][value]
   }
 
@@ -1740,41 +1528,14 @@
   }
 
   Common.prototype.handlerLabel = function (id, dd, isAdd, oval, notOn) {
-    if (!id) {
-      console.warn('handlerLabel: missing id')
-      return
+    let div = $(`[xid="${id}"]`).prev().find(`.${LABEL}`),
+      val = dd && this.getItem(id, dd),
+      vals = data[id].values,
+      on = data[id].config.on || events.on[id],
+      endOn = data[id].config.endOn || events.endOn[id]
+    if (oval) {
+      val = oval
     }
-    let div = $(`[xid="${id}"]`).prev().find(`.${LABEL}`)
-    if (!div.length) {
-      console.warn('handlerLabel: label container not found')
-      return
-    }
-    // 如果是分页按钮点击，直接返回
-    if (
-      dd &&
-      (dd.hasClass('page-prev') ||
-        dd.hasClass('page-next') ||
-        dd.hasClass('page-info'))
-    ) {
-      return
-    }
-
-    let val = oval // 优先使用传入的值
-    // 只有在没有传入 oval 且有 dd 元素时才从 dd 获取值
-    if (!oval && dd && dd[0]) {
-      console.warn('handlerLabel: label container not found')
-      val = this.getItem(id, dd)
-    }
-
-    // 确保 val 存在
-    if (!val) {
-      console.warn('无法获取选项值:', id, dd, oval)
-      return
-    }
-
-    let vals = data[id].values
-    let on = data[id].config.on || events.on[id]
-    let endOn = data[id].config.endOn || events.endOn[id]
     let fs = data[id]
     if (isAdd && fs.config.max && fs.values.length >= fs.config.max) {
       let maxTipsFun = events.maxTips[id] || data[id].config.maxTips
@@ -2401,10 +2162,6 @@
             config.direction &&
             (data[id].config.direction = config.direction),
           data[id] && config.clearInput && (data[id].config.clearInput = true),
-          config.page && (data[id].config.page = true),
-          config.pageSize && (data[id].config.pageSize = config.pageSize),
-          config.currentPage &&
-            (data[id].config.currentPage = config.currentPage),
           config.searchUrl &&
             data[id] &&
             common.triggerSearch(
@@ -2449,10 +2206,7 @@
           opened: options.opened,
           closed: options.closed,
           template: options.template,
-          clearInput: options.clearInput,
-          page: options.page,
-          pageSize: options.pageSize,
-          currentPage: options.currentPage
+          clearInput: options.clearInput
         }
       : {}
 
@@ -2517,8 +2271,6 @@
     this.value(id, [])
     this.config(id, config)
     if (type == 'local') {
-      // 设置 allData 为 config.arr 的副本
-      data[id].allData = [...(config.arr || [])]
       common.renderData(
         id,
         config.arr,
