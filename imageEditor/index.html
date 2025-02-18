@@ -2,201 +2,69 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>鲁班AI图片编辑器</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aidge对接</title>
   <style>
+    html,
     body {
+      height: 100%;
       margin: 0;
-      padding: 20px;
-      font-family: Arial, sans-serif;
-      background-color: #f5f7fa;
     }
 
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      background: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+    #editor {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
     }
 
-    .editor-container {
+    .aidc-open-frame {
       width: 100%;
-      height: 600px;
-      border: 1px solid #e4e7ed;
-      margin: 20px 0;
-      border-radius: 4px;
-      overflow: hidden;
-    }
-
-    .control-panel {
-      margin-bottom: 20px;
-      display: flex;
-      gap: 12px;
-      padding: 16px;
-      background: #f8f9fb;
-      border-radius: 6px;
-    }
-
-    .btn {
-      padding: 10px 20px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-weight: 500;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .btn-primary {
-      background: #409eff;
-      color: white;
-    }
-
-    .btn-primary:hover {
-      background: #66b1ff;
-      transform: translateY(-1px);
-    }
-
-    .btn-secondary {
-      background: #67c23a;
-      color: white;
-    }
-
-    .btn-secondary:hover {
-      background: #85ce61;
-      transform: translateY(-1px);
-    }
-
-    .btn-warning {
-      background: #e6a23c;
-      color: white;
-    }
-
-    .btn-warning:hover {
-      background: #ebb563;
-      transform: translateY(-1px);
-    }
-
-    .btn i {
-      font-size: 16px;
-    }
-
-    /* 添加一些动画效果 */
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-      }
-
-      to {
-        opacity: 1;
-      }
-    }
-
-    .container {
-      animation: fadeIn 0.3s ease;
+      height: 100%;
+      border: 0;
     }
   </style>
-  <!-- 引入图标库 -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css">
 </head>
 
 <body>
-  <div class="container">
-    <div class="control-panel">
-      <button class="btn btn-primary" onclick="initEditor('product')">
-        <i class="fas fa-image"></i>
-        商品图编辑
-      </button>
-      <button class="btn btn-secondary" onclick="initEditor('banner')">
-        <i class="fas fa-panorama"></i>
-        Banner编辑
-      </button>
-      <button class="btn btn-warning" onclick="initEditor('translate')">
-        <i class="fas fa-language"></i>
-        图片翻译
-      </button>
-    </div>
-    <div id="editor" class="editor-container"></div>
+  <div id="editor">
+    <iframe class="aidc-open-frame"></iframe>
   </div>
 
   <script>
-    // 鲁班AI配置
-    const LUBAN_CONFIG = {
-      apiKey: 'your_api_key', // 替换为你的API key
-      apiHost: 'https://api.luban.com',
-      lang: 'zh-CN'
+    // open sdk 扩展配置
+    window.INTL_OP_FRAME_SDK_CONFIG = {
+      // API 映射,默认接口/open/api/signature 映射为 /lms/product/selectSignResponse
+      apiMap: {
+        "/open/api/signature": "/lms/product/selectSignResponse",
+      },
     };
+    // 需要拼接的参数，以图片翻译为例。其中apiHost,lang为通用参数，其余为能力输入参数。
+    const translateParam = {
+      apiHost: 'aibcn',
+      lang: 'zh-cn',
+      // imageUrl: "https://img.alicdn.com/imgextra/i3/O1CN01F84hLR29Futc7Oshz_!!6000000008039-0-tps-750-1000.jpg",
+      // sourceLanguage: 'zh',
+      targetLanguage: 'en'
+    };
+    // 处理为拼接字符串
+    const payloadString = encodeURIComponent(JSON.stringify(translateParam));
 
-    // 初始化编辑器
-    function initEditor (type) {
-      const editor = document.getElementById('editor');
-      const config = {
-        ...LUBAN_CONFIG,
-        container: 'editor',
-        type: type,
-        onSave: handleSave,
-        onError: handleError
-      };
+    // 工具页面地址
+    const hostUrl = 'https://editor.d.design/editor/index.html/#/';
 
-      // 根据类型设置不同的配置
-      switch (type) {
-        case 'product':
-          config.productConfig = {
-            imageUrl: 'https://example.com/product.jpg',
-            features: ['background-remove', 'enhance', 'resize']
-          };
-          break;
-        case 'banner':
-          config.bannerConfig = {
-            width: 1200,
-            height: 600,
-            templates: true
-          };
-          break;
-        case 'translate':
-          config.translateConfig = {
-            sourceLanguage: 'zh',
-            targetLanguage: 'en',
-            ocrEnabled: true
-          };
-          break;
-      }
+    // 能力路由
+    const router = 'station';
 
-      // 初始化鲁班编辑器
-      window.lubanEditor = new LubanEditor(config);
-    }
+    // 拼接成最终的src字段, 拼接过程注意斜杠符号的使用
+    const iframeURL = `${hostUrl}${router}?payload=${payloadString}`;
+    //设置iframe的src
+    document.querySelector('.aidc-open-frame').src = iframeURL;
 
-    // 保存回调
-    function handleSave (result) {
-      console.log('编辑结果:', result);
-      // 处理编辑后的图片
-      if (result.success) {
-        const imageUrl = result.data.url;
-        // TODO: 处理编辑后的图片URL
-      }
-    }
-
-    // 错误处理
-    function handleError (error) {
-      console.error('编辑器错误:', error);
-      alert('操作失败: ' + error.message);
-    }
-
-    // 监听消息
-    window.addEventListener('message', (event) => {
-      if (event.data.type === 'luban-editor') {
-        console.log('收到编辑器消息:', event.data);
-      }
-    });
   </script>
-
-  <!-- 加载鲁班AI SDK -->
-  <script src="https://cdn.luban-ai.com/editor-sdk.min.js"></script>
+  <script src="https://g.alicdn.com/code/npm/@ali/intl-op-frame-sdk/0.1.10/main.min.js"></script>
 </body>
 
 </html>
