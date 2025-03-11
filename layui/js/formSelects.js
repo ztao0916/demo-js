@@ -194,10 +194,7 @@
         showCount: 0,
         isCreate: false,
         placeholder: TIPS,
-        clearInput: false,
-        virtualScroll: true, // 默认启用虚拟滚动
-        itemHeight: 36, // 每个选项的高度，可根据实际情况调整
-        bufferSize: 5 // 缓冲区大小，即滚动时预渲染的选项数量
+        clearInput: false
       }
       this.select = null
       this.values = []
