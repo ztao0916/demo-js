@@ -161,12 +161,7 @@
         on: null, //select值发生变化
         opened: null,
         closed: null,
-        renderLimit: 1000, //添加最大渲染数量配置
         filter: (id, inputVal, val, isDisabled) => {
-          // 添加空值检查
-          if (!val || !val.name) {
-            return true
-          }
           let newInputVal = inputVal.replace(/，/g, ',')
           if (newInputVal.indexOf(',') > 0) {
             // 多个精确
@@ -199,7 +194,10 @@
         showCount: 0,
         isCreate: false,
         placeholder: TIPS,
-        clearInput: false
+        clearInput: false,
+        virtualScroll: true, // 默认启用虚拟滚动
+        itemHeight: 36, // 每个选项的高度，可根据实际情况调整
+        bufferSize: 5 // 缓冲区大小，即滚动时预渲染的选项数量
       }
       this.select = null
       this.values = []
@@ -231,11 +229,6 @@
     this.appender()
     this.on()
     this.onreset()
-  }
-
-  //定义一个方法: 接受参数id和arr
-  Common.prototype.setAllData = function (id, arr) {
-    data[id].allData = arr
   }
 
   Common.prototype.appender = function () {
@@ -401,27 +394,27 @@
       ]
       let isAllpelple = $(`select[xm-select=${id}]`).attr(ALL_PEOPLE) //存在全部人员，拉长组件宽度
       let reElem = $(`<div class="${FORM_SELECT}" ${SKIN}="${fs.config.skin}">
-					<input class="${HIDE_INPUT}" value="" name="${
+        <input class="${HIDE_INPUT}" value="" name="${
         fs.config.formname
       }" lay-verify="${fs.config.layverify}" lay-verType="${
         fs.config.layverType
       }" type="text" style="position: absolute;bottom: 0; z-index: -1;width: 100%; height: 100%; border: none; opacity: 0;"/>
-					<div class="${FORM_TITLE} ${fs.config.disabled ? DIS : ''}">
-						<div class="${FORM_INPUT} ${NAME}" ${heightStyle}>
-							${inputHtml.join('')}
-							<i class="${SANJIAO}"></i>
-						</div>
-						<div class="${TDIV}">
-							<input type="text" autocomplete="off" placeholder="${
-                fs.config.placeholder
-              }" readonly="readonly" unselectable="on" class="${FORM_INPUT}">
-						</div>
-						<div></div>
-					</div>
-					<dl xid="${id}" class="${DL} ${fs.config.radio ? RADIO : ''}" style="${
+        <div class="${FORM_TITLE} ${fs.config.disabled ? DIS : ''}">
+          <div class="${FORM_INPUT} ${NAME}" ${heightStyle}>
+            ${inputHtml.join('')}
+            <i class="${SANJIAO}"></i>
+          </div>
+          <div class="${TDIV}">
+            <input type="text" autocomplete="off" placeholder="${
+              fs.config.placeholder
+            }" readonly="readonly" unselectable="on" class="${FORM_INPUT}">
+          </div>
+          <div></div>
+        </div>
+        <dl xid="${id}" class="${DL} ${fs.config.radio ? RADIO : ''}" style="${
         isAllpelple ? 'min-width:380px;' : ''
       }">${dinfo}</dl>
-				</div>`)
+      </div>`)
 
       var $parent = $(`<div class="${PNAME}" FS_ID="${id}"></div>`)
       $parent.append(reElem)
@@ -480,151 +473,68 @@
     let fs = data[id],
       isCreate = fs.config.isCreate,
       reElem = $(`dl[xid="${id}"]`).parents(`.${FORM_SELECT}`)
-    // let renderLimit = data[id].config.renderLimit
-    const allData = fs.allData || []
-    // 清除之前的定时器
-    if (fs.clearid) {
-      clearTimeout(fs.clearid)
-    }
     //如果开启了远程搜索
-    fs.clearid = setTimeout(() => {
-      if (searchUrl) {
-        if (ajaxConfig.searchVal) {
-          inputValue = ajaxConfig.searchVal
-          ajaxConfig.searchVal = ''
-        }
-        if (
-          !ajaxConfig.beforeSearch ||
-          (ajaxConfig.beforeSearch &&
-            ajaxConfig.beforeSearch instanceof Function &&
-            ajaxConfig.beforeSearch(id, searchUrl, inputValue))
-        ) {
-          let delay = ajaxConfig.delay
-          if (ajaxConfig.first) {
-            ajaxConfig.first = false
-            delay = 10
-          }
-          clearTimeout(fs.clearid)
-          fs.clearid = setTimeout(() => {
-            reElem.find(`dl > *:not(.${FORM_SELECT_TIPS})`).remove()
-            reElem
-              .find(`dd.${FORM_NONE}`)
-              .addClass(FORM_EMPTY)
-              .text('请输入要搜索的内容')
-            this.ajax(id, searchUrl, inputValue, false, null, true)
-          }, delay)
-        }
-      } else {
-        reElem.find(`dl .${DD_HIDE}`).removeClass(DD_HIDE)
-        if (allData.length <= 1500) {
-          //遍历选项, 选择可以显示的值
-          reElem.find(`dl dd:not(.${FORM_SELECT_TIPS})`).each((idx, item) => {
-            let _item = $(item)
-            let searchFun = events.filter[id] || data[id].config.filter
-            if (
-              searchFun &&
-              searchFun(
-                id,
-                inputValue,
-                this.getItem(id, _item),
-                _item.hasClass(DISABLED)
-              ) == true
-            ) {
-              _item.addClass(DD_HIDE)
-            }
-          })
-          //控制分组名称
-          reElem.find('dl dt').each((index, item) => {
-            if (!$(item).nextUntil('dt', `:not(.${DD_HIDE})`).length) {
-              $(item).addClass(DD_HIDE)
-            }
-          })
-          //动态创建
-          this.create(id, isCreate, inputValue)
-          let shows = reElem.find(
-            `dl dd:not(.${FORM_SELECT_TIPS}):not(.${DD_HIDE})`
-          )
-          if (!shows.length) {
-            reElem.find(`dd.${FORM_NONE}`).addClass(FORM_EMPTY).text('无匹配项')
-          } else {
-            reElem.find(`dd.${FORM_NONE}`).removeClass(FORM_EMPTY)
-          }
-        } else {
-          //搜索全部数据,而不是基于已渲染dl
-          // console.log('需要搜索全部数据哦 :>>>')
-          let searchResults = []
-
-          // 如果搜索词为空，直接使用前renderLimit条数据
-          if (!inputValue) {
-            searchResults = allData.slice(0, fs.config.renderLimit)
-          } else {
-            // 对所有数据进行搜索
-            allData.forEach(item => {
-              let searchFun = events.filter[id] || data[id].config.filter
-              if (
-                item &&
-                item.name &&
-                searchFun &&
-                !searchFun(id, inputValue, item, item.disabled)
-              ) {
-                searchResults.push(item)
-              }
-            })
-          }
-          //创建新的dl
-          let dl_dom = reElem.find('dl[xid]')
-          // 保留tips相关元素，移除其他dd元素
-          dl_dom.find(`dd:not(.${FORM_SELECT_TIPS})`).remove()
-          // 创建文档片段来提高性能
-          let fragment = document.createDocumentFragment()
-          let tips = dl_dom.find(`.${FORM_SELECT_TIPS}`)[0]
-
-          // 渲染所有搜索结果
-          searchResults.forEach(item => {
-            // 检查是否在选中项中
-            let isSelected = fs.values.some(val => val.value == item.value)
-            let dd = $(
-              this.createDD(id, {
-                name: item.name,
-                value: item.value,
-                disabled: item.disabled,
-                type: item.type || '',
-                innerHTML: item.name
-              })
-            )[0] // 获取原生DOM节点
-            // 如果是选中项，添加THIS类
-            if (isSelected) {
-              $(dd).addClass(THIS)
-            }
-            fragment.appendChild(dd)
-          })
-          // 如果是空搜索词且数据被截断，添加加载更多提示
-          if (!inputValue && allData.length > fs.config.renderLimit) {
-            let loadMoreTip =
-              $(`<dd class="load-more ${DISABLED}" style="text-align: center; padding: 5px 0; cursor: pointer; color: #999;">
-              还有${
-                allData.length - data[id].config.renderLimit
-              }条数据未显示，点击加载更多
-          </dd>`)[0]
-            //如果已经存在加载更多提示，则移除
-            if (dl_dom.find('.load-more').length) {
-              dl_dom.find('.load-more').remove()
-            }
-            fragment.appendChild(loadMoreTip)
-          }
-
-          // 将文档片段插入到tips元素之前
-          tips.parentNode.appendChild(fragment)
-
-          // 处理无匹配项的情况
-          if (searchResults.length === 0) {
-            dl_dom.find(`dd.${FORM_NONE}`).addClass(FORM_EMPTY).text('无匹配项')
-          } else {
-            dl_dom.find(`dd.${FORM_NONE}`).removeClass(FORM_EMPTY)
-          }
-        }
+    if (searchUrl) {
+      if (ajaxConfig.searchVal) {
+        inputValue = ajaxConfig.searchVal
+        ajaxConfig.searchVal = ''
       }
-    }, 500)
+      if (
+        !ajaxConfig.beforeSearch ||
+        (ajaxConfig.beforeSearch &&
+          ajaxConfig.beforeSearch instanceof Function &&
+          ajaxConfig.beforeSearch(id, searchUrl, inputValue))
+      ) {
+        let delay = ajaxConfig.delay
+        if (ajaxConfig.first) {
+          ajaxConfig.first = false
+          delay = 10
+        }
+        clearTimeout(fs.clearid)
+        fs.clearid = setTimeout(() => {
+          reElem.find(`dl > *:not(.${FORM_SELECT_TIPS})`).remove()
+          reElem
+            .find(`dd.${FORM_NONE}`)
+            .addClass(FORM_EMPTY)
+            .text('请输入要搜索的内容')
+          this.ajax(id, searchUrl, inputValue, false, null, true)
+        }, delay)
+      }
+    } else {
+      reElem.find(`dl .${DD_HIDE}`).removeClass(DD_HIDE)
+      //遍历选项, 选择可以显示的值
+      reElem.find(`dl dd:not(.${FORM_SELECT_TIPS})`).each((idx, item) => {
+        let _item = $(item)
+        let searchFun = events.filter[id] || data[id].config.filter
+        if (
+          searchFun &&
+          searchFun(
+            id,
+            inputValue,
+            this.getItem(id, _item),
+            _item.hasClass(DISABLED)
+          ) == true
+        ) {
+          _item.addClass(DD_HIDE)
+        }
+      })
+      //控制分组名称
+      reElem.find('dl dt').each((index, item) => {
+        if (!$(item).nextUntil('dt', `:not(.${DD_HIDE})`).length) {
+          $(item).addClass(DD_HIDE)
+        }
+      })
+      //动态创建
+      this.create(id, isCreate, inputValue)
+      let shows = reElem.find(
+        `dl dd:not(.${FORM_SELECT_TIPS}):not(.${DD_HIDE})`
+      )
+      if (!shows.length) {
+        reElem.find(`dd.${FORM_NONE}`).addClass(FORM_EMPTY).text('无匹配项')
+      } else {
+        reElem.find(`dd.${FORM_NONE}`).removeClass(FORM_EMPTY)
+      }
+    }
   }
 
   Common.prototype.isArray = function (obj) {
@@ -757,21 +667,11 @@
 
     dataArr = this.exchangeData(id, dataArr)
     let values = []
-    // 判断数据长度，超过1000条时只渲染前1000条
-    const RENDER_LIMIT = data[id].config.renderLimit
-    let renderData = dataArr
-    let showLoadMore = false
-    if (dataArr.length > RENDER_LIMIT) {
-      renderData = dataArr.slice(0, RENDER_LIMIT)
-      showLoadMore = true
-    }
-    // 渲染数据
-    let dl = reElem.find('dl')
-    dl.html(
+    reElem.find('dl').html(
       this.renderSelect(
         id,
         pcInput.attr('placeholder') || pcInput.attr('back'),
-        renderData.map(item => {
+        dataArr.map(item => {
           let itemVal = $.extend({}, item, {
             innerHTML: item[ajaxConfig.keyName],
             value: item[ajaxConfig.keyVal],
@@ -787,15 +687,7 @@
         })
       )
     )
-    // 如果数据被截断，添加加载更多提示
-    if (showLoadMore) {
-      let loadMoreTip =
-        $(`<dd class="load-more ${DISABLED}" style="text-align: center; padding: 5px 0; cursor: pointer; color: #999;">
-              还有${dataArr.length - RENDER_LIMIT}条数据未显示
-          </dd>`)
-      dl.append(loadMoreTip)
-    }
-    // 同步select的options
+    //添加使用data方法渲染时同步select下的options Dom数据
     if (originalSelects.find('option').length == 0) {
       let options = ''
       dataArr.map(item => {
@@ -805,27 +697,27 @@
     }
 
     let label = reElem.find(`.${LABEL}`)
-    let dl_dom = reElem.find('dl[xid]')
+    let dl = reElem.find('dl[xid]')
     if (isSearch) {
+      //如果是远程搜索, 这里需要判重
       let oldVal = data[id].values
       oldVal.forEach((item, index) => {
-        dl_dom.find(`dd[lay-value="${item.value}"]`).addClass(THIS)
+        dl.find(`dd[lay-value="${item.value}"]`).addClass(THIS)
       })
       values.forEach((item, index) => {
         if (this.indexOf(oldVal, item) == -1) {
           this.addLabel(id, label, item)
-          dl_dom.find(`dd[lay-value="${item.value}"]`).addClass(THIS)
+          dl.find(`dd[lay-value="${item.value}"]`).addClass(THIS)
           oldVal.push(item)
         }
       })
     } else {
       values.forEach((item, index) => {
         this.addLabel(id, label, item)
-        dl_dom.find(`dd[lay-value="${item.value}"]`).addClass(THIS)
+        dl.find(`dd[lay-value="${item.value}"]`).addClass(THIS)
       })
       data[id].values = values
     }
-
     this.commonHandler(id, label)
   }
 
@@ -1003,51 +895,21 @@
     }
   }
 
-  Common.prototype.createDD = function (id, item, clz) {
+  Common.prototype.createDD = function (id, item) {
     let ajaxConfig = ajaxs[id] ? ajaxs[id] : ajax
-    let name = $.trim(item.innerHTML)
-    db[id][item.value] = $(item).is('option')
-      ? (item = (function () {
-          let resultItem = {}
-          resultItem[ajaxConfig.keyName] = name
-          resultItem[ajaxConfig.keyVal] = item.value
-          resultItem[ajaxConfig.keyDis] = item.disabled
-          return resultItem
-        })())
-      : item
-    let template = data[id].config.template(id, item)
-    let pid = item[FORM_TEAM_PID]
-    pid ? (pid = JSON.parse(pid)) : (pid = [-1])
-    let attr =
-      pid[0] == -1
-        ? ''
-        : `tree-id="${pid.join('-')}" tree-folder="${!!item['XM_TREE_FOLDER']}"`
-    let isAllpelple = $(`select[xm-select=${id}]`).attr(ALL_PEOPLE)
-    let employee = name && name.includes('离职') ? 'employee' : ''
-    let employeeDisplay = name && name.includes('离职') ? 'disN' : ''
-    if (isAllpelple) {
-      return `<dd employee="${employee}"  lay-value="${item.value}" class="${
-        item.disabled ? DISABLED : ''
-      } ${clz ? clz : ''} ${employeeDisplay}" ${attr}>
-                        <div class="xm-unselect xm-form-checkbox ${
-                          item.disabled ? DISABLED : ''
-                        }"  style="margin-left: ${(pid.length - 1) * 20}px">
-                            <i class="${CHECKBOX_YES}"></i>
-                            <span name="${name}">${template}</span>
-                        </div>
+    let isChecked = item[ajaxConfig.keySel] ? 'checked' : ''
+    let isDisabled = item[ajaxConfig.keyDis] ? DISABLED : ''
+
+    // 渲染复选框
+    let checkboxHtml = `<i class="${CHECKBOX_YES} ${isChecked}" ${isDisabled}></i>`
+
+    // 渲染选项内容
+    let itemHtml = `<dd lay-value="${item.value}" ${isDisabled}>
+                        ${checkboxHtml}
+                        <span>${item.name}</span>
                     </dd>`
-    } else {
-      return `<dd lay-value="${item.value}" class="${
-        item.disabled ? DISABLED : ''
-      } ${clz ? clz : ''}" ${attr}>
-                        <div class="xm-unselect xm-form-checkbox ${
-                          item.disabled ? DISABLED : ''
-                        }"  style="margin-left: ${(pid.length - 1) * 20}px">
-                            <i class="${CHECKBOX_YES}"></i>
-                            <span name="${name}">${template}</span>
-                        </div>
-                    </dd>`
-    }
+
+    return itemHtml
   }
 
   Common.prototype.createQuickBtn = function (obj, right) {
@@ -1153,55 +1015,15 @@
     this.one()
 
     $(document).on('click', e => {
+      // console.log(FORM_TITLE,'FORM_TITLE on')
       if (!$(e.target).parents(`.${FORM_TITLE}`)[0]) {
         //清空input中的值
         $(`.${PNAME} dl .${DD_HIDE}`).removeClass(DD_HIDE)
         $(`.${PNAME} dl dd.${FORM_EMPTY}`).removeClass(FORM_EMPTY)
         $(`.${PNAME} dl dd.${TEMP}`).remove()
         $.each(data, (key, fs) => {
-          if (fs.allData.length > 1500) {
-            //说明数据量比较大,关闭的时候需要重新渲染下拉框
-            let reElem = $(`dl[xid="${key}"]`).parents(`.${FORM_SELECT}`)
-            let currentData = fs.allData.slice(0, fs.config.renderLimit)
-            //创建新的dl
-            let dl_dom = reElem.find('dl[xid]')
-            // 保留tips相关元素，移除其他dd元素
-            dl_dom.find(`dd:not(.${FORM_SELECT_TIPS})`).remove()
-            // 创建文档片段来提高性能
-            let fragment = document.createDocumentFragment()
-            let tips = dl_dom.find(`.${FORM_SELECT_TIPS}`)[0]
-            currentData.forEach(item => {
-              // 检查是否在选中项中
-              let isSelected = fs.values.some(val => val.value == item.value)
-              let dd = $(
-                this.createDD(key, {
-                  name: item.name,
-                  value: item.value,
-                  disabled: item.disabled,
-                  type: item.type || '',
-                  innerHTML: item.name
-                })
-              )[0] // 获取原生DOM节点
-              // 如果是选中项，添加THIS类
-              if (isSelected) {
-                $(dd).addClass(THIS)
-              }
-              fragment.appendChild(dd)
-            })
-            let loadMoreTip =
-              $(`<dd class="load-more ${DISABLED}" style="text-align: center; padding: 5px 0; cursor: pointer; color: #999;">
-              还有${
-                fs.allData.length - fs.config.renderLimit
-              }条数据未显示，点击加载更多
-          </dd>`)[0]
-            //如果已经存在加载更多提示，则移除
-            if (dl_dom.find('.load-more').length) {
-              dl_dom.find('.load-more').remove()
-            }
-            fragment.appendChild(loadMoreTip)
-            // 将文档片段插入到tips元素之前
-            tips.parentNode.appendChild(fragment)
-          } else if (!fs.values.length) {
+          this.clearInput(key)
+          if (!fs.values.length) {
             this.changePlaceHolder($(`div[FS_ID="${key}"] .${LABEL}`))
           }
         })
@@ -2313,8 +2135,6 @@
             config.direction &&
             (data[id].config.direction = config.direction),
           data[id] && config.clearInput && (data[id].config.clearInput = true),
-          config.renderLimit &&
-            (data[id].config.renderLimit = config.renderLimit),
           config.searchUrl &&
             data[id] &&
             common.triggerSearch(
@@ -2424,8 +2244,6 @@
     this.value(id, [])
     this.config(id, config)
     if (type == 'local') {
-      //把config.arr复制给common.allData
-      common.setAllData(id, config.arr)
       common.renderData(
         id,
         config.arr,
