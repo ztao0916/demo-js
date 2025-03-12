@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>个人介绍页面</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="css/layui.css">
+    <style>
+        .header {
+            text-align: center;
+            padding: 60px 0;
+            background: linear-gradient(135deg, #1E9FFF 0%, #2F4056 100%);
+            color: #fff;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .avatar {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            border: 4px solid rgba(255,255,255,0.3);
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+        }
+        .avatar:hover {
+            transform: scale(1.05);
+            border-color: rgba(255,255,255,0.8);
+        }
+        .content {
+            padding: 20px;
+            background: #f8f8f8;
+        }
+        .layui-card {
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .layui-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .layui-card-header {
+            font-size: 16px;
+            font-weight: bold;
+            color: #1E9FFF;
+            border-bottom: 2px solid #f0f0f0;
+            padding: 15px 20px;
+        }
+        .layui-card-body {
+            padding: 20px;
+        }
+        .skill-item {
+            margin: 15px 0;
+        }
+        .skill-item span {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #666;
+        }
+        .layui-progress {
+            height: 12px;
+            border-radius: 6px;
+        }
+        .layui-progress-bar {
+            border-radius: 6px;
+            transition: all 0.8s ease;
+        }
+        .layui-timeline-item {
+            padding-bottom: 25px;
+        }
+        .layui-timeline-title {
+            color: #1E9FFF;
+        }
+        .layui-colla-title {
+            background-color: #f8f8f8;
+        }
+        .layui-colla-item:first-child {
+            border-radius: 8px 8px 0 0;
+        }
+        .layui-colla-item:last-child {
+            border-radius: 0 0 8px 8px;
+        }
+        .layui-icon {
+            margin-right: 8px;
+            color: #1E9FFF;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="https://unsplash.it/120/120" alt="头像" class="avatar layui-anim layui-anim-up">
+        <h1 class="layui-anim layui-anim-up">张三</h1>
+        <p class="layui-anim layui-anim-up">Web前端开发工程师</p>
+    </div>
+
+    <div class="layui-container content">
+        <!-- 基本信息 -->
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md6">
+                <div class="layui-card">
+                    <div class="layui-card-header"><i class="layui-icon layui-icon-user"></i> 基本信息</div>
+                    <div class="layui-card-body">
+                        <p><i class="layui-icon layui-icon-location"></i> 所在地：北京市</p>
+                        <p><i class="layui-icon layui-icon-email"></i> 邮箱：example@email.com</p>
+                        <p><i class="layui-icon layui-icon-cellphone"></i> 电话：123-4567-8900</p>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-md6">
+                <div class="layui-card">
+                    <div class="layui-card-header"><i class="layui-icon layui-icon-star"></i> 个人特长</div>
+                    <div class="layui-card-body">
+                        <div class="skill-item">
+                            <span>HTML/CSS</span>
+                            <div class="layui-progress" lay-showpercent="true">
+                                <div class="layui-progress-bar" lay-percent="90%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span>JavaScript</span>
+                            <div class="layui-progress" lay-showpercent="true">
+                                <div class="layui-progress-bar layui-bg-orange" lay-percent="85%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span>Vue.js</span>
+                            <div class="layui-progress" lay-showpercent="true">
+                                <div class="layui-progress-bar layui-bg-green" lay-percent="80%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 教育经历 -->
+        <div class="layui-row" style="margin-top: 20px;">
+            <div class="layui-col-md12">
+                <div class="layui-card">
+                    <div class="layui-card-header"><i class="layui-icon layui-icon-read"></i> 教育经历</div>
+                    <div class="layui-card-body">
+                        <ul class="layui-timeline">
+                            <li class="layui-timeline-item">
+                                <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                                <div class="layui-timeline-content layui-text">
+                                    <h3 class="layui-timeline-title">2019年 - 2023年</h3>
+                                    <p>某某大学 计算机科学与技术专业</p>
+                                    <p>主修课程：数据结构、算法分析、计算机网络、操作系统等</p>
+                                </div>
+                            </li>
+                            <li class="layui-timeline-item">
+                                <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                                <div class="layui-timeline-content layui-text">
+                                    <h3 class="layui-timeline-title">2016年 - 2019年</h3>
+                                    <p>某某高中</p>
+                                    <p>获得多次学科竞赛奖项</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 工作经历 -->
+        <div class="layui-row" style="margin-top: 20px;">
+            <div class="layui-col-md12">
+                <div class="layui-card">
+                    <div class="layui-card-header"><i class="layui-icon layui-icon-flag"></i> 工作经历</div>
+                    <div class="layui-card-body">
+                        <div class="layui-collapse">
+                            <div class="layui-colla-item">
+                                <h2 class="layui-colla-title">某某科技有限公司（2023年至今）</h2>
+                                <div class="layui-colla-content layui-show">
+                                    <p>前端开发工程师</p>
+                                    <ul>
+                                        <li>负责公司主要产品的前端开发工作</li>
+                                        <li>参与前端架构设计和技术选型</li>
+                                        <li>优化前端性能，提升用户体验</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="layui-colla-item">
+                                <h2 class="layui-colla-title">某某网络公司（2022年 - 2023年）</h2>
+                                <div class="layui-colla-content">
+                                    <p>前端开发实习生</p>
+                                    <ul>
+                                        <li>参与公司官网的改版工作</li>
+                                        <li>开发和维护内部管理系统</li>
+                                        <li>编写技术文档，参与代码评审</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/layui.js"></script>
+    <script>
+        layui.use(['element', 'layer'], function(){
+            var element = layui.element;
+            var layer = layui.layer;
+            
+            // 初始化进度条
+            element.progress('demo', '50%');
+        });
+    </script>
+</body>
+</html>
