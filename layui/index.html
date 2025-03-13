@@ -34,7 +34,7 @@
     </div>
   </div>
   <script src="./js/layui.all.js"></script>
-  <script src="./js/formSelects.js" type="text/javascript" charset="utf-8"></script>
+  <script src="./js/formSelects.js" type="text/javascript"></script>
   <script>
     let formSelects = layui.formSelects;
     const $ = layui.jquery;
@@ -50,7 +50,7 @@
           }));
           // 再渲染数据
           formSelects.data('shop', 'local', {
-            arr: options
+            arr: options.slice(0, 1000)
           });
         }
       }

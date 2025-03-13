@@ -21,46 +21,46 @@
   }
 })(typeof layui == 'undefined' ? null : layui, window, function () {
   let v = '4.0.0.0910',
-    NAME = 'xm-select',
-    PNAME = 'xm-select-parent',
-    INPUT = 'xm-select-input',
-    TDIV = 'xm-select--suffix',
-    THIS = 'xm-select-this',
-    LABEL = 'xm-select-label',
-    SEARCH = 'xm-select-search',
-    SEARCH_TYPE = 'xm-select-search-type',
-    SHOW_COUNT = 'xm-select-show-count',
-    CREATE = 'xm-select-create',
-    CREATE_LONG = 'xm-select-create-long',
-    MAX = 'xm-select-max',
-    SKIN = 'xm-select-skin',
-    DIRECTION = 'xm-select-direction',
-    HEIGHT = 'xm-select-height',
-    DISABLED = 'xm-dis-disabled',
-    DIS = 'xm-select-dis',
-    TEMP = 'xm-select-temp',
-    RADIO = 'xm-select-radio',
-    LINKAGE = 'xm-select-linkage',
-    DL = 'xm-select-dl',
-    DD_HIDE = 'xm-select-hide',
-    HIDE_INPUT = 'xm-hide-input',
-    SANJIAO = 'xm-select-sj',
-    ICON_CLOSE = 'xm-icon-close',
-    FORM_TITLE = 'xm-select-title',
-    FORM_SELECT = 'xm-form-select',
-    FORM_SELECTED = 'xm-form-selected',
-    FORM_NONE = 'xm-select-none',
-    FORM_EMPTY = 'xm-select-empty',
-    FORM_INPUT = 'xm-input',
-    FORM_DL_INPUT = 'xm-dl-input',
-    FORM_SELECT_TIPS = 'xm-select-tips',
-    CHECKBOX_YES = 'xm-iconfont',
-    FORM_TEAM_PID = 'XM_PID_VALUE',
-    ALL_PEOPLE = 'xm-select-allpeople',
-    CZ = 'xm-cz',
-    CZ_GROUP = 'xm-cz-group',
-    TIPS = '请选择',
-    data = {},
+    NAME = 'xm-select', //name
+    PNAME = 'xm-select-parent', //父级
+    INPUT = 'xm-select-input', //输入框
+    TDIV = 'xm-select--suffix', //后缀
+    THIS = 'xm-select-this', //this
+    LABEL = 'xm-select-label', //label
+    SEARCH = 'xm-select-search', //搜索
+    SEARCH_TYPE = 'xm-select-search-type', //搜索类型
+    SHOW_COUNT = 'xm-select-show-count', //显示数量
+    CREATE = 'xm-select-create', //创建
+    CREATE_LONG = 'xm-select-create-long', //创建长
+    MAX = 'xm-select-max', //最大
+    SKIN = 'xm-select-skin', //皮肤
+    DIRECTION = 'xm-select-direction', //方向
+    HEIGHT = 'xm-select-height', //高度
+    DISABLED = 'xm-dis-disabled', //禁用
+    DIS = 'xm-select-dis', //dis
+    TEMP = 'xm-select-temp', //temp
+    RADIO = 'xm-select-radio', //radio
+    LINKAGE = 'xm-select-linkage', //linkage
+    DL = 'xm-select-dl', //dl
+    DD_HIDE = 'xm-select-hide', //隐藏dd
+    HIDE_INPUT = 'xm-hide-input', //隐藏input
+    SANJIAO = 'xm-select-sj', //三角
+    ICON_CLOSE = 'xm-icon-close', //icon-close
+    FORM_TITLE = 'xm-select-title', //title
+    FORM_SELECT = 'xm-form-select', //表单的form-select
+    FORM_SELECTED = 'xm-form-selected', //表单的form-selected
+    FORM_NONE = 'xm-select-none', //表单的select-none
+    FORM_EMPTY = 'xm-select-empty', //表单的select-empty
+    FORM_INPUT = 'xm-input', //表单的input
+    FORM_DL_INPUT = 'xm-dl-input', //表单的dl-input
+    FORM_SELECT_TIPS = 'xm-select-tips', //表单的select-tips
+    CHECKBOX_YES = 'xm-iconfont', //checkbox-yes
+    FORM_TEAM_PID = 'XM_PID_VALUE', //form-team-pid
+    ALL_PEOPLE = 'xm-select-allpeople', //allpeople
+    CZ = 'xm-cz', //操作
+    CZ_GROUP = 'xm-cz-group', //操作分组
+    TIPS = '请选择', //提示
+    data = {}, //data
     events = {
       on: {},
       endOn: {},
@@ -69,6 +69,7 @@
       opened: {},
       closed: {}
     },
+    //忽略ajax,暂时用不到
     ajax = {
       type: 'get',
       header: {},
@@ -102,80 +103,92 @@
         lazy: true
       }
     },
+    //快捷按钮
     quickBtns = [
       {
-        icon: 'xm-iconfont icon-quanxuan',
+        icon: 'xm-iconfont icon-quanxuan', //全选
         name: '全选',
         click: function (id, cm) {
           cm.selectAll(id, true, true)
         }
       },
       {
-        icon: 'xm-iconfont icon-qingkong',
+        icon: 'xm-iconfont icon-qingkong', //清空
         name: '清空',
         click: function (id, cm) {
           cm.removeAll(id, true, true)
         }
       },
       {
-        icon: 'xm-iconfont icon-fanxuan',
+        icon: 'xm-iconfont icon-fanxuan', //反选
         name: '反选',
         click: function (id, cm) {
           cm.reverse(id, true, true)
         }
       },
       {
-        icon: 'xm-iconfont icon-pifu',
+        icon: 'xm-iconfont icon-pifu', //换肤
         name: '换肤',
         click: function (id, cm) {
           cm.skin(id)
         }
       },
       {
-        name: '所有人员',
+        name: '所有人员', //所有人员
         click: function (id, cm) {
           cm.allpeopleFn(id, true, true)
         }
       }
     ],
     $ = window.$ || (window.layui && window.layui.jquery),
-    $win = $(window),
-    ajaxs = {},
-    fsConfig = {},
-    fsConfigs = {},
+    $win = $(window), //window
+    ajaxs = {}, //ajax
+    fsConfig = {}, //配置
+    fsConfigs = {}, //配置
     FormSelects = function (options) {
       this.config = {
         name: null, //xm-select="xxx"
-        max: null,
+        max: null, //最大
+        // 超过最大数量提示
         maxTips: (id, vals, val, max) => {
-          let ipt = $(`[xid="${this.config.name}"]`).prev().find(`.${NAME}`)
+          let ipt = $(`[xid="${this.config.name}"]`).prev().find(`.${NAME}`) //获取输入框
           if (ipt.parents('.layui-form-item[pane]').length) {
             ipt = ipt.parents('.layui-form-item[pane]')
           }
-          ipt.attr('style', 'border-color: red !important')
+          ipt.attr('style', 'border-color: red !important') //错误样式
           setTimeout(() => {
-            ipt.removeAttr('style')
+            ipt.removeAttr('style') //300ms后移除错误样式
           }, 300)
         },
         init: null, //初始化的选择值,
         on: null, //select值发生变化
         opened: null,
         closed: null,
+        // 匹配搜索: 单个模糊匹配,多个精确匹配
         filter: (id, inputVal, val, isDisabled) => {
-          let newInputVal = inputVal.replace(/，/g, ',')
-          if (newInputVal.indexOf(',') > 0) {
-            // 多个精确
-            let inputValArr = newInputVal
-              .trim()
-              .split(',')
-              .map(val => val.trim())
-            return !inputValArr.includes(val.name)
+          // 快速判断空输入情况
+          if (!inputVal || !inputVal.trim()) {
+            return false // 空输入时显示所有选项
+          }
+          // 缓存处理后的输入值
+          const trimmedInput = inputVal.trim()
+          // 检查是否包含逗号（只检查一次）
+          if (trimmedInput.indexOf(',') > -1) {
+            // 多个精确匹配 - 预先分割搜索词
+            const searchTerms = trimmedInput.replace(/，/g, ',').split(',')
+
+            // 遍历每个搜索词，找到匹配项就返回false（显示）
+            for (let i = 0; i < searchTerms.length; i++) {
+              const term = searchTerms[i].trim()
+              if (term && term === val.name) {
+                return false
+              }
+            }
+            return true // 没有匹配项则隐藏
           } else {
-            // 单个模糊
+            // 单个模糊匹配 - 直接使用indexOf，避免额外的toLowerCase()操作
             return (
-              val.name
-                .toLowerCase()
-                .indexOf(newInputVal.toLowerCase().trim()) === -1
+              val.name.toLowerCase().indexOf(trimmedInput.toLowerCase()) === -1
             )
           }
         },
@@ -183,27 +196,31 @@
         direction: 'auto',
         height: '50px', //设为null为不设置高度，修改这里---------------------------------------------------
         isEmpty: false,
-        btns: [quickBtns[0], quickBtns[1], quickBtns[2]],
-        searchType: 0,
+        btns: [quickBtns[0], quickBtns[1], quickBtns[2]], //默认按钮[全选,清空,反选]
+        searchType: 0, //搜索类型: 0-模糊搜索, 1-精确搜索
         create: (id, name) => {
-          return Date.now()
+          //创建
+          return Date.now() // 创建时间戳
         },
         template: (id, item) => {
-          return item.name
+          //模板
+          return item.name // 返回选项的name
         },
-        showCount: 0,
-        isCreate: false,
-        placeholder: TIPS,
-        clearInput: false
+        showCount: 0, //显示数量
+        isCreate: false, //是否创建
+        placeholder: TIPS, //提示
+        clearInput: false //是否清空
       }
-      this.select = null
-      this.values = []
+      this.select = null // 选择器
+      this.values = [] // 已选值
+      // 合并配置
       $.extend(
-        this.config,
-        options,
+        this.config, //默认配置
+        options, //用户配置
+        //ajax配置
         {
-          searchUrl: options.isSearch ? options.searchUrl : null,
-          placeholder: options.optionsFirst
+          searchUrl: options.isSearch ? options.searchUrl : null, //搜索地址
+          placeholder: options.optionsFirst //选项第一个
             ? options.optionsFirst.value
               ? TIPS
               : options.optionsFirst.innerHTML || TIPS
@@ -214,7 +231,7 @@
             ? [quickBtns[0], quickBtns[1], quickBtns[4], quickBtns[2]]
             : [quickBtns[0], quickBtns[1], quickBtns[2]]
         },
-        fsConfigs[options.name] || fsConfig
+        fsConfigs[options.name] || fsConfig //用户配置
       )
       if (isNaN(this.config.showCount) || this.config.showCount <= 0) {
         this.config.showCount = 19921012
@@ -892,21 +909,51 @@
     }
   }
 
-  Common.prototype.createDD = function (id, item) {
+  Common.prototype.createDD = function (id, item, clz) {
     let ajaxConfig = ajaxs[id] ? ajaxs[id] : ajax
-    let isChecked = item[ajaxConfig.keySel] ? 'checked' : ''
-    let isDisabled = item[ajaxConfig.keyDis] ? DISABLED : ''
-
-    // 渲染复选框
-    let checkboxHtml = `<i class="${CHECKBOX_YES} ${isChecked}" ${isDisabled}></i>`
-
-    // 渲染选项内容
-    let itemHtml = `<dd lay-value="${item.value}" ${isDisabled}>
-                        ${checkboxHtml}
-                        <span>${item.name}</span>
-                    </dd>`
-
-    return itemHtml
+    let name = $.trim(item.innerHTML)
+    db[id][item.value] = $(item).is('option')
+      ? (item = (function () {
+          let resultItem = {}
+          resultItem[ajaxConfig.keyName] = name
+          resultItem[ajaxConfig.keyVal] = item.value
+          resultItem[ajaxConfig.keyDis] = item.disabled
+          return resultItem
+        })())
+      : item
+    let template = data[id].config.template(id, item)
+    let pid = item[FORM_TEAM_PID]
+    pid ? (pid = JSON.parse(pid)) : (pid = [-1])
+    let attr =
+      pid[0] == -1
+        ? ''
+        : `tree-id="${pid.join('-')}" tree-folder="${!!item['XM_TREE_FOLDER']}"`
+    let isAllpelple = $(`select[xm-select=${id}]`).attr(ALL_PEOPLE)
+    let employee = name && name.includes('离职') ? 'employee' : ''
+    let employeeDisplay = name && name.includes('离职') ? 'disN' : ''
+    if (isAllpelple) {
+      return `<dd employee="${employee}"  lay-value="${item.value}" class="${
+        item.disabled ? DISABLED : ''
+      } ${clz ? clz : ''} ${employeeDisplay}" ${attr}>
+                      <div class="xm-unselect xm-form-checkbox ${
+                        item.disabled ? DISABLED : ''
+                      }"  style="margin-left: ${(pid.length - 1) * 20}px">
+                          <i class="${CHECKBOX_YES}"></i>
+                          <span name="${name}">${template}</span>
+                      </div>
+                  </dd>`
+    } else {
+      return `<dd lay-value="${item.value}" class="${
+        item.disabled ? DISABLED : ''
+      } ${clz ? clz : ''}" ${attr}>
+                      <div class="xm-unselect xm-form-checkbox ${
+                        item.disabled ? DISABLED : ''
+                      }"  style="margin-left: ${(pid.length - 1) * 20}px">
+                          <i class="${CHECKBOX_YES}"></i>
+                          <span name="${name}">${template}</span>
+                      </div>
+                  </dd>`
+    }
   }
 
   Common.prototype.createQuickBtn = function (obj, right) {
