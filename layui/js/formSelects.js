@@ -762,22 +762,120 @@
     return Object.prototype.toString.call(obj) == '[object Array]'
   }
 
+  //#region 触发搜索
+  /**
+   * 触发搜索操作
+   * @param {HTMLElement|jQuery} div - 目标元素
+   * @param {boolean} isCall - 是否强制触发
+   */
   Common.prototype.triggerSearch = function (div, isCall) {
-    ;(div ? [div] : $(`.${FORM_SELECT}`).toArray()).forEach((reElem, index) => {
-      reElem = $(reElem)
-      let id = reElem.find('dl').attr('xid')
-      if ((id && data[id] && data[id].config.isEmpty) || isCall) {
-        this.search(
-          id,
-          null,
-          null,
-          data[id].config.searchType == 0
-            ? reElem.find(`.${LABEL} .${INPUT}`)
-            : reElem.find(`dl .${FORM_DL_INPUT} .${INPUT}`)
-        )
-      }
+    // 1. 获取目标元素
+    const $targets = this.getSearchTargets(div)
+
+    // 2. 遍历处理每个目标
+    $targets.forEach($elem => {
+      this.handleSearchTarget($elem, isCall)
     })
   }
+
+  /**
+   * 获取搜索目标元素
+   * @param {HTMLElement|jQuery} div - 目标元素
+   * @returns {jQuery[]} 目标元素数组
+   */
+  Common.prototype.getSearchTargets = function (div) {
+    if (div) {
+      return [$(div)]
+    }
+    return $(`.${FORM_SELECT}`)
+      .toArray()
+      .map(elem => $(elem))
+  }
+
+  /**
+   * 处理单个搜索目标
+   * @param {jQuery} $elem - 目标元素
+   * @param {boolean} isCall - 是否强制触发
+   */
+  Common.prototype.handleSearchTarget = function ($elem, isCall) {
+    // 1. 获取搜索ID
+    const id = this.getSearchId($elem)
+    if (!id) return
+
+    // 2. 检查搜索条件
+    if (!this.shouldTriggerSearch(id, isCall)) return
+
+    // 3. 获取搜索输入框
+    const $input = this.getSearchInput($elem, id)
+    if (!$input.length) return
+
+    // 4. 执行搜索
+    this.executeTriggerSearch(id, $input)
+  }
+
+  /**
+   * 获取搜索ID
+   * @param {jQuery} $elem - 目标元素
+   * @returns {string|null} 搜索ID
+   */
+  Common.prototype.getSearchId = function ($elem) {
+    return $elem.find('dl').attr('xid')
+  }
+
+  /**
+   * 检查是否应该触发搜索
+   * @param {string} id - 搜索ID
+   * @param {boolean} isCall - 是否强制触发
+   * @returns {boolean} 是否应该触发
+   */
+  Common.prototype.shouldTriggerSearch = function (id, isCall) {
+    return isCall || (id && data[id] && data[id].config.isEmpty)
+  }
+
+  /**
+   * 获取搜索输入框
+   * @param {jQuery} $elem - 目标元素
+   * @param {string} id - 搜索ID
+   * @returns {jQuery} 输入框元素
+   */
+  Common.prototype.getSearchInput = function ($elem, id) {
+    const searchType = data[id].config.searchType
+    const selector =
+      searchType === 0
+        ? `.${LABEL} .${INPUT}`
+        : `dl .${FORM_DL_INPUT} .${INPUT}`
+
+    return $elem.find(selector)
+  }
+
+  /**
+   * 执行触发搜索
+   * @param {string} id - 搜索ID
+   * @param {jQuery} $input - 输入框元素
+   */
+  Common.prototype.executeTriggerSearch = function (id, $input) {
+    try {
+      this.search(id, null, null, $input)
+    } catch (error) {
+      console.error(`搜索执行失败: ${error.message}`)
+      this.handleSearchError(id)
+    }
+  }
+
+  /**
+   * 处理搜索错误
+   * @param {string} id - 搜索ID
+   */
+  Common.prototype.handleSearchError = function (id) {
+    const $reElem = $(`.${PNAME} dl[xid="${id}"]`).parents(`.${FORM_SELECT}`)
+    if ($reElem.length) {
+      $reElem
+        .find(`dd.${FORM_NONE}`)
+        .addClass(FORM_EMPTY)
+        .text('搜索出错,请重试')
+    }
+  }
+  //#endregion
 
   Common.prototype.clearInput = function (id) {
     let div = $(`.${PNAME}[fs_id="${id}"]`)
