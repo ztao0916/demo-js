@@ -327,7 +327,9 @@
     }
   }
 
-  // 初始化页面上已有的select
+  //#region 初始化页面上已有的select
+
+  // 初始化
   Common.prototype.init = function (target) {
     // 获取目标select元素
     const $selects = $(target ? target : `select[${NAME}]`)
@@ -538,96 +540,223 @@
     }
   }
 
-  Common.prototype.search = function (id, e, searchUrl, call) {
-    let input
-    if (call) {
-      input = call
-    } else {
-      input = e.target
-      let keyCode = e.keyCode
-      if (
-        keyCode === 9 ||
-        keyCode === 13 ||
-        keyCode === 37 ||
-        keyCode === 38 ||
-        keyCode === 39 ||
-        keyCode === 40
-      ) {
-        return false
-      }
-    }
-    let inputValue = $.trim(input.value)
-    //过滤一下tips
-    this.changePlaceHolder($(input))
+  //#endregion
 
-    let ajaxConfig = ajaxs[id] ? ajaxs[id] : ajax
-    searchUrl = ajaxConfig.searchUrl || searchUrl
-    let fs = data[id],
-      isCreate = fs.config.isCreate,
-      reElem = $(`dl[xid="${id}"]`).parents(`.${FORM_SELECT}`)
-    //如果开启了远程搜索
-    if (searchUrl) {
-      if (ajaxConfig.searchVal) {
-        inputValue = ajaxConfig.searchVal
-        ajaxConfig.searchVal = ''
-      }
-      if (
-        !ajaxConfig.beforeSearch ||
-        (ajaxConfig.beforeSearch &&
-          ajaxConfig.beforeSearch instanceof Function &&
-          ajaxConfig.beforeSearch(id, searchUrl, inputValue))
-      ) {
-        let delay = ajaxConfig.delay
-        if (ajaxConfig.first) {
-          ajaxConfig.first = false
-          delay = 10
-        }
-        clearTimeout(fs.clearid)
-        fs.clearid = setTimeout(() => {
-          reElem.find(`dl > *:not(.${FORM_SELECT_TIPS})`).remove()
-          reElem
-            .find(`dd.${FORM_NONE}`)
-            .addClass(FORM_EMPTY)
-            .text('请输入要搜索的内容')
-          this.ajax(id, searchUrl, inputValue, false, null, true)
-        }, delay)
-      }
-    } else {
-      reElem.find(`dl .${DD_HIDE}`).removeClass(DD_HIDE)
-      //遍历选项, 选择可以显示的值
-      reElem.find(`dl dd:not(.${FORM_SELECT_TIPS})`).each((idx, item) => {
-        let _item = $(item)
-        let searchFun = events.filter[id] || data[id].config.filter
-        if (
-          searchFun &&
-          searchFun(
-            id,
-            inputValue,
-            this.getItem(id, _item),
-            _item.hasClass(DISABLED)
-          ) == true
-        ) {
-          _item.addClass(DD_HIDE)
-        }
-      })
-      //控制分组名称
-      reElem.find('dl dt').each((index, item) => {
-        if (!$(item).nextUntil('dt', `:not(.${DD_HIDE})`).length) {
-          $(item).addClass(DD_HIDE)
-        }
-      })
-      //动态创建
-      this.create(id, isCreate, inputValue)
-      let shows = reElem.find(
-        `dl dd:not(.${FORM_SELECT_TIPS}):not(.${DD_HIDE})`
-      )
-      if (!shows.length) {
-        reElem.find(`dd.${FORM_NONE}`).addClass(FORM_EMPTY).text('无匹配项')
-      } else {
-        reElem.find(`dd.${FORM_NONE}`).removeClass(FORM_EMPTY)
-      }
+  //#region 搜索事件
+  //搜索处理
+  Common.prototype.search = function (id, e, searchUrl, call) {
+    // 1. 初始化搜索参数
+    const searchParams = this.initSearchParams(id, e, searchUrl, call)
+    if (!searchParams) return
+
+    // 2. 获取搜索配置
+    const config = this.getSearchConfig(id, searchParams.searchUrl)
+
+    // 3. 执行搜索
+    this.executeSearch(id, searchParams, config)
+  }
+
+  // 初始化搜索参数
+  Common.prototype.initSearchParams = function (id, e, searchUrl, call) {
+    const input = call || e.target
+
+    // 处理特殊按键
+    if (!call && this.isSpecialKey(e.keyCode)) {
+      return null
+    }
+
+    return {
+      input,
+      inputValue: $.trim(input.value),
+      searchUrl,
+      $input: $(input)
     }
   }
+
+  // 判断是否为特殊按键
+  Common.prototype.isSpecialKey = function (keyCode) {
+    const specialKeys = [9, 13, 37, 38, 39, 40]
+    return specialKeys.includes(keyCode)
+  }
+
+  // 获取搜索配置
+  Common.prototype.getSearchConfig = function (id, searchUrl) {
+    const ajaxConfig = ajaxs[id] || ajax
+    return {
+      ...ajaxConfig,
+      searchUrl: ajaxConfig.searchUrl || searchUrl,
+      fs: data[id],
+      $reElem: $(`dl[xid="${id}"]`).parents(`.${FORM_SELECT}`)
+    }
+  }
+
+  // 执行搜索
+  Common.prototype.executeSearch = function (id, params, config) {
+    // 更新占位符
+    this.changePlaceHolder(params.$input)
+
+    // 根据搜索类型执行不同的搜索逻辑
+    if (config.searchUrl) {
+      this.executeRemoteSearch(id, params, config)
+    } else {
+      this.executeLocalSearch(id, params, config)
+    }
+  }
+
+  // 执行远程搜索
+  Common.prototype.executeRemoteSearch = function (id, params, config) {
+    const { fs, searchUrl, $reElem } = config
+
+    // 处理搜索值
+    let inputValue = this.handleSearchValue(params.inputValue, config)
+
+    // 执行搜索前检查
+    if (!this.checkBeforeSearch(config, id, searchUrl, inputValue)) {
+      return
+    }
+
+    // 设置延迟搜索
+    this.setupDelayedSearch(fs, $reElem, id, searchUrl, inputValue, config)
+  }
+
+  // 处理搜索值
+  Common.prototype.handleSearchValue = function (inputValue, config) {
+    if (config.searchVal) {
+      inputValue = config.searchVal
+      config.searchVal = ''
+    }
+    return inputValue
+  }
+
+  // 检查搜索前条件
+  Common.prototype.checkBeforeSearch = function (
+    config,
+    id,
+    searchUrl,
+    inputValue
+  ) {
+    return (
+      !config.beforeSearch ||
+      (config.beforeSearch instanceof Function &&
+        config.beforeSearch(id, searchUrl, inputValue))
+    )
+  }
+
+  // 设置延迟搜索
+  Common.prototype.setupDelayedSearch = function (
+    fs,
+    $reElem,
+    id,
+    searchUrl,
+    inputValue,
+    config
+  ) {
+    const delay = config.first ? 10 : config.delay
+
+    clearTimeout(fs.clearid)
+
+    fs.clearid = setTimeout(() => {
+      this.prepareRemoteSearch($reElem)
+      this.ajax(id, searchUrl, inputValue, false, null, true)
+    }, delay)
+  }
+
+  // 准备远程搜索
+  Common.prototype.prepareRemoteSearch = function ($reElem) {
+    $reElem.find(`dl > *:not(.${FORM_SELECT_TIPS})`).remove()
+    $reElem
+      .find(`dd.${FORM_NONE}`)
+      .addClass(FORM_EMPTY)
+      .text('请输入要搜索的内容')
+  }
+
+  // 执行本地搜索
+  Common.prototype.executeLocalSearch = function (id, params, config) {
+    const { $reElem, fs } = config
+    const $dl = $reElem.find('dl')
+
+    // 重置显示状态
+    this.resetLocalSearchState($dl)
+
+    // 执行过滤
+    this.filterLocalOptions(id, params.inputValue, $dl, fs)
+
+    // 处理分组显示
+    this.handleGroupVisibility($dl)
+
+    // 处理动态创建
+    this.handleDynamicCreation(id, fs.config.isCreate, params.inputValue)
+
+    // 更新搜索结果状态
+    this.updateSearchResultStatus($reElem)
+  }
+
+  // 重置本地搜索状态
+  Common.prototype.resetLocalSearchState = function ($dl) {
+    $dl.find(`.${DD_HIDE}`).removeClass(DD_HIDE)
+  }
+
+  // 过滤本地选项
+  Common.prototype.filterLocalOptions = function (id, inputValue, $dl, fs) {
+    const searchFun = events.filter[id] || fs.config.filter
+
+    $dl.find(`dd:not(.${FORM_SELECT_TIPS})`).each((_, item) => {
+      const $item = $(item)
+      if (this.shouldHideOption(searchFun, id, inputValue, $item)) {
+        $item.addClass(DD_HIDE)
+      }
+    })
+  }
+
+  // 判断是否应该隐藏选项
+  Common.prototype.shouldHideOption = function (
+    searchFun,
+    id,
+    inputValue,
+    $item
+  ) {
+    return (
+      searchFun &&
+      searchFun(
+        id,
+        inputValue,
+        this.getItem(id, $item),
+        $item.hasClass(DISABLED)
+      ) === true
+    )
+  }
+
+  // 处理分组显示
+  Common.prototype.handleGroupVisibility = function ($dl) {
+    $dl.find('dt').each((_, item) => {
+      const $dt = $(item)
+      if (!$dt.nextUntil('dt', `:not(.${DD_HIDE})`).length) {
+        $dt.addClass(DD_HIDE)
+      }
+    })
+  }
+
+  // 处理动态创建
+  Common.prototype.handleDynamicCreation = function (id, isCreate, inputValue) {
+    if (isCreate) {
+      this.create(id, isCreate, inputValue)
+    }
+  }
+
+  // 更新搜索结果状态
+  Common.prototype.updateSearchResultStatus = function ($reElem) {
+    const $shows = $reElem.find(
+      `dl dd:not(.${FORM_SELECT_TIPS}):not(.${DD_HIDE})`
+    )
+    const $none = $reElem.find(`dd.${FORM_NONE}`)
+
+    if (!$shows.length) {
+      $none.addClass(FORM_EMPTY).text('无匹配项')
+    } else {
+      $none.removeClass(FORM_EMPTY)
+    }
+  }
+  //#endregion
 
   Common.prototype.isArray = function (obj) {
     return Object.prototype.toString.call(obj) == '[object Array]'
