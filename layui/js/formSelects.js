@@ -240,11 +240,12 @@
 
   //一些简单的处理方法
   let Common = function () {
-    this.appender()
-    this.on()
-    this.onreset()
+    this.appender() //针对IE做的一些拓展
+    this.on() //选择值发生变化
+    this.onreset() //重置
   }
 
+  // 针对IE做的一些拓展,无需关注
   Common.prototype.appender = function () {
     //针对IE做的一些拓展
     //拓展Array map方法
@@ -326,138 +327,215 @@
     }
   }
 
+  // 初始化页面上已有的select
   Common.prototype.init = function (target) {
-    //初始化页面上已有的select
-    $(target ? target : `select[${NAME}]`).each((index, select) => {
-      let othis = $(select),
-        id = othis.attr(NAME),
-        hasLayuiRender = othis.next(`.layui-form-select`),
-        hasRender = othis.next(`.${PNAME}`),
-        options = {
-          name: id,
-          disabled: select.disabled,
-          max: othis.attr(MAX) - 0,
-          isSearch: othis.attr(SEARCH) != undefined,
-          searchUrl: othis.attr(SEARCH),
-          isCreate: othis.attr(CREATE) != undefined,
-          radio: othis.attr(RADIO) != undefined,
-          skin: othis.attr(SKIN),
-          direction: othis.attr(DIRECTION),
-          optionsFirst: select.options[0],
-          height: othis.attr(HEIGHT),
-          formname: othis.attr('name') || othis.attr('_name'),
-          layverify: othis.attr('lay-verify') || othis.attr('_lay-verify'),
-          layverType: othis.attr('lay-verType'),
-          searchType: othis.attr(SEARCH_TYPE) == 'dl' ? 1 : 0,
-          showCount: othis.attr(SHOW_COUNT) - 0,
-          allPeople: othis.attr(ALL_PEOPLE)
-        },
-        value = othis
-          .find('option[selected]')
-          .toArray()
-          .map(option => {
-            //获取已选中的数据
-            return {
-              name: option.innerHTML,
-              value: option.value
-            }
-          }),
-        fs = new FormSelects(options)
+    // 获取目标select元素
+    const $selects = $(target ? target : `select[${NAME}]`)
 
-      fs.values = value
+    $selects.each((index, select) => {
+      const $select = $(select)
+      const id = $select.attr(NAME)
 
-      if (fs.config.init) {
-        fs.values = fs.config.init
-          .map(item => {
-            if (typeof item == 'object') {
-              return item
-            }
-            return {
-              name: othis.find(`option[value="${item}"]`).text(),
-              value: item
-            }
-          })
-          .filter(item => {
-            return item.name
-          })
-        fs.config.init = fs.values.concat([])
-      } else {
-        fs.config.init = value.concat([])
-      }
+      // 1. 初始化配置项
+      const options = this.initOptions($select, select)
 
-      !fs.values && (fs.values = [])
+      // 2. 获取已选值
+      const selectedValues = this.getSelectedValues($select)
 
-      data[id] = fs
+      // 3. 创建FormSelects实例
+      const fs = this.createFormSelects(options, selectedValues)
 
-      //先取消layui对select的渲染
-      hasLayuiRender[0] && hasLayuiRender.remove()
-      hasRender[0] && hasRender.remove()
+      // 4. 移除已有渲染
+      this.removeExistingRender($select)
 
-      //构造渲染div
-      let dinfo = this.renderSelect(id, fs.config.placeholder, select)
-      let heightStyle =
-        !fs.config.height || fs.config.height == 'auto'
-          ? ''
-          : `xm-hg style="height: 34px;"`
-      let inputHtml = [
-        `<div class="${LABEL}">`,
-        `<input type="text" fsw class="${FORM_INPUT} ${INPUT}" ${
-          fs.config.isSearch ? '' : 'style="display: none;"'
-        } autocomplete="off" debounce="0" />`,
-        `</div>`
-      ]
-      let isAllpelple = $(`select[xm-select=${id}]`).attr(ALL_PEOPLE) //存在全部人员，拉长组件宽度
-      let reElem = $(`<div class="${FORM_SELECT}" ${SKIN}="${fs.config.skin}">
-        <input class="${HIDE_INPUT}" value="" name="${
-        fs.config.formname
-      }" lay-verify="${fs.config.layverify}" lay-verType="${
-        fs.config.layverType
-      }" type="text" style="position: absolute;bottom: 0; z-index: -1;width: 100%; height: 100%; border: none; opacity: 0;"/>
-        <div class="${FORM_TITLE} ${fs.config.disabled ? DIS : ''}">
-          <div class="${FORM_INPUT} ${NAME}" ${heightStyle}>
-            ${inputHtml.join('')}
-            <i class="${SANJIAO}"></i>
-          </div>
-          <div class="${TDIV}">
-            <input type="text" autocomplete="off" placeholder="${
-              fs.config.placeholder
-            }" readonly="readonly" unselectable="on" class="${FORM_INPUT}">
-          </div>
-          <div></div>
-        </div>
-        <dl xid="${id}" class="${DL} ${fs.config.radio ? RADIO : ''}" style="${
-        isAllpelple ? 'min-width:380px;' : ''
-      }">${dinfo}</dl>
-      </div>`)
+      // 5. 构建并渲染新的DOM结构
+      this.renderNewStructure($select, fs, id)
 
-      var $parent = $(`<div class="${PNAME}" FS_ID="${id}"></div>`)
-      $parent.append(reElem)
-      othis.after($parent)
-      othis.attr('lay-ignore', '')
-      othis.removeAttr('name') && othis.attr('_name', fs.config.formname)
-      othis.removeAttr('lay-verify') &&
-        othis.attr('_lay-verify', fs.config.layverify)
-
-      //如果可搜索, 加上事件
-      if (fs.config.isSearch) {
-        ajaxs[id] = $.extend(
-          {},
-          ajax,
-          { searchUrl: fs.config.searchUrl },
-          ajaxs[id]
-        )
-        $(document).on('input', `div.${PNAME}[FS_ID="${id}"] .${INPUT}`, e => {
-          this.search(id, e, fs.config.searchUrl)
-        })
-        if (fs.config.searchUrl) {
-          //触发第一次请求事件
-          this.triggerSearch(reElem, true)
-        }
-      } else {
-        //隐藏第二个dl
-        reElem.find(`dl dd.${FORM_DL_INPUT}`).css('display', 'none')
-      }
+      // 6. 绑定搜索事件
+      this.bindSearchEvents(fs, id)
     })
+  }
+
+  // 初始化配置项
+  Common.prototype.initOptions = function ($select, select) {
+    return {
+      name: $select.attr(NAME),
+      disabled: select.disabled,
+      max: $select.attr(MAX) - 0,
+      isSearch: $select.attr(SEARCH) != undefined,
+      searchUrl: $select.attr(SEARCH),
+      isCreate: $select.attr(CREATE) != undefined,
+      radio: $select.attr(RADIO) != undefined,
+      skin: $select.attr(SKIN),
+      direction: $select.attr(DIRECTION),
+      optionsFirst: select.options[0],
+      height: $select.attr(HEIGHT),
+      formname: $select.attr('name') || $select.attr('_name'),
+      layverify: $select.attr('lay-verify') || $select.attr('_lay-verify'),
+      layverType: $select.attr('lay-verType'),
+      searchType: $select.attr(SEARCH_TYPE) == 'dl' ? 1 : 0,
+      showCount: $select.attr(SHOW_COUNT) - 0,
+      allPeople: $select.attr(ALL_PEOPLE)
+    }
+  }
+
+  // 获取已选值
+  Common.prototype.getSelectedValues = function ($select) {
+    return $select
+      .find('option[selected]')
+      .toArray()
+      .map(option => ({
+        name: option.innerHTML,
+        value: option.value
+      }))
+  }
+
+  // 创建FormSelects实例
+  Common.prototype.createFormSelects = function (options, selectedValues) {
+    const fs = new FormSelects(options)
+    fs.values = selectedValues
+
+    if (fs.config.init) {
+      fs.values = this.processInitValues(fs.config.init, options.name)
+      fs.config.init = fs.values.concat([])
+    } else {
+      fs.config.init = selectedValues.concat([])
+    }
+
+    !fs.values && (fs.values = [])
+    data[options.name] = fs
+
+    return fs
+  }
+
+  // 处理初始值
+  Common.prototype.processInitValues = function (initValues, id) {
+    return initValues
+      .map(item => {
+        if (typeof item == 'object') {
+          return item
+        }
+        return {
+          name: $(`select[xm-select="${id}"] option[value="${item}"]`).text(),
+          value: item
+        }
+      })
+      .filter(item => item.name)
+  }
+
+  // 移除已有渲染
+  Common.prototype.removeExistingRender = function ($select) {
+    const hasLayuiRender = $select.next(`.layui-form-select`)
+    const hasRender = $select.next(`.${PNAME}`)
+
+    hasLayuiRender[0] && hasLayuiRender.remove()
+    hasRender[0] && hasRender.remove()
+  }
+
+  // 构建并渲染新的DOM结构
+  Common.prototype.renderNewStructure = function ($select, fs, id) {
+    const dinfo = this.renderSelect(id, fs.config.placeholder, $select[0])
+    const heightStyle =
+      !fs.config.height || fs.config.height == 'auto'
+        ? ''
+        : `xm-hg style="height: 34px;"`
+
+    const inputHtml = this.createInputHtml(fs.config.isSearch)
+    const isAllpelple = $(`select[xm-select=${id}]`).attr(ALL_PEOPLE)
+
+    const reElem = this.createMainElement(
+      fs,
+      heightStyle,
+      inputHtml,
+      id,
+      dinfo,
+      isAllpelple
+    )
+    const $parent = $(`<div class="${PNAME}" FS_ID="${id}"></div>`)
+
+    $parent.append(reElem)
+    $select.after($parent)
+
+    this.handleSelectAttributes($select, fs.config)
+  }
+
+  // 创建输入框HTML
+  Common.prototype.createInputHtml = function (isSearch) {
+    return [
+      `<div class="${LABEL}">`,
+      `<input type="text" fsw class="${FORM_INPUT} ${INPUT}" ${
+        isSearch ? '' : 'style="display: none;"'
+      } autocomplete="off" debounce="0" />`,
+      `</div>`
+    ].join('')
+  }
+
+  // 创建主元素
+  Common.prototype.createMainElement = function (
+    fs,
+    heightStyle,
+    inputHtml,
+    id,
+    dinfo,
+    isAllpelple
+  ) {
+    return $(`<div class="${FORM_SELECT}" ${SKIN}="${fs.config.skin}">
+      <input class="${HIDE_INPUT}" value="" name="${fs.config.formname}" 
+        lay-verify="${fs.config.layverify}" lay-verType="${
+      fs.config.layverType
+    }"
+        type="text" style="position: absolute;bottom: 0; z-index: -1;width: 100%; height: 100%; border: none; opacity: 0;"/>
+      <div class="${FORM_TITLE} ${fs.config.disabled ? DIS : ''}">
+        <div class="${FORM_INPUT} ${NAME}" ${heightStyle}>
+          ${inputHtml}
+          <i class="${SANJIAO}"></i>
+        </div>
+        <div class="${TDIV}">
+          <input type="text" autocomplete="off" placeholder="${
+            fs.config.placeholder
+          }" 
+            readonly="readonly" unselectable="on" class="${FORM_INPUT}">
+        </div>
+        <div></div>
+      </div>
+      <dl xid="${id}" class="${DL} ${fs.config.radio ? RADIO : ''}" 
+        style="${isAllpelple ? 'min-width:380px;' : ''}">${dinfo}</dl>
+    </div>`)
+  }
+
+  // 处理select属性
+  Common.prototype.handleSelectAttributes = function ($select, config) {
+    $select.attr('lay-ignore', '')
+    $select.removeAttr('name') && $select.attr('_name', config.formname)
+    $select.removeAttr('lay-verify') &&
+      $select.attr('_lay-verify', config.layverify)
+  }
+
+  // 绑定搜索事件
+  Common.prototype.bindSearchEvents = function (fs, id) {
+    if (fs.config.isSearch) {
+      ajaxs[id] = $.extend(
+        {},
+        ajax,
+        { searchUrl: fs.config.searchUrl },
+        ajaxs[id]
+      )
+
+      $(document).on('input', `div.${PNAME}[FS_ID="${id}"] .${INPUT}`, e => {
+        this.search(id, e, fs.config.searchUrl)
+      })
+
+      if (fs.config.searchUrl) {
+        this.triggerSearch(
+          $(`div.${PNAME}[FS_ID="${id}"] .${FORM_SELECT}`),
+          true
+        )
+      }
+    } else {
+      $(
+        `div.${PNAME}[FS_ID="${id}"] .${FORM_SELECT} dl dd.${FORM_DL_INPUT}`
+      ).css('display', 'none')
+    }
   }
 
   Common.prototype.search = function (id, e, searchUrl, call) {
