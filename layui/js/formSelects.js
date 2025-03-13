@@ -877,15 +877,70 @@
   }
   //#endregion
 
+  //#region 清空搜索输入框的值
+  /**
+   * 清空搜索输入框的值
+   * @param {string} id - 搜索框的唯一标识
+   * @returns {boolean} 是否成功清空
+   */
   Common.prototype.clearInput = function (id) {
-    let div = $(`.${PNAME}[fs_id="${id}"]`)
-    let input =
-      data[id].config.searchType == 0
-        ? div.find(`.${LABEL} .${INPUT}`)
-        : div.find(`dl .${FORM_DL_INPUT} .${INPUT}`)
-    input.val('')
+    // 1. 参数验证
+    if (!id || typeof id !== 'string') {
+      console.warn('clearInput: 无效的id参数')
+      return false
+    }
+
+    try {
+      // 2. 获取父容器
+      const $container = $(`.${PNAME}[fs_id="${id}"]`)
+      if (!$container.length) {
+        console.warn(`clearInput: 未找到id为 ${id} 的容器`)
+        return false
+      }
+
+      // 3. 获取配置
+      const config = data[id]?.config
+      if (!config) {
+        console.warn(`clearInput: 未找到id为 ${id} 的配置`)
+        return false
+      }
+
+      // 4. 根据搜索类型获取输入框
+      const $input = this.getSearchInput($container, id)
+      if (!$input.length) {
+        console.warn(`clearInput: 未找到id为 ${id} 的输入框`)
+        return false
+      }
+
+      // 5. 清空输入框
+      $input.val('').trigger('input')
+
+      return true
+    } catch (error) {
+      console.error(`clearInput: 清空输入框时发生错误 - ${error.message}`)
+      return false
+    }
   }
 
+  /**
+   * 获取搜索输入框
+   * @param {jQuery} $container - 容器元素
+   * @param {string} id - 搜索框的唯一标识
+   * @returns {jQuery} 输入框元素
+   */
+  Common.prototype.getSearchInput = function ($container, id) {
+    const searchType = data[id].config.searchType
+    const selector =
+      searchType === 0
+        ? `.${LABEL} .${INPUT}`
+        : `dl .${FORM_DL_INPUT} .${INPUT}`
+
+    return $container.find(selector)
+  }
+
+  //#endregion
+
+  //#region ajax
   Common.prototype.ajax = function (
     id,
     searchUrl,
@@ -896,69 +951,261 @@
     successCallback,
     isReplace
   ) {
-    let reElem = $(`.${PNAME} dl[xid="${id}"]`).parents(`.${FORM_SELECT}`)
+    // 1. 参数验证和初始化
+    const reElem = $(`.${PNAME} dl[xid="${id}"]`).parents(`.${FORM_SELECT}`)
     if (!reElem[0] || !searchUrl) {
+      console.warn('ajax: 无效的参数或URL')
       return
     }
-    let ajaxConfig = ajaxs[id] ? ajaxs[id] : ajax
-    let ajaxData = $.extend(true, {}, ajaxConfig.data)
+
+    // 2. 获取并合并配置
+    const ajaxConfig = ajaxs[id] || ajax
+    const ajaxData = this.prepareAjaxData(ajaxConfig, inputValue)
+
+    // 3. 执行AJAX请求
+    this.executeAjaxRequest({
+      id,
+      searchUrl,
+      inputValue,
+      isLinkage,
+      linkageWidth,
+      isSearch,
+      isReplace,
+      ajaxConfig,
+      ajaxData,
+      reElem,
+      successCallback
+    })
+  }
+
+  // 准备AJAX数据
+  Common.prototype.prepareAjaxData = function (ajaxConfig, inputValue) {
+    const ajaxData = $.extend(true, {}, ajaxConfig.data)
     ajaxData[ajaxConfig.searchName] = inputValue
-    //是否需要对ajax添加随机时间
-    //ajaxData['_'] = Date.now();
+    return ajaxConfig.dataType === 'json' ? JSON.stringify(ajaxData) : ajaxData
+  }
+
+  // 执行AJAX请求
+  Common.prototype.executeAjaxRequest = function ({
+    id,
+    searchUrl,
+    inputValue,
+    isLinkage,
+    linkageWidth,
+    isSearch,
+    isReplace,
+    ajaxConfig,
+    ajaxData,
+    reElem,
+    successCallback
+  }) {
     $.ajax({
       type: ajaxConfig.type,
       headers: ajaxConfig.header,
       url: searchUrl,
-      data: ajaxConfig.dataType == 'json' ? JSON.stringify(ajaxData) : ajaxData,
-      success: res => {
-        if (typeof res == 'string') {
-          res = JSON.parse(res)
-        }
-        ajaxConfig.beforeSuccess &&
-          ajaxConfig.beforeSuccess instanceof Function &&
-          (res = ajaxConfig.beforeSuccess(id, searchUrl, inputValue, res))
-        if (this.isArray(res)) {
-          let newRes = {}
-          newRes[ajaxConfig.response.statusName] =
-            ajaxConfig.response.statusCode
-          newRes[ajaxConfig.response.msgName] = ''
-          newRes[ajaxConfig.response.dataName] = res
-          res = newRes
-        }
-        if (
-          res[ajaxConfig.response.statusName] != ajaxConfig.response.statusCode
-        ) {
-          reElem
-            .find(`dd.${FORM_NONE}`)
-            .addClass(FORM_EMPTY)
-            .text(res[ajaxConfig.response.msgName])
-        } else {
-          reElem.find(`dd.${FORM_NONE}`).removeClass(FORM_EMPTY)
-          this.renderData(
-            id,
-            res[ajaxConfig.response.dataName],
-            isLinkage,
-            linkageWidth,
-            isSearch,
-            isReplace
-          )
-          data[id].config.isEmpty =
-            res[ajaxConfig.response.dataName].length == 0
-        }
-        successCallback && successCallback(id)
-        ajaxConfig.success &&
-          ajaxConfig.success instanceof Function &&
-          ajaxConfig.success(id, searchUrl, inputValue, res)
-      },
-      error: err => {
-        reElem.find(`dd[lay-value]:not(.${FORM_SELECT_TIPS})`).remove()
-        reElem.find(`dd.${FORM_NONE}`).addClass(FORM_EMPTY).text('服务异常')
-        ajaxConfig.error &&
-          ajaxConfig.error instanceof Function &&
-          ajaxConfig.error(id, searchUrl, inputValue, err)
-      }
+      data: ajaxData,
+      success: res =>
+        this.handleAjaxSuccess({
+          id,
+          searchUrl,
+          inputValue,
+          isLinkage,
+          linkageWidth,
+          isSearch,
+          isReplace,
+          ajaxConfig,
+          reElem,
+          successCallback,
+          res
+        }),
+      error: err =>
+        this.handleAjaxError({
+          id,
+          searchUrl,
+          inputValue,
+          ajaxConfig,
+          reElem,
+          err
+        })
     })
   }
+
+  // 处理AJAX成功响应
+  Common.prototype.handleAjaxSuccess = function ({
+    id,
+    searchUrl,
+    inputValue,
+    isLinkage,
+    linkageWidth,
+    isSearch,
+    isReplace,
+    ajaxConfig,
+    reElem,
+    successCallback,
+    res
+  }) {
+    try {
+      // 1. 解析响应数据
+      const parsedRes = this.parseResponse(res)
+
+      // 2. 执行前置处理
+      const processedRes = this.processResponseBeforeSuccess({
+        id,
+        searchUrl,
+        inputValue,
+        ajaxConfig,
+        res: parsedRes
+      })
+
+      // 3. 标准化响应格式
+      const normalizedRes = this.normalizeResponse(processedRes, ajaxConfig)
+
+      // 4. 处理响应结果
+      this.processResponseResult({
+        id,
+        isLinkage,
+        linkageWidth,
+        isSearch,
+        isReplace,
+        ajaxConfig,
+        reElem,
+        res: normalizedRes
+      })
+
+      // 5. 执行回调
+      this.executeCallbacks({
+        id,
+        searchUrl,
+        inputValue,
+        ajaxConfig,
+        successCallback,
+        res: normalizedRes
+      })
+    } catch (error) {
+      console.error('处理AJAX响应时发生错误:', error)
+      this.handleAjaxError({
+        id,
+        searchUrl,
+        inputValue,
+        ajaxConfig,
+        reElem,
+        err: error
+      })
+    }
+  }
+
+  // 解析响应数据
+  Common.prototype.parseResponse = function (res) {
+    return typeof res === 'string' ? JSON.parse(res) : res
+  }
+
+  // 处理响应前置处理
+  Common.prototype.processResponseBeforeSuccess = function ({
+    id,
+    searchUrl,
+    inputValue,
+    ajaxConfig,
+    res
+  }) {
+    if (
+      ajaxConfig.beforeSuccess &&
+      typeof ajaxConfig.beforeSuccess === 'function'
+    ) {
+      return ajaxConfig.beforeSuccess(id, searchUrl, inputValue, res)
+    }
+    return res
+  }
+
+  // 标准化响应格式
+  Common.prototype.normalizeResponse = function (res, ajaxConfig) {
+    if (this.isArray(res)) {
+      return {
+        [ajaxConfig.response.statusName]: ajaxConfig.response.statusCode,
+        [ajaxConfig.response.msgName]: '',
+        [ajaxConfig.response.dataName]: res
+      }
+    }
+    return res
+  }
+
+  // 处理响应结果
+  Common.prototype.processResponseResult = function ({
+    id,
+    isLinkage,
+    linkageWidth,
+    isSearch,
+    isReplace,
+    ajaxConfig,
+    reElem,
+    res
+  }) {
+    const $none = reElem.find(`dd.${FORM_NONE}`)
+
+    if (
+      res[ajaxConfig.response.statusName] !== ajaxConfig.response.statusCode
+    ) {
+      $none.addClass(FORM_EMPTY).text(res[ajaxConfig.response.msgName])
+      return
+    }
+
+    $none.removeClass(FORM_EMPTY)
+    this.renderData(
+      id,
+      res[ajaxConfig.response.dataName],
+      isLinkage,
+      linkageWidth,
+      isSearch,
+      isReplace
+    )
+
+    data[id].config.isEmpty = res[ajaxConfig.response.dataName].length === 0
+  }
+
+  // 执行回调函数
+  Common.prototype.executeCallbacks = function ({
+    id,
+    searchUrl,
+    inputValue,
+    ajaxConfig,
+    successCallback,
+    res
+  }) {
+    if (successCallback) {
+      successCallback(id)
+    }
+
+    if (ajaxConfig.success && typeof ajaxConfig.success === 'function') {
+      ajaxConfig.success(id, searchUrl, inputValue, res)
+    }
+  }
+
+  // 处理AJAX错误
+  Common.prototype.handleAjaxError = function ({
+    id,
+    searchUrl,
+    inputValue,
+    ajaxConfig,
+    reElem,
+    err
+  }) {
+    // 清理现有选项
+    reElem.find(`dd[lay-value]:not(.${FORM_SELECT_TIPS})`).remove()
+
+    // 显示错误信息
+    reElem.find(`dd.${FORM_NONE}`).addClass(FORM_EMPTY).text('服务异常')
+
+    // 执行错误回调
+    if (ajaxConfig.error && typeof ajaxConfig.error === 'function') {
+      ajaxConfig.error(id, searchUrl, inputValue, err)
+    }
+
+    console.error('AJAX请求失败:', {
+      id,
+      searchUrl,
+      error: err
+    })
+  }
+  //#endregion
 
   Common.prototype.renderData = function (
     id,
