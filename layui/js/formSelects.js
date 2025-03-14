@@ -1838,12 +1838,15 @@
   }
   //#endregion
 
+  //#region 创建快捷按钮
   Common.prototype.createQuickBtn = function (obj, right) {
     return `<div class="${CZ}" method="${obj.name}" title="${obj.name}" ${
       right ? 'style="margin-right: ' + right + '"' : ''
     }><i class="${obj.icon}"></i><span>${obj.name}</span></div>`
   }
+  //#endregion
 
+  //#region 渲染快捷按钮
   Common.prototype.renderBtns = function (id, show, right) {
     let quickBtn = []
     let dl = $(`dl[xid="${id}"]`)
@@ -1861,7 +1864,9 @@
     )
     return quickBtn.join('')
   }
+  //#endregion
 
+  //#region 渲染选择器
   Common.prototype.renderSelect = function (id, tips, select) {
     db[id] = {}
     let arr = []
@@ -1935,6 +1940,7 @@
     )
     return arr.join('')
   }
+  //#endregion
 
   Common.prototype.on = function () {
     //事件绑定
