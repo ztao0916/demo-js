@@ -1207,6 +1207,7 @@
   }
   //#endregion
 
+  //#region 渲染数据
   Common.prototype.renderData = function (
     id,
     dataArr,
@@ -1215,8 +1216,8 @@
     isSearch,
     isReplace
   ) {
+    // 1. 快速返回特殊情况
     if (linkage) {
-      //渲染多级联动
       this.renderLinkage(id, dataArr, linkageWidth)
       return
     }
@@ -1224,119 +1225,221 @@
       this.renderReplace(id, dataArr)
       return
     }
-    let reElem = $(`.${PNAME} dl[xid="${id}"]`).parents(`.${FORM_SELECT}`)
-    let originalSelects = reElem
+
+    // 2. 缓存DOM元素和配置
+    const $reElem = $(`.${PNAME} dl[xid="${id}"]`).parents(`.${FORM_SELECT}`)
+    const $originalSelects = $reElem
       .parents(`div[fs_id="${id}"]`)
       .siblings('select')
-    let ajaxConfig = ajaxs[id] ? ajaxs[id] : ajax
-    let pcInput = reElem.find(`.${TDIV} input`)
+    const ajaxConfig = ajaxs[id] || ajax
+    const $pcInput = $reElem.find(`.${TDIV} input`)
+    const $label = $reElem.find(`.${LABEL}`)
+    const $dl = $reElem.find('dl[xid]')
 
-    dataArr = this.exchangeData(id, dataArr)
-    let values = []
-    reElem.find('dl').html(
-      this.renderSelect(
-        id,
-        pcInput.attr('placeholder') || pcInput.attr('back'),
-        dataArr.map(item => {
-          let itemVal = $.extend({}, item, {
-            innerHTML: item[ajaxConfig.keyName],
-            value: item[ajaxConfig.keyVal],
-            sel: item[ajaxConfig.keySel],
-            disabled: item[ajaxConfig.keyDis],
-            type: item.type,
-            name: item[ajaxConfig.keyName]
-          })
-          if (itemVal.sel) {
-            values.push(itemVal)
-          }
-          return itemVal
-        })
-      )
-    )
-    //添加使用data方法渲染时同步select下的options Dom数据
-    if (originalSelects.find('option').length == 0) {
-      let options = ''
-      dataArr.map(item => {
-        options += `<option value="${item.value}">${item.name}</option>`
-      })
-      originalSelects.append(options)
-    }
+    // 3. 优化数据处理
+    const processedData = this.processData(id, dataArr, ajaxConfig)
+    const { values, items } = processedData
 
-    let label = reElem.find(`.${LABEL}`)
-    let dl = reElem.find('dl[xid]')
+    // 4. 使用文档片段优化DOM操作
+    const fragment = document.createDocumentFragment()
+
+    // 5. 批量渲染选项
+    const optionsHtml = this.renderOptions(id, items, $pcInput)
+    $dl.html(optionsHtml)
+
+    // 6. 同步原始select的options(仅在需要时)
+    this.syncOriginalSelects($originalSelects, items)
+
+    // 7. 处理选中值
     if (isSearch) {
-      //如果是远程搜索, 这里需要判重
-      let oldVal = data[id].values
-      oldVal.forEach((item, index) => {
-        dl.find(`dd[lay-value="${item.value}"]`).addClass(THIS)
-      })
-      values.forEach((item, index) => {
-        if (this.indexOf(oldVal, item) == -1) {
-          this.addLabel(id, label, item)
-          dl.find(`dd[lay-value="${item.value}"]`).addClass(THIS)
-          oldVal.push(item)
-        }
-      })
+      this.handleSearchValues(id, values, $dl, $label)
     } else {
-      values.forEach((item, index) => {
-        this.addLabel(id, label, item)
-        dl.find(`dd[lay-value="${item.value}"]`).addClass(THIS)
-      })
-      data[id].values = values
+      this.handleNormalValues(id, values, $dl, $label)
     }
-    this.commonHandler(id, label)
+
+    // 8. 执行通用处理
+    this.commonHandler(id, $label)
   }
 
+  // 处理数据
+  Common.prototype.processData = function (id, dataArr, ajaxConfig) {
+    const processedData = this.exchangeData(id, dataArr)
+    const values = []
+    const items = processedData.map(item => {
+      const itemVal = {
+        ...item,
+        innerHTML: item[ajaxConfig.keyName],
+        value: item[ajaxConfig.keyVal],
+        sel: item[ajaxConfig.keySel],
+        disabled: item[ajaxConfig.keyDis],
+        type: item.type,
+        name: item[ajaxConfig.keyName]
+      }
+      if (itemVal.sel) {
+        values.push(itemVal)
+      }
+      return itemVal
+    })
+    return { values, items }
+  }
+
+  // 渲染选项
+  Common.prototype.renderOptions = function (id, items, $pcInput) {
+    return this.renderSelect(
+      id,
+      $pcInput.attr('placeholder') || $pcInput.attr('back'),
+      items
+    )
+  }
+
+  // 同步原始select的options
+  Common.prototype.syncOriginalSelects = function ($originalSelects, items) {
+    if ($originalSelects.find('option').length === 0) {
+      const optionsHtml = items
+        .map(item => `<option value="${item.value}">${item.name}</option>`)
+        .join('')
+      $originalSelects.append(optionsHtml)
+    }
+  }
+
+  // 处理搜索值
+  Common.prototype.handleSearchValues = function (id, values, $dl, $label) {
+    const oldVal = data[id].values
+    const $selectedDds = $dl.find(`dd[lay-value]`)
+
+    // 批量添加选中类
+    oldVal.forEach(item => {
+      $selectedDds.filter(`[lay-value="${item.value}"]`).addClass(THIS)
+    })
+
+    // 批量处理新值
+    values.forEach(item => {
+      if (this.indexOf(oldVal, item) === -1) {
+        this.addLabel(id, $label, item)
+        $dl.find(`dd[lay-value="${item.value}"]`).addClass(THIS)
+        oldVal.push(item)
+      }
+    })
+  }
+
+  // 处理普通值
+  Common.prototype.handleNormalValues = function (id, values, $dl, $label) {
+    // 批量添加标签和选中类
+    values.forEach(item => {
+      this.addLabel(id, $label, item)
+      $dl.find(`dd[lay-value="${item.value}"]`).addClass(THIS)
+    })
+    data[id].values = values
+  }
+  //#endregion
+
+  //#region 渲染联动
+  /**
+   * 渲染联动选择器
+   * @param {string} id - 选择器唯一标识
+   * @param {Array} dataArr - 联动数据数组
+   * @param {number} linkageWidth - 联动选择器宽度
+   */
   Common.prototype.renderLinkage = function (id, dataArr, linkageWidth) {
-    let result = [],
-      index = 0,
-      temp = { 0: dataArr },
-      ajaxConfig = ajaxs[id] ? ajaxs[id] : ajax
-    db[id] = {}
+    // 1. 处理联动数据结构
+    const { result, db: processedDb } = this.processLinkageData(id, dataArr)
+    db[id] = processedDb // 更新全局db
+
+    // 2. 构建DOM结构
+    const reElem = $(`.${PNAME} dl[xid="${id}"]`).parents(`.${FORM_SELECT}`)
+    const html = this.buildLinkageHtml(result, linkageWidth)
+
+    // 3. 渲染DOM并禁用搜索
+    reElem.find('dl').html(html)
+    reElem.find(`.${INPUT}`).css('display', 'none') // 联动暂时不支持搜索
+  }
+
+  /**
+   * 处理联动数据结构
+   * @private
+   * @param {string} id - 选择器唯一标识
+   * @param {Array} dataArr - 原始数据数组
+   * @returns {Object} 处理后的数据结构
+   */
+  Common.prototype.processLinkageData = function (id, dataArr) {
+    const result = []
+    const processedDb = {}
+    let index = 0
+    let temp = { 0: dataArr }
+    const ajaxConfig = ajaxs[id] ? ajaxs[id] : ajax
+
+    // 递归处理数据层级
     do {
-      let group = (result[index++] = []),
-        _temp = temp
+      const group = []
+      result[index++] = group
+      const _temp = temp
       temp = {}
-      $.each(_temp, (pid, arr) => {
-        $.each(arr, (idx, item) => {
-          let val = {
-            pid: pid,
+
+      // 处理当前层级数据
+      Object.entries(_temp).forEach(([pid, arr]) => {
+        arr.forEach(item => {
+          // 构建选项值对象
+          const val = {
+            pid,
             name: item[ajaxConfig.keyName],
             value: item[ajaxConfig.keyVal]
           }
-          db[id][val.value] = $.extend(item, val)
+
+          // 存储到db
+          processedDb[val.value] = { ...item, ...val }
           group.push(val)
-          let children = item[ajaxConfig.keyChildren]
-          if (children && children.length) {
+
+          // 处理子节点
+          const children = item[ajaxConfig.keyChildren]
+          if (children?.length) {
             temp[val.value] = children
           }
         })
       })
-    } while (Object.getOwnPropertyNames(temp).length)
+    } while (Object.keys(temp).length)
 
-    let reElem = $(`.${PNAME} dl[xid="${id}"]`).parents(`.${FORM_SELECT}`)
-    let html = ['<div class="xm-select-linkage">']
-
-    $.each(result, (idx, arr) => {
-      let groupDiv = [
-        `<div style="left: ${
-          (linkageWidth - 0) * idx
-        }px;" class="xm-select-linkage-group xm-select-linkage-group${
-          idx + 1
-        } ${idx != 0 ? 'xm-select-linkage-hide' : ''}">`
-      ]
-      $.each(arr, (idx2, item) => {
-        let span = `<li title="${item.name}" pid="${item.pid}" xm-value="${item.value}"><span>${item.name}</span></li>`
-        groupDiv.push(span)
-      })
-      groupDiv.push(`</div>`)
-      html = html.concat(groupDiv)
-    })
-    html.push('<div style="clear: both; height: 288px;"></div>')
-    html.push('</div>')
-    reElem.find('dl').html(html.join(''))
-    reElem.find(`.${INPUT}`).css('display', 'none') //联动暂时不支持搜索
+    return { result, db: processedDb }
   }
+
+  /**
+   * 构建联动选择器的HTML结构
+   * @private
+   * @param {Array} result - 处理后的数据数组
+   * @param {number} linkageWidth - 联动选择器宽度
+   * @returns {string} 构建的HTML字符串
+   */
+  Common.prototype.buildLinkageHtml = function (result, linkageWidth) {
+    const fragments = ['<div class="xm-select-linkage">']
+
+    // 构建每个分组的HTML
+    result.forEach((group, groupIndex) => {
+      // 构建分组容器
+      const groupHtml = [
+        `<div style="left: ${(linkageWidth - 0) * groupIndex}px;" 
+          class="xm-select-linkage-group xm-select-linkage-group${
+            groupIndex + 1
+          } 
+          ${groupIndex !== 0 ? 'xm-select-linkage-hide' : ''}">`
+      ]
+
+      // 构建分组选项
+      const options = group.map(
+        item =>
+          `<li title="${item.name}" pid="${item.pid}" xm-value="${item.value}">
+          <span>${item.name}</span>
+        </li>`
+      )
+
+      groupHtml.push(...options, '</div>')
+      fragments.push(groupHtml.join(''))
+    })
+
+    // 添加清除浮动
+    fragments.push('<div style="clear: both; height: 288px;"></div>', '</div>')
+
+    return fragments.join('')
+  }
+  //#endregion
 
   Common.prototype.renderReplace = function (id, dataArr) {
     let dl = $(`.${PNAME} dl[xid="${id}"]`)
