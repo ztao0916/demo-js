@@ -1441,46 +1441,71 @@
   }
   //#endregion
 
+  //#region 渲染替换
   Common.prototype.renderReplace = function (id, dataArr) {
-    let dl = $(`.${PNAME} dl[xid="${id}"]`)
-    let ajaxConfig = ajaxs[id] ? ajaxs[id] : ajax
+    // 1. 获取必要的DOM元素和配置
+    const $dl = $(`.${PNAME} dl[xid="${id}"]`)
+    const ajaxConfig = ajaxs[id] || ajax
 
-    dataArr = this.exchangeData(id, dataArr)
-    db[id] = dataArr
+    // 2. 处理数据结构(转换树形结构)
+    const processedData = this.exchangeData(id, dataArr)
 
-    let html = dataArr
+    // 3. 更新全局数据存储
+    db[id] = processedData
+
+    // 4. 使用DocumentFragment优化DOM操作
+    const fragment = document.createDocumentFragment()
+
+    // 5. 构建选项HTML
+    const optionsHtml = processedData
       .map(item => {
-        let itemVal = $.extend({}, item, {
-          innerHTML: item[ajaxConfig.keyName],
-          value: item[ajaxConfig.keyVal],
-          sel: item[ajaxConfig.keySel],
-          disabled: item[ajaxConfig.keyDis],
-          type: item.type,
-          name: item[ajaxConfig.keyName]
-        })
+        // 构建选项值对象
+        const itemVal = {
+          ...item,
+          innerHTML: item[ajaxConfig.keyName], // 显示文本
+          value: item[ajaxConfig.keyVal], // 选项值
+          sel: item[ajaxConfig.keySel], // 是否选中
+          disabled: item[ajaxConfig.keyDis], // 是否禁用
+          type: item.type, // 选项类型
+          name: item[ajaxConfig.keyName] // 选项名称
+        }
+
+        // 创建选项DOM结构
         return this.createDD(id, itemVal)
       })
       .join('')
 
-    dl.find(`dd:not(.${FORM_SELECT_TIPS}),dt:not([style])`).remove()
-    dl.find(`dt[style]`).after($(html))
-  }
+    // 6. 更新DOM结构
+    // 移除旧的选项(保留提示和样式)
+    $dl.find(`dd:not(.${FORM_SELECT_TIPS}),dt:not([style])`).remove()
 
+    // 在保留的dt后插入新选项
+    $dl.find(`dt[style]`).after($(optionsHtml))
+  }
+  //#endregion
+
+  //#region 处理树形数据
   Common.prototype.exchangeData = function (id, arr) {
-    //这里处理树形结构
-    let ajaxConfig = ajaxs[id] ? ajaxs[id] : ajax
-    let childrenName = ajaxConfig['keyChildren']
-    let disabledName = ajaxConfig['keyDis']
+    // 1. 获取配置信息
+    const ajaxConfig = ajaxs[id] || ajax
+    const childrenName = ajaxConfig['keyChildren'] // 子节点的键名
+    const disabledName = ajaxConfig['keyDis'] // 禁用状态的键名
+
+    // 2. 重置当前选择器的数据存储
     db[id] = {}
-    let result = this.getChildrenList(
-      arr,
-      childrenName,
-      disabledName,
-      [],
-      false
+
+    // 3. 递归处理数据,构建树形结构
+    const result = this.getChildrenList(
+      arr, // 原始数据数组
+      childrenName, // 子节点键名
+      disabledName, // 禁用状态键名
+      [], // 初始父节点ID数组
+      false // 初始禁用状态
     )
+
     return result
   }
+  //#endregion
 
   Common.prototype.getChildrenList = function (
     arr,
