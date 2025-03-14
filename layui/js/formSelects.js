@@ -1710,19 +1710,46 @@
    * @private
    */
   Common.prototype.createOptionItem = function (item, name, ajaxConfig) {
-    const resultItem = {}
-    resultItem[ajaxConfig.keyName] = name
-    resultItem[ajaxConfig.keyVal] = item.value
-    resultItem[ajaxConfig.keyDis] = item.disabled
-    return resultItem
+    // 使用对象解构获取配置键名
+    const { keyName, keyVal, keyDis } = ajaxConfig
+
+    // 使用对象字面量直接返回结果
+    return {
+      [keyName]: name, // 设置选项显示名称
+      [keyVal]: item.value, // 设置选项值
+      [keyDis]: item.disabled // 设置禁用状态
+    }
   }
 
   /**
-   * 处理父节点ID
-   * @private
+   * 处理父节点ID,将JSON字符串转换为数组或返回默认值
+   * @param {string|null|undefined} parentId - 父节点ID的JSON字符串
+   * @returns {Array<number|string>} 解析后的父节点ID数组,如果解析失败则返回默认值 [-1]
+   * @throws {Error} 当JSON解析失败时可能抛出异常(已被捕获)
    */
   Common.prototype.processParentId = function (parentId) {
-    return parentId ? JSON.parse(parentId) : [-1]
+    // 如果输入为空,直接返回默认值
+    if (!parentId) {
+      return [-1]
+    }
+
+    try {
+      // 尝试解析JSON字符串
+      const parsedId = JSON.parse(parentId)
+
+      // 验证解析结果是否为数组
+      if (Array.isArray(parsedId)) {
+        return parsedId
+      }
+
+      // 如果解析结果不是数组,记录警告并返回默认值
+      console.warn(`父节点ID解析结果不是数组: ${parentId}`)
+      return [-1]
+    } catch (error) {
+      // 捕获并处理JSON解析错误
+      console.warn(`父节点ID解析失败: ${parentId}`, error)
+      return [-1]
+    }
   }
 
   /**
