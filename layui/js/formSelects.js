@@ -1507,6 +1507,15 @@
   }
   //#endregion
 
+  /**
+   * 递归处理树形数据结构,将层级数据扁平化处理
+   * @param {Array} arr - 需要处理的数组数据
+   * @param {string} childrenName - 子节点的属性名
+   * @param {string} disabledName - 禁用状态的属性名
+   * @param {Array} pid - 父节点ID数组
+   * @param {boolean} disabled - 是否禁用
+   * @returns {Array} 处理后的扁平化数组
+   */
   Common.prototype.getChildrenList = function (
     arr,
     childrenName,
@@ -1514,127 +1523,293 @@
     pid,
     disabled
   ) {
-    let result = [],
-      offset = 0
-    for (let a = 0; a < arr.length; a++) {
-      let item = arr[a]
-      if (item.type && item.type == 'optgroup') {
-        result.push(item)
+    // 初始化结果数组和偏移量计数器
+    const result = []
+    let nodeOffset = 0
+
+    // 遍历输入数组
+    for (let i = 0; i < arr.length; i++) {
+      const currentNode = arr[i]
+
+      // 处理分组类型节点
+      if (currentNode.type && currentNode.type === 'optgroup') {
+        result.push(currentNode)
         continue
-      } else {
-        offset++
       }
-      let parentIds = pid.concat([])
-      parentIds.push(`${offset - 1}_E`)
-      item[FORM_TEAM_PID] = JSON.stringify(parentIds)
-      item[disabledName] = item[disabledName] || disabled
-      result.push(item)
-      let child = item[childrenName]
-      if (child && common.isArray(child) && child.length) {
-        item['XM_TREE_FOLDER'] = true
-        let pidArr = parentIds.concat([])
-        let childResult = this.getChildrenList(
-          child,
+
+      // 处理普通节点
+      nodeOffset++
+
+      // 构建当前节点的父节点路径
+      const parentPath = [...pid, `${nodeOffset - 1}_E`]
+
+      // 设置节点属性
+      currentNode[FORM_TEAM_PID] = JSON.stringify(parentPath)
+      currentNode[disabledName] = currentNode[disabledName] || disabled
+
+      // 将当前节点添加到结果数组
+      result.push(currentNode)
+
+      // 处理子节点
+      const childNodes = currentNode[childrenName]
+      if (childNodes && common.isArray(childNodes) && childNodes.length) {
+        // 标记当前节点为文件夹节点
+        currentNode['XM_TREE_FOLDER'] = true
+
+        // 递归处理子节点
+        const childResults = this.getChildrenList(
+          childNodes,
           childrenName,
           disabledName,
-          pidArr,
-          item[disabledName]
+          [...parentPath], // 创建新的父节点路径数组
+          currentNode[disabledName]
         )
-        result = result.concat(childResult)
+
+        // 将子节点结果合并到主结果数组
+        result.push(...childResults)
       }
     }
+
     return result
   }
+  //#endregion
 
+  //#region 创建选项
   Common.prototype.create = function (id, isCreate, inputValue) {
+    // 只有当允许创建且有输入值时才执行创建逻辑
     if (isCreate && inputValue) {
-      let fs = data[id],
-        dl = $(`[xid="${id}"]`),
-        tips = dl.find(`dd.${FORM_SELECT_TIPS}.${FORM_DL_INPUT}`),
-        tdd = null,
-        temp = dl.find(`dd.${TEMP}`)
-      dl.find(`dd:not(.${FORM_SELECT_TIPS}):not(.${TEMP})`).each(
-        (index, item) => {
-          if (inputValue == $(item).find('span').attr('name')) {
-            tdd = item
-          }
+      // 获取必要的DOM元素和配置
+      const formSelect = data[id]
+      const $dl = $(`[xid="${id}"]`)
+      const $tips = $dl.find(`dd.${FORM_SELECT_TIPS}.${FORM_DL_INPUT}`)
+      const $temp = $dl.find(`dd.${TEMP}`)
+
+      // 查找是否已存在相同名称的选项
+      let existingOption = null
+      $dl.find(`dd:not(.${FORM_SELECT_TIPS}):not(.${TEMP})`).each((_, item) => {
+        const $item = $(item)
+        if (inputValue === $item.find('span').attr('name')) {
+          existingOption = item
+          return false // 找到后终止循环
         }
-      )
-      if (!tdd) {
-        //如果不存在, 则创建
-        let val = fs.config.create(id, inputValue)
-        if (temp[0]) {
-          temp.attr('lay-value', val)
-          temp.find('span').text(inputValue)
-          temp.find('span').attr('name', inputValue)
-          temp.removeClass(DD_HIDE)
+      })
+
+      // 如果不存在相同选项,则创建新选项
+      if (!existingOption) {
+        // 调用配置中的create函数生成值
+        const newValue = formSelect.config.create(id, inputValue)
+
+        // 处理临时选项
+        if ($temp.length) {
+          // 如果存在临时选项,则更新它
+          this.updateTempOption($temp, {
+            value: newValue,
+            text: inputValue,
+            name: inputValue
+          })
         } else {
-          tips.after(
-            $(
-              this.createDD(
-                id,
-                {
-                  name: inputValue,
-                  innerHTML: inputValue,
-                  value: val
-                },
-                `${TEMP} ${CREATE_LONG}`
-              )
-            )
-          )
+          // 如果不存在临时选项,则创建新的选项
+          this.createNewOption($tips, {
+            id,
+            inputValue,
+            newValue
+          })
         }
       }
     } else {
+      // 如果不允许创建或没有输入值,则移除所有临时选项
       $(`[xid=${id}] dd.${TEMP}`).remove()
     }
   }
 
+  /**
+   * 更新临时选项
+   * @private
+   * @param {jQuery} $temp - 临时选项的jQuery对象
+   * @param {Object} options - 更新选项的配置
+   * @param {string} options.value - 选项的值
+   * @param {string} options.text - 选项的显示文本
+   * @param {string} options.name - 选项的名称
+   */
+  Common.prototype.updateTempOption = function ($temp, { value, text, name }) {
+    $temp.attr('lay-value', value).find('span').text(text).attr('name', name)
+    $temp.removeClass(DD_HIDE)
+  }
+
+  /**
+   * 创建新的选项
+   * @private
+   * @param {jQuery} $tips - 提示元素的jQuery对象
+   * @param {Object} options - 创建选项的配置
+   * @param {string} options.id - 选择器的唯一标识
+   * @param {string} options.inputValue - 输入的值
+   * @param {string} options.newValue - 新生成的值
+   */
+  Common.prototype.createNewOption = function (
+    $tips,
+    { id, inputValue, newValue }
+  ) {
+    const newOption = {
+      name: inputValue,
+      innerHTML: inputValue,
+      value: newValue
+    }
+
+    $tips.after($(this.createDD(id, newOption, `${TEMP} ${CREATE_LONG}`)))
+  }
+  //#endregion
+
+  //#region 创建选项DD
   Common.prototype.createDD = function (id, item, clz) {
-    let ajaxConfig = ajaxs[id] ? ajaxs[id] : ajax
-    let name = $.trim(item.innerHTML)
+    // 获取AJAX配置
+    const ajaxConfig = ajaxs[id] || ajax
+
+    // 处理选项名称
+    const name = $.trim(item.innerHTML)
+
+    // 处理选项数据存储
     db[id][item.value] = $(item).is('option')
-      ? (item = (function () {
-          let resultItem = {}
-          resultItem[ajaxConfig.keyName] = name
-          resultItem[ajaxConfig.keyVal] = item.value
-          resultItem[ajaxConfig.keyDis] = item.disabled
-          return resultItem
-        })())
+      ? this.createOptionItem(item, name, ajaxConfig)
       : item
-    let template = data[id].config.template(id, item)
-    let pid = item[FORM_TEAM_PID]
-    pid ? (pid = JSON.parse(pid)) : (pid = [-1])
-    let attr =
-      pid[0] == -1
-        ? ''
-        : `tree-id="${pid.join('-')}" tree-folder="${!!item['XM_TREE_FOLDER']}"`
-    let isAllpelple = $(`select[xm-select=${id}]`).attr(ALL_PEOPLE)
-    let employee = name && name.includes('离职') ? 'employee' : ''
-    let employeeDisplay = name && name.includes('离职') ? 'disN' : ''
-    if (isAllpelple) {
-      return `<dd employee="${employee}"  lay-value="${item.value}" class="${
-        item.disabled ? DISABLED : ''
-      } ${clz ? clz : ''} ${employeeDisplay}" ${attr}>
-                      <div class="xm-unselect xm-form-checkbox ${
-                        item.disabled ? DISABLED : ''
-                      }"  style="margin-left: ${(pid.length - 1) * 20}px">
-                          <i class="${CHECKBOX_YES}"></i>
-                          <span name="${name}">${template}</span>
-                      </div>
-                  </dd>`
-    } else {
-      return `<dd lay-value="${item.value}" class="${
-        item.disabled ? DISABLED : ''
-      } ${clz ? clz : ''}" ${attr}>
-                      <div class="xm-unselect xm-form-checkbox ${
-                        item.disabled ? DISABLED : ''
-                      }"  style="margin-left: ${(pid.length - 1) * 20}px">
-                          <i class="${CHECKBOX_YES}"></i>
-                          <span name="${name}">${template}</span>
-                      </div>
-                  </dd>`
+
+    // 获取模板
+    const template = data[id].config.template(id, item)
+
+    // 处理父节点ID
+    const pid = this.processParentId(item[FORM_TEAM_PID])
+
+    // 构建树形结构属性
+    const treeAttr = this.buildTreeAttributes(pid, item)
+
+    // 检查是否为全部人员模式
+    const isAllPeople = $(`select[xm-select=${id}]`).attr(ALL_PEOPLE)
+
+    // 处理员工状态相关属性
+    const { employee, employeeDisplay } = this.processEmployeeStatus(name)
+
+    // 构建基础属性
+    const baseProps = this.buildBaseProperties(item, clz)
+
+    // 构建选项内容
+    const content = this.buildOptionContent(pid, name, template, item.disabled)
+
+    // 根据模式返回不同的HTML结构
+    return isAllPeople
+      ? this.buildAllPeopleHTML(
+          employee,
+          employeeDisplay,
+          baseProps,
+          treeAttr,
+          content
+        )
+      : this.buildNormalHTML(baseProps, treeAttr, content)
+  }
+
+  /**
+   * 创建选项数据对象
+   * @private
+   */
+  Common.prototype.createOptionItem = function (item, name, ajaxConfig) {
+    const resultItem = {}
+    resultItem[ajaxConfig.keyName] = name
+    resultItem[ajaxConfig.keyVal] = item.value
+    resultItem[ajaxConfig.keyDis] = item.disabled
+    return resultItem
+  }
+
+  /**
+   * 处理父节点ID
+   * @private
+   */
+  Common.prototype.processParentId = function (parentId) {
+    return parentId ? JSON.parse(parentId) : [-1]
+  }
+
+  /**
+   * 构建树形结构属性
+   * @private
+   */
+  Common.prototype.buildTreeAttributes = function (pid, item) {
+    return pid[0] === -1
+      ? ''
+      : `tree-id="${pid.join('-')}" tree-folder="${!!item['XM_TREE_FOLDER']}"`
+  }
+
+  /**
+   * 处理员工状态相关属性
+   * @private
+   */
+  Common.prototype.processEmployeeStatus = function (name) {
+    const isResigned = name && name.includes('离职')
+    return {
+      employee: isResigned ? 'employee' : '',
+      employeeDisplay: isResigned ? 'disN' : ''
     }
   }
+
+  /**
+   * 构建基础属性
+   * @private
+   */
+  Common.prototype.buildBaseProperties = function (item, clz) {
+    return {
+      value: item.value,
+      className: `${item.disabled ? DISABLED : ''} ${clz || ''}`,
+      disabled: item.disabled ? DISABLED : ''
+    }
+  }
+
+  /**
+   * 构建选项内容
+   * @private
+   */
+  Common.prototype.buildOptionContent = function (
+    pid,
+    name,
+    template,
+    isDisabled
+  ) {
+    return `<div class="xm-unselect xm-form-checkbox ${
+      isDisabled ? DISABLED : ''
+    }"  
+      style="margin-left: ${(pid.length - 1) * 20}px">
+      <i class="${CHECKBOX_YES}"></i>
+      <span name="${name}">${template}</span>
+    </div>`
+  }
+
+  /**
+   * 构建全部人员模式的HTML
+   * @private
+   */
+  Common.prototype.buildAllPeopleHTML = function (
+    employee,
+    employeeDisplay,
+    baseProps,
+    treeAttr,
+    content
+  ) {
+    return `<dd employee="${employee}" 
+      lay-value="${baseProps.value}" 
+      class="${baseProps.className} ${employeeDisplay}" 
+      ${treeAttr}>
+      ${content}
+    </dd>`
+  }
+
+  /**
+   * 构建普通模式的HTML
+   * @private
+   */
+  Common.prototype.buildNormalHTML = function (baseProps, treeAttr, content) {
+    return `<dd 
+      lay-value="${baseProps.value}" 
+      class="${baseProps.className}" 
+      ${treeAttr}>
+      ${content}
+    </dd>`
+  }
+  //#endregion
 
   Common.prototype.createQuickBtn = function (obj, right) {
     return `<div class="${CZ}" method="${obj.name}" title="${obj.name}" ${
