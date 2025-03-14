@@ -21,46 +21,46 @@
   }
 })(typeof layui == 'undefined' ? null : layui, window, function () {
   let v = '4.0.0.0910',
-    NAME = 'xm-select', //name
-    PNAME = 'xm-select-parent', //父级
-    INPUT = 'xm-select-input', //输入框
-    TDIV = 'xm-select--suffix', //后缀
-    THIS = 'xm-select-this', //this
-    LABEL = 'xm-select-label', //label
-    SEARCH = 'xm-select-search', //搜索
-    SEARCH_TYPE = 'xm-select-search-type', //搜索类型
-    SHOW_COUNT = 'xm-select-show-count', //显示数量
-    CREATE = 'xm-select-create', //创建
-    CREATE_LONG = 'xm-select-create-long', //创建长
-    MAX = 'xm-select-max', //最大
-    SKIN = 'xm-select-skin', //皮肤
-    DIRECTION = 'xm-select-direction', //方向
-    HEIGHT = 'xm-select-height', //高度
-    DISABLED = 'xm-dis-disabled', //禁用
-    DIS = 'xm-select-dis', //dis
-    TEMP = 'xm-select-temp', //temp
-    RADIO = 'xm-select-radio', //radio
-    LINKAGE = 'xm-select-linkage', //linkage
-    DL = 'xm-select-dl', //dl
-    DD_HIDE = 'xm-select-hide', //隐藏dd
-    HIDE_INPUT = 'xm-hide-input', //隐藏input
-    SANJIAO = 'xm-select-sj', //三角
-    ICON_CLOSE = 'xm-icon-close', //icon-close
-    FORM_TITLE = 'xm-select-title', //title
-    FORM_SELECT = 'xm-form-select', //表单的form-select
-    FORM_SELECTED = 'xm-form-selected', //表单的form-selected
-    FORM_NONE = 'xm-select-none', //表单的select-none
-    FORM_EMPTY = 'xm-select-empty', //表单的select-empty
-    FORM_INPUT = 'xm-input', //表单的input
-    FORM_DL_INPUT = 'xm-dl-input', //表单的dl-input
-    FORM_SELECT_TIPS = 'xm-select-tips', //表单的select-tips
-    CHECKBOX_YES = 'xm-iconfont', //checkbox-yes
-    FORM_TEAM_PID = 'XM_PID_VALUE', //form-team-pid
-    ALL_PEOPLE = 'xm-select-allpeople', //allpeople
-    CZ = 'xm-cz', //操作
-    CZ_GROUP = 'xm-cz-group', //操作分组
-    TIPS = '请选择', //提示
-    data = {}, //data
+    NAME = 'xm-select',
+    PNAME = 'xm-select-parent',
+    INPUT = 'xm-select-input',
+    TDIV = 'xm-select--suffix',
+    THIS = 'xm-select-this',
+    LABEL = 'xm-select-label',
+    SEARCH = 'xm-select-search',
+    SEARCH_TYPE = 'xm-select-search-type',
+    SHOW_COUNT = 'xm-select-show-count',
+    CREATE = 'xm-select-create',
+    CREATE_LONG = 'xm-select-create-long',
+    MAX = 'xm-select-max',
+    SKIN = 'xm-select-skin',
+    DIRECTION = 'xm-select-direction',
+    HEIGHT = 'xm-select-height',
+    DISABLED = 'xm-dis-disabled',
+    DIS = 'xm-select-dis',
+    TEMP = 'xm-select-temp',
+    RADIO = 'xm-select-radio',
+    LINKAGE = 'xm-select-linkage',
+    DL = 'xm-select-dl',
+    DD_HIDE = 'xm-select-hide',
+    HIDE_INPUT = 'xm-hide-input',
+    SANJIAO = 'xm-select-sj',
+    ICON_CLOSE = 'xm-icon-close',
+    FORM_TITLE = 'xm-select-title',
+    FORM_SELECT = 'xm-form-select',
+    FORM_SELECTED = 'xm-form-selected',
+    FORM_NONE = 'xm-select-none',
+    FORM_EMPTY = 'xm-select-empty',
+    FORM_INPUT = 'xm-input',
+    FORM_DL_INPUT = 'xm-dl-input',
+    FORM_SELECT_TIPS = 'xm-select-tips',
+    CHECKBOX_YES = 'xm-iconfont',
+    FORM_TEAM_PID = 'XM_PID_VALUE',
+    ALL_PEOPLE = 'xm-select-allpeople',
+    CZ = 'xm-cz',
+    CZ_GROUP = 'xm-cz-group',
+    TIPS = '请选择',
+    data = {},
     events = {
       on: {},
       endOn: {},
@@ -69,7 +69,6 @@
       opened: {},
       closed: {}
     },
-    //忽略ajax,暂时用不到
     ajax = {
       type: 'get',
       header: {},
@@ -103,92 +102,80 @@
         lazy: true
       }
     },
-    //快捷按钮
     quickBtns = [
       {
-        icon: 'xm-iconfont icon-quanxuan', //全选
+        icon: 'xm-iconfont icon-quanxuan',
         name: '全选',
         click: function (id, cm) {
           cm.selectAll(id, true, true)
         }
       },
       {
-        icon: 'xm-iconfont icon-qingkong', //清空
+        icon: 'xm-iconfont icon-qingkong',
         name: '清空',
         click: function (id, cm) {
           cm.removeAll(id, true, true)
         }
       },
       {
-        icon: 'xm-iconfont icon-fanxuan', //反选
+        icon: 'xm-iconfont icon-fanxuan',
         name: '反选',
         click: function (id, cm) {
           cm.reverse(id, true, true)
         }
       },
       {
-        icon: 'xm-iconfont icon-pifu', //换肤
+        icon: 'xm-iconfont icon-pifu',
         name: '换肤',
         click: function (id, cm) {
           cm.skin(id)
         }
       },
       {
-        name: '所有人员', //所有人员
+        name: '所有人员',
         click: function (id, cm) {
           cm.allpeopleFn(id, true, true)
         }
       }
     ],
     $ = window.$ || (window.layui && window.layui.jquery),
-    $win = $(window), //window
-    ajaxs = {}, //ajax
-    fsConfig = {}, //配置
-    fsConfigs = {}, //配置
+    $win = $(window),
+    ajaxs = {},
+    fsConfig = {},
+    fsConfigs = {},
     FormSelects = function (options) {
       this.config = {
         name: null, //xm-select="xxx"
-        max: null, //最大
-        // 超过最大数量提示
+        max: null,
         maxTips: (id, vals, val, max) => {
-          let ipt = $(`[xid="${this.config.name}"]`).prev().find(`.${NAME}`) //获取输入框
+          let ipt = $(`[xid="${this.config.name}"]`).prev().find(`.${NAME}`)
           if (ipt.parents('.layui-form-item[pane]').length) {
             ipt = ipt.parents('.layui-form-item[pane]')
           }
-          ipt.attr('style', 'border-color: red !important') //错误样式
+          ipt.attr('style', 'border-color: red !important')
           setTimeout(() => {
-            ipt.removeAttr('style') //300ms后移除错误样式
+            ipt.removeAttr('style')
           }, 300)
         },
         init: null, //初始化的选择值,
         on: null, //select值发生变化
         opened: null,
         closed: null,
-        // 匹配搜索: 单个模糊匹配,多个精确匹配
         filter: (id, inputVal, val, isDisabled) => {
-          // 快速判断空输入情况
-          if (!inputVal || !inputVal.trim()) {
-            return false // 空输入时显示所有选项
-          }
-          // 缓存处理后的输入值
-          const trimmedInput = inputVal.trim()
-          // 检查是否包含逗号（只检查一次）
-          if (trimmedInput.indexOf(',') > -1) {
-            // 多个精确匹配 - 预先分割搜索词
-            const searchTerms = trimmedInput.replace(/，/g, ',').split(',')
-
-            // 遍历每个搜索词，找到匹配项就返回false（显示）
-            for (let i = 0; i < searchTerms.length; i++) {
-              const term = searchTerms[i].trim()
-              if (term && term === val.name) {
-                return false
-              }
-            }
-            return true // 没有匹配项则隐藏
+          let newInputVal = inputVal.replace(/，/g, ',')
+          if (newInputVal.indexOf(',') > 0) {
+            // 多个精确
+            let inputValArr = newInputVal
+              .trim()
+              .split(',')
+              .map(val => val.trim())
+            return !inputValArr.includes(val.name)
           } else {
-            // 单个模糊匹配 - 直接使用indexOf，避免额外的toLowerCase()操作
+            // 单个模糊
             return (
-              val.name.toLowerCase().indexOf(trimmedInput.toLowerCase()) === -1
+              val.name
+                .toLowerCase()
+                .indexOf(newInputVal.toLowerCase().trim()) === -1
             )
           }
         },
@@ -196,31 +183,27 @@
         direction: 'auto',
         height: '50px', //设为null为不设置高度，修改这里---------------------------------------------------
         isEmpty: false,
-        btns: [quickBtns[0], quickBtns[1], quickBtns[2]], //默认按钮[全选,清空,反选]
-        searchType: 0, //搜索类型: 0-模糊搜索, 1-精确搜索
+        btns: [quickBtns[0], quickBtns[1], quickBtns[2]],
+        searchType: 0,
         create: (id, name) => {
-          //创建
-          return Date.now() // 创建时间戳
+          return Date.now()
         },
         template: (id, item) => {
-          //模板
-          return item.name // 返回选项的name
+          return item.name
         },
-        showCount: 0, //显示数量
-        isCreate: false, //是否创建
-        placeholder: TIPS, //提示
-        clearInput: false //是否清空
+        showCount: 0,
+        isCreate: false,
+        placeholder: TIPS,
+        clearInput: false
       }
-      this.select = null // 选择器
-      this.values = [] // 已选值
-      // 合并配置
+      this.select = null
+      this.values = []
       $.extend(
-        this.config, //默认配置
-        options, //用户配置
-        //ajax配置
+        this.config,
+        options,
         {
-          searchUrl: options.isSearch ? options.searchUrl : null, //搜索地址
-          placeholder: options.optionsFirst //选项第一个
+          searchUrl: options.isSearch ? options.searchUrl : null,
+          placeholder: options.optionsFirst
             ? options.optionsFirst.value
               ? TIPS
               : options.optionsFirst.innerHTML || TIPS
@@ -231,7 +214,7 @@
             ? [quickBtns[0], quickBtns[1], quickBtns[4], quickBtns[2]]
             : [quickBtns[0], quickBtns[1], quickBtns[2]]
         },
-        fsConfigs[options.name] || fsConfig //用户配置
+        fsConfigs[options.name] || fsConfig
       )
       if (isNaN(this.config.showCount) || this.config.showCount <= 0) {
         this.config.showCount = 19921012
@@ -240,12 +223,11 @@
 
   //一些简单的处理方法
   let Common = function () {
-    this.appender() //针对IE做的一些拓展
-    this.on() //选择值发生变化
-    this.onreset() //重置
+    this.appender()
+    this.on()
+    this.onreset()
   }
 
-  // 针对IE做的一些拓展,无需关注
   Common.prototype.appender = function () {
     //针对IE做的一些拓展
     //拓展Array map方法
@@ -327,620 +309,261 @@
     }
   }
 
-  //#region 初始化页面上已有的select
-
-  // 初始化
   Common.prototype.init = function (target) {
-    // 获取目标select元素
-    const $selects = $(target ? target : `select[${NAME}]`)
+    //初始化页面上已有的select
+    $(target ? target : `select[${NAME}]`).each((index, select) => {
+      let othis = $(select),
+        id = othis.attr(NAME),
+        hasLayuiRender = othis.next(`.layui-form-select`),
+        hasRender = othis.next(`.${PNAME}`),
+        options = {
+          name: id,
+          disabled: select.disabled,
+          max: othis.attr(MAX) - 0,
+          isSearch: othis.attr(SEARCH) != undefined,
+          searchUrl: othis.attr(SEARCH),
+          isCreate: othis.attr(CREATE) != undefined,
+          radio: othis.attr(RADIO) != undefined,
+          skin: othis.attr(SKIN),
+          direction: othis.attr(DIRECTION),
+          optionsFirst: select.options[0],
+          height: othis.attr(HEIGHT),
+          formname: othis.attr('name') || othis.attr('_name'),
+          layverify: othis.attr('lay-verify') || othis.attr('_lay-verify'),
+          layverType: othis.attr('lay-verType'),
+          searchType: othis.attr(SEARCH_TYPE) == 'dl' ? 1 : 0,
+          showCount: othis.attr(SHOW_COUNT) - 0,
+          allPeople: othis.attr(ALL_PEOPLE)
+        },
+        value = othis
+          .find('option[selected]')
+          .toArray()
+          .map(option => {
+            //获取已选中的数据
+            return {
+              name: option.innerHTML,
+              value: option.value
+            }
+          }),
+        fs = new FormSelects(options)
 
-    $selects.each((index, select) => {
-      const $select = $(select)
-      const id = $select.attr(NAME)
+      fs.values = value
 
-      // 1. 初始化配置项
-      const options = this.initOptions($select, select)
+      if (fs.config.init) {
+        fs.values = fs.config.init
+          .map(item => {
+            if (typeof item == 'object') {
+              return item
+            }
+            return {
+              name: othis.find(`option[value="${item}"]`).text(),
+              value: item
+            }
+          })
+          .filter(item => {
+            return item.name
+          })
+        fs.config.init = fs.values.concat([])
+      } else {
+        fs.config.init = value.concat([])
+      }
 
-      // 2. 获取已选值
-      const selectedValues = this.getSelectedValues($select)
+      !fs.values && (fs.values = [])
 
-      // 3. 创建FormSelects实例
-      const fs = this.createFormSelects(options, selectedValues)
+      data[id] = fs
 
-      // 4. 移除已有渲染
-      this.removeExistingRender($select)
+      //先取消layui对select的渲染
+      hasLayuiRender[0] && hasLayuiRender.remove()
+      hasRender[0] && hasRender.remove()
 
-      // 5. 构建并渲染新的DOM结构
-      this.renderNewStructure($select, fs, id)
-
-      // 6. 绑定搜索事件
-      this.bindSearchEvents(fs, id)
-    })
-  }
-
-  // 初始化配置项
-  Common.prototype.initOptions = function ($select, select) {
-    return {
-      name: $select.attr(NAME),
-      disabled: select.disabled,
-      max: $select.attr(MAX) - 0,
-      isSearch: $select.attr(SEARCH) != undefined,
-      searchUrl: $select.attr(SEARCH),
-      isCreate: $select.attr(CREATE) != undefined,
-      radio: $select.attr(RADIO) != undefined,
-      skin: $select.attr(SKIN),
-      direction: $select.attr(DIRECTION),
-      optionsFirst: select.options[0],
-      height: $select.attr(HEIGHT),
-      formname: $select.attr('name') || $select.attr('_name'),
-      layverify: $select.attr('lay-verify') || $select.attr('_lay-verify'),
-      layverType: $select.attr('lay-verType'),
-      searchType: $select.attr(SEARCH_TYPE) == 'dl' ? 1 : 0,
-      showCount: $select.attr(SHOW_COUNT) - 0,
-      allPeople: $select.attr(ALL_PEOPLE)
-    }
-  }
-
-  // 获取已选值
-  Common.prototype.getSelectedValues = function ($select) {
-    return $select
-      .find('option[selected]')
-      .toArray()
-      .map(option => ({
-        name: option.innerHTML,
-        value: option.value
-      }))
-  }
-
-  // 创建FormSelects实例
-  Common.prototype.createFormSelects = function (options, selectedValues) {
-    const fs = new FormSelects(options)
-    fs.values = selectedValues
-
-    if (fs.config.init) {
-      fs.values = this.processInitValues(fs.config.init, options.name)
-      fs.config.init = fs.values.concat([])
-    } else {
-      fs.config.init = selectedValues.concat([])
-    }
-
-    !fs.values && (fs.values = [])
-    data[options.name] = fs
-
-    return fs
-  }
-
-  // 处理初始值
-  Common.prototype.processInitValues = function (initValues, id) {
-    return initValues
-      .map(item => {
-        if (typeof item == 'object') {
-          return item
-        }
-        return {
-          name: $(`select[xm-select="${id}"] option[value="${item}"]`).text(),
-          value: item
-        }
-      })
-      .filter(item => item.name)
-  }
-
-  // 移除已有渲染
-  Common.prototype.removeExistingRender = function ($select) {
-    const hasLayuiRender = $select.next(`.layui-form-select`)
-    const hasRender = $select.next(`.${PNAME}`)
-
-    hasLayuiRender[0] && hasLayuiRender.remove()
-    hasRender[0] && hasRender.remove()
-  }
-
-  // 构建并渲染新的DOM结构
-  Common.prototype.renderNewStructure = function ($select, fs, id) {
-    const dinfo = this.renderSelect(id, fs.config.placeholder, $select[0])
-    const heightStyle =
-      !fs.config.height || fs.config.height == 'auto'
-        ? ''
-        : `xm-hg style="height: 34px;"`
-
-    const inputHtml = this.createInputHtml(fs.config.isSearch)
-    const isAllpelple = $(`select[xm-select=${id}]`).attr(ALL_PEOPLE)
-
-    const reElem = this.createMainElement(
-      fs,
-      heightStyle,
-      inputHtml,
-      id,
-      dinfo,
-      isAllpelple
-    )
-    const $parent = $(`<div class="${PNAME}" FS_ID="${id}"></div>`)
-
-    $parent.append(reElem)
-    $select.after($parent)
-
-    this.handleSelectAttributes($select, fs.config)
-  }
-
-  // 创建输入框HTML
-  Common.prototype.createInputHtml = function (isSearch) {
-    return [
-      `<div class="${LABEL}">`,
-      `<input type="text" fsw class="${FORM_INPUT} ${INPUT}" ${
-        isSearch ? '' : 'style="display: none;"'
-      } autocomplete="off" debounce="0" />`,
-      `</div>`
-    ].join('')
-  }
-
-  // 创建主元素
-  Common.prototype.createMainElement = function (
-    fs,
-    heightStyle,
-    inputHtml,
-    id,
-    dinfo,
-    isAllpelple
-  ) {
-    return $(`<div class="${FORM_SELECT}" ${SKIN}="${fs.config.skin}">
-      <input class="${HIDE_INPUT}" value="" name="${fs.config.formname}" 
-        lay-verify="${fs.config.layverify}" lay-verType="${
-      fs.config.layverType
-    }"
-        type="text" style="position: absolute;bottom: 0; z-index: -1;width: 100%; height: 100%; border: none; opacity: 0;"/>
-      <div class="${FORM_TITLE} ${fs.config.disabled ? DIS : ''}">
-        <div class="${FORM_INPUT} ${NAME}" ${heightStyle}>
-          ${inputHtml}
-          <i class="${SANJIAO}"></i>
+      //构造渲染div
+      let dinfo = this.renderSelect(id, fs.config.placeholder, select)
+      let heightStyle =
+        !fs.config.height || fs.config.height == 'auto'
+          ? ''
+          : `xm-hg style="height: 34px;"`
+      let inputHtml = [
+        `<div class="${LABEL}">`,
+        `<input type="text" fsw class="${FORM_INPUT} ${INPUT}" ${
+          fs.config.isSearch ? '' : 'style="display: none;"'
+        } autocomplete="off" debounce="0" />`,
+        `</div>`
+      ]
+      let isAllpelple = $(`select[xm-select=${id}]`).attr(ALL_PEOPLE) //存在全部人员，拉长组件宽度
+      let reElem = $(`<div class="${FORM_SELECT}" ${SKIN}="${fs.config.skin}">
+        <input class="${HIDE_INPUT}" value="" name="${
+        fs.config.formname
+      }" lay-verify="${fs.config.layverify}" lay-verType="${
+        fs.config.layverType
+      }" type="text" style="position: absolute;bottom: 0; z-index: -1;width: 100%; height: 100%; border: none; opacity: 0;"/>
+        <div class="${FORM_TITLE} ${fs.config.disabled ? DIS : ''}">
+          <div class="${FORM_INPUT} ${NAME}" ${heightStyle}>
+            ${inputHtml.join('')}
+            <i class="${SANJIAO}"></i>
+          </div>
+          <div class="${TDIV}">
+            <input type="text" autocomplete="off" placeholder="${
+              fs.config.placeholder
+            }" readonly="readonly" unselectable="on" class="${FORM_INPUT}">
+          </div>
+          <div></div>
         </div>
-        <div class="${TDIV}">
-          <input type="text" autocomplete="off" placeholder="${
-            fs.config.placeholder
-          }" 
-            readonly="readonly" unselectable="on" class="${FORM_INPUT}">
-        </div>
-        <div></div>
-      </div>
-      <dl xid="${id}" class="${DL} ${fs.config.radio ? RADIO : ''}" 
-        style="${isAllpelple ? 'min-width:380px;' : ''}">${dinfo}</dl>
-    </div>`)
-  }
+        <dl xid="${id}" class="${DL} ${fs.config.radio ? RADIO : ''}" style="${
+        isAllpelple ? 'min-width:380px;' : ''
+      }">${dinfo}</dl>
+      </div>`)
 
-  // 处理select属性
-  Common.prototype.handleSelectAttributes = function ($select, config) {
-    $select.attr('lay-ignore', '')
-    $select.removeAttr('name') && $select.attr('_name', config.formname)
-    $select.removeAttr('lay-verify') &&
-      $select.attr('_lay-verify', config.layverify)
-  }
+      var $parent = $(`<div class="${PNAME}" FS_ID="${id}"></div>`)
+      $parent.append(reElem)
+      othis.after($parent)
+      othis.attr('lay-ignore', '')
+      othis.removeAttr('name') && othis.attr('_name', fs.config.formname)
+      othis.removeAttr('lay-verify') &&
+        othis.attr('_lay-verify', fs.config.layverify)
 
-  // 绑定搜索事件
-  Common.prototype.bindSearchEvents = function (fs, id) {
-    if (fs.config.isSearch) {
-      ajaxs[id] = $.extend(
-        {},
-        ajax,
-        { searchUrl: fs.config.searchUrl },
-        ajaxs[id]
-      )
-
-      $(document).on('input', `div.${PNAME}[FS_ID="${id}"] .${INPUT}`, e => {
-        this.search(id, e, fs.config.searchUrl)
-      })
-
-      if (fs.config.searchUrl) {
-        this.triggerSearch(
-          $(`div.${PNAME}[FS_ID="${id}"] .${FORM_SELECT}`),
-          true
+      //如果可搜索, 加上事件
+      if (fs.config.isSearch) {
+        ajaxs[id] = $.extend(
+          {},
+          ajax,
+          { searchUrl: fs.config.searchUrl },
+          ajaxs[id]
         )
+        $(document).on('input', `div.${PNAME}[FS_ID="${id}"] .${INPUT}`, e => {
+          this.search(id, e, fs.config.searchUrl)
+        })
+        if (fs.config.searchUrl) {
+          //触发第一次请求事件
+          this.triggerSearch(reElem, true)
+        }
+      } else {
+        //隐藏第二个dl
+        reElem.find(`dl dd.${FORM_DL_INPUT}`).css('display', 'none')
       }
-    } else {
-      $(
-        `div.${PNAME}[FS_ID="${id}"] .${FORM_SELECT} dl dd.${FORM_DL_INPUT}`
-      ).css('display', 'none')
-    }
+    })
   }
 
-  //#endregion
-
-  //#region 搜索事件
-  //搜索处理
   Common.prototype.search = function (id, e, searchUrl, call) {
-    // 1. 初始化搜索参数
-    const searchParams = this.initSearchParams(id, e, searchUrl, call)
-    if (!searchParams) return
-
-    // 2. 获取搜索配置
-    const config = this.getSearchConfig(id, searchParams.searchUrl)
-
-    // 3. 执行搜索
-    this.executeSearch(id, searchParams, config)
-  }
-
-  // 初始化搜索参数
-  Common.prototype.initSearchParams = function (id, e, searchUrl, call) {
-    const input = call || e.target
-
-    // 处理特殊按键
-    if (!call && this.isSpecialKey(e.keyCode)) {
-      return null
-    }
-
-    return {
-      input,
-      inputValue: $.trim(input.value),
-      searchUrl,
-      $input: $(input)
-    }
-  }
-
-  // 判断是否为特殊按键
-  Common.prototype.isSpecialKey = function (keyCode) {
-    const specialKeys = [9, 13, 37, 38, 39, 40]
-    return specialKeys.includes(keyCode)
-  }
-
-  // 获取搜索配置
-  Common.prototype.getSearchConfig = function (id, searchUrl) {
-    const ajaxConfig = ajaxs[id] || ajax
-    return {
-      ...ajaxConfig,
-      searchUrl: ajaxConfig.searchUrl || searchUrl,
-      fs: data[id],
-      $reElem: $(`dl[xid="${id}"]`).parents(`.${FORM_SELECT}`)
-    }
-  }
-
-  // 执行搜索
-  Common.prototype.executeSearch = function (id, params, config) {
-    // 更新占位符
-    this.changePlaceHolder(params.$input)
-
-    // 根据搜索类型执行不同的搜索逻辑
-    if (config.searchUrl) {
-      this.executeRemoteSearch(id, params, config)
+    let input
+    if (call) {
+      input = call
     } else {
-      this.executeLocalSearch(id, params, config)
-    }
-  }
-
-  // 执行远程搜索
-  Common.prototype.executeRemoteSearch = function (id, params, config) {
-    const { fs, searchUrl, $reElem } = config
-
-    // 处理搜索值
-    let inputValue = this.handleSearchValue(params.inputValue, config)
-
-    // 执行搜索前检查
-    if (!this.checkBeforeSearch(config, id, searchUrl, inputValue)) {
-      return
-    }
-
-    // 设置延迟搜索
-    this.setupDelayedSearch(fs, $reElem, id, searchUrl, inputValue, config)
-  }
-
-  // 处理搜索值
-  Common.prototype.handleSearchValue = function (inputValue, config) {
-    if (config.searchVal) {
-      inputValue = config.searchVal
-      config.searchVal = ''
-    }
-    return inputValue
-  }
-
-  // 检查搜索前条件
-  Common.prototype.checkBeforeSearch = function (
-    config,
-    id,
-    searchUrl,
-    inputValue
-  ) {
-    return (
-      !config.beforeSearch ||
-      (config.beforeSearch instanceof Function &&
-        config.beforeSearch(id, searchUrl, inputValue))
-    )
-  }
-
-  // 设置延迟搜索
-  Common.prototype.setupDelayedSearch = function (
-    fs,
-    $reElem,
-    id,
-    searchUrl,
-    inputValue,
-    config
-  ) {
-    const delay = config.first ? 10 : config.delay
-
-    clearTimeout(fs.clearid)
-
-    fs.clearid = setTimeout(() => {
-      this.prepareRemoteSearch($reElem)
-      this.ajax(id, searchUrl, inputValue, false, null, true)
-    }, delay)
-  }
-
-  // 准备远程搜索
-  Common.prototype.prepareRemoteSearch = function ($reElem) {
-    $reElem.find(`dl > *:not(.${FORM_SELECT_TIPS})`).remove()
-    $reElem
-      .find(`dd.${FORM_NONE}`)
-      .addClass(FORM_EMPTY)
-      .text('请输入要搜索的内容')
-  }
-
-  // 执行本地搜索
-  Common.prototype.executeLocalSearch = function (id, params, config) {
-    const { $reElem, fs } = config
-    const $dl = $reElem.find('dl')
-
-    // 重置显示状态
-    this.resetLocalSearchState($dl)
-
-    // 执行过滤
-    this.filterLocalOptions(id, params.inputValue, $dl, fs)
-
-    // 处理分组显示
-    this.handleGroupVisibility($dl)
-
-    // 处理动态创建
-    this.handleDynamicCreation(id, fs.config.isCreate, params.inputValue)
-
-    // 更新搜索结果状态
-    this.updateSearchResultStatus($reElem)
-  }
-
-  // 重置本地搜索状态
-  Common.prototype.resetLocalSearchState = function ($dl) {
-    $dl.find(`.${DD_HIDE}`).removeClass(DD_HIDE)
-  }
-
-  // 过滤本地选项
-  Common.prototype.filterLocalOptions = function (id, inputValue, $dl, fs) {
-    const searchFun = events.filter[id] || fs.config.filter
-
-    $dl.find(`dd:not(.${FORM_SELECT_TIPS})`).each((_, item) => {
-      const $item = $(item)
-      if (this.shouldHideOption(searchFun, id, inputValue, $item)) {
-        $item.addClass(DD_HIDE)
+      input = e.target
+      let keyCode = e.keyCode
+      if (
+        keyCode === 9 ||
+        keyCode === 13 ||
+        keyCode === 37 ||
+        keyCode === 38 ||
+        keyCode === 39 ||
+        keyCode === 40
+      ) {
+        return false
       }
-    })
-  }
+    }
+    let inputValue = $.trim(input.value)
+    //过滤一下tips
+    this.changePlaceHolder($(input))
 
-  // 判断是否应该隐藏选项
-  Common.prototype.shouldHideOption = function (
-    searchFun,
-    id,
-    inputValue,
-    $item
-  ) {
-    return (
-      searchFun &&
-      searchFun(
-        id,
-        inputValue,
-        this.getItem(id, $item),
-        $item.hasClass(DISABLED)
-      ) === true
-    )
-  }
-
-  // 处理分组显示
-  Common.prototype.handleGroupVisibility = function ($dl) {
-    $dl.find('dt').each((_, item) => {
-      const $dt = $(item)
-      if (!$dt.nextUntil('dt', `:not(.${DD_HIDE})`).length) {
-        $dt.addClass(DD_HIDE)
+    let ajaxConfig = ajaxs[id] ? ajaxs[id] : ajax
+    searchUrl = ajaxConfig.searchUrl || searchUrl
+    let fs = data[id],
+      isCreate = fs.config.isCreate,
+      reElem = $(`dl[xid="${id}"]`).parents(`.${FORM_SELECT}`)
+    //如果开启了远程搜索
+    if (searchUrl) {
+      if (ajaxConfig.searchVal) {
+        inputValue = ajaxConfig.searchVal
+        ajaxConfig.searchVal = ''
       }
-    })
-  }
-
-  // 处理动态创建
-  Common.prototype.handleDynamicCreation = function (id, isCreate, inputValue) {
-    if (isCreate) {
+      if (
+        !ajaxConfig.beforeSearch ||
+        (ajaxConfig.beforeSearch &&
+          ajaxConfig.beforeSearch instanceof Function &&
+          ajaxConfig.beforeSearch(id, searchUrl, inputValue))
+      ) {
+        let delay = ajaxConfig.delay
+        if (ajaxConfig.first) {
+          ajaxConfig.first = false
+          delay = 10
+        }
+        clearTimeout(fs.clearid)
+        fs.clearid = setTimeout(() => {
+          reElem.find(`dl > *:not(.${FORM_SELECT_TIPS})`).remove()
+          reElem
+            .find(`dd.${FORM_NONE}`)
+            .addClass(FORM_EMPTY)
+            .text('请输入要搜索的内容')
+          this.ajax(id, searchUrl, inputValue, false, null, true)
+        }, delay)
+      }
+    } else {
+      reElem.find(`dl .${DD_HIDE}`).removeClass(DD_HIDE)
+      //遍历选项, 选择可以显示的值
+      reElem.find(`dl dd:not(.${FORM_SELECT_TIPS})`).each((idx, item) => {
+        let _item = $(item)
+        let searchFun = events.filter[id] || data[id].config.filter
+        if (
+          searchFun &&
+          searchFun(
+            id,
+            inputValue,
+            this.getItem(id, _item),
+            _item.hasClass(DISABLED)
+          ) == true
+        ) {
+          _item.addClass(DD_HIDE)
+        }
+      })
+      //控制分组名称
+      reElem.find('dl dt').each((index, item) => {
+        if (!$(item).nextUntil('dt', `:not(.${DD_HIDE})`).length) {
+          $(item).addClass(DD_HIDE)
+        }
+      })
+      //动态创建
       this.create(id, isCreate, inputValue)
+      let shows = reElem.find(
+        `dl dd:not(.${FORM_SELECT_TIPS}):not(.${DD_HIDE})`
+      )
+      if (!shows.length) {
+        reElem.find(`dd.${FORM_NONE}`).addClass(FORM_EMPTY).text('无匹配项')
+      } else {
+        reElem.find(`dd.${FORM_NONE}`).removeClass(FORM_EMPTY)
+      }
     }
   }
-
-  // 更新搜索结果状态
-  Common.prototype.updateSearchResultStatus = function ($reElem) {
-    const $shows = $reElem.find(
-      `dl dd:not(.${FORM_SELECT_TIPS}):not(.${DD_HIDE})`
-    )
-    const $none = $reElem.find(`dd.${FORM_NONE}`)
-
-    if (!$shows.length) {
-      $none.addClass(FORM_EMPTY).text('无匹配项')
-    } else {
-      $none.removeClass(FORM_EMPTY)
-    }
-  }
-  //#endregion
 
   Common.prototype.isArray = function (obj) {
     return Object.prototype.toString.call(obj) == '[object Array]'
   }
 
-  //#region 触发搜索
-  /**
-   * 触发搜索操作
-   * @param {HTMLElement|jQuery} div - 目标元素
-   * @param {boolean} isCall - 是否强制触发
-   */
   Common.prototype.triggerSearch = function (div, isCall) {
-    // 1. 获取目标元素
-    const $targets = this.getSearchTargets(div)
-
-    // 2. 遍历处理每个目标
-    $targets.forEach($elem => {
-      this.handleSearchTarget($elem, isCall)
+    ;(div ? [div] : $(`.${FORM_SELECT}`).toArray()).forEach((reElem, index) => {
+      reElem = $(reElem)
+      let id = reElem.find('dl').attr('xid')
+      if ((id && data[id] && data[id].config.isEmpty) || isCall) {
+        this.search(
+          id,
+          null,
+          null,
+          data[id].config.searchType == 0
+            ? reElem.find(`.${LABEL} .${INPUT}`)
+            : reElem.find(`dl .${FORM_DL_INPUT} .${INPUT}`)
+        )
+      }
     })
   }
 
-  /**
-   * 获取搜索目标元素
-   * @param {HTMLElement|jQuery} div - 目标元素
-   * @returns {jQuery[]} 目标元素数组
-   */
-  Common.prototype.getSearchTargets = function (div) {
-    if (div) {
-      return [$(div)]
-    }
-    return $(`.${FORM_SELECT}`)
-      .toArray()
-      .map(elem => $(elem))
-  }
-
-  /**
-   * 处理单个搜索目标
-   * @param {jQuery} $elem - 目标元素
-   * @param {boolean} isCall - 是否强制触发
-   */
-  Common.prototype.handleSearchTarget = function ($elem, isCall) {
-    // 1. 获取搜索ID
-    const id = this.getSearchId($elem)
-    if (!id) return
-
-    // 2. 检查搜索条件
-    if (!this.shouldTriggerSearch(id, isCall)) return
-
-    // 3. 获取搜索输入框
-    const $input = this.getSearchInput($elem, id)
-    if (!$input.length) return
-
-    // 4. 执行搜索
-    this.executeTriggerSearch(id, $input)
-  }
-
-  /**
-   * 获取搜索ID
-   * @param {jQuery} $elem - 目标元素
-   * @returns {string|null} 搜索ID
-   */
-  Common.prototype.getSearchId = function ($elem) {
-    return $elem.find('dl').attr('xid')
-  }
-
-  /**
-   * 检查是否应该触发搜索
-   * @param {string} id - 搜索ID
-   * @param {boolean} isCall - 是否强制触发
-   * @returns {boolean} 是否应该触发
-   */
-  Common.prototype.shouldTriggerSearch = function (id, isCall) {
-    return isCall || (id && data[id] && data[id].config.isEmpty)
-  }
-
-  /**
-   * 获取搜索输入框
-   * @param {jQuery} $elem - 目标元素
-   * @param {string} id - 搜索ID
-   * @returns {jQuery} 输入框元素
-   */
-  Common.prototype.getSearchInput = function ($elem, id) {
-    const searchType = data[id].config.searchType
-    const selector =
-      searchType === 0
-        ? `.${LABEL} .${INPUT}`
-        : `dl .${FORM_DL_INPUT} .${INPUT}`
-
-    return $elem.find(selector)
-  }
-
-  /**
-   * 执行触发搜索
-   * @param {string} id - 搜索ID
-   * @param {jQuery} $input - 输入框元素
-   */
-  Common.prototype.executeTriggerSearch = function (id, $input) {
-    try {
-      this.search(id, null, null, $input)
-    } catch (error) {
-      console.error(`搜索执行失败: ${error.message}`)
-      this.handleSearchError(id)
-    }
-  }
-
-  /**
-   * 处理搜索错误
-   * @param {string} id - 搜索ID
-   */
-  Common.prototype.handleSearchError = function (id) {
-    const $reElem = $(`.${PNAME} dl[xid="${id}"]`).parents(`.${FORM_SELECT}`)
-    if ($reElem.length) {
-      $reElem
-        .find(`dd.${FORM_NONE}`)
-        .addClass(FORM_EMPTY)
-        .text('搜索出错,请重试')
-    }
-  }
-  //#endregion
-
-  //#region 清空搜索输入框的值
-  /**
-   * 清空搜索输入框的值
-   * @param {string} id - 搜索框的唯一标识
-   * @returns {boolean} 是否成功清空
-   */
   Common.prototype.clearInput = function (id) {
-    // 1. 参数验证
-    if (!id || typeof id !== 'string') {
-      console.warn('clearInput: 无效的id参数')
-      return false
-    }
-
-    try {
-      // 2. 获取父容器
-      const $container = $(`.${PNAME}[fs_id="${id}"]`)
-      if (!$container.length) {
-        console.warn(`clearInput: 未找到id为 ${id} 的容器`)
-        return false
-      }
-
-      // 3. 获取配置
-      const config = data[id]?.config
-      if (!config) {
-        console.warn(`clearInput: 未找到id为 ${id} 的配置`)
-        return false
-      }
-
-      // 4. 根据搜索类型获取输入框
-      const $input = this.getSearchInput($container, id)
-      if (!$input.length) {
-        console.warn(`clearInput: 未找到id为 ${id} 的输入框`)
-        return false
-      }
-
-      // 5. 清空输入框
-      $input.val('').trigger('input')
-
-      return true
-    } catch (error) {
-      console.error(`clearInput: 清空输入框时发生错误 - ${error.message}`)
-      return false
-    }
+    let div = $(`.${PNAME}[fs_id="${id}"]`)
+    let input =
+      data[id].config.searchType == 0
+        ? div.find(`.${LABEL} .${INPUT}`)
+        : div.find(`dl .${FORM_DL_INPUT} .${INPUT}`)
+    input.val('')
   }
 
-  /**
-   * 获取搜索输入框
-   * @param {jQuery} $container - 容器元素
-   * @param {string} id - 搜索框的唯一标识
-   * @returns {jQuery} 输入框元素
-   */
-  Common.prototype.getSearchInput = function ($container, id) {
-    const searchType = data[id].config.searchType
-    const selector =
-      searchType === 0
-        ? `.${LABEL} .${INPUT}`
-        : `dl .${FORM_DL_INPUT} .${INPUT}`
-
-    return $container.find(selector)
-  }
-
-  //#endregion
-
-  //#region ajax
   Common.prototype.ajax = function (
     id,
     searchUrl,
@@ -951,263 +574,70 @@
     successCallback,
     isReplace
   ) {
-    // 1. 参数验证和初始化
-    const reElem = $(`.${PNAME} dl[xid="${id}"]`).parents(`.${FORM_SELECT}`)
+    let reElem = $(`.${PNAME} dl[xid="${id}"]`).parents(`.${FORM_SELECT}`)
     if (!reElem[0] || !searchUrl) {
-      console.warn('ajax: 无效的参数或URL')
       return
     }
-
-    // 2. 获取并合并配置
-    const ajaxConfig = ajaxs[id] || ajax
-    const ajaxData = this.prepareAjaxData(ajaxConfig, inputValue)
-
-    // 3. 执行AJAX请求
-    this.executeAjaxRequest({
-      id,
-      searchUrl,
-      inputValue,
-      isLinkage,
-      linkageWidth,
-      isSearch,
-      isReplace,
-      ajaxConfig,
-      ajaxData,
-      reElem,
-      successCallback
-    })
-  }
-
-  // 准备AJAX数据
-  Common.prototype.prepareAjaxData = function (ajaxConfig, inputValue) {
-    const ajaxData = $.extend(true, {}, ajaxConfig.data)
+    let ajaxConfig = ajaxs[id] ? ajaxs[id] : ajax
+    let ajaxData = $.extend(true, {}, ajaxConfig.data)
     ajaxData[ajaxConfig.searchName] = inputValue
-    return ajaxConfig.dataType === 'json' ? JSON.stringify(ajaxData) : ajaxData
-  }
-
-  // 执行AJAX请求
-  Common.prototype.executeAjaxRequest = function ({
-    id,
-    searchUrl,
-    inputValue,
-    isLinkage,
-    linkageWidth,
-    isSearch,
-    isReplace,
-    ajaxConfig,
-    ajaxData,
-    reElem,
-    successCallback
-  }) {
+    //是否需要对ajax添加随机时间
+    //ajaxData['_'] = Date.now();
     $.ajax({
       type: ajaxConfig.type,
       headers: ajaxConfig.header,
       url: searchUrl,
-      data: ajaxData,
-      success: res =>
-        this.handleAjaxSuccess({
-          id,
-          searchUrl,
-          inputValue,
-          isLinkage,
-          linkageWidth,
-          isSearch,
-          isReplace,
-          ajaxConfig,
-          reElem,
-          successCallback,
-          res
-        }),
-      error: err =>
-        this.handleAjaxError({
-          id,
-          searchUrl,
-          inputValue,
-          ajaxConfig,
-          reElem,
-          err
-        })
-    })
-  }
-
-  // 处理AJAX成功响应
-  Common.prototype.handleAjaxSuccess = function ({
-    id,
-    searchUrl,
-    inputValue,
-    isLinkage,
-    linkageWidth,
-    isSearch,
-    isReplace,
-    ajaxConfig,
-    reElem,
-    successCallback,
-    res
-  }) {
-    try {
-      // 1. 解析响应数据
-      const parsedRes = this.parseResponse(res)
-
-      // 2. 执行前置处理
-      const processedRes = this.processResponseBeforeSuccess({
-        id,
-        searchUrl,
-        inputValue,
-        ajaxConfig,
-        res: parsedRes
-      })
-
-      // 3. 标准化响应格式
-      const normalizedRes = this.normalizeResponse(processedRes, ajaxConfig)
-
-      // 4. 处理响应结果
-      this.processResponseResult({
-        id,
-        isLinkage,
-        linkageWidth,
-        isSearch,
-        isReplace,
-        ajaxConfig,
-        reElem,
-        res: normalizedRes
-      })
-
-      // 5. 执行回调
-      this.executeCallbacks({
-        id,
-        searchUrl,
-        inputValue,
-        ajaxConfig,
-        successCallback,
-        res: normalizedRes
-      })
-    } catch (error) {
-      console.error('处理AJAX响应时发生错误:', error)
-      this.handleAjaxError({
-        id,
-        searchUrl,
-        inputValue,
-        ajaxConfig,
-        reElem,
-        err: error
-      })
-    }
-  }
-
-  // 解析响应数据
-  Common.prototype.parseResponse = function (res) {
-    return typeof res === 'string' ? JSON.parse(res) : res
-  }
-
-  // 处理响应前置处理
-  Common.prototype.processResponseBeforeSuccess = function ({
-    id,
-    searchUrl,
-    inputValue,
-    ajaxConfig,
-    res
-  }) {
-    if (
-      ajaxConfig.beforeSuccess &&
-      typeof ajaxConfig.beforeSuccess === 'function'
-    ) {
-      return ajaxConfig.beforeSuccess(id, searchUrl, inputValue, res)
-    }
-    return res
-  }
-
-  // 标准化响应格式
-  Common.prototype.normalizeResponse = function (res, ajaxConfig) {
-    if (this.isArray(res)) {
-      return {
-        [ajaxConfig.response.statusName]: ajaxConfig.response.statusCode,
-        [ajaxConfig.response.msgName]: '',
-        [ajaxConfig.response.dataName]: res
+      data: ajaxConfig.dataType == 'json' ? JSON.stringify(ajaxData) : ajaxData,
+      success: res => {
+        if (typeof res == 'string') {
+          res = JSON.parse(res)
+        }
+        ajaxConfig.beforeSuccess &&
+          ajaxConfig.beforeSuccess instanceof Function &&
+          (res = ajaxConfig.beforeSuccess(id, searchUrl, inputValue, res))
+        if (this.isArray(res)) {
+          let newRes = {}
+          newRes[ajaxConfig.response.statusName] =
+            ajaxConfig.response.statusCode
+          newRes[ajaxConfig.response.msgName] = ''
+          newRes[ajaxConfig.response.dataName] = res
+          res = newRes
+        }
+        if (
+          res[ajaxConfig.response.statusName] != ajaxConfig.response.statusCode
+        ) {
+          reElem
+            .find(`dd.${FORM_NONE}`)
+            .addClass(FORM_EMPTY)
+            .text(res[ajaxConfig.response.msgName])
+        } else {
+          reElem.find(`dd.${FORM_NONE}`).removeClass(FORM_EMPTY)
+          this.renderData(
+            id,
+            res[ajaxConfig.response.dataName],
+            isLinkage,
+            linkageWidth,
+            isSearch,
+            isReplace
+          )
+          data[id].config.isEmpty =
+            res[ajaxConfig.response.dataName].length == 0
+        }
+        successCallback && successCallback(id)
+        ajaxConfig.success &&
+          ajaxConfig.success instanceof Function &&
+          ajaxConfig.success(id, searchUrl, inputValue, res)
+      },
+      error: err => {
+        reElem.find(`dd[lay-value]:not(.${FORM_SELECT_TIPS})`).remove()
+        reElem.find(`dd.${FORM_NONE}`).addClass(FORM_EMPTY).text('服务异常')
+        ajaxConfig.error &&
+          ajaxConfig.error instanceof Function &&
+          ajaxConfig.error(id, searchUrl, inputValue, err)
       }
-    }
-    return res
-  }
-
-  // 处理响应结果
-  Common.prototype.processResponseResult = function ({
-    id,
-    isLinkage,
-    linkageWidth,
-    isSearch,
-    isReplace,
-    ajaxConfig,
-    reElem,
-    res
-  }) {
-    const $none = reElem.find(`dd.${FORM_NONE}`)
-
-    if (
-      res[ajaxConfig.response.statusName] !== ajaxConfig.response.statusCode
-    ) {
-      $none.addClass(FORM_EMPTY).text(res[ajaxConfig.response.msgName])
-      return
-    }
-
-    $none.removeClass(FORM_EMPTY)
-    this.renderData(
-      id,
-      res[ajaxConfig.response.dataName],
-      isLinkage,
-      linkageWidth,
-      isSearch,
-      isReplace
-    )
-
-    data[id].config.isEmpty = res[ajaxConfig.response.dataName].length === 0
-  }
-
-  // 执行回调函数
-  Common.prototype.executeCallbacks = function ({
-    id,
-    searchUrl,
-    inputValue,
-    ajaxConfig,
-    successCallback,
-    res
-  }) {
-    if (successCallback) {
-      successCallback(id)
-    }
-
-    if (ajaxConfig.success && typeof ajaxConfig.success === 'function') {
-      ajaxConfig.success(id, searchUrl, inputValue, res)
-    }
-  }
-
-  // 处理AJAX错误
-  Common.prototype.handleAjaxError = function ({
-    id,
-    searchUrl,
-    inputValue,
-    ajaxConfig,
-    reElem,
-    err
-  }) {
-    // 清理现有选项
-    reElem.find(`dd[lay-value]:not(.${FORM_SELECT_TIPS})`).remove()
-
-    // 显示错误信息
-    reElem.find(`dd.${FORM_NONE}`).addClass(FORM_EMPTY).text('服务异常')
-
-    // 执行错误回调
-    if (ajaxConfig.error && typeof ajaxConfig.error === 'function') {
-      ajaxConfig.error(id, searchUrl, inputValue, err)
-    }
-
-    console.error('AJAX请求失败:', {
-      id,
-      searchUrl,
-      error: err
     })
   }
-  //#endregion
 
-  //#region 渲染数据
   Common.prototype.renderData = function (
     id,
     dataArr,
@@ -1216,8 +646,8 @@
     isSearch,
     isReplace
   ) {
-    // 1. 快速返回特殊情况
     if (linkage) {
+      //渲染多级联动
       this.renderLinkage(id, dataArr, linkageWidth)
       return
     }
@@ -1225,297 +655,161 @@
       this.renderReplace(id, dataArr)
       return
     }
-
-    // 2. 缓存DOM元素和配置
-    const $reElem = $(`.${PNAME} dl[xid="${id}"]`).parents(`.${FORM_SELECT}`)
-    const $originalSelects = $reElem
+    let reElem = $(`.${PNAME} dl[xid="${id}"]`).parents(`.${FORM_SELECT}`)
+    let originalSelects = reElem
       .parents(`div[fs_id="${id}"]`)
       .siblings('select')
-    const ajaxConfig = ajaxs[id] || ajax
-    const $pcInput = $reElem.find(`.${TDIV} input`)
-    const $label = $reElem.find(`.${LABEL}`)
-    const $dl = $reElem.find('dl[xid]')
+    let ajaxConfig = ajaxs[id] ? ajaxs[id] : ajax
+    let pcInput = reElem.find(`.${TDIV} input`)
 
-    // 3. 优化数据处理
-    const processedData = this.processData(id, dataArr, ajaxConfig)
-    const { values, items } = processedData
-
-    // 4. 使用文档片段优化DOM操作
-    const fragment = document.createDocumentFragment()
-
-    // 5. 批量渲染选项
-    const optionsHtml = this.renderOptions(id, items, $pcInput)
-    $dl.html(optionsHtml)
-
-    // 6. 同步原始select的options(仅在需要时)
-    this.syncOriginalSelects($originalSelects, items)
-
-    // 7. 处理选中值
-    if (isSearch) {
-      this.handleSearchValues(id, values, $dl, $label)
-    } else {
-      this.handleNormalValues(id, values, $dl, $label)
-    }
-
-    // 8. 执行通用处理
-    this.commonHandler(id, $label)
-  }
-
-  // 处理数据
-  Common.prototype.processData = function (id, dataArr, ajaxConfig) {
-    const processedData = this.exchangeData(id, dataArr)
-    const values = []
-    const items = processedData.map(item => {
-      const itemVal = {
-        ...item,
-        innerHTML: item[ajaxConfig.keyName],
-        value: item[ajaxConfig.keyVal],
-        sel: item[ajaxConfig.keySel],
-        disabled: item[ajaxConfig.keyDis],
-        type: item.type,
-        name: item[ajaxConfig.keyName]
-      }
-      if (itemVal.sel) {
-        values.push(itemVal)
-      }
-      return itemVal
-    })
-    return { values, items }
-  }
-
-  // 渲染选项
-  Common.prototype.renderOptions = function (id, items, $pcInput) {
-    return this.renderSelect(
-      id,
-      $pcInput.attr('placeholder') || $pcInput.attr('back'),
-      items
+    dataArr = this.exchangeData(id, dataArr)
+    let values = []
+    reElem.find('dl').html(
+      this.renderSelect(
+        id,
+        pcInput.attr('placeholder') || pcInput.attr('back'),
+        dataArr.map(item => {
+          let itemVal = $.extend({}, item, {
+            innerHTML: item[ajaxConfig.keyName],
+            value: item[ajaxConfig.keyVal],
+            sel: item[ajaxConfig.keySel],
+            disabled: item[ajaxConfig.keyDis],
+            type: item.type,
+            name: item[ajaxConfig.keyName]
+          })
+          if (itemVal.sel) {
+            values.push(itemVal)
+          }
+          return itemVal
+        })
+      )
     )
-  }
-
-  // 同步原始select的options
-  Common.prototype.syncOriginalSelects = function ($originalSelects, items) {
-    if ($originalSelects.find('option').length === 0) {
-      const optionsHtml = items
-        .map(item => `<option value="${item.value}">${item.name}</option>`)
-        .join('')
-      $originalSelects.append(optionsHtml)
+    //添加使用data方法渲染时同步select下的options Dom数据
+    if (originalSelects.find('option').length == 0) {
+      let options = ''
+      dataArr.map(item => {
+        options += `<option value="${item.value}">${item.name}</option>`
+      })
+      originalSelects.append(options)
     }
+
+    let label = reElem.find(`.${LABEL}`)
+    let dl = reElem.find('dl[xid]')
+    if (isSearch) {
+      //如果是远程搜索, 这里需要判重
+      let oldVal = data[id].values
+      oldVal.forEach((item, index) => {
+        dl.find(`dd[lay-value="${item.value}"]`).addClass(THIS)
+      })
+      values.forEach((item, index) => {
+        if (this.indexOf(oldVal, item) == -1) {
+          this.addLabel(id, label, item)
+          dl.find(`dd[lay-value="${item.value}"]`).addClass(THIS)
+          oldVal.push(item)
+        }
+      })
+    } else {
+      values.forEach((item, index) => {
+        this.addLabel(id, label, item)
+        dl.find(`dd[lay-value="${item.value}"]`).addClass(THIS)
+      })
+      data[id].values = values
+    }
+    this.commonHandler(id, label)
   }
 
-  // 处理搜索值
-  Common.prototype.handleSearchValues = function (id, values, $dl, $label) {
-    const oldVal = data[id].values
-    const $selectedDds = $dl.find(`dd[lay-value]`)
-
-    // 批量添加选中类
-    oldVal.forEach(item => {
-      $selectedDds.filter(`[lay-value="${item.value}"]`).addClass(THIS)
-    })
-
-    // 批量处理新值
-    values.forEach(item => {
-      if (this.indexOf(oldVal, item) === -1) {
-        this.addLabel(id, $label, item)
-        $dl.find(`dd[lay-value="${item.value}"]`).addClass(THIS)
-        oldVal.push(item)
-      }
-    })
-  }
-
-  // 处理普通值
-  Common.prototype.handleNormalValues = function (id, values, $dl, $label) {
-    // 批量添加标签和选中类
-    values.forEach(item => {
-      this.addLabel(id, $label, item)
-      $dl.find(`dd[lay-value="${item.value}"]`).addClass(THIS)
-    })
-    data[id].values = values
-  }
-  //#endregion
-
-  //#region 渲染联动
-  /**
-   * 渲染联动选择器
-   * @param {string} id - 选择器唯一标识
-   * @param {Array} dataArr - 联动数据数组
-   * @param {number} linkageWidth - 联动选择器宽度
-   */
   Common.prototype.renderLinkage = function (id, dataArr, linkageWidth) {
-    // 1. 处理联动数据结构
-    const { result, db: processedDb } = this.processLinkageData(id, dataArr)
-    db[id] = processedDb // 更新全局db
-
-    // 2. 构建DOM结构
-    const reElem = $(`.${PNAME} dl[xid="${id}"]`).parents(`.${FORM_SELECT}`)
-    const html = this.buildLinkageHtml(result, linkageWidth)
-
-    // 3. 渲染DOM并禁用搜索
-    reElem.find('dl').html(html)
-    reElem.find(`.${INPUT}`).css('display', 'none') // 联动暂时不支持搜索
-  }
-
-  /**
-   * 处理联动数据结构
-   * @private
-   * @param {string} id - 选择器唯一标识
-   * @param {Array} dataArr - 原始数据数组
-   * @returns {Object} 处理后的数据结构
-   */
-  Common.prototype.processLinkageData = function (id, dataArr) {
-    const result = []
-    const processedDb = {}
-    let index = 0
-    let temp = { 0: dataArr }
-    const ajaxConfig = ajaxs[id] ? ajaxs[id] : ajax
-
-    // 递归处理数据层级
+    let result = [],
+      index = 0,
+      temp = { 0: dataArr },
+      ajaxConfig = ajaxs[id] ? ajaxs[id] : ajax
+    db[id] = {}
     do {
-      const group = []
-      result[index++] = group
-      const _temp = temp
+      let group = (result[index++] = []),
+        _temp = temp
       temp = {}
-
-      // 处理当前层级数据
-      Object.entries(_temp).forEach(([pid, arr]) => {
-        arr.forEach(item => {
-          // 构建选项值对象
-          const val = {
-            pid,
+      $.each(_temp, (pid, arr) => {
+        $.each(arr, (idx, item) => {
+          let val = {
+            pid: pid,
             name: item[ajaxConfig.keyName],
             value: item[ajaxConfig.keyVal]
           }
-
-          // 存储到db
-          processedDb[val.value] = { ...item, ...val }
+          db[id][val.value] = $.extend(item, val)
           group.push(val)
-
-          // 处理子节点
-          const children = item[ajaxConfig.keyChildren]
-          if (children?.length) {
+          let children = item[ajaxConfig.keyChildren]
+          if (children && children.length) {
             temp[val.value] = children
           }
         })
       })
-    } while (Object.keys(temp).length)
+    } while (Object.getOwnPropertyNames(temp).length)
 
-    return { result, db: processedDb }
-  }
+    let reElem = $(`.${PNAME} dl[xid="${id}"]`).parents(`.${FORM_SELECT}`)
+    let html = ['<div class="xm-select-linkage">']
 
-  /**
-   * 构建联动选择器的HTML结构
-   * @private
-   * @param {Array} result - 处理后的数据数组
-   * @param {number} linkageWidth - 联动选择器宽度
-   * @returns {string} 构建的HTML字符串
-   */
-  Common.prototype.buildLinkageHtml = function (result, linkageWidth) {
-    const fragments = ['<div class="xm-select-linkage">']
-
-    // 构建每个分组的HTML
-    result.forEach((group, groupIndex) => {
-      // 构建分组容器
-      const groupHtml = [
-        `<div style="left: ${(linkageWidth - 0) * groupIndex}px;" 
-          class="xm-select-linkage-group xm-select-linkage-group${
-            groupIndex + 1
-          } 
-          ${groupIndex !== 0 ? 'xm-select-linkage-hide' : ''}">`
+    $.each(result, (idx, arr) => {
+      let groupDiv = [
+        `<div style="left: ${
+          (linkageWidth - 0) * idx
+        }px;" class="xm-select-linkage-group xm-select-linkage-group${
+          idx + 1
+        } ${idx != 0 ? 'xm-select-linkage-hide' : ''}">`
       ]
-
-      // 构建分组选项
-      const options = group.map(
-        item =>
-          `<li title="${item.name}" pid="${item.pid}" xm-value="${item.value}">
-          <span>${item.name}</span>
-        </li>`
-      )
-
-      groupHtml.push(...options, '</div>')
-      fragments.push(groupHtml.join(''))
+      $.each(arr, (idx2, item) => {
+        let span = `<li title="${item.name}" pid="${item.pid}" xm-value="${item.value}"><span>${item.name}</span></li>`
+        groupDiv.push(span)
+      })
+      groupDiv.push(`</div>`)
+      html = html.concat(groupDiv)
     })
-
-    // 添加清除浮动
-    fragments.push('<div style="clear: both; height: 288px;"></div>', '</div>')
-
-    return fragments.join('')
+    html.push('<div style="clear: both; height: 288px;"></div>')
+    html.push('</div>')
+    reElem.find('dl').html(html.join(''))
+    reElem.find(`.${INPUT}`).css('display', 'none') //联动暂时不支持搜索
   }
-  //#endregion
 
-  //#region 渲染替换
   Common.prototype.renderReplace = function (id, dataArr) {
-    // 1. 获取必要的DOM元素和配置
-    const $dl = $(`.${PNAME} dl[xid="${id}"]`)
-    const ajaxConfig = ajaxs[id] || ajax
+    let dl = $(`.${PNAME} dl[xid="${id}"]`)
+    let ajaxConfig = ajaxs[id] ? ajaxs[id] : ajax
 
-    // 2. 处理数据结构(转换树形结构)
-    const processedData = this.exchangeData(id, dataArr)
+    dataArr = this.exchangeData(id, dataArr)
+    db[id] = dataArr
 
-    // 3. 更新全局数据存储
-    db[id] = processedData
-
-    // 4. 使用DocumentFragment优化DOM操作
-    const fragment = document.createDocumentFragment()
-
-    // 5. 构建选项HTML
-    const optionsHtml = processedData
+    let html = dataArr
       .map(item => {
-        // 构建选项值对象
-        const itemVal = {
-          ...item,
-          innerHTML: item[ajaxConfig.keyName], // 显示文本
-          value: item[ajaxConfig.keyVal], // 选项值
-          sel: item[ajaxConfig.keySel], // 是否选中
-          disabled: item[ajaxConfig.keyDis], // 是否禁用
-          type: item.type, // 选项类型
-          name: item[ajaxConfig.keyName] // 选项名称
-        }
-
-        // 创建选项DOM结构
+        let itemVal = $.extend({}, item, {
+          innerHTML: item[ajaxConfig.keyName],
+          value: item[ajaxConfig.keyVal],
+          sel: item[ajaxConfig.keySel],
+          disabled: item[ajaxConfig.keyDis],
+          type: item.type,
+          name: item[ajaxConfig.keyName]
+        })
         return this.createDD(id, itemVal)
       })
       .join('')
 
-    // 6. 更新DOM结构
-    // 移除旧的选项(保留提示和样式)
-    $dl.find(`dd:not(.${FORM_SELECT_TIPS}),dt:not([style])`).remove()
-
-    // 在保留的dt后插入新选项
-    $dl.find(`dt[style]`).after($(optionsHtml))
+    dl.find(`dd:not(.${FORM_SELECT_TIPS}),dt:not([style])`).remove()
+    dl.find(`dt[style]`).after($(html))
   }
-  //#endregion
 
-  //#region 处理树形数据
   Common.prototype.exchangeData = function (id, arr) {
-    // 1. 获取配置信息
-    const ajaxConfig = ajaxs[id] || ajax
-    const childrenName = ajaxConfig['keyChildren'] // 子节点的键名
-    const disabledName = ajaxConfig['keyDis'] // 禁用状态的键名
-
-    // 2. 重置当前选择器的数据存储
+    //这里处理树形结构
+    let ajaxConfig = ajaxs[id] ? ajaxs[id] : ajax
+    let childrenName = ajaxConfig['keyChildren']
+    let disabledName = ajaxConfig['keyDis']
     db[id] = {}
-
-    // 3. 递归处理数据,构建树形结构
-    const result = this.getChildrenList(
-      arr, // 原始数据数组
-      childrenName, // 子节点键名
-      disabledName, // 禁用状态键名
-      [], // 初始父节点ID数组
-      false // 初始禁用状态
+    let result = this.getChildrenList(
+      arr,
+      childrenName,
+      disabledName,
+      [],
+      false
     )
-
     return result
   }
-  //#endregion
 
-  /**
-   * 递归处理树形数据结构,将层级数据扁平化处理
-   * @param {Array} arr - 需要处理的数组数据
-   * @param {string} childrenName - 子节点的属性名
-   * @param {string} disabledName - 禁用状态的属性名
-   * @param {Array} pid - 父节点ID数组
-   * @param {boolean} disabled - 是否禁用
-   * @returns {Array} 处理后的扁平化数组
-   */
   Common.prototype.getChildrenList = function (
     arr,
     childrenName,
@@ -1523,330 +817,134 @@
     pid,
     disabled
   ) {
-    // 初始化结果数组和偏移量计数器
-    const result = []
-    let nodeOffset = 0
-
-    // 遍历输入数组
-    for (let i = 0; i < arr.length; i++) {
-      const currentNode = arr[i]
-
-      // 处理分组类型节点
-      if (currentNode.type && currentNode.type === 'optgroup') {
-        result.push(currentNode)
+    let result = [],
+      offset = 0
+    for (let a = 0; a < arr.length; a++) {
+      let item = arr[a]
+      if (item.type && item.type == 'optgroup') {
+        result.push(item)
         continue
+      } else {
+        offset++
       }
-
-      // 处理普通节点
-      nodeOffset++
-
-      // 构建当前节点的父节点路径
-      const parentPath = [...pid, `${nodeOffset - 1}_E`]
-
-      // 设置节点属性
-      currentNode[FORM_TEAM_PID] = JSON.stringify(parentPath)
-      currentNode[disabledName] = currentNode[disabledName] || disabled
-
-      // 将当前节点添加到结果数组
-      result.push(currentNode)
-
-      // 处理子节点
-      const childNodes = currentNode[childrenName]
-      if (childNodes && common.isArray(childNodes) && childNodes.length) {
-        // 标记当前节点为文件夹节点
-        currentNode['XM_TREE_FOLDER'] = true
-
-        // 递归处理子节点
-        const childResults = this.getChildrenList(
-          childNodes,
+      let parentIds = pid.concat([])
+      parentIds.push(`${offset - 1}_E`)
+      item[FORM_TEAM_PID] = JSON.stringify(parentIds)
+      item[disabledName] = item[disabledName] || disabled
+      result.push(item)
+      let child = item[childrenName]
+      if (child && common.isArray(child) && child.length) {
+        item['XM_TREE_FOLDER'] = true
+        let pidArr = parentIds.concat([])
+        let childResult = this.getChildrenList(
+          child,
           childrenName,
           disabledName,
-          [...parentPath], // 创建新的父节点路径数组
-          currentNode[disabledName]
+          pidArr,
+          item[disabledName]
         )
-
-        // 将子节点结果合并到主结果数组
-        result.push(...childResults)
+        result = result.concat(childResult)
       }
     }
-
     return result
   }
-  //#endregion
 
-  //#region 创建选项
   Common.prototype.create = function (id, isCreate, inputValue) {
-    // 只有当允许创建且有输入值时才执行创建逻辑
     if (isCreate && inputValue) {
-      // 获取必要的DOM元素和配置
-      const formSelect = data[id]
-      const $dl = $(`[xid="${id}"]`)
-      const $tips = $dl.find(`dd.${FORM_SELECT_TIPS}.${FORM_DL_INPUT}`)
-      const $temp = $dl.find(`dd.${TEMP}`)
-
-      // 查找是否已存在相同名称的选项
-      let existingOption = null
-      $dl.find(`dd:not(.${FORM_SELECT_TIPS}):not(.${TEMP})`).each((_, item) => {
-        const $item = $(item)
-        if (inputValue === $item.find('span').attr('name')) {
-          existingOption = item
-          return false // 找到后终止循环
+      let fs = data[id],
+        dl = $(`[xid="${id}"]`),
+        tips = dl.find(`dd.${FORM_SELECT_TIPS}.${FORM_DL_INPUT}`),
+        tdd = null,
+        temp = dl.find(`dd.${TEMP}`)
+      dl.find(`dd:not(.${FORM_SELECT_TIPS}):not(.${TEMP})`).each(
+        (index, item) => {
+          if (inputValue == $(item).find('span').attr('name')) {
+            tdd = item
+          }
         }
-      })
-
-      // 如果不存在相同选项,则创建新选项
-      if (!existingOption) {
-        // 调用配置中的create函数生成值
-        const newValue = formSelect.config.create(id, inputValue)
-
-        // 处理临时选项
-        if ($temp.length) {
-          // 如果存在临时选项,则更新它
-          this.updateTempOption($temp, {
-            value: newValue,
-            text: inputValue,
-            name: inputValue
-          })
+      )
+      if (!tdd) {
+        //如果不存在, 则创建
+        let val = fs.config.create(id, inputValue)
+        if (temp[0]) {
+          temp.attr('lay-value', val)
+          temp.find('span').text(inputValue)
+          temp.find('span').attr('name', inputValue)
+          temp.removeClass(DD_HIDE)
         } else {
-          // 如果不存在临时选项,则创建新的选项
-          this.createNewOption($tips, {
-            id,
-            inputValue,
-            newValue
-          })
+          tips.after(
+            $(
+              this.createDD(
+                id,
+                {
+                  name: inputValue,
+                  innerHTML: inputValue,
+                  value: val
+                },
+                `${TEMP} ${CREATE_LONG}`
+              )
+            )
+          )
         }
       }
     } else {
-      // 如果不允许创建或没有输入值,则移除所有临时选项
       $(`[xid=${id}] dd.${TEMP}`).remove()
     }
   }
 
-  /**
-   * 更新临时选项
-   * @private
-   * @param {jQuery} $temp - 临时选项的jQuery对象
-   * @param {Object} options - 更新选项的配置
-   * @param {string} options.value - 选项的值
-   * @param {string} options.text - 选项的显示文本
-   * @param {string} options.name - 选项的名称
-   */
-  Common.prototype.updateTempOption = function ($temp, { value, text, name }) {
-    $temp.attr('lay-value', value).find('span').text(text).attr('name', name)
-    $temp.removeClass(DD_HIDE)
-  }
-
-  /**
-   * 创建新的选项
-   * @private
-   * @param {jQuery} $tips - 提示元素的jQuery对象
-   * @param {Object} options - 创建选项的配置
-   * @param {string} options.id - 选择器的唯一标识
-   * @param {string} options.inputValue - 输入的值
-   * @param {string} options.newValue - 新生成的值
-   */
-  Common.prototype.createNewOption = function (
-    $tips,
-    { id, inputValue, newValue }
-  ) {
-    const newOption = {
-      name: inputValue,
-      innerHTML: inputValue,
-      value: newValue
-    }
-
-    $tips.after($(this.createDD(id, newOption, `${TEMP} ${CREATE_LONG}`)))
-  }
-  //#endregion
-
-  //#region 创建选项DD
   Common.prototype.createDD = function (id, item, clz) {
-    // 获取AJAX配置
-    const ajaxConfig = ajaxs[id] || ajax
-
-    // 处理选项名称
-    const name = $.trim(item.innerHTML)
-
-    // 处理选项数据存储
+    let ajaxConfig = ajaxs[id] ? ajaxs[id] : ajax
+    let name = $.trim(item.innerHTML)
     db[id][item.value] = $(item).is('option')
-      ? this.createOptionItem(item, name, ajaxConfig)
+      ? (item = (function () {
+          let resultItem = {}
+          resultItem[ajaxConfig.keyName] = name
+          resultItem[ajaxConfig.keyVal] = item.value
+          resultItem[ajaxConfig.keyDis] = item.disabled
+          return resultItem
+        })())
       : item
-
-    // 获取模板
-    const template = data[id].config.template(id, item)
-
-    // 处理父节点ID
-    const pid = this.processParentId(item[FORM_TEAM_PID])
-
-    // 构建树形结构属性
-    const treeAttr = this.buildTreeAttributes(pid, item)
-
-    // 检查是否为全部人员模式
-    const isAllPeople = $(`select[xm-select=${id}]`).attr(ALL_PEOPLE)
-
-    // 处理员工状态相关属性
-    const { employee, employeeDisplay } = this.processEmployeeStatus(name)
-
-    // 构建基础属性
-    const baseProps = this.buildBaseProperties(item, clz)
-
-    // 构建选项内容
-    const content = this.buildOptionContent(pid, name, template, item.disabled)
-
-    // 根据模式返回不同的HTML结构
-    return isAllPeople
-      ? this.buildAllPeopleHTML(
-          employee,
-          employeeDisplay,
-          baseProps,
-          treeAttr,
-          content
-        )
-      : this.buildNormalHTML(baseProps, treeAttr, content)
-  }
-
-  /**
-   * 创建选项数据对象
-   * @private
-   */
-  Common.prototype.createOptionItem = function (item, name, ajaxConfig) {
-    // 使用对象解构获取配置键名
-    const { keyName, keyVal, keyDis } = ajaxConfig
-
-    // 使用对象字面量直接返回结果
-    return {
-      [keyName]: name, // 设置选项显示名称
-      [keyVal]: item.value, // 设置选项值
-      [keyDis]: item.disabled // 设置禁用状态
+    let template = data[id].config.template(id, item)
+    let pid = item[FORM_TEAM_PID]
+    pid ? (pid = JSON.parse(pid)) : (pid = [-1])
+    let attr =
+      pid[0] == -1
+        ? ''
+        : `tree-id="${pid.join('-')}" tree-folder="${!!item['XM_TREE_FOLDER']}"`
+    let isAllpelple = $(`select[xm-select=${id}]`).attr(ALL_PEOPLE)
+    let employee = name && name.includes('离职') ? 'employee' : ''
+    let employeeDisplay = name && name.includes('离职') ? 'disN' : ''
+    if (isAllpelple) {
+      return `<dd employee="${employee}"  lay-value="${item.value}" class="${
+        item.disabled ? DISABLED : ''
+      } ${clz ? clz : ''} ${employeeDisplay}" ${attr}>
+                      <div class="xm-unselect xm-form-checkbox ${
+                        item.disabled ? DISABLED : ''
+                      }"  style="margin-left: ${(pid.length - 1) * 20}px">
+                          <i class="${CHECKBOX_YES}"></i>
+                          <span name="${name}">${template}</span>
+                      </div>
+                  </dd>`
+    } else {
+      return `<dd lay-value="${item.value}" class="${
+        item.disabled ? DISABLED : ''
+      } ${clz ? clz : ''}" ${attr}>
+                      <div class="xm-unselect xm-form-checkbox ${
+                        item.disabled ? DISABLED : ''
+                      }"  style="margin-left: ${(pid.length - 1) * 20}px">
+                          <i class="${CHECKBOX_YES}"></i>
+                          <span name="${name}">${template}</span>
+                      </div>
+                  </dd>`
     }
   }
 
-  /**
-   * 处理父节点ID,将JSON字符串转换为数组或返回默认值
-   * @param {string|null|undefined} parentId - 父节点ID的JSON字符串
-   * @returns {Array<number|string>} 解析后的父节点ID数组,如果解析失败则返回默认值 [-1]
-   * @throws {Error} 当JSON解析失败时可能抛出异常(已被捕获)
-   */
-  Common.prototype.processParentId = function (parentId) {
-    // 如果输入为空,直接返回默认值
-    if (!parentId) {
-      return [-1]
-    }
-
-    try {
-      // 尝试解析JSON字符串
-      const parsedId = JSON.parse(parentId)
-
-      // 验证解析结果是否为数组
-      if (Array.isArray(parsedId)) {
-        return parsedId
-      }
-
-      // 如果解析结果不是数组,记录警告并返回默认值
-      console.warn(`父节点ID解析结果不是数组: ${parentId}`)
-      return [-1]
-    } catch (error) {
-      // 捕获并处理JSON解析错误
-      console.warn(`父节点ID解析失败: ${parentId}`, error)
-      return [-1]
-    }
-  }
-
-  /**
-   * 构建树形结构属性
-   * @private
-   */
-  Common.prototype.buildTreeAttributes = function (pid, item) {
-    return pid[0] === -1
-      ? ''
-      : `tree-id="${pid.join('-')}" tree-folder="${!!item['XM_TREE_FOLDER']}"`
-  }
-
-  /**
-   * 处理员工状态相关属性
-   * @private
-   */
-  Common.prototype.processEmployeeStatus = function (name) {
-    const isResigned = name && name.includes('离职')
-    return {
-      employee: isResigned ? 'employee' : '',
-      employeeDisplay: isResigned ? 'disN' : ''
-    }
-  }
-
-  /**
-   * 构建基础属性
-   * @private
-   */
-  Common.prototype.buildBaseProperties = function (item, clz) {
-    return {
-      value: item.value,
-      className: `${item.disabled ? DISABLED : ''} ${clz || ''}`,
-      disabled: item.disabled ? DISABLED : ''
-    }
-  }
-
-  /**
-   * 构建选项内容
-   * @private
-   */
-  Common.prototype.buildOptionContent = function (
-    pid,
-    name,
-    template,
-    isDisabled
-  ) {
-    return `<div class="xm-unselect xm-form-checkbox ${
-      isDisabled ? DISABLED : ''
-    }"  
-      style="margin-left: ${(pid.length - 1) * 20}px">
-      <i class="${CHECKBOX_YES}"></i>
-      <span name="${name}">${template}</span>
-    </div>`
-  }
-
-  /**
-   * 构建全部人员模式的HTML
-   * @private
-   */
-  Common.prototype.buildAllPeopleHTML = function (
-    employee,
-    employeeDisplay,
-    baseProps,
-    treeAttr,
-    content
-  ) {
-    return `<dd employee="${employee}" 
-      lay-value="${baseProps.value}" 
-      class="${baseProps.className} ${employeeDisplay}" 
-      ${treeAttr}>
-      ${content}
-    </dd>`
-  }
-
-  /**
-   * 构建普通模式的HTML
-   * @private
-   */
-  Common.prototype.buildNormalHTML = function (baseProps, treeAttr, content) {
-    return `<dd 
-      lay-value="${baseProps.value}" 
-      class="${baseProps.className}" 
-      ${treeAttr}>
-      ${content}
-    </dd>`
-  }
-  //#endregion
-
-  //#region 创建快捷按钮
   Common.prototype.createQuickBtn = function (obj, right) {
     return `<div class="${CZ}" method="${obj.name}" title="${obj.name}" ${
       right ? 'style="margin-right: ' + right + '"' : ''
     }><i class="${obj.icon}"></i><span>${obj.name}</span></div>`
   }
-  //#endregion
 
-  //#region 渲染快捷按钮
   Common.prototype.renderBtns = function (id, show, right) {
     let quickBtn = []
     let dl = $(`dl[xid="${id}"]`)
@@ -1864,9 +962,7 @@
     )
     return quickBtn.join('')
   }
-  //#endregion
 
-  //#region 渲染选择器
   Common.prototype.renderSelect = function (id, tips, select) {
     db[id] = {}
     let arr = []
@@ -1940,7 +1036,6 @@
     )
     return arr.join('')
   }
-  //#endregion
 
   Common.prototype.on = function () {
     //事件绑定
