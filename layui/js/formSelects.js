@@ -969,76 +969,86 @@
   }
 
   Common.prototype.renderSelect = function (id, tips, select) {
+    // 1. 初始化数据缓存
     db[id] = {}
-    let arr = []
-    let isAllpelple = $(`select[xm-select=${id}]`).attr(ALL_PEOPLE) //存在全部人员，拉长组件功能区的宽度
-    if (data[id].config.btns.length) {
-      setTimeout(() => {
-        let dl = $(`dl[xid="${id}"]`)
-        dl.parents(`.${FORM_SELECT}`).attr(
-          SEARCH_TYPE,
-          data[id].config.searchType
-        )
-        if (isAllpelple) {
-          dl.find(`.${CZ_GROUP}`).css(
-            'max-width',
-            `${dl.prev().width() + 100}px`
-          )
-        } else {
-          dl.find(`.${CZ_GROUP}`).css(
-            'max-width',
-            `${dl.prev().width() + 54}px`
-          )
-        }
-      }, 10)
-      arr.push(
-        [
-          `<dd lay-value="" class="${FORM_SELECT_TIPS}" style="background-color: #FFF!important;">`,
-          this.renderBtns(id, null, '20px'),
-          `</dd>`,
-          `<dd lay-value="" class="${FORM_SELECT_TIPS} ${FORM_DL_INPUT}" style="background-color: #FFF!important;">`,
-          `<i class="xm-iconfont icon-sousuo"></i>`,
-          `<input type="text" class="${FORM_INPUT} ${INPUT}" placeholder="请搜索"/>`,
-          `</dd>`
-        ].join('')
-      )
+
+    // 2. 提前缓存常用的选择器结果
+    const $select = $(`select[xm-select=${id}]`)
+    const isAllpeople = $select.attr(ALL_PEOPLE)
+    const config = data[id].config
+
+    // 3. 使用数组来存储HTML片段,最后一次性join
+    const arr = []
+
+    // 4. 优化按钮渲染逻辑
+    if (config.btns.length) {
+      // 使用requestAnimationFrame代替setTimeout,性能更好
+      requestAnimationFrame(() => {
+        const $dl = $(`dl[xid="${id}"]`)
+        const $parent = $dl.parents(`.${FORM_SELECT}`)
+
+        $parent.attr(SEARCH_TYPE, config.searchType)
+
+        // 缓存宽度计算
+        const width = $dl.prev().width()
+        const maxWidth = isAllpeople ? width + 100 : width + 54
+
+        $dl.find(`.${CZ_GROUP}`).css('max-width', `${maxWidth}px`)
+      })
+
+      // 5. 使用模板字符串优化按钮HTML拼接
+      arr.push(`
+        <dd lay-value="" class="${FORM_SELECT_TIPS}" style="background-color: #FFF!important;">
+          ${this.renderBtns(id, null, '20px')}
+        </dd>
+        <dd lay-value="" class="${FORM_SELECT_TIPS} ${FORM_DL_INPUT}" style="background-color: #FFF!important;">
+          <i class="xm-iconfont icon-sousuo"></i>
+          <input type="text" class="${FORM_INPUT} ${INPUT}" placeholder="请搜索"/>
+        </dd>
+      `)
     } else {
       arr.push(`<dd lay-value="" class="${FORM_SELECT_TIPS}">${tips}</dd>`)
     }
+
+    // 6. 优化选项渲染逻辑
     if (this.isArray(select)) {
-      $(select).each((index, item) => {
-        if (item) {
-          if (item.type && item.type === 'optgroup') {
-            arr.push(`<dt>${item.name}</dt>`)
-          } else {
-            arr.push(this.createDD(id, item))
-          }
+      // 使用map代替each,性能更好
+      arr.push(
+        ...select.map(item => {
+          if (!item) return ''
+          return item.type === 'optgroup'
+            ? `<dt>${item.name}</dt>`
+            : this.createDD(id, item)
+        })
+      )
+    } else {
+      // 7. 优化DOM遍历
+      const options = []
+      const $items = $(select).find('optgroup, option')
+
+      $items.each((_, item) => {
+        const tagName = item.tagName.toLowerCase()
+
+        if (tagName === 'option') {
+          if (!item.value && options.length === 0) return
+          options.push(this.createDD(id, item))
+        } else if (tagName === 'optgroup') {
+          options.push(`<dt>${item.label}</dt>`)
         }
       })
-    } else {
-      $(select)
-        .find('*')
-        .each((index, item) => {
-          if (
-            item.tagName.toLowerCase() == 'option' &&
-            index == 0 &&
-            !item.value
-          ) {
-            return
-          }
-          if (item.tagName.toLowerCase() === 'optgroup') {
-            arr.push(`<dt>${item.label}</dt>`)
-          } else {
-            arr.push(this.createDD(id, item))
-          }
-        })
+
+      arr.push(...options)
     }
+
+    // 8. 添加固定元素
     arr.push('<dt style="display:none;"> </dt>')
     arr.push(
       `<dd class="${FORM_SELECT_TIPS} ${FORM_NONE} ${
         arr.length === 2 ? FORM_EMPTY : ''
       }">没有选项</dd>`
     )
+
+    // 9. 一次性返回所有HTML
     return arr.join('')
   }
 
