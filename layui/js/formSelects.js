@@ -1838,7 +1838,7 @@
     // 给data[id].values去重: 如果data[id].values中存在相同的value，则只保留一个
     data[id].values = data[id].values.filter(
       (item, index, self) =>
-        index === self.findIndex(t => t.value === item.value)
+        index === self.findIndex(t => String(t.value) === String(item.value))
     )
 
     // 最后统一处理一次label相关逻辑
@@ -2005,7 +2005,7 @@
       // 给data[id].values去重: 如果data[id].values中存在相同的value，则只保留一个
       data[id].values = data[id].values.filter(
         (item, index, self) =>
-          index === self.findIndex(t => t.value === item.value)
+          index === self.findIndex(t => String(t.value) === String(item.value))
       )
     }
 
@@ -2024,7 +2024,7 @@
 
       // 从数据中移除
       data[id].values = data[id].values.filter(item => {
-        return !removeValues.includes(item.value)
+        return !removeValues.includes(String(item.value))
       })
     }
 
