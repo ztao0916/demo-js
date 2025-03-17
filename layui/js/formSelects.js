@@ -1955,27 +1955,73 @@
 
   Common.prototype.reverse = function (id, isOn, skipDis) {
     let dl = $(`[xid="${id}"]`)
-    if (!dl[0]) {
+    if (!dl[0] || dl.find('.xm-select-linkage')[0]) {
       return
     }
-    if (dl.find('.xm-select-linkage')[0]) {
+
+    // 构建选择器,获取所有可反选的选项(排除tips)
+    let selector = `dd[lay-value]:not(.${FORM_SELECT_TIPS})${
+      skipDis ? ':not(.' + DISABLED + ')' : ''
+    }`
+
+    let items = dl.find(selector)
+    if (!items.length) {
       return
     }
-    dl.find(
-      `dd[lay-value]:not(.${FORM_SELECT_TIPS})${
-        skipDis ? ':not(.' + DISABLED + ')' : ''
-      }`
-    ).each((index, item) => {
-      item = $(item)
-      let val = this.getItem(id, item)
-      this.handlerLabel(
-        id,
-        dl.find(`dd[lay-value="${val.value}"]`),
-        !item.hasClass(THIS),
-        val,
-        !isOn
-      )
-    })
+
+    // 获取label容器
+    let div = dl.parents(`.${PNAME}`).find(`.${LABEL}`)
+
+    // 分别处理需要选中和取消选中的项
+    let toSelect = items.filter(`:not(.${THIS})`) // 未选中的需要选中
+    let toRemove = items.filter(`.${THIS}`) // 已选中的需要取消
+
+    // 处理需要选中的项
+    if (toSelect.length) {
+      // 批量添加选中样式
+      toSelect.addClass(THIS)
+
+      // 批量添加label
+      let selectValues = []
+      toSelect.each((index, item) => {
+        item = $(item)
+        let val = this.getItem(id, item)
+        selectValues.push(val)
+
+        // 构建并添加label span
+        let tips = `fsw="${NAME}"`
+        let $label = $(
+          `<span ${tips} value="${val.value}"><font ${tips}>${val.name}</font></span>`
+        )
+        $label.append($(`<i ${tips} class="xm-iconfont icon-close"></i>`))
+        div.find('input').before($label)
+      })
+
+      // 添加到数据中
+      data[id].values = data[id].values.concat(selectValues)
+    }
+
+    // 处理需要移除的项
+    if (toRemove.length) {
+      // 批量移除选中样式
+      toRemove.removeClass(THIS)
+
+      // 批量移除label
+      let removeValues = []
+      toRemove.each((index, item) => {
+        let value = $(item).attr('lay-value')
+        div.find(`span[value="${value}"]`).remove()
+        removeValues.push(value)
+      })
+
+      // 从数据中移除
+      data[id].values = data[id].values.filter(item => {
+        return !removeValues.includes(item.value)
+      })
+    }
+
+    // 最后统一处理一次label相关逻辑
+    this.commonHandler(id, div)
   }
 
   Common.prototype.skin = function (id) {
