@@ -1835,6 +1835,11 @@
 
     // 一次性更新数据
     data[id].values = data[id].values.concat(values)
+    // 给data[id].values去重: 如果data[id].values中存在相同的value，则只保留一个
+    data[id].values = data[id].values.filter(
+      (item, index, self) =>
+        index === self.findIndex(t => t.value === item.value)
+    )
 
     // 最后统一处理一次label相关逻辑
     this.commonHandler(id, div)
@@ -1944,10 +1949,8 @@
       removeValues.push(value)
     })
 
-    // 一次性更新数据
-    data[id].values = data[id].values.filter(item => {
-      return !removeValues.includes(item.value)
-    })
+    // 一次性更新数据:清空的时候，data[id].values为空
+    data[id].values = []
 
     // 最后统一处理一次label相关逻辑
     this.commonHandler(id, div)
@@ -1999,6 +2002,11 @@
 
       // 添加到数据中
       data[id].values = data[id].values.concat(selectValues)
+      // 给data[id].values去重: 如果data[id].values中存在相同的value，则只保留一个
+      data[id].values = data[id].values.filter(
+        (item, index, self) =>
+          index === self.findIndex(t => t.value === item.value)
+      )
     }
 
     // 处理需要移除的项
