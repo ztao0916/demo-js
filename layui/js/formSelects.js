@@ -1901,8 +1901,9 @@
     if (!dl[0]) {
       return
     }
+
+    // 处理联动的情况
     if (dl.find('.xm-select-linkage')[0]) {
-      //针对多级联动的处理
       data[id].values.concat([]).forEach((item, idx) => {
         let vs = item.value.split('/')
         let pid,
@@ -1918,21 +1919,38 @@
       })
       return
     }
-    data[id].values.concat([]).forEach((item, index) => {
-      if (
-        skipDis &&
-        dl.find(`dd[lay-value="${item.value}"]`).hasClass(DISABLED)
-      ) {
-      } else {
-        this.handlerLabel(
-          id,
-          dl.find(`dd[lay-value="${item.value}"]`),
-          false,
-          item,
-          !isOn
-        )
-      }
+
+    // 获取所有需要移除的元素
+    let selector = skipDis
+      ? `dd[lay-value].${THIS}:not(.${DISABLED})`
+      : `dd[lay-value].${THIS}`
+
+    let items = dl.find(selector)
+    if (!items.length) {
+      return
+    }
+
+    // 获取label容器
+    let div = dl.parents(`.${PNAME}`).find(`.${LABEL}`)
+
+    // 批量移除选中样式
+    items.removeClass(THIS)
+
+    // 批量移除对应的label
+    let removeValues = []
+    items.each((index, item) => {
+      let value = $(item).attr('lay-value')
+      div.find(`span[value="${value}"]`).remove()
+      removeValues.push(value)
     })
+
+    // 一次性更新数据
+    data[id].values = data[id].values.filter(item => {
+      return !removeValues.includes(item.value)
+    })
+
+    // 最后统一处理一次label相关逻辑
+    this.commonHandler(id, div)
   }
 
   Common.prototype.reverse = function (id, isOn, skipDis) {
