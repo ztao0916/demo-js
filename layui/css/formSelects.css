@@ -773,46 +773,12 @@ div[xm-select-search-type="1"] .xm-select .xm-select-input {
   color: red;
   font-weight: 600;
 }
-
 .xm-select-page {
-  padding: 5px 10px;
-  text-align: center;
-  background-color: #fff;
-  border-top: 1px solid #eee;
-  z-index: 20251231;
+  padding: 0 10px;
+  display: flex;
+  margin-top: 5px;
 }
 
-.xm-select-page span {
-  display: inline-block;
-  padding: 2px 8px;
-  margin: 0 3px;
-  cursor: pointer;
-  user-select: none;
-}
-
-.xm-select-page .page-info {
-  cursor: default;
-  color: #666;
-}
-
-.xm-select-page .page-prev,
-.xm-select-page .page-next {
-  padding: 2px 10px;
-  background: #f2f2f2;
-  border-radius: 2px;
-}
-
-.xm-select-page .page-prev,
-.xm-select-page .page-next {
-    padding: 2px 10px;
-    background: #f2f2f2;
-    border-radius: 2px;
-}
-
-.xm-select-page .page-prev:hover,
-.xm-select-page .page-next:hover {
-    background: #e6e6e6;
-}
 
 /* 阿里巴巴矢量图标库 */
 

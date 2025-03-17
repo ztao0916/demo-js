@@ -59,6 +59,8 @@
     ALL_PEOPLE = 'xm-select-allpeople',
     CZ = 'xm-cz',
     CZ_GROUP = 'xm-cz-group',
+    //每页显示条数
+    PAGE_SIZE = 'xm-select-page-size',
     TIPS = '请选择',
     data = {},
     events = {
@@ -338,7 +340,8 @@
           layverType: othis.attr('lay-verType'),
           searchType: othis.attr(SEARCH_TYPE) == 'dl' ? 1 : 0,
           showCount: othis.attr(SHOW_COUNT) - 0,
-          allPeople: othis.attr(ALL_PEOPLE)
+          allPeople: othis.attr(ALL_PEOPLE),
+          pageSize: othis.attr(PAGE_SIZE) != undefined
         },
         value = othis
           .find('option[selected]')
@@ -395,6 +398,16 @@
         `</div>`
       ]
       let isAllpelple = $(`select[xm-select=${id}]`).attr(ALL_PEOPLE) //存在全部人员，拉长组件宽度
+      // 构建分页HTML
+      let pageHtml = options.pageSize
+        ? `
+        <div class="xm-select-page">
+          <span class="xm-select-page-prev">上一页</span>
+          <span class="xm-select-page-info">1 / 9</span>  
+          <span class="xm-select-page-next">下一页</span>
+        </div>`
+        : ''
+      console.log('pageHtml :>>>', pageHtml)
       let reElem = $(`<div class="${FORM_SELECT}" ${SKIN}="${fs.config.skin}">
         <input class="${HIDE_INPUT}" value="" name="${
         fs.config.formname
