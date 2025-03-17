@@ -24,10 +24,14 @@
           <div class="layui-form-item">
             <label class="layui-form-label">店铺</label>
             <div class="layui-input-block">
-              <select name="shop" xm-select="shop" xm-select-search xm-select-search-type="dl" xm-select-skin="normal"
-                xm-select-show-count="100">
-                <!-- 这里的选项将通过Ajax动态加载 -->
+              <select name="shop" xm-select="shop" xm-select-search xm-select-search-type="dl" xm-select-skin="normal">
               </select>
+            </div>
+          </div>
+          <div class="layui-form-item">
+            <label class="layui-form-label">店铺xm</label>
+            <div class="layui-input-block">
+              <div id="demo1" class="xm-select-demo"></div>
             </div>
           </div>
         </div>
@@ -36,6 +40,7 @@
   </div>
   <script src="./js/layui.all.js"></script>
   <script src="./js/formSelects.js" type="text/javascript"></script>
+  <script src="./js/xm-select/xm-select.js" type="text/javascript"></script>
   <script>
     let formSelects = layui.formSelects;
     const $ = layui.jquery;
@@ -51,8 +56,18 @@
           }));
           // 再渲染数据
           formSelects.data('shop', 'local', {
-            arr: options.slice(0, 500)
+            arr: options.slice(0, 1000)
           });
+          xmSelect.render({
+            el: '#demo1',
+            filterable: true,
+            paging: true,
+            toolbar: {
+              show: true,
+            },
+            pageSize: 2000,
+            data: options
+          })
         }
       }
     });
