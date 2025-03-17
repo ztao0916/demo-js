@@ -1796,28 +1796,48 @@
 
   Common.prototype.selectAll = function (id, isOn, skipDis) {
     let dl = $(`[xid="${id}"]`)
-    if (!dl[0]) {
+    if (!dl[0] || dl.find('.xm-select-linkage')[0]) {
       return
     }
-    if (dl.find('.xm-select-linkage')[0]) {
+
+    // 构建选择器,只选择未选中且未隐藏的选项
+    let selector = `dd[lay-value]:not(.${FORM_SELECT_TIPS}):not(.${THIS}):not('.disN'):not(.${DD_HIDE})${
+      skipDis ? ':not(.' + DISABLED + ')' : ''
+    }`
+
+    // 一次性获取所有待选中的元素
+    let items = dl.find(selector)
+    if (!items.length) {
       return
     }
-    // 全选不操作disN隐藏的元素
-    dl.find(
-      `dd[lay-value]:not(.${FORM_SELECT_TIPS}):not(.${THIS}):not('.disN'):not(.${DD_HIDE})${
-        skipDis ? ':not(.' + DISABLED + ')' : ''
-      }`
-    ).each((index, item) => {
+
+    // 获取label容器
+    let div = dl.parents(`.${PNAME}`).find(`.${LABEL}`)
+
+    // 批量添加选中样式
+    items.addClass(THIS)
+
+    // 批量收集数据
+    let values = []
+    items.each((index, item) => {
       item = $(item)
       let val = this.getItem(id, item)
-      this.handlerLabel(
-        id,
-        dl.find(`dd[lay-value="${val.value}"]`),
-        true,
-        val,
-        !isOn
+      values.push(val)
+
+      // 直接构建并添加label span
+      let tips = `fsw="${NAME}"`
+      let $label = $(
+        `<span ${tips} value="${val.value}"><font ${tips}>${val.name}</font></span>`
       )
+      $label.append($(`<i ${tips} class="xm-iconfont icon-close"></i>`))
+      div.find('input').before($label)
     })
+
+    // 一次性更新数据
+    data[id].values = data[id].values.concat(values)
+
+    // 最后统一处理一次label相关逻辑
+    this.commonHandler(id, div)
   }
   // 全部人员
   Common.prototype.allpeopleFn = function (id, isOn, skipDis) {
