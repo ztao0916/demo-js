@@ -162,22 +162,27 @@
         opened: null,
         closed: null,
         filter: (id, inputVal, val, isDisabled) => {
-          let newInputVal = inputVal.replace(/，/g, ',')
-          if (newInputVal.indexOf(',') > 0) {
-            // 多个精确
-            let inputValArr = newInputVal
-              .trim()
-              .split(',')
-              .map(val => val.trim())
-            return !inputValArr.includes(val.name)
-          } else {
-            // 单个模糊
-            return (
-              val.name
-                .toLowerCase()
-                .indexOf(newInputVal.toLowerCase().trim()) === -1
-            )
+          // 缓存处理后的输入值
+          const processedInput = inputVal.replace(/，/g, ',').trim()
+
+          // 缓存val.name的小写形式,避免重复转换
+          const itemName = val.name.toLowerCase()
+
+          // 判断是否为多值搜索
+          if (processedInput.includes(',')) {
+            // 缓存分割后的数组,避免重复split
+            const searchTerms = processedInput.split(',').filter(Boolean) // filter(Boolean)可以去除空字符串
+
+            // 使用some而不是includes,可以在找到匹配项时立即返回
+            return !searchTerms.some(term => val.name === term.trim())
           }
+
+          // 单值模糊搜索
+          // 缓存处理后的搜索词,避免重复处理
+          const searchTerm = processedInput.toLowerCase()
+
+          // 直接返回indexOf结果
+          return itemName.indexOf(searchTerm) === -1
         },
         clearid: -1,
         direction: 'auto',
@@ -223,9 +228,9 @@
 
   //一些简单的处理方法
   let Common = function () {
-    this.appender()
-    this.on()
-    this.onreset()
+    this.appender() //针对IE做的一些拓展,忽略
+    this.on() //绑定事件
+    this.onreset() //重置事件
   }
 
   Common.prototype.appender = function () {
