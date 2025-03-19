@@ -778,6 +778,9 @@ div[xm-select-search-type="1"] .xm-select .xm-select-input {
   text-align: center;
   background-color: #FFF;
   border-top: 1px solid #E6E6E6;
+  position: sticky;
+  bottom: 0;
+  z-index: 1000;
 }
 
 .xm-select-page span {
