@@ -774,9 +774,24 @@ div[xm-select-search-type="1"] .xm-select .xm-select-input {
   font-weight: 600;
 }
 .xm-select-page {
-  padding: 0 10px;
-  display: flex;
-  margin-top: 5px;
+  padding: 5px 10px;
+  text-align: center;
+  background-color: #FFF;
+  border-top: 1px solid #E6E6E6;
+}
+
+.xm-select-page span {
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+.xm-select-page-prev:hover,
+.xm-select-page-next:hover {
+  color: #009688;
+}
+
+.xm-select-page-info {
+  color: #999;
 }
 
 

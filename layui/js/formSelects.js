@@ -60,7 +60,7 @@
     CZ = 'xm-cz',
     CZ_GROUP = 'xm-cz-group',
     //每页显示条数
-    PAGE_SIZE = 'xm-select-page-size',
+    PAGE_SIZE = 'xm-select-page',
     TIPS = '请选择',
     data = {},
     events = {
@@ -398,16 +398,6 @@
         `</div>`
       ]
       let isAllpelple = $(`select[xm-select=${id}]`).attr(ALL_PEOPLE) //存在全部人员，拉长组件宽度
-      // 构建分页HTML
-      let pageHtml = options.pageSize
-        ? `
-        <div class="xm-select-page">
-          <span class="xm-select-page-prev">上一页</span>
-          <span class="xm-select-page-info">1 / 9</span>  
-          <span class="xm-select-page-next">下一页</span>
-        </div>`
-        : ''
-      console.log('pageHtml :>>>', pageHtml)
       let reElem = $(`<div class="${FORM_SELECT}" ${SKIN}="${fs.config.skin}">
         <input class="${HIDE_INPUT}" value="" name="${
         fs.config.formname
@@ -1061,7 +1051,20 @@
       }">没有选项</dd>`
     )
 
-    // 9. 一次性返回所有HTML
+    // 9. 添加分页
+    if (data[id] && data[id].config.pageSize) {
+      arr.push(`
+        <div class="xm-select-page">
+          <div>
+            <span class="xm-select-page-prev">上一页</span>
+            <span class="xm-select-page-info">1 / 9</span>  
+            <span class="xm-select-page-next">下一页</span>
+          </div>
+        </div>
+      `)
+    }
+
+    // 10. 一次性返回所有HTML
     return arr.join('')
   }
 

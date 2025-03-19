@@ -25,16 +25,16 @@
             <label class="layui-form-label">店铺</label>
             <div class="layui-input-block">
               <select name="shop" xm-select="shop" xm-select-search xm-select-search-type="dl" xm-select-skin="normal"
-                xm-select-page-size>
+                xm-select-page>
               </select>
             </div>
           </div>
-          <div class="layui-form-item">
+          <!-- <div class="layui-form-item">
             <label class="layui-form-label">店铺xm</label>
             <div class="layui-input-block">
               <div id="demo1" class="xm-select-demo"></div>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -57,18 +57,18 @@
           }));
           // 再渲染数据
           formSelects.data('shop', 'local', {
-            arr: options.slice(0, 3)
+            arr: options.slice(0, 10)
           });
-          xmSelect.render({
-            el: '#demo1',
-            filterable: true,
-            paging: true,
-            toolbar: {
-              show: true,
-            },
-            pageSize: 2000,
-            data: options
-          })
+          // xmSelect.render({
+          //   el: '#demo1',
+          //   filterable: true,
+          //   paging: true,
+          //   toolbar: {
+          //     show: true,
+          //   },
+          //   pageSize: 2000,
+          //   data: options
+          // })
         }
       }
     });
