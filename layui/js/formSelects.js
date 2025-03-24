@@ -341,7 +341,8 @@
           searchType: othis.attr(SEARCH_TYPE) == 'dl' ? 1 : 0,
           showCount: othis.attr(SHOW_COUNT) - 0,
           allPeople: othis.attr(ALL_PEOPLE),
-          pageSize: othis.attr(PAGE_SIZE) != undefined
+          pageSize: othis.attr(PAGE_SIZE) != undefined,
+          pageLimit: 20
         },
         value = othis
           .find('option[selected]')
@@ -1050,14 +1051,22 @@
         arr.length === 2 ? FORM_EMPTY : ''
       }">没有选项</dd>`
     )
-
+    //获取到arr中所有选项dd
+    const filteredArr = arr.filter(item => {
+      const match = item.match(/lay-value="([^"]*)"/)
+      return match && match[1].trim() !== ''
+    })
     // 9. 添加分页
     if (data[id] && data[id].config.pageSize) {
+      //计算分页总数,默认每页20条
+      const total = Math.ceil(filteredArr.length / data[id].config.pageLimit)
+      // 9. 添加分页
+
       arr.push(`
         <div class="xm-select-page">
           <div>
             <span class="xm-select-page-prev">上一页</span>
-            <span class="xm-select-page-info">1 / 9</span>  
+            <span class="xm-select-page-info">1 / ${total}</span>  
             <span class="xm-select-page-next">下一页</span>
           </div>
         </div>
