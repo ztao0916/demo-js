@@ -1061,7 +1061,6 @@
       //计算分页总数,默认每页20条
       const total = Math.ceil(filteredArr.length / data[id].config.pageLimit)
       // 9. 添加分页
-
       arr.push(`
         <div class="xm-select-page">
           <div>
@@ -1082,8 +1081,8 @@
     this.one()
 
     $(document).on('click', e => {
-      // console.log(FORM_TITLE,'FORM_TITLE on')
       if (!$(e.target).parents(`.${FORM_TITLE}`)[0]) {
+        console.log('on', e.target)
         //清空input中的值
         $(`.${PNAME} dl .${DD_HIDE}`).removeClass(DD_HIDE)
         $(`.${PNAME} dl dd.${FORM_EMPTY}`).removeClass(FORM_EMPTY)

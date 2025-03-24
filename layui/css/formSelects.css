@@ -787,6 +787,10 @@ div[xm-select-search-type="1"] .xm-select .xm-select-input {
   margin: 0 10px;
   cursor: pointer;
 }
+.xm-select-page .disabled {
+  color: #999;
+  cursor: not-allowed;
+}
 
 .xm-select-page-prev:hover,
 .xm-select-page-next:hover {
