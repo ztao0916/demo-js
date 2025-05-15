@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>schemaJSON数据渲染</title>
+  <link rel="stylesheet" href="./css/layui.css">
+  <style>
+    #form-container {
+      width: 500px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>测试json schema数据解析</h1>
+  <div>
+    <!-- 表单渲染 -->
+    <div id="form-container">
+      <form class="layui-form">
+        <div class="layui-form-item">
+          <label class="layui-form-label">用户名</label>
+          <div class="layui-input-block">
+            <input type="text" name="username" required lay-verify="required" autocomplete="off" placeholder="请输入用户名"
+              class="layui-input">
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <script src="./js/layui.all.js"></script>
+  <script>
+    async function getSchemaContent () {
+      try {
+        const response = await fetch('./schema.json');
+        const data = await response.json();
+        const contentStr = data.data.content;
+        const contentJson = JSON.parse(contentStr);
+        //现在需要获取properties中的key
+        const properties = contentJson.properties;
+        console.log(properties)
+        const targetKeys = ['variation_theme', 'fulfillment_availability']
+        // 找到目标键并返回其值
+        let variation_theme =  properties.variation_theme;
+        let fulfillment_availability = properties.fulfillment_availability;
+        //封装一个函数,参数是对象,获取到对象的items属性
+        function processEnumValues(propertyObj) {
+          if (!propertyObj.enum) return [];
+          
+          const enumArr = propertyObj.enum;
+          if (!propertyObj.enumNames || !propertyObj.enumNames.length) return enumArr;
+          
+          const enumNames = propertyObj.enumNames;
+          if (JSON.stringify(enumNames) === JSON.stringify(enumArr)) return enumArr;
+          
+          return enumNames.map((name, i) => ({
+            name: name,
+            value: enumArr[i]
+          }));
+        }
+
+        function getEnumValuesFromSchema(obj) {
+          if (!obj.items) return [];
+          
+          const items = obj.items;
+          let propertyObj;
+          
+          if (items.required && items.required.length > 0) {
+            propertyObj = items.properties[items.required[0]];
+          } else {
+            const itemsKeys = Object.keys(items.properties);
+            if (!itemsKeys.length) return [];
+            propertyObj = items.properties[itemsKeys[0]];
+          }
+          
+          return processEnumValues(propertyObj);
+        }
+        let variation_themeItems = getEnumValuesFromSchema(variation_theme);
+        let fulfillment_availabilityItems = getEnumValuesFromSchema(fulfillment_availability);
+        console.log(variation_themeItems)
+        console.log(fulfillment_availabilityItems)
+
+        return contentJson;
+      } catch (error) {
+        console.error('获取或解析schema数据时出错:', error);
+      }
+    }
+
+    // 页面加载完成后执行
+    window.onload = function () {
+      getSchemaContent();
+    };
+  </script>
+</body>
+
+</html>
