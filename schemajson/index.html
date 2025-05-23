@@ -55,6 +55,26 @@
       padding: 10px;
       border-left: 1px dashed #e6e6e6;
     }
+
+    /* 选填属性默认隐藏 */
+    .optional-field {
+      display: none;
+    }
+
+    /* 选填分组默认隐藏 */
+    .optional-group {
+      display: none;
+    }
+
+    /* 更多选填属性按钮 */
+    .more-options-btn {
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    .more-options-btn .layui-btn {
+      padding: 0 30px;
+    }
   </style>
 </head>
 
@@ -88,18 +108,41 @@
     // 渲染表单字段
     function renderFormFields (formConfig) {
       const formContainer = document.querySelector('#form-container .layui-form');
-      let formHtml = '';
+      let requiredFieldsHtml = '';
+      let optionalFieldsHtml = '';
 
-      // 遍历所有字段并生成表单
+      // 遍历所有字段并分别生成必填和选填表单
       formConfig.fields.forEach(field => {
-        formHtml += renderField(field);
+        const fieldHtml = renderField(field, field.required);
+        if (field.required) {
+          requiredFieldsHtml += fieldHtml;
+        } else {
+          optionalFieldsHtml += fieldHtml;
+        }
       });
 
-      // 添加提交按钮前的表单内容
+      // 添加"更多选填属性"按钮
+      const moreOptionsBtn = `
+        <div class="more-options-btn">
+          <button type="button" class="layui-btn layui-btn-normal" id="moreOptionsBtn">
+            <span>显示更多选填属性</span> <i class="layui-icon layui-icon-down"></i>
+          </button>
+        </div>
+      `;
+
+      // 组合所有内容
+      const formHtml = requiredFieldsHtml + moreOptionsBtn + optionalFieldsHtml;
+
+      // 添加到表单容器
       formContainer.innerHTML = formHtml + formContainer.innerHTML;
 
       // 重新渲染表单
       layui.form.render();
+
+      // 监听"更多选填属性"按钮点击
+      document.getElementById('moreOptionsBtn').addEventListener('click', function () {
+        toggleOptionalFields(this);
+      });
 
       // 监听表单提交
       document.getElementById('submitBtn').addEventListener('click', function () {
@@ -107,8 +150,40 @@
       });
     }
 
+    // 切换选填属性的显示/隐藏
+    function toggleOptionalFields (btn) {
+      const optionalFields = document.querySelectorAll('.optional-field');
+      const optionalGroups = document.querySelectorAll('.optional-group');
+      const btnText = btn.querySelector('span');
+      const btnIcon = btn.querySelector('i');
+
+      // 检查当前是否显示选填字段
+      const isShowing = optionalFields.length > 0 && optionalFields[0].style.display === 'block';
+
+      // 切换显示状态
+      optionalFields.forEach(field => {
+        field.style.display = isShowing ? 'none' : 'block';
+      });
+
+      optionalGroups.forEach(group => {
+        group.style.display = isShowing ? 'none' : 'block';
+      });
+
+      // 更新按钮文本和图标
+      if (isShowing) {
+        btnText.textContent = '显示更多选填属性';
+        btnIcon.className = 'layui-icon layui-icon-down';
+      } else {
+        btnText.textContent = '隐藏选填属性';
+        btnIcon.className = 'layui-icon layui-icon-up';
+      }
+    }
+
     // 渲染单个字段
-    function renderField (field) {
+    function renderField (field, isParentRequired = false) {
+      // 计算当前字段是否必填（自身必填或父级必填）
+      const isRequired = field.required || isParentRequired;
+
       // 判断是否有子属性
       if (field.isArray && field.children && field.children.length > 0) {
         // 如果只有一个子属性，直接渲染子属性
@@ -119,16 +194,19 @@
             key: child.key,
             label: child.label || field.label,
             description: child.description || field.description,
-            required: field.required || child.required,
+            required: isRequired || child.required,
             type: child.type,
             options: child.options
-          });
+          }, isRequired);
         }
         // 如果有多个子属性，以分组形式渲染
         else {
+          // 确定分组是否为选填
+          const groupClass = isRequired ? '' : 'optional-group';
+
           let html = `
-            <div class="group-title">${field.label}${field.required ? '<span style="color:red">*</span>' : ''}</div>
-            <div class="group-content">
+            <div class="group-title ${groupClass}">${field.label}${isRequired ? '<span style="color:red">*</span>' : ''}</div>
+            <div class="group-content ${groupClass}">
           `;
 
           // 添加字段描述
@@ -142,9 +220,10 @@
             const childWithLabel = {
               ...child,
               label: child.label || field.label,
-              description: child.description || ''
+              description: child.description || '',
+              required: isRequired || child.required
             };
-            html += renderBasicField(childWithLabel);
+            html += renderBasicField(childWithLabel, isRequired);
           });
 
           html += `</div>`;
@@ -153,21 +232,27 @@
       }
       // 没有子属性，直接渲染基本字段
       else {
-        return renderBasicField(field);
+        return renderBasicField(field, isRequired);
       }
     }
 
     // 渲染基本表单字段（无子属性）
-    function renderBasicField (field) {
+    function renderBasicField (field, isParentRequired = false) {
+      // 计算当前字段是否必填（自身必填或父级必填）
+      const isRequired = field.required || isParentRequired;
+
+      // 为选填字段添加特殊类名
+      const fieldClass = isRequired ? 'layui-form-item' : 'layui-form-item optional-field';
+
       let html = `
-        <div class="layui-form-item">
-          <label class="layui-form-label">${field.label}${field.required ? '<span style="color:red">*</span>' : ''}</label>
+        <div class="${fieldClass}">
+          <label class="layui-form-label">${field.label}${isRequired ? '<span style="color:red">*</span>' : ''}</label>
           <div class="layui-input-block">
       `;
 
       // 根据字段类型渲染不同的表单元素
       if (field.type === 'select') {
-        html += `<select name="${field.key}" ${field.required ? 'lay-verify="required"' : ''}>
+        html += `<select name="${field.key}" ${isRequired ? 'lay-verify="required"' : ''}>
           <option value="">请选择${field.label}</option>`;
 
         field.options.forEach(option => {
@@ -177,7 +262,7 @@
         html += `</select>`;
       } else {
         html += `<input type="text" name="${field.key}" placeholder="请输入${field.label}" 
-          class="layui-input" ${field.required ? 'lay-verify="required"' : ''}>`;
+          class="layui-input" ${isRequired ? 'lay-verify="required"' : ''}>`;
       }
 
       // 添加字段描述
