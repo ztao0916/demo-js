@@ -37,51 +37,7 @@
         const response = await fetch('./schema.json');
         const data = await response.json();
         const contentStr = data.data.content;
-        const contentJson = JSON.parse(contentStr);
-        //现在需要获取properties中的key
-        const properties = contentJson.properties;
-        console.log(properties)
-        const targetKeys = ['variation_theme', 'fulfillment_availability']
-        // 找到目标键并返回其值
-        let variation_theme =  properties.variation_theme;
-        let fulfillment_availability = properties.fulfillment_availability;
-        //封装一个函数,参数是对象,获取到对象的items属性
-        function processEnumValues(propertyObj) {
-          if (!propertyObj.enum) return [];
-          
-          const enumArr = propertyObj.enum;
-          if (!propertyObj.enumNames || !propertyObj.enumNames.length) return enumArr;
-          
-          const enumNames = propertyObj.enumNames;
-          if (JSON.stringify(enumNames) === JSON.stringify(enumArr)) return enumArr;
-          
-          return enumNames.map((name, i) => ({
-            name: name,
-            value: enumArr[i]
-          }));
-        }
-
-        function getEnumValuesFromSchema(obj) {
-          if (!obj.items) return [];
-          
-          const items = obj.items;
-          let propertyObj;
-          
-          if (items.required && items.required.length > 0) {
-            propertyObj = items.properties[items.required[0]];
-          } else {
-            const itemsKeys = Object.keys(items.properties);
-            if (!itemsKeys.length) return [];
-            propertyObj = items.properties[itemsKeys[0]];
-          }
-          
-          return processEnumValues(propertyObj);
-        }
-        let variation_themeItems = getEnumValuesFromSchema(variation_theme);
-        let fulfillment_availabilityItems = getEnumValuesFromSchema(fulfillment_availability);
-        console.log(variation_themeItems)
-        console.log(fulfillment_availabilityItems)
-
+        const contentJson = JSON.parse(contentStr);     
         return contentJson;
       } catch (error) {
         console.error('获取或解析schema数据时出错:', error);
@@ -89,8 +45,114 @@
     }
 
     // 页面加载完成后执行
+    // 渲染表单字段
+    function renderFormField(properties, required = [], parentKey = '') {
+      let html = '';
+      for (const key in properties) {
+        const field = properties[key];
+        const fullKey = parentKey ? `${parentKey}.${key}` : key;
+        const isRequired = required.includes(key);
+
+        html += `
+          <div class="layui-form-item">
+            <label class="layui-form-label">${isRequired ? '<span style="color: red;">*</span>' : ''}${field.title || key}</label>
+            <div class="layui-input-block">
+        `;
+
+        // 根据字段类型渲染不同的表单元素
+        switch (field.type) {
+          case 'string':
+            if (field.enum) {
+              // 下拉选择框
+              html += `<select name="${fullKey}" ${isRequired ? 'lay-verify="required"' : ''} lay-filter="${fullKey}">`;
+              html += '<option value="">请选择</option>';
+              field.enum.forEach(option => {
+                html += `<option value="${option}">${option}</option>`;
+              });
+              html += '</select>';
+            } else {
+              // 文本输入框
+              html += `<input type="text" name="${fullKey}" ${isRequired ? 'lay-verify="required"' : ''} placeholder="请输入${field.title || key}" class="layui-input">`;
+            }
+            break;
+          case 'number':
+          case 'integer':
+            html += `<input type="number" name="${fullKey}" ${isRequired ? 'lay-verify="required|number"' : 'lay-verify="number"'} placeholder="请输入${field.title || key}" class="layui-input">`;
+            break;
+          case 'boolean':
+            html += `
+              <input type="checkbox" name="${fullKey}" lay-skin="switch" lay-text="是|否">
+            `;
+            break;
+          case 'object':
+            if (field.properties) {
+              html += renderFormField(field.properties, field.required || [], fullKey);
+            }
+            break;
+        }
+
+        html += `
+            </div>
+          </div>
+        `;
+      }
+      return html;
+    }
+
+    // 处理字段关联关系
+    function handleFieldRelations(allOf) {
+      if (!allOf || !Array.isArray(allOf)) return;
+      
+      allOf.forEach(rule => {
+        if (rule.if && rule.then) {
+          const conditions = rule.if.properties;
+          const effects = rule.then.properties;
+          
+          // 监听条件字段的变化
+          for (const field in conditions) {
+            layui.form.on(`select(${field})`, function(data) {
+              const value = data.value;
+              const expectedValue = conditions[field].enum[0];
+              
+              // 如果满足条件，应用效果
+              if (value === expectedValue) {
+                for (const effectField in effects) {
+                  const element = document.querySelector(`[name="${effectField}"]`);
+                  if (element) {
+                    // 根据效果类型处理
+                    if (effects[effectField].required === true) {
+                      element.setAttribute('lay-verify', 'required');
+                      element.closest('.layui-form-item')
+                        .querySelector('.layui-form-label')
+                        .innerHTML = '<span style="color: red;">*</span>' + element.closest('.layui-form-item').querySelector('.layui-form-label').textContent;
+                    }
+                  }
+                }
+              }
+            });
+          }
+        }
+      });
+    }
+
     window.onload = function () {
-      getSchemaContent();
+      getSchemaContent().then(res => {
+        if (!res) return;
+        console.log(res);
+        
+        // 获取表单容器
+        const formContainer = document.querySelector('#form-container .layui-form');
+        
+        // 渲染表单字段
+        const formHtml = renderFormField(res.properties, res.required || []);
+        formContainer.innerHTML = formHtml;
+        
+        // 重新渲染表单
+        layui.form.render();
+        
+        // 处理字段关联关系
+        handleFieldRelations(res.allOf);
+      });
     };
   </script>
 </body>
