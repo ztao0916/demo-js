@@ -8,152 +8,169 @@
   <link rel="stylesheet" href="./css/layui.css">
   <style>
     #form-container {
-      width: 500px;
+      width: 800px;
       margin: 0 auto;
+      padding: 20px;
+    }
+
+    .form-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    .layui-form-item {
+      margin-bottom: 15px;
+    }
+
+    .field-description {
+      color: #666;
+      font-size: 12px;
+      margin-top: 5px;
+    }
+
+    /* 修改标签宽度 */
+    .layui-form-label {
+      width: 400px;
+      box-sizing: border-box;
+    }
+
+    /* 调整输入框左侧边距，避免重叠 */
+    .layui-input-block {
+      margin-left: 430px;
     }
   </style>
 </head>
 
 <body>
-  <h1>测试json schema数据解析</h1>
+  <h1 style="text-align: center; margin: 20px 0;">测试json schema数据解析</h1>
   <div>
     <!-- 表单渲染 -->
     <div id="form-container">
       <form class="layui-form">
+        <!-- 表单内容将通过JS动态渲染 -->
         <div class="layui-form-item">
-          <label class="layui-form-label">用户名</label>
-          <div class="layui-input-block">
-            <input type="text" name="username" required lay-verify="required" autocomplete="off" placeholder="请输入用户名"
-              class="layui-input">
-          </div>
+          <button type="button" class="layui-btn" id="submitBtn">提交表单</button>
         </div>
       </form>
     </div>
   </div>
   <script src="./js/layui.all.js"></script>
+  <script src="./js/amazon.js"></script>
   <script>
+    // 获取JSON Schema数据
     async function getSchemaContent () {
       try {
-        const response = await fetch('./schema.json');
-        const data = await response.json();
-        const contentStr = data.data.content;
-        const contentJson = JSON.parse(contentStr);     
-        return contentJson;
+        const response = await fetch('./demo.json');
+        return await response.json();
       } catch (error) {
-        console.error('获取或解析schema数据时出错:', error);
+        console.error('获取Schema数据失败:', error);
+        return null;
       }
     }
 
-    // 页面加载完成后执行
     // 渲染表单字段
-    function renderFormField(properties, required = [], parentKey = '') {
-      let html = '';
-      for (const key in properties) {
-        const field = properties[key];
-        const fullKey = parentKey ? `${parentKey}.${key}` : key;
-        const isRequired = required.includes(key);
+    function renderFormFields (formConfig) {
+      const formContainer = document.querySelector('#form-container .layui-form');
+      let formHtml = '';
 
-        html += `
-          <div class="layui-form-item">
-            <label class="layui-form-label">${isRequired ? '<span style="color: red;">*</span>' : ''}${field.title || key}</label>
-            <div class="layui-input-block">
-        `;
+      // 遍历所有字段并生成表单
+      formConfig.fields.forEach(field => {
+        formHtml += renderField(field);
+      });
 
-        // 根据字段类型渲染不同的表单元素
-        switch (field.type) {
-          case 'string':
-            if (field.enum) {
-              // 下拉选择框
-              html += `<select name="${fullKey}" ${isRequired ? 'lay-verify="required"' : ''} lay-filter="${fullKey}">`;
-              html += '<option value="">请选择</option>';
-              field.enum.forEach(option => {
-                html += `<option value="${option}">${option}</option>`;
-              });
-              html += '</select>';
-            } else {
-              // 文本输入框
-              html += `<input type="text" name="${fullKey}" ${isRequired ? 'lay-verify="required"' : ''} placeholder="请输入${field.title || key}" class="layui-input">`;
-            }
-            break;
-          case 'number':
-          case 'integer':
-            html += `<input type="number" name="${fullKey}" ${isRequired ? 'lay-verify="required|number"' : 'lay-verify="number"'} placeholder="请输入${field.title || key}" class="layui-input">`;
-            break;
-          case 'boolean':
-            html += `
-              <input type="checkbox" name="${fullKey}" lay-skin="switch" lay-text="是|否">
-            `;
-            break;
-          case 'object':
-            if (field.properties) {
-              html += renderFormField(field.properties, field.required || [], fullKey);
-            }
-            break;
-        }
+      // 添加提交按钮前的表单内容
+      formContainer.innerHTML = formHtml + formContainer.innerHTML;
 
-        html += `
-            </div>
-          </div>
-        `;
+      // 重新渲染表单
+      layui.form.render();
+
+      // 监听表单提交
+      document.getElementById('submitBtn').addEventListener('click', function () {
+        submitForm();
+      });
+    }
+
+    // 渲染单个字段
+    function renderField (field) {
+      let html = `
+        <div class="layui-form-item">
+          <label class="layui-form-label">${field.label}${field.required ? '<span style="color:red">*</span>' : ''}</label>
+          <div class="layui-input-block">
+      `;
+
+      // 根据字段类型渲染不同的表单元素
+      if (field.type === 'select') {
+        html += `<select name="${field.key}" ${field.required ? 'lay-verify="required"' : ''}>
+          <option value="">请选择${field.label}</option>`;
+
+        field.options.forEach(option => {
+          html += `<option value="${option.value}">${option.label}</option>`;
+        });
+
+        html += `</select>`;
+      } else {
+        html += `<input type="text" name="${field.key}" placeholder="请输入${field.label}" 
+          class="layui-input" ${field.required ? 'lay-verify="required"' : ''}>`;
       }
+
+      // 添加字段描述
+      if (field.description) {
+        html += `<div class="field-description">${field.description}</div>`;
+      }
+
+      html += `</div></div>`;
+
+      // 处理数组类型字段（如果有子字段）
+      if (field.isArray && field.children && field.children.length > 0) {
+        html += `<div class="layui-form-item" style="margin-left: 30px;">`;
+        field.children.forEach(child => {
+          html += renderField(child);
+        });
+        html += `</div>`;
+      }
+
       return html;
     }
 
-    // 处理字段关联关系
-    function handleFieldRelations(allOf) {
-      if (!allOf || !Array.isArray(allOf)) return;
-      
-      allOf.forEach(rule => {
-        if (rule.if && rule.then) {
-          const conditions = rule.if.properties;
-          const effects = rule.then.properties;
-          
-          // 监听条件字段的变化
-          for (const field in conditions) {
-            layui.form.on(`select(${field})`, function(data) {
-              const value = data.value;
-              const expectedValue = conditions[field].enum[0];
-              
-              // 如果满足条件，应用效果
-              if (value === expectedValue) {
-                for (const effectField in effects) {
-                  const element = document.querySelector(`[name="${effectField}"]`);
-                  if (element) {
-                    // 根据效果类型处理
-                    if (effects[effectField].required === true) {
-                      element.setAttribute('lay-verify', 'required');
-                      element.closest('.layui-form-item')
-                        .querySelector('.layui-form-label')
-                        .innerHTML = '<span style="color: red;">*</span>' + element.closest('.layui-form-item').querySelector('.layui-form-label').textContent;
-                    }
-                  }
-                }
-              }
-            });
-          }
+    // 提交表单
+    function submitForm () {
+      const form = document.querySelector('.layui-form');
+      const formData = {};
+
+      // 收集表单数据
+      const formElements = form.querySelectorAll('input, select, textarea');
+      formElements.forEach(element => {
+        if (element.name && element.value) {
+          formData[element.name] = element.value;
         }
+      });
+
+      // 使用amazon.js处理表单数据
+      const processedData = processFormData(formData);
+
+      // 显示处理后的数据
+      layui.layer.open({
+        type: 1,
+        title: '处理后的表单数据',
+        area: ['800px', '600px'],
+        content: `<pre style="padding: 20px;">${JSON.stringify(processedData, null, 2)}</pre>`
       });
     }
 
-    window.onload = function () {
-      getSchemaContent().then(res => {
-        if (!res) return;
-        console.log(res);
-        
-        // 获取表单容器
-        const formContainer = document.querySelector('#form-container .layui-form');
-        
-        // 渲染表单字段
-        const formHtml = renderFormField(res.properties, res.required || []);
-        formContainer.innerHTML = formHtml;
-        
-        // 重新渲染表单
-        layui.form.render();
-        
-        // 处理字段关联关系
-        handleFieldRelations(res.allOf);
-      });
-    };
+    // 页面加载完成后执行
+    document.addEventListener('DOMContentLoaded', async function () {
+      // 获取Schema数据
+      const schemaData = await getSchemaContent();
+      if (!schemaData) return;
+
+      // 使用amazon.js转换Schema为表单配置
+      const formConfig = transformJsonSchemaToForm(schemaData);
+      console.log(formConfig);
+
+      // 渲染表单
+      renderFormFields(formConfig);
+    });
   </script>
 </body>
 
