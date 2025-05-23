@@ -39,6 +39,22 @@
     .layui-input-block {
       margin-left: 430px;
     }
+
+    /* 分组标题样式 */
+    .group-title {
+      font-weight: bold;
+      margin: 15px 0 10px 0;
+      padding: 8px;
+      background-color: #f8f8f8;
+      border-left: 4px solid #1E9FFF;
+    }
+
+    /* 分组内容样式 */
+    .group-content {
+      margin-left: 20px;
+      padding: 10px;
+      border-left: 1px dashed #e6e6e6;
+    }
   </style>
 </head>
 
@@ -93,6 +109,56 @@
 
     // 渲染单个字段
     function renderField (field) {
+      // 判断是否有子属性
+      if (field.isArray && field.children && field.children.length > 0) {
+        // 如果只有一个子属性，直接渲染子属性
+        if (field.children.length === 1) {
+          const child = field.children[0];
+          // 使用子属性的label，如果没有则使用父属性的label
+          return renderBasicField({
+            key: child.key,
+            label: child.label || field.label,
+            description: child.description || field.description,
+            required: field.required || child.required,
+            type: child.type,
+            options: child.options
+          });
+        }
+        // 如果有多个子属性，以分组形式渲染
+        else {
+          let html = `
+            <div class="group-title">${field.label}${field.required ? '<span style="color:red">*</span>' : ''}</div>
+            <div class="group-content">
+          `;
+
+          // 添加字段描述
+          if (field.description) {
+            html += `<div class="field-description">${field.description}</div>`;
+          }
+
+          // 渲染所有子属性
+          field.children.forEach(child => {
+            // 如果子属性没有label，则使用父属性的label
+            const childWithLabel = {
+              ...child,
+              label: child.label || field.label,
+              description: child.description || ''
+            };
+            html += renderBasicField(childWithLabel);
+          });
+
+          html += `</div>`;
+          return html;
+        }
+      }
+      // 没有子属性，直接渲染基本字段
+      else {
+        return renderBasicField(field);
+      }
+    }
+
+    // 渲染基本表单字段（无子属性）
+    function renderBasicField (field) {
       let html = `
         <div class="layui-form-item">
           <label class="layui-form-label">${field.label}${field.required ? '<span style="color:red">*</span>' : ''}</label>
@@ -120,15 +186,6 @@
       }
 
       html += `</div></div>`;
-
-      // 处理数组类型字段（如果有子字段）
-      if (field.isArray && field.children && field.children.length > 0) {
-        html += `<div class="layui-form-item" style="margin-left: 30px;">`;
-        field.children.forEach(child => {
-          html += renderField(child);
-        });
-        html += `</div>`;
-      }
 
       return html;
     }
