@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 
 <head>
   <meta charset="UTF-8">
@@ -7,22 +7,26 @@
   <title>schemaJSON数据渲染</title>
   <link rel="stylesheet" href="./css/layui.css">
   <style>
+    /* 表单容器样式 */
     #form-container {
       width: 800px;
       margin: 0 auto;
       padding: 20px;
     }
 
+    /* 表单标题样式 */
     .form-title {
       font-size: 18px;
       font-weight: bold;
       margin-bottom: 15px;
     }
 
+    /* 表单项目样式 */
     .layui-form-item {
       margin-bottom: 15px;
     }
 
+    /* 字段描述样式 */
     .field-description {
       color: #666;
       font-size: 12px;
@@ -91,11 +95,16 @@
       </form>
     </div>
   </div>
+
+  <!-- 引入所需的JS库 -->
   <script src="./js/layui.all.js"></script>
   <script src="./js/amazon.js"></script>
   <script>
-    // 获取JSON Schema数据
-    async function getSchemaContent () {
+    /**
+     * 获取JSON Schema数据
+     * @return {Promise<Object>} Schema数据对象
+     */
+    const getSchemaContent = async () => {
       try {
         const response = await fetch('./demo.json');
         return await response.json();
@@ -103,10 +112,13 @@
         console.error('获取Schema数据失败:', error);
         return null;
       }
-    }
+    };
 
-    // 渲染表单字段
-    function renderFormFields (formConfig) {
+    /**
+     * 渲染表单字段
+     * @param {Object} formConfig - 表单配置对象
+     */
+    const renderFormFields = (formConfig) => {
       const formContainer = document.querySelector('#form-container .layui-form');
       let requiredFieldsHtml = '';
       let optionalFieldsHtml = '';
@@ -139,19 +151,28 @@
       // 重新渲染表单
       layui.form.render();
 
+      // 添加事件监听
+      bindEvents();
+    };
+
+    /**
+     * 绑定所有事件处理
+     */
+    const bindEvents = () => {
       // 监听"更多选填属性"按钮点击
       document.getElementById('moreOptionsBtn').addEventListener('click', function () {
         toggleOptionalFields(this);
       });
 
       // 监听表单提交
-      document.getElementById('submitBtn').addEventListener('click', function () {
-        submitForm();
-      });
-    }
+      document.getElementById('submitBtn').addEventListener('click', submitForm);
+    };
 
-    // 切换选填属性的显示/隐藏
-    function toggleOptionalFields (btn) {
+    /**
+     * 切换选填属性的显示/隐藏
+     * @param {HTMLElement} btn - 触发切换的按钮元素
+     */
+    const toggleOptionalFields = (btn) => {
       const optionalFields = document.querySelectorAll('.optional-field');
       const optionalGroups = document.querySelectorAll('.optional-group');
       const btnText = btn.querySelector('span');
@@ -177,10 +198,15 @@
         btnText.textContent = '隐藏选填属性';
         btnIcon.className = 'layui-icon layui-icon-up';
       }
-    }
+    };
 
-    // 渲染单个字段
-    function renderField (field, isParentRequired = false) {
+    /**
+     * 渲染单个字段
+     * @param {Object} field - 字段配置对象
+     * @param {Boolean} isParentRequired - 父级是否为必填
+     * @return {String} 字段HTML
+     */
+    const renderField = (field, isParentRequired = false) => {
       // 计算当前字段是否必填（自身必填或父级必填）
       const isRequired = field.required || isParentRequired;
 
@@ -234,10 +260,15 @@
       else {
         return renderBasicField(field, isRequired);
       }
-    }
+    };
 
-    // 渲染基本表单字段（无子属性）
-    function renderBasicField (field, isParentRequired = false) {
+    /**
+     * 渲染基本表单字段（无子属性）
+     * @param {Object} field - 字段配置对象
+     * @param {Boolean} isParentRequired - 父级是否为必填
+     * @return {String} 字段HTML
+     */
+    const renderBasicField = (field, isParentRequired = false) => {
       // 计算当前字段是否必填（自身必填或父级必填）
       const isRequired = field.required || isParentRequired;
 
@@ -273,10 +304,12 @@
       html += `</div></div>`;
 
       return html;
-    }
+    };
 
-    // 提交表单
-    function submitForm () {
+    /**
+     * 提交表单
+     */
+    const submitForm = () => {
       const form = document.querySelector('.layui-form');
       const formData = {};
 
@@ -298,20 +331,24 @@
         area: ['800px', '600px'],
         content: `<pre style="padding: 20px;">${JSON.stringify(processedData, null, 2)}</pre>`
       });
-    }
+    };
 
     // 页面加载完成后执行
-    document.addEventListener('DOMContentLoaded', async function () {
-      // 获取Schema数据
-      const schemaData = await getSchemaContent();
-      if (!schemaData) return;
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        // 获取Schema数据
+        const schemaData = await getSchemaContent();
+        if (!schemaData) return;
 
-      // 使用amazon.js转换Schema为表单配置
-      const formConfig = transformJsonSchemaToForm(schemaData);
-      console.log(formConfig);
+        // 使用amazon.js转换Schema为表单配置
+        const formConfig = transformJsonSchemaToForm(schemaData);
+        console.log('表单配置:', formConfig);
 
-      // 渲染表单
-      renderFormFields(formConfig);
+        // 渲染表单
+        renderFormFields(formConfig);
+      } catch (error) {
+        console.error('初始化失败:', error);
+      }
     });
   </script>
 </body>

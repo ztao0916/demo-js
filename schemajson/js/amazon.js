@@ -1,22 +1,40 @@
+/**
+ * amazon.js - Amazon JSON Schema处理工具
+ * 功能：将Amazon JSON Schema转换为表单结构，以及处理表单数据
+ */
+
 // 创建全局对象供直接引用
 ;(function (global) {
+  // 定义常量
+  const DEFAULT_MARKETPLACE_ID = 'ATVPDKIKX0DER'
+  const DEFAULT_LANGUAGE_TAG = 'en_US'
+
   // 定义对象
   global.amazonUtils = {
-    // 转换 JSON Schema 为表单结构
+    /**
+     * 转换JSON Schema为表单结构
+     * @param {Object} schema - JSON Schema对象
+     * @return {Object} 表单配置对象
+     */
     transformJsonSchemaToForm: function (schema) {
       // 基础配置
       const formConfig = {
         fields: []
       }
 
-      // 检查是否为引用字段
+      /**
+       * 检查是否为引用字段
+       * @param {Object} value - 字段值
+       * @param {String} key - 字段键名
+       * @return {Boolean} 是否为引用字段
+       */
       const isRefField = function (value, key) {
         return (
           value.$ref ||
           key === 'marketplace_id' ||
           key === 'language_tag' ||
-          value.default_ === 'en_US' ||
-          value.default_ === 'ATVPDKIKX0DER'
+          value.default_ === DEFAULT_LANGUAGE_TAG ||
+          value.default_ === DEFAULT_MARKETPLACE_ID
         )
       }
 
@@ -66,7 +84,7 @@
                   return
 
                 const childField = {
-                  key: key + '.' + childKey,
+                  key: `${key}.${childKey}`,
                   label: childValue.tTitle || childValue.title || childKey,
                   description:
                     childValue.tDescription || childValue.description || '',
@@ -122,27 +140,29 @@
       }
 
       // 合并必填和非必填字段
-      formConfig.fields = requiredFields.concat(optionalFields)
+      formConfig.fields = [...requiredFields, ...optionalFields]
 
       return formConfig
     },
 
-    // 处理表单数据
+    /**
+     * 处理表单数据为Amazon API所需格式
+     * @param {Object} formData - 表单数据对象
+     * @return {Object} 处理后的数据对象
+     */
     processFormData: function (formData) {
       const result = {}
 
       Object.entries(formData).forEach(function ([key, value]) {
         if (key.includes('.')) {
           // 处理嵌套属性
-          const parts = key.split('.')
-          const parent = parts[0]
-          const child = parts[1]
+          const [parent, child] = key.split('.')
           if (!result[parent]) {
             result[parent] = [
               {
                 // 添加默认的 marketplace_id 和 language_tag
-                marketplace_id: 'ATVPDKIKX0DER',
-                language_tag: 'en_US'
+                marketplace_id: DEFAULT_MARKETPLACE_ID,
+                language_tag: DEFAULT_LANGUAGE_TAG
               }
             ]
           }
@@ -153,8 +173,8 @@
             result[key] = [
               {
                 value: value,
-                marketplace_id: 'ATVPDKIKX0DER',
-                language_tag: 'en_US'
+                marketplace_id: DEFAULT_MARKETPLACE_ID,
+                language_tag: DEFAULT_LANGUAGE_TAG
               }
             ]
           } else {
