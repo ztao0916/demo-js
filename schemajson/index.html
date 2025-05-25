@@ -100,6 +100,16 @@
     .field-label-container {
       display: inline-block;
     }
+
+    /* 错误提示样式 */
+    .error-message {
+      color: #FF5722;
+      margin-top: 10px;
+      padding: 10px;
+      background-color: #fff2f0;
+      border: 1px solid #ffccc7;
+      border-radius: 4px;
+    }
   </style>
 </head>
 
@@ -112,6 +122,7 @@
         <!-- 表单内容将通过JS动态渲染 -->
         <div class="layui-form-item">
           <button type="button" class="layui-btn" id="submitBtn">提交表单</button>
+          <div id="errorContainer"></div>
         </div>
       </form>
     </div>
@@ -123,6 +134,8 @@
   <script>
     // 存储原始schema数据
     let originalSchemaData = null;
+    // 存储当前打开的结果弹窗索引
+    let currentResultLayerIndex = null;
 
     /**
      * 获取JSON Schema数据
@@ -360,7 +373,7 @@
 
       // 根据字段类型渲染不同的表单元素
       if (field.type === 'select') {
-        html += `<select name="${field.key}" ${isRequired ? 'lay-verify="required"' : ''}>
+        html += `<select name="${field.key}" ${isRequired ? 'lay-verify="required"' : ''} data-required="${isRequired}">
           <option value="">请选择</option>`;
 
         field.options.forEach(option => {
@@ -370,7 +383,7 @@
         html += `</select>`;
       } else {
         // 输入框不需要placeholder
-        html += `<input type="text" name="${field.key}" class="layui-input" ${isRequired ? 'lay-verify="required"' : ''}>`;
+        html += `<input type="text" name="${field.key}" class="layui-input" ${isRequired ? 'lay-verify="required"' : ''} data-required="${isRequired}">`;
       }
 
       html += `</div></div>`;
@@ -379,9 +392,50 @@
     };
 
     /**
+     * 验证必填项是否已填写
+     * @return {Object} 验证结果，包含isValid和missingFields
+     */
+    const validateRequiredFields = () => {
+      const form = document.querySelector('.layui-form');
+      const requiredFields = form.querySelectorAll('[data-required="true"]');
+
+      let isValid = true;
+      const missingFields = [];
+
+      requiredFields.forEach(field => {
+        if (!field.value) {
+          isValid = false;
+          // 获取字段标签名
+          const label = field.closest('.layui-form-item').querySelector('.layui-form-label .field-label-container span').textContent;
+          missingFields.push(label);
+        }
+      });
+
+      return { isValid, missingFields };
+    };
+
+    /**
      * 提交表单
      */
     const submitForm = () => {
+      // 验证必填项
+      const validation = validateRequiredFields();
+
+      // 清除之前的错误提示
+      document.getElementById('errorContainer').innerHTML = '';
+
+      if (!validation.isValid) {
+        // 显示错误消息
+        const errorMsg = `
+          <div class="error-message">
+            <i class="layui-icon layui-icon-tips"></i>
+            请填写以下必填项: ${validation.missingFields.join(', ')}
+          </div>
+        `;
+        document.getElementById('errorContainer').innerHTML = errorMsg;
+        return;
+      }
+
       const form = document.querySelector('.layui-form');
       const formData = {};
 
@@ -396,8 +450,13 @@
       // 使用amazon.js处理表单数据
       const processedData = processFormData(formData);
 
+      // 关闭之前的结果弹窗（如果有）
+      if (currentResultLayerIndex !== null) {
+        layui.layer.close(currentResultLayerIndex);
+      }
+
       // 显示处理后的数据
-      layui.layer.open({
+      currentResultLayerIndex = layui.layer.open({
         type: 1,
         title: '处理后的表单数据',
         area: ['800px', '600px'],
