@@ -1,0 +1,96 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# 前端Demo项目开发规范
+
+## 项目说明
+本项目主要用于编写各种验证demo逻辑，使用原生JavaScript、CSS、HTML等方法，以及jQuery、LayUI、ECharts等框架。
+
+## 目录结构规范
+每个demo需放置在独立目录中，目录名应简洁明了地表示demo的主要功能或所使用的技术框架：
+
+- `/layui` - LayUI框架相关demo
+- `/echarts` - ECharts图表相关demo
+- `/schemajson` - JSON Schema解析与表单生成demo
+- `/imageEditor` - 图片编辑相关demo
+- `/copy` - 复制功能相关demo
+
+## 命名规范
+
+### 文件命名
+1. 主入口文件统一使用 `index.html`
+2. JavaScript文件使用小驼峰命名法，如 `chart.js`、`formSelects.js`
+3. CSS文件使用小写字母加连字符，如 `layui.css`、`form-style.css`
+4. 数据文件使用小写字母，如 `demo.json`、`tiktok.json`
+
+### HTML元素ID和类命名
+1. ID使用小驼峰命名法，如 `formContainer`、`submitBtn`
+2. 类名使用小写字母加连字符，如 `form-title`、`layui-btn`
+3. 框架特定的类名遵循框架规范，如 LayUI 的 `layui-form`、`layui-input-block`
+
+### JavaScript命名
+1. 变量和函数使用小驼峰命名法，如 `formSelects`、`renderFormFields()`
+2. 常量使用大写字母加下划线，如 `API_HOST`、`DEFAULT_CONFIG`
+3. 构造函数和类使用大驼峰命名法，如 `ChartBuilder`、`FormRenderer`
+
+## 编码规范
+
+### HTML规范
+1. 使用HTML5文档类型 `<!DOCTYPE html>`
+2. 必须包含 `lang` 属性，如 `<html lang="zh-CN">` 或 `<html lang="en">`
+3. 必须设置字符集 `<meta charset="UTF-8">`
+4. 必须设置视口 `<meta name="viewport" content="width=device-width, initial-scale=1.0">`
+5. 标题应简洁明了，反映页面内容 `<title>功能名称</title>`
+6. 注释应清晰表达代码功能或分区
+
+### CSS规范
+1. 优先使用类选择器，避免过度使用ID选择器
+2. 使用清晰的CSS类名，如 `.form-container`，`.chart-wrapper`
+3. 合理组织样式，相关样式应放在一起
+4. 可使用CSS注释划分不同部分的样式
+5. 媒体查询应放在相关样式的末尾
+
+### JavaScript规范
+1. 使用ES6+语法特性，如箭头函数、解构赋值、模板字符串等
+2. 变量声明优先使用 `const`，其次是 `let`，避免使用 `var`
+3. 异步操作优先使用 `async/await`，其次是 Promise
+4. 函数应当短小精悍，单一职责
+5. 添加必要的注释，特别是复杂逻辑部分
+6. 合理处理错误，使用 try/catch 捕获异常
+
+## 框架使用规范
+
+### LayUI
+1. 遵循LayUI的类命名规范，如 `layui-container`、`layui-form`等
+2. 表单验证应使用LayUI提供的验证机制 `lay-verify`
+3. 组件初始化应在DOM加载完成后进行
+
+### jQuery
+1. 使用 `$` 前缀命名jQuery对象变量，如 `$form`、`$button`
+2. 链式调用时，每个方法应另起一行并适当缩进
+3. 优先使用事件委托，避免直接绑定到多个元素
+
+### ECharts
+1. 图表配置选项应结构清晰，分类组织
+2. 复杂图表应拆分配置项，便于维护
+3. 响应式处理：监听窗口大小变化并调整图表大小
+
+## 注释规范
+1. 文件顶部注释：说明文件的主要功能、作者、创建日期等
+2. 函数注释：说明函数的功能、参数、返回值等
+3. 复杂逻辑注释：解释复杂代码的实现思路
+4. TODO注释：标记待完成的任务，格式为 `// TODO: 任务描述`
+
+## 性能优化
+1. 脚本放置在body结束标签前，减少阻塞渲染
+2. 合理使用事件委托，减少事件监听器数量
+3. 避免频繁操作DOM，可使用DocumentFragment批量操作
+4. 大型框架文件使用CDN或本地缓存
+5. 图片应进行适当压缩，使用适合的格式
+
+## 兼容性要求
+1. 支持主流现代浏览器：Chrome、Firefox、Edge等
+2. 如需兼容IE浏览器，应在注释中特别说明
+3. 使用特定新特性时，应添加必要的polyfill或优雅降级处理
