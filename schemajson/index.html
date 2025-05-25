@@ -100,6 +100,9 @@
   <script src="./js/layui.all.js"></script>
   <script src="./js/amazon.js"></script>
   <script>
+    // 存储原始schema数据
+    let originalSchemaData = null;
+
     /**
      * 获取JSON Schema数据
      * @return {Promise<Object>} Schema数据对象
@@ -123,10 +126,16 @@
       let requiredFieldsHtml = '';
       let optionalFieldsHtml = '';
 
-      // 遍历所有字段并分别生成必填和选填表单
+      // 遍历所有字段
       formConfig.fields.forEach(field => {
+        // 判断字段是否在原始schema的required数组中
+        const isInRequired = originalSchemaData.required &&
+          originalSchemaData.required.includes(field.key);
+
         const fieldHtml = renderField(field, field.required);
-        if (field.required) {
+
+        // 如果字段在required数组中，则默认显示，否则放入可选字段
+        if (isInRequired) {
           requiredFieldsHtml += fieldHtml;
         } else {
           optionalFieldsHtml += fieldHtml;
@@ -210,6 +219,10 @@
       // 计算当前字段是否必填（自身必填或父级必填）
       const isRequired = field.required || isParentRequired;
 
+      // 判断字段是否在原始schema的required数组中
+      const isInRequired = originalSchemaData.required &&
+        originalSchemaData.required.includes(field.key);
+
       // 判断是否有子属性
       if (field.isArray && field.children && field.children.length > 0) {
         // 如果只有一个子属性，直接渲染子属性
@@ -223,12 +236,12 @@
             required: isRequired || child.required,
             type: child.type,
             options: child.options
-          }, isRequired);
+          }, isRequired, isInRequired);
         }
         // 如果有多个子属性，以分组形式渲染
         else {
           // 确定分组是否为选填
-          const groupClass = isRequired ? '' : 'optional-group';
+          const groupClass = isInRequired ? '' : 'optional-group';
 
           let html = `
             <div class="group-title ${groupClass}">${field.label}${isRequired ? '<span style="color:red">*</span>' : ''}</div>
@@ -249,7 +262,7 @@
               description: child.description || '',
               required: isRequired || child.required
             };
-            html += renderBasicField(childWithLabel, isRequired);
+            html += renderBasicField(childWithLabel, isRequired, isInRequired);
           });
 
           html += `</div>`;
@@ -258,7 +271,7 @@
       }
       // 没有子属性，直接渲染基本字段
       else {
-        return renderBasicField(field, isRequired);
+        return renderBasicField(field, isRequired, isInRequired);
       }
     };
 
@@ -266,14 +279,16 @@
      * 渲染基本表单字段（无子属性）
      * @param {Object} field - 字段配置对象
      * @param {Boolean} isParentRequired - 父级是否为必填
+     * @param {Boolean} isInRequired - 字段是否在原始schema的required数组中
      * @return {String} 字段HTML
      */
-    const renderBasicField = (field, isParentRequired = false) => {
+    const renderBasicField = (field, isParentRequired = false, isInRequired = false) => {
       // 计算当前字段是否必填（自身必填或父级必填）
       const isRequired = field.required || isParentRequired;
 
       // 为选填字段添加特殊类名
-      const fieldClass = isRequired ? 'layui-form-item' : 'layui-form-item optional-field';
+      // 如果字段不在原始schema的required数组中，则默认隐藏
+      const fieldClass = isInRequired ? 'layui-form-item' : 'layui-form-item optional-field';
 
       let html = `
         <div class="${fieldClass}">
@@ -339,6 +354,10 @@
         // 获取Schema数据
         const schemaData = await getSchemaContent();
         if (!schemaData) return;
+
+        // 保存原始schema数据，用于后续判断字段是否在required中
+        originalSchemaData = schemaData;
+        console.log('schemaData:', schemaData);
 
         // 使用amazon.js转换Schema为表单配置
         const formConfig = transformJsonSchemaToForm(schemaData);
