@@ -26,11 +26,9 @@
       margin-bottom: 15px;
     }
 
-    /* 字段描述样式 */
+    /* 字段描述样式 - 默认不显示，通过lay-tips展示 */
     .field-description {
-      color: #666;
-      font-size: 12px;
-      margin-top: 5px;
+      display: none;
     }
 
     /* 修改标签宽度 */
@@ -78,6 +76,29 @@
 
     .more-options-btn .layui-btn {
       padding: 0 30px;
+    }
+
+    /* 带有提示的标签样式 */
+    .label-with-tip {
+      cursor: help;
+      border-bottom: 1px dashed #1E9FFF;
+    }
+
+    .label-with-tips-container {
+      color: #fff;
+      padding: 8px;
+      border-radius: 5px;
+    }
+
+    /* 必填项标记 */
+    .required-mark {
+      color: #FF5722;
+      margin-left: 5px;
+    }
+
+    /* 字段名称和必填标记容器 */
+    .field-label-container {
+      display: inline-block;
     }
   </style>
 </head>
@@ -175,6 +196,26 @@
 
       // 监听表单提交
       document.getElementById('submitBtn').addEventListener('click', submitForm);
+
+      // 为带有提示的标签添加鼠标事件
+      document.querySelectorAll('.label-with-tip').forEach(label => {
+        const tipContent = label.getAttribute('data-tip');
+        console.log('tipContent:', tipContent);
+        if (tipContent) {
+          // 鼠标悬浮显示提示
+          label.addEventListener('mouseenter', function () {
+            layui.layer.tips(`<div class="label-with-tips-container">${tipContent}</div>`, this, {
+              tips: [1, '#000'],
+              time: 0
+            })
+          });
+
+          // 鼠标离开时关闭所有tips
+          label.addEventListener('mouseleave', function () {
+            layui.layer.closeAll('tips');
+          });
+        }
+      });
     };
 
     /**
@@ -243,15 +284,23 @@
           // 确定分组是否为选填
           const groupClass = isInRequired ? '' : 'optional-group';
 
+          // 判断是否添加提示
+          const tipAttribute = isInRequired && field.description ?
+            `data-tip="${field.description}"` : '';
+
+          // 添加带提示样式
+          const labelClass = isInRequired && field.description ?
+            'label-with-tip' : '';
+
           let html = `
-            <div class="group-title ${groupClass}">${field.label}${isRequired ? '<span style="color:red">*</span>' : ''}</div>
+            <div class="group-title ${groupClass}">
+              <div class="field-label-container">
+                <span class="${labelClass}" ${tipAttribute}>${field.label}</span>
+                ${isRequired ? '<span class="required-mark">*</span>' : ''}
+              </div>
+            </div>
             <div class="group-content ${groupClass}">
           `;
-
-          // 添加字段描述
-          if (field.description) {
-            html += `<div class="field-description">${field.description}</div>`;
-          }
 
           // 渲染所有子属性
           field.children.forEach(child => {
@@ -290,16 +339,29 @@
       // 如果字段不在原始schema的required数组中，则默认隐藏
       const fieldClass = isInRequired ? 'layui-form-item' : 'layui-form-item optional-field';
 
+      // 判断是否添加提示
+      const tipAttribute = isInRequired && field.description ?
+        `data-tip="${field.description}"` : '';
+
+      // 添加带提示样式
+      const labelClass = isInRequired && field.description ?
+        'label-with-tip' : '';
+
       let html = `
         <div class="${fieldClass}">
-          <label class="layui-form-label">${field.label}${isRequired ? '<span style="color:red">*</span>' : ''}</label>
+          <label class="layui-form-label">
+            <div class="field-label-container">
+              <span class="${labelClass}" ${tipAttribute}>${field.label}</span>
+              ${isRequired ? '<span class="required-mark">*</span>' : ''}
+            </div>
+          </label>
           <div class="layui-input-block">
       `;
 
       // 根据字段类型渲染不同的表单元素
       if (field.type === 'select') {
         html += `<select name="${field.key}" ${isRequired ? 'lay-verify="required"' : ''}>
-          <option value="">请选择${field.label}</option>`;
+          <option value="">请选择</option>`;
 
         field.options.forEach(option => {
           html += `<option value="${option.value}">${option.label}</option>`;
@@ -307,13 +369,8 @@
 
         html += `</select>`;
       } else {
-        html += `<input type="text" name="${field.key}" placeholder="请输入${field.label}" 
-          class="layui-input" ${isRequired ? 'lay-verify="required"' : ''}>`;
-      }
-
-      // 添加字段描述
-      if (field.description) {
-        html += `<div class="field-description">${field.description}</div>`;
+        // 输入框不需要placeholder
+        html += `<input type="text" name="${field.key}" class="layui-input" ${isRequired ? 'lay-verify="required"' : ''}>`;
       }
 
       html += `</div></div>`;
@@ -357,7 +414,6 @@
 
         // 保存原始schema数据，用于后续判断字段是否在required中
         originalSchemaData = schemaData;
-        console.log('schemaData:', schemaData);
 
         // 使用amazon.js转换Schema为表单配置
         const formConfig = transformJsonSchemaToForm(schemaData);
