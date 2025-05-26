@@ -89,12 +89,7 @@
                   description:
                     childValue.tDescription || childValue.description || '',
                   // 判断子属性是否必填：从items.required字段获取
-                  required: value.items.required
-                    ? value.items.required.includes(childKey)
-                    : // 如果父字段是必填且当前是value字段，则也作为必填项
-                      schema.required &&
-                      schema.required.includes(key) &&
-                      childKey === 'value',
+                  required: schema.required.includes(childKey),
                   type: 'input'
                 }
 
