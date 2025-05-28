@@ -80,8 +80,7 @@
                 childValue
               ]) {
                 // 跳过隐藏字段和引用字段
-                if (childValue.hidden || isRefField(childValue, childKey))
-                  return
+                if (isRefField(childValue, childKey)) return
 
                 const childField = {
                   key: `${key}.${childKey}`,
