@@ -131,7 +131,12 @@
   <!-- 引入所需的JS库 -->
   <script src="./js/layui.all.js"></script>
   <script src="./js/amazon.js"></script>
+  <script src="./js/parse.js"></script>
   <script>
+    var demoStr = `item_name:[{"marketplace_id":"ATVPDKIKX0DER","language_tag":"en_US","value":"1111"}]#,#brand:[{"marketplace_id":"ATVPDKIKX0DER","language_tag":"en_US","value":"1111"}]#,#item_type_keyword:[{"marketplace_id":"ATVPDKIKX0DER","language_tag":"en_US","value":"111"}]#,#product_description:[{"marketplace_id":"ATVPDKIKX0DER","language_tag":"en_US","value":"1111"}]#,#bullet_point:[{"marketplace_id":"ATVPDKIKX0DER","language_tag":"en_US","value":"111"}]#,#country_of_origin:[{"marketplace_id":"ATVPDKIKX0DER","language_tag":"en_US","value":"AF"}]#,#supplier_declared_dg_hz_regulation:[{"marketplace_id":"ATVPDKIKX0DER","language_tag":"en_US","value":"ghs"}]
+    `
+    let parsedData = parseAmazonData(demoStr)
+    console.log('parsedData:', parsedData.brand)
     // 存储原始schema数据
     let originalSchemaData = null;
     // 存储当前打开的结果弹窗索引
@@ -213,7 +218,6 @@
       // 为带有提示的标签添加鼠标事件
       document.querySelectorAll('.label-with-tip').forEach(label => {
         const tipContent = label.getAttribute('data-tip');
-        console.log('tipContent:', tipContent);
         if (tipContent) {
           // 鼠标悬浮显示提示
           label.addEventListener('mouseenter', function () {
