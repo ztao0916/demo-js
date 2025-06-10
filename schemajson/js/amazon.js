@@ -75,47 +75,70 @@
             // 处理数组项的属性
             if (value.items && value.items.properties) {
               field.children = []
-              Object.entries(value.items.properties).forEach(function ([
-                childKey,
-                childValue
-              ]) {
-                // 跳过隐藏字段和引用字段
-                if (isRefField(childValue, childKey)) return
-
-                const childField = {
-                  key: `${key}.${childKey}`,
-                  label: childValue.tTitle || childValue.title || childKey,
-                  description:
-                    childValue.tDescription || childValue.description || '',
-                  // 判断子属性是否必填：从items.required字段获取
-                  required: schema.required.includes(childKey),
-                  type: 'input'
-                }
-
-                // 处理子字段的枚举值
-                if (childValue.enum) {
-                  childField.type = 'select'
-                  childField.options = childValue.enum.map(function (
-                    val,
-                    index
-                  ) {
-                    return {
-                      value: val,
-                      label: childValue.enumNames
-                        ? childValue.enumNames[index]
-                        : val
-                    }
-                  })
-                }
-
-                field.children.push(childField)
-              })
-
+              
+              /**
+               * 递归处理嵌套的properties字段
+               * @param {Object} properties - 属性对象
+               * @param {String} parentKey - 父级键名
+               * @param {Array} targetArray - 目标数组
+               * @param {Array} requiredFields - 必填字段列表
+               */
+              const processProperties = function(properties, parentKey, targetArray, requiredFields = []) {
+                Object.entries(properties).forEach(function ([
+                  propKey,
+                  propValue
+                ]) {
+                  // 跳过隐藏字段和引用字段
+                  if (isRefField(propValue, propKey)) return
+                  
+                  const fieldKey = parentKey ? `${parentKey}.${propKey}` : propKey
+                  const fieldObj = {
+                    key: fieldKey,
+                    label: propValue.tTitle || propValue.title || propKey,
+                    description: propValue.tDescription || propValue.description || '',
+                    required: requiredFields.includes(propKey),
+                    type: 'input'
+                  }
+                  
+                  // 处理枚举值
+                  if (propValue.enum) {
+                    fieldObj.type = 'select'
+                    fieldObj.options = propValue.enum.map(function (val, index) {
+                      return {
+                        value: val,
+                        label: propValue.enumNames ? propValue.enumNames[index] : val
+                      }
+                    })
+                  }
+                  
+                  // 递归处理嵌套的properties
+                  if (propValue.properties) {
+                    fieldObj.children = []
+                    processProperties(
+                      propValue.properties, 
+                      fieldKey, 
+                      fieldObj.children, 
+                      propValue.required || []
+                    )
+                  }
+                  
+                  targetArray.push(fieldObj)
+                })
+              }
+              
+              // 处理items.properties
+              processProperties(
+                value.items.properties, 
+                key, 
+                field.children, 
+                value.items.required || []
+              )
+              
               // 如果没有有效的子字段，则跳过该数组字段
               if (field.children.length === 0) {
                 return
               }
-
+              
               // 对子字段进行排序：必填在前，非必填在后
               field.children.sort(function (a, b) {
                 if (a.required && !b.required) return -1
