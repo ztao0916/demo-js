@@ -328,7 +328,7 @@
               description: child.description || '',
               required: isRequired || child.required
             };
-            
+
             // 如果子属性有自己的children，递归调用renderField
             if (child.children && child.children.length > 0) {
               html += renderField(childWithLabel, isRequired);
@@ -487,6 +487,10 @@
         // 使用amazon.js转换Schema为表单配置
         const formConfig = transformJsonSchemaToForm(schemaData);
         console.log('表单配置:', formConfig);
+
+        //解析单个属性variation_theme
+        const variationTheme = processSingleField(originalSchemaData.properties, 'variation_theme')
+        console.log('variationTheme:', variationTheme)
 
         // 渲染表单
         renderFormFields(formConfig);
