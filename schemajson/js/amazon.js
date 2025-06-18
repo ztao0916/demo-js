@@ -119,8 +119,7 @@
               const processProperties = function (
                 properties,
                 parentKey,
-                targetArray,
-                requiredFields = []
+                targetArray
               ) {
                 Object.entries(properties).forEach(function ([
                   propKey,
@@ -150,7 +149,7 @@
                           propValue.properties.value.tDescription ||
                           propValue.properties.value.description ||
                           '',
-                        required: (propValue.required || []).includes('value'),
+                        required: schema.required ? schema.required.includes(propKey) : false,
                         type: 'input'
                       }
 
@@ -187,7 +186,7 @@
                           propValue.properties.unit.tDescription ||
                           propValue.properties.unit.description ||
                           '',
-                        required: (propValue.required || []).includes('unit'),
+                        required: schema.required ? schema.required.includes(propKey) : false,
                         type: 'input'
                       }
 
@@ -217,7 +216,7 @@
                       label: propValue.tTitle || propValue.title || propKey,
                       description:
                         propValue.tDescription || propValue.description || '',
-                      required: requiredFields.includes(propKey),
+                      required: schema.required ? schema.required.includes(propKey) : false,
                       type: 'input'
                     }
                     // 处理maxlength属性
@@ -256,8 +255,7 @@
                       processProperties(
                         propValue.properties,
                         fieldKey,
-                        fieldObj.children,
-                        propValue.required || []
+                        fieldObj.children
                       )
                     }
 
@@ -270,8 +268,7 @@
               processProperties(
                 value.items.properties,
                 key,
-                field.children,
-                value.items.required || []
+                field.children
               )
 
               // 如果没有有效的子字段，则跳过该数组字段
@@ -344,6 +341,56 @@
       return result
     },
     /**
+     * 解析亚马逊数据字符串，并过滤掉marketplace_id和language_tag字段
+     * @param {String} dataString - 以#,#分隔的亚马逊数据字符串
+     * @return {Object} 解析后的数据对象，不包含marketplace_id和language_tag字段
+     */
+    parseAmazonData: function (dataString) {
+      if (!dataString || typeof dataString !== "string") {
+        console.error("数据字符串无效");
+        return null;
+      }
+
+      // 分割字符串获取键值对
+      const pairs = dataString.split("#,#");
+      const parsedData = {};
+
+      // 解析每个键值对
+      pairs.forEach((pair) => {
+        try {
+          // 提取键和值，只替换第一个冒号为##,##
+          const colonIndex = pair.indexOf(":");
+          if (colonIndex === -1) return;
+
+          const key = pair.substring(0, colonIndex);
+          let valueStr = pair.substring(colonIndex + 1);
+
+          // 将原始键值对中的第一个冒号替换为##,##
+          const processedPair = pair.replace(":", "##,##");
+
+          // 将键值对存入结果对象
+          parsedData[key] = JSON.parse(valueStr);
+        } catch (outerError) {
+          console.error("处理键值对时出错:", outerError);
+        }
+      });
+      //遍历parsedData,只取value对象中的value或者数组第一个对象的value
+      let tarData = {};
+      for (const key in parsedData) {
+        let value = parsedData[key];
+        if (value instanceof Array) {
+          let valObj = value[0];
+          let tarVal = valObj.value;
+          tarData[key] = tarVal;
+        } else if (value instanceof Object) {
+          let tarVal = value.value;
+          tarData[key] = tarVal;
+        }
+      }
+      // console.log("tarData", tarData);
+      return tarData;
+    },
+    /**
      * 返回properties中单个字段的数据
      * @param {Object} properties - 属性对象
      * @param {String} key - 字段键名
@@ -390,5 +437,6 @@
   global.transformJsonSchemaToForm =
     global.amazonUtils.transformJsonSchemaToForm
   global.processFormData = global.amazonUtils.processFormData
+  global.parseAmazonData = global.amazonUtils.parseAmazonData
   global.processSingleField = global.amazonUtils.processSingleField
 })(typeof window !== 'undefined' ? window : this)
