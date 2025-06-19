@@ -131,12 +131,10 @@
   <!-- 引入所需的JS库 -->
   <script src="./js/layui.all.js"></script>
   <script src="./js/amazon.js"></script>
-  <script src="./js/parse.js"></script>
   <script>
-    var demoStr = `item_name:[{"marketplace_id":"ATVPDKIKX0DER","language_tag":"en_US","value":"1111"}]#,#brand:[{"marketplace_id":"ATVPDKIKX0DER","language_tag":"en_US","value":"1111"}]#,#item_type_keyword:[{"marketplace_id":"ATVPDKIKX0DER","language_tag":"en_US","value":"111"}]#,#product_description:[{"marketplace_id":"ATVPDKIKX0DER","language_tag":"en_US","value":"1111"}]#,#bullet_point:[{"marketplace_id":"ATVPDKIKX0DER","language_tag":"en_US","value":"111"}]#,#country_of_origin:[{"marketplace_id":"ATVPDKIKX0DER","language_tag":"en_US","value":"AF"}]#,#supplier_declared_dg_hz_regulation:[{"marketplace_id":"ATVPDKIKX0DER","language_tag":"en_US","value":"ghs"}]
-    `
+    var demoStr = `brand:[{"marketplace_id":"ATVPDKIKX0DER","language_tag":"en_US","value":"5"}]#,#item_type_keyword:[{"marketplace_id":"ATVPDKIKX0DER","language_tag":"en_US","value":"5"}]#,#country_of_origin:[{"marketplace_id":"ATVPDKIKX0DER","language_tag":"en_US","value":"AF"}]#,#supplier_declared_dg_hz_regulation:[{"marketplace_id":"ATVPDKIKX0DER","language_tag":"en_US","value":"not_applicable"}]#,#externally_assigned_product_identifier:[{"marketplace_id":"ATVPDKIKX0DER","language_tag":"en_US","type":"upc","value":"3"}]#,#merchant_suggested_asin:[{"marketplace_id":"ATVPDKIKX0DER","language_tag":"en_US","value":"3"}]#,#supplier_declared_has_product_identifier_exemption:[{"marketplace_id":"ATVPDKIKX0DER","language_tag":"en_US","value":"false"}]#,#package_level:[{"marketplace_id":"ATVPDKIKX0DER","language_tag":"en_US","value":"case"}]#,#item_depth_width_height:[{"marketplace_id":"ATVPDKIKX0DER","language_tag":"en_US","depth":{"value":80,"unit":"inches"},"height":{"value":90,"unit":"inches"},"width":{"value":100,"unit":"inches"}}]`
     let parsedData = parseAmazonData(demoStr)
-    console.log('parsedData:', parsedData.brand)
+    // console.log('parsedData:', parsedData.brand)
     // 存储原始schema数据
     let originalSchemaData = null;
     // 存储当前打开的结果弹窗索引
@@ -474,6 +472,43 @@
       });
     };
 
+    /**
+     * 设置表单数据
+     * @param {Object} formData - 表单数据对象
+     */
+    const setFormValues = (formData) => {
+      if (!formData) return;
+      
+      // 延迟设置表单值，确保DOM已完全渲染
+      setTimeout(() => {
+        // 获取所有表单元素
+        const formElements = document.querySelectorAll('.layui-form [name]');
+        
+        // 遍历表单元素并设置值
+        formElements.forEach(element => {
+          const name = element.getAttribute('name');
+          if (name && formData[name] !== undefined) {
+            if (element.tagName === 'SELECT') {
+              element.value = formData[name];
+              // 触发选择框的显示更新
+              layui.form.render('select');
+            } else {
+              element.value = formData[name];
+            }
+          }
+        });
+        
+        // 自动展开所有选填字段，以便查看回显数据
+        const moreOptionsBtn = document.getElementById('moreOptionsBtn');
+        if (moreOptionsBtn) {
+          const optionalFields = document.querySelectorAll('.optional-field');
+          if (optionalFields.length > 0 && optionalFields[0].style.display !== 'block') {
+            moreOptionsBtn.click();
+          }
+        }
+      }, 300);
+    };
+    
     // 页面加载完成后执行
     document.addEventListener('DOMContentLoaded', async () => {
       try {
@@ -486,14 +521,15 @@
 
         // 使用amazon.js转换Schema为表单配置
         const formConfig = transformJsonSchemaToForm(schemaData);
-        console.log('表单配置:', formConfig);
-
-        //解析单个属性variation_theme
-        const variationTheme = processSingleField(originalSchemaData.properties, 'variation_theme')
-        console.log('variationTheme:', variationTheme)
-
+        
         // 渲染表单
         renderFormFields(formConfig);
+        
+        // 解析示例数据并回显到表单
+        const formData = parseAmazonData(demoStr);
+        setTimeout(() => {
+          setFormValues(formData);
+        }, 500); // 等待表单渲染完成
       } catch (error) {
         console.error('初始化失败:', error);
       }
