@@ -19,8 +19,8 @@
     transformJsonSchemaToForm: function (schema) {
       // 基础配置
       const formConfig = {
-        fields: []
-      }
+        fields: [],
+      };
 
       /**
        * 检查是否为引用字段
@@ -31,12 +31,12 @@
       const isRefField = function (value, key) {
         return (
           value.$ref ||
-          key === 'marketplace_id' ||
-          key === 'language_tag' ||
+          key === "marketplace_id" ||
+          key === "language_tag" ||
           value.default_ === DEFAULT_LANGUAGE_TAG ||
           value.default_ === DEFAULT_MARKETPLACE_ID
-        )
-      }
+        );
+      };
 
       /**
        * 检查是否为需要过滤的字段
@@ -46,68 +46,68 @@
       const isFilteredField = function (key) {
         // 需要过滤的字段列表
         const filteredFields = [
-          'item_name', // 标题
-          'bullet_point', // 卖点
-          'product_description', // 描述
-          'generic_keyword', // 关键词
-          'main_product_image_locator', // 主图
-          'swatch_product_image_locator' // 变体图
-        ]
+          "item_name", // 标题
+          "bullet_point", // 卖点
+          "product_description", // 描述
+          "generic_keyword", // 关键词
+          "main_product_image_locator", // 主图
+          "swatch_product_image_locator", // 变体图
+        ];
 
         // 检查是否为基本过滤字段
         if (filteredFields.includes(key)) {
-          return true
+          return true;
         }
 
         // 检查是否为other_product_image_locator或其带数字变体
         if (
-          key === 'other_product_image_locator' ||
+          key === "other_product_image_locator" ||
           /^other_product_image_locator_\d+$/.test(key)
         ) {
-          return true
+          return true;
         }
 
-        return false
-      }
+        return false;
+      };
 
       // 临时存储所有字段
-      const requiredFields = []
-      const optionalFields = []
+      const requiredFields = [];
+      const optionalFields = [];
 
       // 处理属性
       if (schema.properties) {
         Object.entries(schema.properties).forEach(function ([key, value]) {
           // 跳过隐藏字段和引用字段
           if (value.hidden || isRefField(value, key) || isFilteredField(key))
-            return
+            return;
 
           // 基础字段信息
           const field = {
             key,
             label: value.tTitle || value.title || key,
-            description: value.tDescription || value.description || '',
+            description: value.tDescription || value.description || "",
             required: schema.required ? schema.required.includes(key) : false,
-            type: 'input' // 默认为输入框
-          }
+            type: "input", // 默认为输入框
+          };
 
           // 处理枚举值 - 转为选择框
           if (value.enum) {
-            field.type = 'select'
+            field.type = "select";
             field.options = value.enum.map(function (val, index) {
               return {
                 value: val,
-                label: value.enumNames ? value.enumNames[index] : val
-              }
-            })
+                label: value.enumNames ? value.enumNames[index] : val,
+              };
+            });
           }
 
           // 处理数组类型
-          if (value.type === 'array') {
-            field.isArray = true
+          if (value.type === "array") {
+            field.isArray = true;
 
             // 处理数组项的属性
             if (value.items && value.items.properties) {
-              field.children = []
+              field.children = [];
 
               /**
                * 处理嵌套的properties字段，将第三层级的数据挪到第二层
@@ -119,14 +119,15 @@
               const processProperties = function (
                 properties,
                 parentKey,
-                targetArray
+                targetArray,
+                requiredFields = []
               ) {
                 Object.entries(properties).forEach(function ([
                   propKey,
-                  propValue
+                  propValue,
                 ]) {
                   // 跳过隐藏字段和引用字段
-                  if (isRefField(propValue, propKey)) return
+                  if (isRefField(propValue, propKey)) return;
 
                   // 如果属性有properties且包含unit和value，将它们提升到当前层级
                   if (
@@ -138,7 +139,7 @@
                     if (propValue.properties.value) {
                       const valueKey = parentKey
                         ? `${parentKey}.${propKey}_value`
-                        : `${propKey}_value`
+                        : `${propKey}_value`;
                       const valueObj = {
                         key: valueKey,
                         label:
@@ -148,36 +149,45 @@
                         description:
                           propValue.properties.value.tDescription ||
                           propValue.properties.value.description ||
-                          '',
-                        required: schema.required
-                          ? schema.required.includes(propKey)
-                          : false,
-                        type: 'input'
+                          "",
+                        required: (propValue.required || []).includes("value"),
+                        type: "input",
+                      };
+                      
+                      // 处理placeholder (example或examples)
+                      if (propValue.properties.value.example !== undefined) {
+                        valueObj.placeholder = propValue.properties.value.example;
+                      } else if (
+                        propValue.properties.value.examples &&
+                        Array.isArray(propValue.properties.value.examples) &&
+                        propValue.properties.value.examples.length > 0
+                      ) {
+                        valueObj.placeholder = propValue.properties.value.examples[0];
                       }
 
                       // 处理枚举值
                       if (propValue.properties.value.enum) {
-                        valueObj.type = 'select'
+                        valueObj.type = "select";
                         valueObj.options = propValue.properties.value.enum.map(
                           function (val, index) {
                             return {
                               value: val,
                               label: propValue.properties.value.enumNames
                                 ? propValue.properties.value.enumNames[index]
-                                : val
-                            }
+                                : val,
+                            };
                           }
-                        )
+                        );
                       }
 
-                      targetArray.push(valueObj)
+                      targetArray.push(valueObj);
                     }
 
                     // 处理unit字段
                     if (propValue.properties.unit) {
                       const unitKey = parentKey
                         ? `${parentKey}.${propKey}_unit`
-                        : `${propKey}_unit`
+                        : `${propKey}_unit`;
                       const unitObj = {
                         key: unitKey,
                         label:
@@ -187,51 +197,61 @@
                         description:
                           propValue.properties.unit.tDescription ||
                           propValue.properties.unit.description ||
-                          '',
-                        required: schema.required
-                          ? schema.required.includes(propKey)
-                          : false,
-                        type: 'input'
+                          "",
+                        required: (propValue.required || []).includes("unit"),
+                        type: "input",
+                      };
+                      
+                      // 处理placeholder (example或examples)
+                      if (propValue.properties.unit.example !== undefined) {
+                        unitObj.placeholder = propValue.properties.unit.example;
+                      } else if (
+                        propValue.properties.unit.examples &&
+                        Array.isArray(propValue.properties.unit.examples) &&
+                        propValue.properties.unit.examples.length > 0
+                      ) {
+                        unitObj.placeholder = propValue.properties.unit.examples[0];
                       }
 
                       // 处理枚举值
                       if (propValue.properties.unit.enum) {
-                        unitObj.type = 'select'
+                        unitObj.type = "select";
                         unitObj.options = propValue.properties.unit.enum.map(
                           function (val, index) {
                             return {
                               value: val,
                               label: propValue.properties.unit.enumNames
                                 ? propValue.properties.unit.enumNames[index]
-                                : val
-                            }
+                                : val,
+                            };
                           }
-                        )
+                        );
                       }
 
-                      targetArray.push(unitObj)
+                      targetArray.push(unitObj);
                     }
                   } else {
                     const fieldKey = parentKey
                       ? `${parentKey}.${propKey}`
-                      : propKey
+                      : propKey;
                     const fieldObj = {
                       key: fieldKey,
                       label: propValue.tTitle || propValue.title || propKey,
                       description:
-                        propValue.tDescription || propValue.description || '',
-                      required: schema.required
-                        ? schema.required.includes(propKey)
-                        : false,
-                      type: 'input'
-                    }
+                        propValue.tDescription || propValue.description || "",
+                      required: requiredFields.includes(propKey),
+                      type: "input",
+                    };
+
                     // 处理maxlength属性
                     if (propValue.maxLength) {
                       fieldObj.maxLength = propValue.maxLength
                     }
 
-                    // 处理examples属性
-                    if (
+                    // 处理placeholder (example或examples)
+                    if (propValue.example !== undefined) {
+                      fieldObj.placeholder = propValue.example;
+                    } else if (
                       propValue.examples &&
                       Array.isArray(propValue.examples) &&
                       propValue.examples.length > 0
@@ -241,7 +261,7 @@
 
                     // 处理枚举值
                     if (propValue.enum) {
-                      fieldObj.type = 'select'
+                      fieldObj.type = "select";
                       fieldObj.options = propValue.enum.map(function (
                         val,
                         index
@@ -250,56 +270,62 @@
                           value: val,
                           label: propValue.enumNames
                             ? propValue.enumNames[index]
-                            : val
-                        }
-                      })
+                            : val,
+                        };
+                      });
                     }
 
                     // 递归处理嵌套的properties，但不是unit和value的情况
                     if (propValue.properties) {
-                      fieldObj.children = []
+                      fieldObj.children = [];
                       processProperties(
                         propValue.properties,
                         fieldKey,
-                        fieldObj.children
-                      )
+                        fieldObj.children,
+                        propValue.required || []
+                      );
                     }
 
-                    targetArray.push(fieldObj)
+                    targetArray.push(fieldObj);
                   }
-                })
-              }
+                });
+              };
 
               // 处理items.properties
-              processProperties(value.items.properties, key, field.children)
+              processProperties(
+                value.items.properties,
+                key,
+                field.children,
+                value.items.required || []
+              );
 
               // 如果没有有效的子字段，则跳过该数组字段
               if (field.children.length === 0) {
-                return
+                return;
               }
 
               // 对子字段进行排序：必填在前，非必填在后
               field.children.sort(function (a, b) {
-                if (a.required && !b.required) return -1
-                if (!a.required && b.required) return 1
-                return 0
-              })
+                if (a.required && !b.required) return -1;
+                if (!a.required && b.required) return 1;
+                return 0;
+              });
             }
           }
 
           // 将字段添加到对应的数组中
           if (field.required) {
-            requiredFields.push(field)
+            requiredFields.push(field);
           } else {
-            optionalFields.push(field)
+            optionalFields.push(field);
           }
-        })
+        });
       }
 
       // 合并必填和非必填字段
-      formConfig.fields = [...requiredFields, ...optionalFields]
-      // console.log('处理后的表单配置formConfig', formConfig)
-      return formConfig
+      formConfig.fields = [...requiredFields, ...optionalFields];
+      console.log("处理后的表单配置formConfig", formConfig);
+      return formConfig;
     },
 
     /**

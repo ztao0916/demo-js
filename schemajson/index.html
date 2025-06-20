@@ -390,8 +390,8 @@
 
         html += `</select>`;
       } else {
-        // 输入框不需要placeholder
-        html += `<input type="text" name="${field.key}" class="layui-input" ${isRequired ? 'lay-verify="required"' : ''} data-required="${isRequired}">`;
+        // 添加placeholder属性
+        html += `<input type="text" name="${field.key}" class="layui-input" ${isRequired ? 'lay-verify="required"' : ''} ${field.placeholder ? `placeholder="${field.placeholder}"` : ''} data-required="${isRequired}">`;
       }
 
       html += `</div></div>`;
@@ -522,6 +522,7 @@
         // 使用amazon.js转换Schema为表单配置
         const formConfig = transformJsonSchemaToForm(schemaData);
         
+        console.log('525-formConfig:', formConfig);
         // 渲染表单
         renderFormFields(formConfig);
         
