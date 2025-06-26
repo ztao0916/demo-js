@@ -1,15 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>店小秘逻辑猜想</title>
+  <title>JSON Schema 表单生成器</title>
+  <link rel="stylesheet" href="./css/layui.css">
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <h1>店小秘逻辑猜想</h1>
-    </div>
+  <!-- 头部横幅 -->
+  <div>
+    你好
   </div>
+
+  <!-- 引入映射器脚本 -->
+   <script src="./js/layui.all.js"></script>
+  <script src="js/schema-to-field-mapper-browser.js"></script>
+  <script>
+    fetch('./dxm.json')
+      .then(response => response.json())
+      .then(schema => {
+        const fields = convertSchemaToFields(schema);
+        const beFunction = convertSchemaToBeFunction(schema); 
+        console.log('beFunction:', beFunction);
+        console.log('fields:', fields);
+      });
+  </script>
 </body>
 </html>

@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>测试 Title 字段功能</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f5f5f5;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .section {
+      margin-bottom: 30px;
+      padding: 20px;
+      border: 1px solid #e0e0e0;
+      border-radius: 6px;
+    }
+    
+    .section h3 {
+      color: #333;
+      margin-bottom: 15px;
+      border-bottom: 2px solid #007bff;
+      padding-bottom: 5px;
+    }
+    
+    .field-item {
+      margin-bottom: 15px;
+      padding: 10px;
+      background: #f8f9fa;
+      border-radius: 4px;
+    }
+    
+    .field-name {
+      font-family: 'Courier New', monospace;
+      color: #666;
+      font-size: 12px;
+      margin-bottom: 5px;
+    }
+    
+    .field-title {
+      font-weight: bold;
+      color: #007bff;
+      margin-bottom: 5px;
+    }
+    
+    .field-description {
+      color: #666;
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+    
+    .field-details {
+      font-size: 12px;
+      color: #888;
+    }
+    
+    .required {
+      color: #dc3545;
+      font-weight: bold;
+    }
+    
+    .optional {
+      color: #28a745;
+    }
+    
+    .btn {
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-right: 10px;
+      margin-bottom: 10px;
+    }
+    
+    .btn:hover {
+      background: #0056b3;
+    }
+    
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    
+    .stat-card {
+      background: #007bff;
+      color: white;
+      padding: 15px;
+      border-radius: 6px;
+      text-align: center;
+    }
+    
+    .stat-number {
+      font-size: 2em;
+      font-weight: bold;
+      display: block;
+    }
+    
+    .stat-label {
+      font-size: 0.9em;
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>JSON Schema Title 字段测试</h1>
+    <p>测试 convertSchemaToFields 函数是否正确解析 title 和 description 字段</p>
+    
+    <div class="controls">
+      <button class="btn" onclick="testExampleSchema()">测试示例 Schema</button>
+      <button class="btn" onclick="testDxmSchema()">测试 dxm.json</button>
+      <button class="btn" onclick="clearResults()">清空结果</button>
+    </div>
+    
+    <div class="stats" id="statsContainer" style="display: none;">
+      <div class="stat-card">
+        <span class="stat-number" id="totalFields">0</span>
+        <span class="stat-label">总字段数</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number" id="fieldsWithTitle">0</span>
+        <span class="stat-label">有 Title 的字段</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number" id="fieldsWithDescription">0</span>
+        <span class="stat-label">有 Description 的字段</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number" id="requiredFields">0</span>
+        <span class="stat-label">必填字段</span>
+      </div>
+    </div>
+    
+    <div id="resultsContainer"></div>
+  </div>
+
+  <!-- 引入映射器脚本 -->
+  <script src="js/schema-to-field-mapper-browser.js"></script>
+  <script>
+    // 示例 Schema
+    const exampleSchema = {
+      "$defs": {
+        "marketplace_id": {
+          "default": "ATVPDKIKX0DER",
+          "type": "string",
+          "enum": ["ATVPDKIKX0DER"],
+          "enumNames": ["Amazon.com"]
+        },
+        "language_tag": {
+          "default": "en_US",
+          "type": "string",
+          "enum": ["en_US"],
+          "enumNames": ["English (United States)"]
+        }
+      },
+      "required": ["item_name", "brand"],
+      "properties": {
+        "item_name": {
+          "title": "商品名称",
+          "description": "为商品提供一个面向客户的标题",
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["language_tag", "value"],
+            "properties": {
+              "value": {
+                "title": "商品名称值",
+                "description": "商品的具体名称",
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 200
+              },
+              "language_tag": {
+                "title": "语言标签",
+                "description": "内容的语言标识",
+                "$ref": "#/$defs/language_tag"
+              },
+              "marketplace_id": {
+                "title": "市场ID",
+                "description": "目标市场标识",
+                "$ref": "#/$defs/marketplace_id"
+              }
+            }
+          }
+        },
+        "brand": {
+          "title": "品牌名称",
+          "description": "商品的品牌信息，最多50个字符",
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["language_tag", "value"],
+            "properties": {
+              "value": {
+                "title": "品牌值",
+                "description": "品牌的具体名称",
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 100
+              },
+              "language_tag": {
+                "title": "语言标签",
+                "$ref": "#/$defs/language_tag"
+              }
+            }
+          }
+        }
+      }
+    };
+    
+    // 测试示例 Schema
+    function testExampleSchema() {
+      console.log('测试示例 Schema...');
+      const fields = convertSchemaToFields(exampleSchema);
+      displayResults(fields, '示例 Schema 解析结果');
+      updateStats(fields);
+    }
+    
+    // 测试 dxm.json
+    async function testDxmSchema() {
+      try {
+        console.log('加载 dxm.json...');
+        const response = await fetch('./dxm.json');
+        const schema = await response.json();
+        
+        console.log('解析 dxm.json...');
+        const fields = convertSchemaToFields(schema);
+        displayResults(fields, 'dxm.json 解析结果');
+        updateStats(fields);
+        
+      } catch (error) {
+        alert('加载 dxm.json 失败: ' + error.message);
+      }
+    }
+    
+    // 显示结果
+    function displayResults(fields, title) {
+      const container = document.getElementById('resultsContainer');
+      
+      let html = `<div class="section">
+        <h3>${title}</h3>
+      `;
+      
+      // 按字段路径分组
+      const groups = {};
+      fields.forEach(field => {
+        const rootField = field.name.split('.')[0];
+        if (!groups[rootField]) {
+          groups[rootField] = [];
+        }
+        groups[rootField].push(field);
+      });
+      
+      // 显示每个分组
+      Object.keys(groups).forEach(groupName => {
+        html += `<h4>${groupName}</h4>`;
+        
+        groups[groupName].forEach(field => {
+          html += `
+            <div class="field-item">
+              <div class="field-name">${field.name}</div>
+              ${field.title ? `<div class="field-title">📝 ${field.title}</div>` : ''}
+              ${field.description ? `<div class="field-description">💬 ${field.description}</div>` : ''}
+              <div class="field-details">
+                <span class="${field.required ? 'required' : 'optional'}">
+                  ${field.required ? '✅ 必填' : '⭕ 可选'}
+                </span>
+                | 类型: ${field.fieldType}
+                ${field.minLength !== undefined ? ` | 最小长度: ${field.minLength}` : ''}
+                ${field.maxLength !== undefined ? ` | 最大长度: ${field.maxLength}` : ''}
+                ${field.options ? ` | 选项: [${field.options.join(', ')}]` : ''}
+                ${field.tipsOptions ? ` | 预设: [${field.tipsOptions.join(', ')}]` : ''}
+              </div>
+            </div>
+          `;
+        });
+      });
+      
+      html += '</div>';
+      container.innerHTML = html;
+    }
+    
+    // 更新统计信息
+    function updateStats(fields) {
+      const stats = {
+        total: fields.length,
+        withTitle: fields.filter(f => f.title).length,
+        withDescription: fields.filter(f => f.description).length,
+        required: fields.filter(f => f.required).length
+      };
+      
+      document.getElementById('totalFields').textContent = stats.total;
+      document.getElementById('fieldsWithTitle').textContent = stats.withTitle;
+      document.getElementById('fieldsWithDescription').textContent = stats.withDescription;
+      document.getElementById('requiredFields').textContent = stats.required;
+      
+      document.getElementById('statsContainer').style.display = 'grid';
+      
+      console.log('统计信息:', stats);
+    }
+    
+    // 清空结果
+    function clearResults() {
+      document.getElementById('resultsContainer').innerHTML = '';
+      document.getElementById('statsContainer').style.display = 'none';
+    }
+    
+    // 页面加载完成后自动测试示例
+    window.addEventListener('load', function() {
+      testExampleSchema();
+    });
+  </script>
+</body>
+</html>

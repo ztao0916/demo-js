@@ -1,0 +1,7186 @@
+[
+  {
+    "name": "item_name",
+    "fieldType": "string",
+    "required": true
+  },
+  {
+    "name": "item_name.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "item_name.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "minLength": 0,
+    "maxLength": 200
+  },
+  {
+    "name": "item_name.0.language_tag",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "tipsOptions": [
+      "en_US"
+    ],
+    "optionLabels": {
+      "en_US": "English (United States)"
+    }
+  },
+  {
+    "name": "item_name.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "brand",
+    "fieldType": "string",
+    "required": true
+  },
+  {
+    "name": "brand.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "brand.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "minLength": 1,
+    "maxLength": 100
+  },
+  {
+    "name": "brand.0.language_tag",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "tipsOptions": [
+      "en_US"
+    ],
+    "optionLabels": {
+      "en_US": "English (United States)"
+    }
+  },
+  {
+    "name": "brand.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "externally_assigned_product_identifier",
+    "fieldType": "string"
+  },
+  {
+    "name": "externally_assigned_product_identifier.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "externally_assigned_product_identifier.0.type",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "options": [
+      "ean",
+      "gtin",
+      "upc"
+    ],
+    "optionLabels": {
+      "ean": "EAN",
+      "gtin": "GTIN",
+      "upc": "UPC"
+    }
+  },
+  {
+    "name": "externally_assigned_product_identifier.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "externally_assigned_product_identifier.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "merchant_suggested_asin",
+    "fieldType": "string"
+  },
+  {
+    "name": "merchant_suggested_asin.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "merchant_suggested_asin.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "minLength": 10,
+    "maxLength": 10,
+    "maxUtf8ByteLength": 40
+  },
+  {
+    "name": "merchant_suggested_asin.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "supplier_declared_has_product_identifier_exemption",
+    "fieldType": "string"
+  },
+  {
+    "name": "supplier_declared_has_product_identifier_exemption.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "supplier_declared_has_product_identifier_exemption.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "options": [
+      false,
+      true
+    ],
+    "optionLabels": {
+      "false": "No",
+      "true": "Yes"
+    }
+  },
+  {
+    "name": "supplier_declared_has_product_identifier_exemption.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "item_type_keyword",
+    "fieldType": "string",
+    "required": true
+  },
+  {
+    "name": "item_type_keyword.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "item_type_keyword.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "maxLength": 20090
+  },
+  {
+    "name": "item_type_keyword.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "package_level",
+    "fieldType": "string"
+  },
+  {
+    "name": "package_level.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "package_level.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "options": [
+      "case",
+      "pallet",
+      "unit"
+    ],
+    "optionLabels": {
+      "case": "Case",
+      "pallet": "Pallet",
+      "unit": "Unit"
+    }
+  },
+  {
+    "name": "package_level.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "package_contains_sku",
+    "fieldType": "string"
+  },
+  {
+    "name": "package_contains_sku.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "package_contains_sku.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "package_contains_sku.0.quantity",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "package_contains_sku.0.sku",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "minLength": 1,
+    "maxLength": 40,
+    "maxUtf8ByteLength": 40
+  },
+  {
+    "name": "age_gender_category",
+    "fieldType": "string"
+  },
+  {
+    "name": "age_gender_category.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "age_gender_category.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "maxLength": 2398
+  },
+  {
+    "name": "age_gender_category.0.language_tag",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "tipsOptions": [
+      "en_US"
+    ],
+    "optionLabels": {
+      "en_US": "English (United States)"
+    }
+  },
+  {
+    "name": "age_gender_category.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "model_number",
+    "fieldType": "string"
+  },
+  {
+    "name": "model_number.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "model_number.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "minLength": 0,
+    "maxLength": 40,
+    "maxUtf8ByteLength": 40
+  },
+  {
+    "name": "model_number.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "model_name",
+    "fieldType": "string"
+  },
+  {
+    "name": "model_name.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "model_name.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "minLength": 0,
+    "maxLength": 120
+  },
+  {
+    "name": "model_name.0.language_tag",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "tipsOptions": [
+      "en_US"
+    ],
+    "optionLabels": {
+      "en_US": "English (United States)"
+    }
+  },
+  {
+    "name": "model_name.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "manufacturer",
+    "fieldType": "string"
+  },
+  {
+    "name": "manufacturer.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "manufacturer.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "minLength": 0,
+    "maxLength": 100
+  },
+  {
+    "name": "manufacturer.0.language_tag",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "tipsOptions": [
+      "en_US"
+    ],
+    "optionLabels": {
+      "en_US": "English (United States)"
+    }
+  },
+  {
+    "name": "manufacturer.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "skip_offer",
+    "fieldType": "string"
+  },
+  {
+    "name": "skip_offer.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "skip_offer.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "options": [
+      false,
+      true
+    ],
+    "optionLabels": {
+      "false": "No",
+      "true": "Yes"
+    }
+  },
+  {
+    "name": "skip_offer.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "fulfillment_availability",
+    "fieldType": "string"
+  },
+  {
+    "name": "fulfillment_availability.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "fulfillment_availability.0.fulfillment_channel_code",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "options": [
+      "AMAZON_NA",
+      "DEFAULT"
+    ],
+    "optionLabels": {
+      "AMAZON_NA": "AMAZON_NA",
+      "DEFAULT": "DEFAULT"
+    }
+  },
+  {
+    "name": "fulfillment_availability.0.quantity",
+    "fieldType": "string",
+    "maxItems": 1
+  },
+  {
+    "name": "fulfillment_availability.0.lead_time_to_ship_max_days",
+    "fieldType": "string",
+    "maxItems": 1
+  },
+  {
+    "name": "fulfillment_availability.0.restock_date",
+    "fieldType": "string",
+    "maxItems": 1
+  },
+  {
+    "name": "fulfillment_availability.0.is_inventory_available",
+    "fieldType": "string",
+    "maxItems": 1,
+    "options": [
+      false,
+      true
+    ],
+    "optionLabels": {
+      "false": "Disabled",
+      "true": "Enabled"
+    }
+  },
+  {
+    "name": "map_policy",
+    "fieldType": "string"
+  },
+  {
+    "name": "map_policy.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "map_policy.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "options": [
+      "policy_1",
+      "policy_10",
+      "policy_11",
+      "policy_2",
+      "policy_3",
+      "policy_4",
+      "policy_5",
+      "policy_6",
+      "policy_7",
+      "policy_8",
+      "policy_9"
+    ],
+    "optionLabels": {
+      "policy_1": "Policy 1",
+      "policy_10": "Policy 10",
+      "policy_11": "Policy 11",
+      "policy_2": "Policy 2",
+      "policy_3": "Policy 3",
+      "policy_4": "Policy 4",
+      "policy_5": "Policy 5",
+      "policy_6": "Policy 6",
+      "policy_7": "Policy 7",
+      "policy_8": "Policy 8",
+      "policy_9": "Policy 9"
+    }
+  },
+  {
+    "name": "map_policy.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "purchasable_offer",
+    "fieldType": "string"
+  },
+  {
+    "name": "purchasable_offer.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "purchasable_offer.0.map_price",
+    "fieldType": "string",
+    "maxItems": 1
+  },
+  {
+    "name": "purchasable_offer.0.currency",
+    "fieldType": "string",
+    "maxItems": 1
+  },
+  {
+    "name": "purchasable_offer.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "purchasable_offer.0.our_price",
+    "fieldType": "string",
+    "maxItems": 1
+  },
+  {
+    "name": "purchasable_offer.0.automated_pricing_merchandising_rule_plan",
+    "fieldType": "string",
+    "maxItems": 1
+  },
+  {
+    "name": "purchasable_offer.0.minimum_seller_allowed_price",
+    "fieldType": "string",
+    "maxItems": 1
+  },
+  {
+    "name": "purchasable_offer.0.maximum_seller_allowed_price",
+    "fieldType": "string",
+    "maxItems": 1
+  },
+  {
+    "name": "purchasable_offer.0.discounted_price",
+    "fieldType": "string",
+    "maxItems": 1
+  },
+  {
+    "name": "purchasable_offer.0.start_at",
+    "fieldType": "string",
+    "maxItems": 1
+  },
+  {
+    "name": "purchasable_offer.0.end_at",
+    "fieldType": "string",
+    "maxItems": 1
+  },
+  {
+    "name": "purchasable_offer.0.audience",
+    "fieldType": "string",
+    "maxItems": 1,
+    "options": [
+      "ALL"
+    ],
+    "optionLabels": {
+      "ALL": "Sell on Amazon"
+    }
+  },
+  {
+    "name": "purchasable_offer.0.quantity_discount_plan",
+    "fieldType": "string",
+    "maxItems": 1
+  },
+  {
+    "name": "purchasable_offer.0.variable_weight_based_price",
+    "fieldType": "string",
+    "maxItems": 1
+  },
+  {
+    "name": "condition_type",
+    "fieldType": "string"
+  },
+  {
+    "name": "condition_type.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "condition_type.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "options": [
+      "club_club",
+      "collectible_acceptable",
+      "collectible_good",
+      "collectible_like_new",
+      "collectible_very_good",
+      "new_new",
+      "new_oem",
+      "new_open_box",
+      "refurbished_refurbished",
+      "used_acceptable",
+      "used_good",
+      "used_like_new",
+      "used_very_good"
+    ],
+    "optionLabels": {
+      "club_club": "Club",
+      "collectible_acceptable": "Collectible - Acceptable",
+      "collectible_good": "Collectible - Good",
+      "collectible_like_new": "Collectible - Like New",
+      "collectible_very_good": "Collectible - Very Good",
+      "new_new": "New",
+      "new_oem": "New - OEM",
+      "new_open_box": "New - Open Box",
+      "refurbished_refurbished": "Refurbished",
+      "used_acceptable": "Used - Acceptable",
+      "used_good": "Used - Good",
+      "used_like_new": "Used - Like New",
+      "used_very_good": "Used - Very Good"
+    }
+  },
+  {
+    "name": "condition_type.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "condition_note",
+    "fieldType": "string"
+  },
+  {
+    "name": "condition_note.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "condition_note.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "maxLength": 2204
+  },
+  {
+    "name": "condition_note.0.language_tag",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "tipsOptions": [
+      "en_US"
+    ],
+    "optionLabels": {
+      "en_US": "English (United States)"
+    }
+  },
+  {
+    "name": "condition_note.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "list_price",
+    "fieldType": "string"
+  },
+  {
+    "name": "list_price.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "list_price.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "maxLength": 20
+  },
+  {
+    "name": "list_price.0.currency",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "options": [
+      "USD"
+    ],
+    "optionLabels": {
+      "USD": "USD"
+    }
+  },
+  {
+    "name": "list_price.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "product_tax_code",
+    "fieldType": "string"
+  },
+  {
+    "name": "product_tax_code.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "product_tax_code.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "maxLength": 949
+  },
+  {
+    "name": "product_tax_code.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "merchant_release_date",
+    "fieldType": "string"
+  },
+  {
+    "name": "merchant_release_date.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "merchant_release_date.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "merchant_release_date.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "merchant_shipping_group",
+    "fieldType": "string"
+  },
+  {
+    "name": "merchant_shipping_group.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "merchant_shipping_group.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "maxLength": 100
+  },
+  {
+    "name": "merchant_shipping_group.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "max_order_quantity",
+    "fieldType": "string"
+  },
+  {
+    "name": "max_order_quantity.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "max_order_quantity.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "max_order_quantity.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "gift_options",
+    "fieldType": "string"
+  },
+  {
+    "name": "gift_options.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "gift_options.0.can_be_messaged",
+    "fieldType": "string",
+    "maxItems": 1,
+    "options": [
+      false,
+      true
+    ],
+    "optionLabels": {
+      "false": "No",
+      "true": "Yes"
+    }
+  },
+  {
+    "name": "gift_options.0.can_be_wrapped",
+    "fieldType": "string",
+    "maxItems": 1,
+    "options": [
+      false,
+      true
+    ],
+    "optionLabels": {
+      "false": "No",
+      "true": "Yes"
+    }
+  },
+  {
+    "name": "gift_options.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "main_offer_image_locator",
+    "fieldType": "string"
+  },
+  {
+    "name": "main_offer_image_locator.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "main_offer_image_locator.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "main_offer_image_locator.0.media_location",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "other_offer_image_locator_1",
+    "fieldType": "string"
+  },
+  {
+    "name": "other_offer_image_locator_1.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "other_offer_image_locator_1.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "other_offer_image_locator_1.0.media_location",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "other_offer_image_locator_2",
+    "fieldType": "string"
+  },
+  {
+    "name": "other_offer_image_locator_2.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "other_offer_image_locator_2.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "other_offer_image_locator_2.0.media_location",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "other_offer_image_locator_3",
+    "fieldType": "string"
+  },
+  {
+    "name": "other_offer_image_locator_3.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "other_offer_image_locator_3.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "other_offer_image_locator_3.0.media_location",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "other_offer_image_locator_4",
+    "fieldType": "string"
+  },
+  {
+    "name": "other_offer_image_locator_4.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "other_offer_image_locator_4.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "other_offer_image_locator_4.0.media_location",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "other_offer_image_locator_5",
+    "fieldType": "string"
+  },
+  {
+    "name": "other_offer_image_locator_5.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "other_offer_image_locator_5.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "other_offer_image_locator_5.0.media_location",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "supplemental_condition_information",
+    "fieldType": "string"
+  },
+  {
+    "name": "supplemental_condition_information.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "supplemental_condition_information.0.accessories",
+    "fieldType": "string",
+    "maxItems": 1,
+    "options": [
+      "generic",
+      "not_applicable",
+      "not_included",
+      "oem"
+    ],
+    "optionLabels": {
+      "generic": "Generic",
+      "not_applicable": "Not Applicable",
+      "not_included": "Not Included",
+      "oem": "OEM"
+    }
+  },
+  {
+    "name": "supplemental_condition_information.0.battery_life_percentage",
+    "fieldType": "string",
+    "maxItems": 1,
+    "options": [
+      "equal_to_or_less_than_60_percent",
+      "greater_than_60_percent",
+      "greater_than_70_percent",
+      "greater_than_80_percent",
+      "greater_than_90_percent",
+      "no_battery"
+    ],
+    "optionLabels": {
+      "equal_to_or_less_than_60_percent": "=<60%",
+      "greater_than_60_percent": ">60%",
+      "greater_than_70_percent": ">70%",
+      "greater_than_80_percent": ">80%",
+      "greater_than_90_percent": ">90%",
+      "no_battery": "No Battery"
+    }
+  },
+  {
+    "name": "supplemental_condition_information.0.cosmetic",
+    "fieldType": "string",
+    "maxItems": 1,
+    "options": [
+      "almost_no_sign_of_use",
+      "highly_visible_sign_of_use",
+      "light_sign_of_use",
+      "moderately_visible_sign_of_use",
+      "no_sign_of_use",
+      "unknown"
+    ],
+    "optionLabels": {
+      "almost_no_sign_of_use": "Almost No Sign Of Use",
+      "highly_visible_sign_of_use": "Highly Visible Sign Of Use",
+      "light_sign_of_use": "Light Sign Of Use",
+      "moderately_visible_sign_of_use": "Moderately Visible Sign Of Use",
+      "no_sign_of_use": "No Sign Of Use",
+      "unknown": "Unknown"
+    }
+  },
+  {
+    "name": "supplemental_condition_information.0.features",
+    "fieldType": "string",
+    "maxItems": 1
+  },
+  {
+    "name": "supplemental_condition_information.0.functional_condition",
+    "fieldType": "string",
+    "maxItems": 1,
+    "options": [
+      "fully_functional",
+      "partly_functional",
+      "unknown"
+    ],
+    "optionLabels": {
+      "fully_functional": "Fully Functional",
+      "partly_functional": "Partly Functional",
+      "unknown": "Unknown"
+    }
+  },
+  {
+    "name": "supplemental_condition_information.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "supplemental_condition_information.0.packaging",
+    "fieldType": "string",
+    "maxItems": 1,
+    "options": [
+      "amazon",
+      "generic",
+      "not_applicable",
+      "oem_original",
+      "oem_pre_owned"
+    ],
+    "optionLabels": {
+      "amazon": "Amazon",
+      "generic": "Generic",
+      "not_applicable": "Not Applicable",
+      "oem_original": "OEM Original",
+      "oem_pre_owned": "OEM Pre-Owned"
+    }
+  },
+  {
+    "name": "supplemental_condition_information.0.source_type",
+    "fieldType": "string",
+    "maxItems": 1,
+    "options": [
+      "as_is",
+      "cpo",
+      "no_data",
+      "refurbished_amazon",
+      "refurbished_oem",
+      "refurbished_third_party",
+      "returned_never_used",
+      "returned_used"
+    ],
+    "optionLabels": {
+      "as_is": "As Is",
+      "cpo": "CPO",
+      "no_data": "No Data",
+      "refurbished_amazon": "Refurbished Amazon",
+      "refurbished_oem": "Refurbished OEM",
+      "refurbished_third_party": "Refurbished Third Party",
+      "returned_never_used": "Returned Never Used",
+      "returned_used": "Returned Used"
+    }
+  },
+  {
+    "name": "handmade_classification",
+    "fieldType": "string"
+  },
+  {
+    "name": "handmade_classification.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "handmade_classification.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "options": [
+      "hand_altered",
+      "hand_designed",
+      "handcrafted",
+      "repurposed",
+      "upcycled"
+    ],
+    "optionLabels": {
+      "hand_altered": "Hand-Altered",
+      "hand_designed": "Hand-Designed",
+      "handcrafted": "Handcrafted",
+      "repurposed": "Repurposed",
+      "upcycled": "Upcycled"
+    }
+  },
+  {
+    "name": "handmade_classification.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "product_description",
+    "fieldType": "string",
+    "required": true
+  },
+  {
+    "name": "product_description.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "product_description.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "maxUtf8ByteLength": 10000
+  },
+  {
+    "name": "product_description.0.language_tag",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "tipsOptions": [
+      "en_US"
+    ],
+    "optionLabels": {
+      "en_US": "English (United States)"
+    }
+  },
+  {
+    "name": "product_description.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "bullet_point",
+    "fieldType": "string",
+    "required": true
+  },
+  {
+    "name": "bullet_point.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "bullet_point.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "minLength": 0,
+    "maxLength": 700
+  },
+  {
+    "name": "bullet_point.0.language_tag",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "tipsOptions": [
+      "en_US"
+    ],
+    "optionLabels": {
+      "en_US": "English (United States)"
+    }
+  },
+  {
+    "name": "bullet_point.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "generic_keyword",
+    "fieldType": "string"
+  },
+  {
+    "name": "generic_keyword.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "generic_keyword.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "minLength": 0,
+    "maxLength": 500,
+    "maxUtf8ByteLength": 2000
+  },
+  {
+    "name": "generic_keyword.0.language_tag",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "tipsOptions": [
+      "en_US"
+    ],
+    "optionLabels": {
+      "en_US": "English (United States)"
+    }
+  },
+  {
+    "name": "generic_keyword.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "style",
+    "fieldType": "string"
+  },
+  {
+    "name": "style.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "style.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "maxLength": 2200,
+    "maxUtf8ByteLength": 2000
+  },
+  {
+    "name": "style.0.language_tag",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "tipsOptions": [
+      "en_US"
+    ],
+    "optionLabels": {
+      "en_US": "English (United States)"
+    }
+  },
+  {
+    "name": "style.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "material",
+    "fieldType": "string"
+  },
+  {
+    "name": "material.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "material.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "maxUtf8ByteLength": 2000
+  },
+  {
+    "name": "material.0.language_tag",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "tipsOptions": [
+      "en_US"
+    ],
+    "optionLabels": {
+      "en_US": "English (United States)"
+    }
+  },
+  {
+    "name": "material.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "fabric_type",
+    "fieldType": "string"
+  },
+  {
+    "name": "fabric_type.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "fabric_type.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "maxLength": 2311
+  },
+  {
+    "name": "fabric_type.0.language_tag",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "tipsOptions": [
+      "en_US"
+    ],
+    "optionLabels": {
+      "en_US": "English (United States)"
+    }
+  },
+  {
+    "name": "fabric_type.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "number_of_items",
+    "fieldType": "string"
+  },
+  {
+    "name": "number_of_items.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "number_of_items.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "number_of_items.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "item_package_quantity",
+    "fieldType": "string"
+  },
+  {
+    "name": "item_package_quantity.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "item_package_quantity.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "item_package_quantity.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "color",
+    "fieldType": "string"
+  },
+  {
+    "name": "color.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "color.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "minLength": 0,
+    "maxLength": 50
+  },
+  {
+    "name": "color.0.language_tag",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "tipsOptions": [
+      "en_US"
+    ],
+    "optionLabels": {
+      "en_US": "English (United States)"
+    }
+  },
+  {
+    "name": "color.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "size",
+    "fieldType": "string"
+  },
+  {
+    "name": "size.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "size.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "maxLength": 50,
+    "maxUtf8ByteLength": 2000
+  },
+  {
+    "name": "size.0.language_tag",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "tipsOptions": [
+      "en_US"
+    ],
+    "optionLabels": {
+      "en_US": "English (United States)"
+    }
+  },
+  {
+    "name": "size.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "part_number",
+    "fieldType": "string"
+  },
+  {
+    "name": "part_number.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "part_number.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "minLength": 0,
+    "maxLength": 40
+  },
+  {
+    "name": "part_number.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "item_shape",
+    "fieldType": "string"
+  },
+  {
+    "name": "item_shape.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "item_shape.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "maxUtf8ByteLength": 2000
+  },
+  {
+    "name": "item_shape.0.language_tag",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "tipsOptions": [
+      "en_US"
+    ],
+    "optionLabels": {
+      "en_US": "English (United States)"
+    }
+  },
+  {
+    "name": "item_shape.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "fit_type",
+    "fieldType": "string"
+  },
+  {
+    "name": "fit_type.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "fit_type.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "maxLength": 2201
+  },
+  {
+    "name": "fit_type.0.language_tag",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "tipsOptions": [
+      "en_US"
+    ],
+    "optionLabels": {
+      "en_US": "English (United States)"
+    }
+  },
+  {
+    "name": "fit_type.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "oe_manufacturer",
+    "fieldType": "string"
+  },
+  {
+    "name": "oe_manufacturer.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "oe_manufacturer.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "maxLength": 2200,
+    "maxUtf8ByteLength": 2000
+  },
+  {
+    "name": "oe_manufacturer.0.language_tag",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "tipsOptions": [
+      "en_US"
+    ],
+    "optionLabels": {
+      "en_US": "English (United States)"
+    }
+  },
+  {
+    "name": "oe_manufacturer.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "oem_equivalent_part_number",
+    "fieldType": "string"
+  },
+  {
+    "name": "oem_equivalent_part_number.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "oem_equivalent_part_number.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "maxLength": 2200,
+    "maxUtf8ByteLength": 2000
+  },
+  {
+    "name": "oem_equivalent_part_number.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "configuration",
+    "fieldType": "string"
+  },
+  {
+    "name": "configuration.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "configuration.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "maxLength": 3261
+  },
+  {
+    "name": "configuration.0.language_tag",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "tipsOptions": [
+      "en_US"
+    ],
+    "optionLabels": {
+      "en_US": "English (United States)"
+    }
+  },
+  {
+    "name": "configuration.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "auto_part_position",
+    "fieldType": "string"
+  },
+  {
+    "name": "auto_part_position.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "auto_part_position.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "options": [
+      "bottom",
+      "bottom_left",
+      "bottom_right",
+      "center",
+      "driveline",
+      "front",
+      "front_center",
+      "front_inner",
+      "front_inside",
+      "front_left",
+      "front_left_inner",
+      "front_left_lower",
+      "front_left_outer",
+      "front_left_upper",
+      "front_lower",
+      "front_outer",
+      "front_outside",
+      "front_right",
+      "front_right_inner",
+      "front_right_lower",
+      "front_right_outer",
+      "front_right_upper",
+      "front_upper",
+      "inner",
+      "inside",
+      "inside_center",
+      "intermediate",
+      "left",
+      "left_center",
+      "left_inner",
+      "left_inside",
+      "left_intermediate",
+      "left_lower",
+      "left_outer",
+      "left_outside",
+      "left_upper",
+      "lower",
+      "outer",
+      "outside",
+      "rear",
+      "rear_center",
+      "rear_inner",
+      "rear_inside",
+      "rear_left",
+      "rear_left_inner",
+      "rear_left_lower",
+      "rear_left_outer",
+      "rear_left_upper",
+      "rear_lower",
+      "rear_outer",
+      "rear_outside",
+      "rear_right",
+      "rear_right_inner",
+      "rear_right_lower",
+      "rear_right_outer",
+      "rear_right_upper",
+      "rear_upper",
+      "right",
+      "right_center",
+      "right_inner",
+      "right_inside",
+      "right_intermediate",
+      "right_lower",
+      "right_outer",
+      "right_outside",
+      "right_upper",
+      "top",
+      "top_left",
+      "top_right",
+      "unknown",
+      "upper"
+    ],
+    "optionLabels": {
+      "bottom": "Bottom",
+      "bottom_left": "Bottom Left",
+      "bottom_right": "Bottom Right",
+      "center": "Center",
+      "driveline": "Driveline",
+      "front": "Front",
+      "front_center": "Front Center",
+      "front_inner": "Front Inner",
+      "front_inside": "Front Inside",
+      "front_left": "Front Left",
+      "front_left_inner": "Front Left Inner",
+      "front_left_lower": "Front Left Lower",
+      "front_left_outer": "Front Left Outer",
+      "front_left_upper": "Front Left Upper",
+      "front_lower": "Front Lower",
+      "front_outer": "Front Outer",
+      "front_outside": "Front Outside",
+      "front_right": "Front Right",
+      "front_right_inner": "Front Right Inner",
+      "front_right_lower": "Front Right Lower",
+      "front_right_outer": "Front Right Outer",
+      "front_right_upper": "Front Right Upper",
+      "front_upper": "Front Upper",
+      "inner": "Inner",
+      "inside": "Inside",
+      "inside_center": "Inside Center",
+      "intermediate": "Intermediate",
+      "left": "Left",
+      "left_center": "Left Center",
+      "left_inner": "Left Inner",
+      "left_inside": "Left Inside",
+      "left_intermediate": "Left Intermediate",
+      "left_lower": "Left Lower",
+      "left_outer": "Left Outer",
+      "left_outside": "Left Outside",
+      "left_upper": "Left Upper",
+      "lower": "Lower",
+      "outer": "Outer",
+      "outside": "Outside",
+      "rear": "Rear",
+      "rear_center": "Rear Center",
+      "rear_inner": "Rear Inner",
+      "rear_inside": "Rear Inside",
+      "rear_left": "Rear Left",
+      "rear_left_inner": "Rear Left Inner",
+      "rear_left_lower": "Rear Left Lower",
+      "rear_left_outer": "Rear Left Outer",
+      "rear_left_upper": "Rear Left Upper",
+      "rear_lower": "Rear Lower",
+      "rear_outer": "Rear Outer",
+      "rear_outside": "Rear Outside",
+      "rear_right": "Rear Right",
+      "rear_right_inner": "Rear Right Inner",
+      "rear_right_lower": "Rear Right Lower",
+      "rear_right_outer": "Rear Right Outer",
+      "rear_right_upper": "Rear Right Upper",
+      "rear_upper": "Rear Upper",
+      "right": "Right",
+      "right_center": "Right Center",
+      "right_inner": "Right Inner",
+      "right_inside": "Right Inside",
+      "right_intermediate": "Right Intermediate",
+      "right_lower": "Right Lower",
+      "right_outer": "Right Outer",
+      "right_outside": "Right Outside",
+      "right_upper": "Right Upper",
+      "top": "Top",
+      "top_left": "Top Left",
+      "top_right": "Top Right",
+      "unknown": "Unknown",
+      "upper": "Upper"
+    }
+  },
+  {
+    "name": "auto_part_position.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "compatibility_options",
+    "fieldType": "string"
+  },
+  {
+    "name": "compatibility_options.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "compatibility_options.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "maxLength": 1961
+  },
+  {
+    "name": "compatibility_options.0.language_tag",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "tipsOptions": [
+      "en_US"
+    ],
+    "optionLabels": {
+      "en_US": "English (United States)"
+    }
+  },
+  {
+    "name": "compatibility_options.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "part_type_id",
+    "fieldType": "string"
+  },
+  {
+    "name": "part_type_id.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "part_type_id.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "maxLength": 734
+  },
+  {
+    "name": "part_type_id.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "capacity",
+    "fieldType": "string"
+  },
+  {
+    "name": "capacity.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "capacity.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "maxLength": 5000
+  },
+  {
+    "name": "capacity.0.unit",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "options": [
+      "centiliters",
+      "centiliters_per_second",
+      "cubic_centimeters",
+      "cubic_feet",
+      "cubic_inches",
+      "cubic_meters",
+      "cubic_yards",
+      "cups",
+      "deciliters",
+      "fluid_ounces",
+      "gallons_per_day",
+      "gallons",
+      "grams",
+      "hundredths_pounds",
+      "imperial_gallons",
+      "kilograms",
+      "liters_per_day",
+      "liters_per_second",
+      "liters",
+      "load",
+      "liters_per_minute",
+      "microliters",
+      "microliters_per_minute",
+      "microliters_per_second",
+      "milligrams",
+      "milliliters",
+      "milliliters_per_second",
+      "milliliters_per_minute",
+      "nanoliters",
+      "nanoliters_per_minute",
+      "nanoliters_per_second",
+      "ounces",
+      "picoliters",
+      "picoliters_per_minute",
+      "picoliters_per_second",
+      "pints",
+      "pounds",
+      "quarts",
+      "tons"
+    ],
+    "optionLabels": {
+      "centiliters": "Centiliters",
+      "centiliters_per_second": "Centiliters per Second",
+      "cubic_centimeters": "Cubic Centimeters",
+      "cubic_feet": "Cubic Feet",
+      "cubic_inches": "Cubic Inches",
+      "cubic_meters": "Cubic Meters",
+      "cubic_yards": "Cubic Yards",
+      "cups": "Cups",
+      "deciliters": "Deciliters",
+      "fluid_ounces": "Fluid Ounces",
+      "gallons_per_day": "G/day",
+      "gallons": "Gallons",
+      "grams": "Grams",
+      "hundredths_pounds": "Hundredths Pounds",
+      "imperial_gallons": "Imperial Gallons",
+      "kilograms": "Kilograms",
+      "liters_per_day": "L/day",
+      "liters_per_second": "L/sec",
+      "liters": "Liters",
+      "load": "load",
+      "liters_per_minute": "LPM",
+      "microliters": "Microliters",
+      "microliters_per_minute": "Microliters per Minute",
+      "microliters_per_second": "Microliters per Second",
+      "milligrams": "Milligrams",
+      "milliliters": "Milliliters",
+      "milliliters_per_second": "Milliliters per Second",
+      "milliliters_per_minute": "ml/min",
+      "nanoliters": "Nanoliters",
+      "nanoliters_per_minute": "Nanoliters per Minute",
+      "nanoliters_per_second": "Nanoliters per Second",
+      "ounces": "ounces",
+      "picoliters": "Picoliters",
+      "picoliters_per_minute": "Picoliters per Minute",
+      "picoliters_per_second": "Picoliters per Second",
+      "pints": "Pints",
+      "pounds": "Pounds",
+      "quarts": "Quarts",
+      "tons": "Tons"
+    }
+  },
+  {
+    "name": "capacity.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "is_assembly_required",
+    "fieldType": "string"
+  },
+  {
+    "name": "is_assembly_required.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "is_assembly_required.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "options": [
+      false,
+      true
+    ],
+    "optionLabels": {
+      "false": "No",
+      "true": "Yes"
+    }
+  },
+  {
+    "name": "is_assembly_required.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "lens",
+    "fieldType": "string"
+  },
+  {
+    "name": "lens.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "lens.0.color",
+    "fieldType": "string",
+    "maxItems": 1
+  },
+  {
+    "name": "lens.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "item_display_dimensions",
+    "fieldType": "string"
+  },
+  {
+    "name": "item_display_dimensions.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "item_display_dimensions.0.depth",
+    "fieldType": "string",
+    "maxItems": 1
+  },
+  {
+    "name": "item_display_dimensions.0.diameter",
+    "fieldType": "string",
+    "maxItems": 1
+  },
+  {
+    "name": "item_display_dimensions.0.height",
+    "fieldType": "string",
+    "maxItems": 1
+  },
+  {
+    "name": "item_display_dimensions.0.length",
+    "fieldType": "string",
+    "maxItems": 1
+  },
+  {
+    "name": "item_display_dimensions.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "item_display_dimensions.0.width",
+    "fieldType": "string",
+    "maxItems": 1
+  },
+  {
+    "name": "flavor",
+    "fieldType": "string"
+  },
+  {
+    "name": "flavor.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "flavor.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "maxLength": 2200
+  },
+  {
+    "name": "flavor.0.language_tag",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "tipsOptions": [
+      "en_US"
+    ],
+    "optionLabels": {
+      "en_US": "English (United States)"
+    }
+  },
+  {
+    "name": "flavor.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "connectivity_technology",
+    "fieldType": "string"
+  },
+  {
+    "name": "connectivity_technology.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "connectivity_technology.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "maxUtf8ByteLength": 2000
+  },
+  {
+    "name": "connectivity_technology.0.language_tag",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "tipsOptions": [
+      "en_US"
+    ],
+    "optionLabels": {
+      "en_US": "English (United States)"
+    }
+  },
+  {
+    "name": "connectivity_technology.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "volume_capacity_name",
+    "fieldType": "string"
+  },
+  {
+    "name": "volume_capacity_name.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "volume_capacity_name.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "maxLength": 2200
+  },
+  {
+    "name": "volume_capacity_name.0.unit",
+    "fieldType": "string",
+    "maxItems": 1,
+    "options": [
+      "thirty_seconds_inches",
+      "amperes_per_watts",
+      "accelerated_reader",
+      "adult_mx",
+      "adult_uk",
+      "adult_us",
+      "afghan_afghani",
+      "albanian_lek",
+      "algerian_dinar",
+      "amp_hours",
+      "amps",
+      "ampules",
+      "angolan_kwanza",
+      "angstrom",
+      "arc_sec",
+      "arc_minute",
+      "argentine_peso",
+      "armenian_dram",
+      "aruban_florin",
+      "assistant",
+      "athens_reading_level",
+      "atmosphere",
+      "attofarad",
+      "australian_dollars",
+      "austrian_schillings",
+      "azerbaijani_manat",
+      "baby_boys_us",
+      "baby_girls_us",
+      "bahamian_dollar",
+      "bahraini_dinar",
+      "bangladeshi_taka",
+      "bante",
+      "food_bars",
+      "barbados_dollar",
+      "barcol",
+      "bars",
+      "belarusian_ruble",
+      "belgian_francs",
+      "belize_dollar",
+      "bermudian_dollar",
+      "bhutanese_ngultrum",
+      "big_boys_us",
+      "big_child_us",
+      "big_girls_us",
+      "bits",
+      "bits_per_second",
+      "boliviano",
+      "botswana_pula",
+      "boys_us",
+      "brazilian_real",
+      "brinnell",
+      "brinell",
+      "btus",
+      "brunei_dollar",
+      "btu_per_hour_per_foot_per_fahrenheit",
+      "bulgarian_lev",
+      "burundian_franc",
+      "bytes",
+      "bytes_per_second",
+      "canadian_dollars",
+      "calls",
+      "calories",
+      "cambodian_riel",
+      "candela",
+      "candela_per_square_meter",
+      "cape_verde_escudo",
+      "capsules",
+      "carats",
+      "cayman_islands_dollar",
+      "center_beam_candle_power",
+      "cubic_centimeters_per_minute",
+      "cubic_centimeters_per_second",
+      "centifarad",
+      "centiliters",
+      "centiliters_per_second",
+      "centimeter_kilograms",
+      "centimeters",
+      "centimeters_mercury",
+      "centimeters_water",
+      "centimeters_per_second",
+      "centimeters_per_second_squared",
+      "centimeters_squared",
+      "central_african_cfa_franc",
+      "cfp_franc",
+      "cubic_feet_per_hour",
+      "chapters",
+      "characters_per_inch",
+      "child_au",
+      "child_mx",
+      "child_uk",
+      "chilean_peso",
+      "chinese_yuan",
+      "cubic_inches_per_minute",
+      "cubic_meters_per_hour",
+      "co",
+      "colombian_peso",
+      "comoro_franc",
+      "congolese_franc",
+      "consulting",
+      "convertible_mark",
+      "costa_rican_colon",
+      "candle_power",
+      "centipoise",
+      "croatian_kuna",
+      "centistokes",
+      "cttw",
+      "cuban_convertible_peso",
+      "cuban_peso",
+      "cubic_centimeters",
+      "cubic_feet",
+      "cubic_feet_per_minute",
+      "cubic_feet_per_minute_per_watt",
+      "cubic_feet_per_second",
+      "cubic_inches",
+      "cubic_meters",
+      "cubic_meters_per_minute",
+      "cubic_meters_per_second",
+      "cubic_yards",
+      "cups",
+      "cycles",
+      "cycles_per_gallon",
+      "cycles_per_liter",
+      "czech_koruna",
+      "daltons",
+      "danish_krone",
+      "days",
+      "decibels",
+      "decibel_volt_per_pascal",
+      "decibel_volt_per_micro_bar",
+      "decafarad",
+      "decifarad",
+      "deciliters",
+      "decimeters",
+      "degrees_per_second",
+      "degrees",
+      "degrees_balling",
+      "degrees_baume",
+      "degrees_brix",
+      "degrees_celsius",
+      "degrees_fahrenheit",
+      "degrees_ochsle",
+      "degrees_per_second_squared",
+      "german_mark",
+      "deputy",
+      "din",
+      "diopters",
+      "djiboutian_franc",
+      "dominican_peso",
+      "dots",
+      "dots_per_inch",
+      "drams",
+      "drp_score",
+      "dwt",
+      "dyne_centimeters",
+      "east_caribbean_dollar",
+      "egyptian_pound",
+      "emails",
+      "eritrean_nakfa",
+      "ethiopian_birr",
+      "euro",
+      "exafarad",
+      "f_stop",
+      "falkland_islands_pound",
+      "farad",
+      "feet",
+      "feet_per_second",
+      "feet_per_second_squared",
+      "femtofarad",
+      "femtoseconds",
+      "fiji_dollar",
+      "finnish_markka",
+      "fluid_ounces",
+      "foot_pounds",
+      "feet_per_minute",
+      "frames_per_second",
+      "fr_school_grade",
+      "french_francs",
+      "foot_ounces",
+      "gravity",
+      "gallons_per_day",
+      "grams_per_liter",
+      "gallons",
+      "gallons_per_flush",
+      "gallons_per_hour",
+      "gallons_per_minute",
+      "gambian_dalasi",
+      "gauge",
+      "GB",
+      "uk_pounds",
+      "georgian_lari",
+      "ghanaian_cedi",
+      "GHz",
+      "gibraltar_pound",
+      "giga_samples_per_second",
+      "gigabits_per_second",
+      "gigabytes_per_hour",
+      "gigabytes_per_second",
+      "gigafarad",
+      "gigaohms",
+      "gigapascals",
+      "girls_us",
+      "us_school_grade",
+      "gram_meters",
+      "grams",
+      "grams_per_100_kilometers",
+      "grams_per_cubic_centimeter",
+      "grams_per_kilometer",
+      "grams_per_milliliter",
+      "grams_per_minute",
+      "grams_per_square_meter",
+      "greek_drachma",
+      "guatemalan_quetzal",
+      "guinean_franc",
+      "guyanese_dollar",
+      "henry",
+      "haitian_gourde",
+      "hectofarad",
+      "honduran_lempira",
+      "hong_kong_dollar",
+      "hour",
+      "hours",
+      "hours_per_gallon",
+      "hours_per_liter",
+      "horsepower",
+      "hectopascal",
+      "hsl",
+      "hsv",
+      "hundredths_pounds",
+      "hundredths_inches",
+      "hungarian_forint",
+      "hertz",
+      "icelandic_krona",
+      "images_per_minute",
+      "imperial_gallons",
+      "inches_mercury",
+      "inches_per_inches_degrees_fahrenheit",
+      "inch_ounces",
+      "inch_pounds",
+      "inches",
+      "inches_water",
+      "inches_per_second",
+      "inches_per_second_squared",
+      "inches_squared",
+      "indonesian_rupiah",
+      "infant_uk",
+      "infant_us",
+      "indian_rupee",
+      "iranian_rial",
+      "iraqi_dinar",
+      "irla_score",
+      "iso",
+      "israeli_new_shekel",
+      "italian_lira",
+      "jamaican_dollar",
+      "jordanian_dinar",
+      "joules",
+      "japanese_yen",
+      "juniors_us",
+      "kazakhstani_tenge",
+      "KB",
+      "Kbaud",
+      "kilobits_per_second",
+      "kilobytes_per_second",
+      "kelvin",
+      "kenyan_shilling",
+      "kilohenry",
+      "KHz",
+      "kilo_samples_per_second",
+      "kiloamps",
+      "kilocalories",
+      "kilodaltons",
+      "kilofarad",
+      "kilogram_centimeters",
+      "kilogram_force_meter",
+      "kilogram_meters",
+      "kilograms",
+      "kilograms_per_cubic_meter",
+      "kilograms_per_liter",
+      "kilograms_per_millimeter",
+      "kilograms_per_square_centimeter",
+      "kilojoules",
+      "kilometer",
+      "kilometers",
+      "kilometers_per_hour",
+      "kilonewton_meters",
+      "kilonewtons",
+      "kiloohms",
+      "kilopixel",
+      "kilovolts",
+      "kilowatt_hours",
+      "kilowatt_hours_per_100_cycles",
+      "kilowatt_hours_per_1000_hours",
+      "kilowatt_hours_per_year",
+      "kilowatts",
+      "knoop",
+      "kilopascal",
+      "kips_per_square_inch",
+      "kuwaiti_dinar",
+      "kyrgyzstani_som",
+      "liters_per_day",
+      "liters_per_second",
+      "liters_per_year",
+      "lao_kip",
+      "latvian_lats",
+      "layers",
+      "lebanese_pound",
+      "lesotho_loti",
+      "levels",
+      "lexile",
+      "lexile_code",
+      "lexile_number",
+      "liberian_dollar",
+      "libyan_dinar",
+      "lines",
+      "lines_per_inch",
+      "links_per_foot",
+      "links_per_inch",
+      "liters",
+      "liters_per_100_kilometers",
+      "liters_per_flush",
+      "lithuanian_litas",
+      "little_boys_us",
+      "little_child_us",
+      "little_girls_us",
+      "lumen",
+      "load",
+      "liters_per_hour",
+      "liters_per_minute",
+      "lux",
+      "luxembourg_franc",
+      "meters_per_meters_kelvin",
+      "macanese_pataca",
+      "macedonian_denar",
+      "malagasy_ariary",
+      "malawian_kwacha",
+      "malaysian_ringgit",
+      "maldivian_rufiyaa",
+      "mauritanian_ouguiya",
+      "mauritian_rupee",
+      "MB",
+      "megabits",
+      "mega_samples_per_second",
+      "megabits_per_second",
+      "megabytes_per_hour",
+      "megabytes_per_second",
+      "megafarad",
+      "megaohms",
+      "megapascals",
+      "mens_au",
+      "mens_uk",
+      "mens_us",
+      "mesh_count_per_square_inch",
+      "messages",
+      "meter",
+      "meters",
+      "meters_per_second",
+      "meters_per_second_squared",
+      "metric_tons_per_hectare",
+      "mexican_peso",
+      "millihenry",
+      "MHz",
+      "microamps",
+      "microcandela",
+      "microfarad",
+      "micrograms",
+      "microhenry",
+      "microhertz",
+      "microliters",
+      "microliters_per_minute",
+      "microliters_per_second",
+      "micrometer",
+      "micron",
+      "micronewton_meters",
+      "microohms",
+      "microradian",
+      "microseconds",
+      "microvolts",
+      "microwatts",
+      "mile",
+      "miles",
+      "miles_per_hour",
+      "milliamp_hours",
+      "milliampere_hour",
+      "milliampere_second",
+      "milliamps",
+      "millibars",
+      "millicandela",
+      "millifarad",
+      "milligrams",
+      "millihertz",
+      "milliliters",
+      "milliliters_per_second",
+      "millimeters",
+      "millimeters_water",
+      "millimeters_per_second",
+      "millimeters_water_per_square_centimeter",
+      "millinewton_meters",
+      "milliohms",
+      "milliradian",
+      "milliseconds",
+      "millivolts",
+      "milliwatts",
+      "milliwatts_per_centimeters_squared",
+      "mils",
+      "minute",
+      "minutes",
+      "minutes_per_liter",
+      "milliliters_per_minute",
+      "millimeters_mercury",
+      "mohs",
+      "moldovan_leu",
+      "mongolian_togrog",
+      "months",
+      "moroccan_dirham",
+      "mozambican_metical",
+      "megapixels",
+      "mean_spherical_candle_power",
+      "mt_s",
+      "millivolts_per_gravity",
+      "millivolts_per_pascals",
+      "millivolts_per_pounds_per_square_inch",
+      "myanma_kyat",
+      "namibian_dollar",
+      "nanoamps",
+      "nanofarad",
+      "nanoliters",
+      "nanoliters_per_minute",
+      "nanoliters_per_second",
+      "nanometer",
+      "nanoohms",
+      "nanoseconds",
+      "nanovolts",
+      "nanowatts",
+      "nepalese_rupee",
+      "netherlands_antillean_guilder",
+      "new_taiwan_dollar",
+      "new_zealand_dollar",
+      "newton_centimeters",
+      "newton_meters",
+      "newton_millimeters",
+      "newtons",
+      "newtons_per_square_millimeter",
+      "nanohenry",
+      "nicaraguan_cordoba",
+      "nigerian_naira",
+      "north_korean_won",
+      "norwegian_krone",
+      "ohm",
+      "ohms_per_centimeter",
+      "ohms_per_inch",
+      "ohms_per_meter",
+      "omani_rial",
+      "openings_per_square_cm",
+      "openings_per_square_inch",
+      "operations",
+      "ounces",
+      "ounces_per_cubic_inch",
+      "ounces_per_square_inch",
+      "poise",
+      "pascal_seconds",
+      "pascal",
+      "pages",
+      "pages_per_month",
+      "pages_per_second",
+      "pages_per_sheet",
+      "pakistani_rupee",
+      "panamanian_balboa",
+      "papua_new_guinean_kina",
+      "paraguayan_guarani",
+      "percent_by_volume",
+      "percent_by_weight",
+      "percent_daily_value_fda",
+      "percentage",
+      "peruvian_nuevo_sol",
+      "petafarad",
+      "ph",
+      "philippine_peso",
+      "photos",
+      "picoamps",
+      "picofarad",
+      "picoliters",
+      "picoliters_per_minute",
+      "picoliters_per_second",
+      "picometer",
+      "picoohms",
+      "picoseconds",
+      "picowatts",
+      "pictures",
+      "pills",
+      "pints",
+      "pitch",
+      "pixels",
+      "pixels_per_inch",
+      "place_settings",
+      "pods",
+      "polish_zloty",
+      "portions",
+      "portuguese_escudos",
+      "pound_per_square_foot",
+      "pounds",
+      "pounds_per_cubic_foot",
+      "pounds_per_cubic_inch",
+      "pounds_per_cubic_yard",
+      "pounds_per_inch",
+      "pounds_per_square_yard",
+      "parts_per_billion",
+      "parts_per_hundred",
+      "parts_per_million",
+      "pages_per_minute",
+      "parts_per_quadrillion",
+      "parts_per_thousand",
+      "parts_per_trillion",
+      "primary",
+      "pounds_per_square_inch",
+      "pulses",
+      "qatari_riyal",
+      "quarters",
+      "quarts",
+      "r_value",
+      "r_value_metric",
+      "radians_per_second",
+      "radians",
+      "radians_per_second_squared",
+      "revolutions_per_month",
+      "revolutions_per_second_squared",
+      "revolutions",
+      "rockwell_15N",
+      "rockwell_15T",
+      "rockwell_30N",
+      "rockwell_30T",
+      "rockwell_45N",
+      "rockwell_45T",
+      "rockwell_a",
+      "rockwell_b",
+      "rockwell_c",
+      "rockwell_d",
+      "rockwell_E",
+      "rockwell_f",
+      "rockwell_g",
+      "rockwell_h",
+      "rockwell_k",
+      "rockwell_l",
+      "rockwell_M",
+      "rockwell_p",
+      "rockwell_R",
+      "rockwell_s",
+      "rockwell_v",
+      "romanian_leu",
+      "rotations",
+      "rows",
+      "revolutions_per_hour",
+      "rpm",
+      "revolutions_per_second",
+      "revolutions_per_week",
+      "russian_rouble",
+      "russian_ruble",
+      "rwandan_franc",
+      "stokes",
+      "saint_helena_pound",
+      "samoan_tala",
+      "samples_per_second",
+      "saudi_riyal",
+      "scoops",
+      "seconds",
+      "serbian_dinar",
+      "seychelles_rupee",
+      "shore_a",
+      "shore_b",
+      "shore_c",
+      "shore_d",
+      "shore_do",
+      "shore_e",
+      "shore_m",
+      "shore_o",
+      "shore_oo",
+      "shore_ooo",
+      "shore_ooo_s",
+      "shore_r",
+      "sierra_leonean_leone",
+      "singapore_dollar",
+      "solomon_islands_dollar",
+      "somali_shilling",
+      "sones",
+      "south_african_rand",
+      "south_korean_won",
+      "south_sudanese_pound",
+      "spanish_pesetas",
+      "sun_protection_factor",
+      "square_centimeters",
+      "square_feet",
+      "square_inches",
+      "square_meters",
+      "sri_lankan_rupee",
+      "stops",
+      "sudanese_pound",
+      "surinamese_dollar",
+      "swazi_lilangeni",
+      "swedish_krona",
+      "swiss_francs",
+      "syrian_pound",
+      "sao_tome_and_principe_dobra",
+      "tablespoons",
+      "tajikistani_somoni",
+      "tanzanian_shilling",
+      "TB",
+      "terabytes_per_second",
+      "teaspoons",
+      "teen_boys_us",
+      "teen_girls_us",
+      "teen_us",
+      "teeth",
+      "teeth_per_inch",
+      "ten_thousandths_inches",
+      "terafarad",
+      "teraohms",
+      "tgw",
+      "thai_baht",
+      "thousandths_inches",
+      "threads_per_centimeter",
+      "threads_per_inch",
+      "terahertz",
+      "toddler_uk",
+      "toddler_us",
+      "tog",
+      "tongan_paanga",
+      "tons",
+      "tons_per_acre",
+      "torr",
+      "trinidad_and_tobago_dollar",
+      "tunisian_dinar",
+      "turkish_lira",
+      "turkmenistani_manat",
+      "turns",
+      "turns_per_centimeter",
+      "turns_per_inch",
+      "ugandan_shilling",
+      "ukrainian_hryvnia",
+      "unidad_de_valor_real",
+      "unisex_br",
+      "unisex_eu",
+      "unisex_jp",
+      "unit_of_alcohol",
+      "united_arab_emirates_dirham",
+      "units",
+      "unknown_modifier",
+      "uruguayan_peso",
+      "us_dollars",
+      "uzbekistan_som",
+      "volts_per_gravity",
+      "vanuatu_vatu",
+      "venezuelan_bolivar",
+      "vickers",
+      "vietnamese_dong",
+      "volt_amperes",
+      "volts",
+      "volts_of_alternating_current",
+      "volts_of_direct_current",
+      "watt_hours",
+      "watts",
+      "watts_per_kilogram",
+      "watts_per_meter_per_celsius",
+      "watts_per_meter_per_kelvin",
+      "weeks",
+      "west_african_cfa_franc",
+      "wir_euro",
+      "wir_franc",
+      "womens_au",
+      "womens_uk",
+      "womens_us",
+      "words",
+      "multiplier_x",
+      "yards",
+      "years",
+      "yemeni_rial",
+      "yoctofarad",
+      "yottafarad",
+      "youth_uk",
+      "youth_us",
+      "zambian_kwacha",
+      "zeptofarad",
+      "zettafarad",
+      "zimbabwe_dollar"
+    ],
+    "optionLabels": {
+      "thirty_seconds_inches": "32nds",
+      "amperes_per_watts": "A/W",
+      "accelerated_reader": "Accelerated Reader",
+      "adult_mx": "Adult MEX",
+      "adult_uk": "Adult UK",
+      "adult_us": "Adult US",
+      "afghan_afghani": "Afghan afghani",
+      "albanian_lek": "Albanian lek",
+      "algerian_dinar": "Algerian dinar",
+      "amp_hours": "Amp Hours",
+      "amps": "Amps",
+      "ampules": "ampule(s)",
+      "angolan_kwanza": "Angolan kwanza",
+      "angstrom": "Angstrom",
+      "arc_sec": "arc sec",
+      "arc_minute": "arcmin",
+      "argentine_peso": "Argentine peso",
+      "armenian_dram": "Armenian dram",
+      "aruban_florin": "Aruban florin",
+      "assistant": "Assistant",
+      "athens_reading_level": "Athens Reading Level",
+      "atmosphere": "Atm",
+      "attofarad": "Attofarad",
+      "australian_dollars": "Australian Dollars",
+      "austrian_schillings": "Austrian Schillings",
+      "azerbaijani_manat": "Azerbaijani manat",
+      "baby_boys_us": "Baby Boys US",
+      "baby_girls_us": "Baby Girls US",
+      "bahamian_dollar": "Bahamian dollar",
+      "bahraini_dinar": "Bahraini dinar",
+      "bangladeshi_taka": "Bangladeshi taka",
+      "bante": "Bante",
+      "food_bars": "bar(s)",
+      "barbados_dollar": "Barbados dollar",
+      "barcol": "Barcol",
+      "bars": "Bars",
+      "belarusian_ruble": "Belarusian ruble",
+      "belgian_francs": "Belgian Francs",
+      "belize_dollar": "Belize dollar",
+      "bermudian_dollar": "Bermudian dollar",
+      "bhutanese_ngultrum": "Bhutanese ngultrum",
+      "big_boys_us": "Big Boys US",
+      "big_child_us": "Big Child US",
+      "big_girls_us": "Big Girls US",
+      "bits": "Bits",
+      "bits_per_second": "Bits Per Second",
+      "boliviano": "Boliviano",
+      "botswana_pula": "Botswana pula",
+      "boys_us": "Boys US",
+      "brazilian_real": "Brazilian Real",
+      "brinnell": "Brinell",
+      "brinell": "Brinell",
+      "btus": "British Thermal Units",
+      "brunei_dollar": "Brunei dollar",
+      "btu_per_hour_per_foot_per_fahrenheit": "BTU per Hour per Foot per Degree Fahrenheit",
+      "bulgarian_lev": "Bulgarian lev",
+      "burundian_franc": "Burundian franc",
+      "bytes": "Bytes",
+      "bytes_per_second": "Bytes Per Second",
+      "canadian_dollars": "CAD",
+      "calls": "Calls",
+      "calories": "Calories",
+      "cambodian_riel": "Cambodian riel",
+      "candela": "Candela",
+      "candela_per_square_meter": "Candela per Square Meter",
+      "cape_verde_escudo": "Cape Verde escudo",
+      "capsules": "capsule(s)",
+      "carats": "carats",
+      "cayman_islands_dollar": "Cayman Islands dollar",
+      "center_beam_candle_power": "cbcp",
+      "cubic_centimeters_per_minute": "cc/min",
+      "cubic_centimeters_per_second": "cc/sec",
+      "centifarad": "Centifarad",
+      "centiliters": "Centiliters",
+      "centiliters_per_second": "Centiliters per Second",
+      "centimeter_kilograms": "Centimeter Kilograms",
+      "centimeters": "Centimeters",
+      "centimeters_mercury": "Centimeters of Mercury",
+      "centimeters_water": "Centimeters of Water",
+      "centimeters_per_second": "Centimeters per Second",
+      "centimeters_per_second_squared": "Centimeters per Second Squared",
+      "centimeters_squared": "Centimeters Squared",
+      "central_african_cfa_franc": "Central African CFA franc",
+      "cfp_franc": "CFP franc",
+      "cubic_feet_per_hour": "CFPH",
+      "chapters": "Chapters",
+      "characters_per_inch": "Characters Per Second",
+      "child_au": "Child AU",
+      "child_mx": "Child MEX",
+      "child_uk": "Child UK",
+      "chilean_peso": "Chilean peso",
+      "chinese_yuan": "Chinese Yuan",
+      "cubic_inches_per_minute": "CIPM",
+      "cubic_meters_per_hour": "CMPH",
+      "co": "Co.",
+      "colombian_peso": "Colombian peso",
+      "comoro_franc": "Comoro franc",
+      "congolese_franc": "Congolese franc",
+      "consulting": "Consulting",
+      "convertible_mark": "convertible mark",
+      "costa_rican_colon": "Costa Rican colon",
+      "candle_power": "cp",
+      "centipoise": "cp",
+      "croatian_kuna": "Croatian kuna",
+      "centistokes": "cs",
+      "cttw": "CTTW",
+      "cuban_convertible_peso": "Cuban convertible peso",
+      "cuban_peso": "Cuban peso",
+      "cubic_centimeters": "Cubic Centimeters",
+      "cubic_feet": "Cubic Feet",
+      "cubic_feet_per_minute": "Cubic Feet Per Minute",
+      "cubic_feet_per_minute_per_watt": "Cubic Feet Per Minute Per Watt",
+      "cubic_feet_per_second": "Cubic Feet Per Second",
+      "cubic_inches": "Cubic Inches",
+      "cubic_meters": "Cubic Meters",
+      "cubic_meters_per_minute": "Cubic Meters per Minute",
+      "cubic_meters_per_second": "Cubic Meters per Second",
+      "cubic_yards": "Cubic Yards",
+      "cups": "Cups",
+      "cycles": "cycles",
+      "cycles_per_gallon": "Cycles per Gallon",
+      "cycles_per_liter": "Cycles Per Liter",
+      "czech_koruna": "Czech koruna",
+      "daltons": "Daltons",
+      "danish_krone": "Danish Krone",
+      "days": "days",
+      "decibels": "dB",
+      "decibel_volt_per_pascal": "dBV/Pascal",
+      "decibel_volt_per_micro_bar": "dBV/uBar",
+      "decafarad": "Decafarad",
+      "decifarad": "Decifarad",
+      "deciliters": "Deciliters",
+      "decimeters": "decimeters",
+      "degrees_per_second": "deg/sec",
+      "degrees": "Degrees",
+      "degrees_balling": "Degrees Balling",
+      "degrees_baume": "Degrees Baume",
+      "degrees_brix": "Degrees Brix",
+      "degrees_celsius": "Degrees Celsius",
+      "degrees_fahrenheit": "Degrees Fahrenheit",
+      "degrees_ochsle": "Degrees Oechsle",
+      "degrees_per_second_squared": "Degrees per Second Squared",
+      "german_mark": "DEM",
+      "deputy": "Deputy",
+      "din": "DIN",
+      "diopters": "Diopters",
+      "djiboutian_franc": "Djiboutian franc",
+      "dominican_peso": "Dominican peso",
+      "dots": "Dots",
+      "dots_per_inch": "Dots Per Inch",
+      "drams": "Drams",
+      "drp_score": "DRP Score",
+      "dwt": "DWT",
+      "dyne_centimeters": "Dyne-cm",
+      "east_caribbean_dollar": "East Caribbean dollar",
+      "egyptian_pound": "Egyptian pound",
+      "emails": "Emails",
+      "eritrean_nakfa": "Eritrean nakfa",
+      "ethiopian_birr": "Ethiopian birr",
+      "euro": "EUR",
+      "exafarad": "Exafarad",
+      "f_stop": "f",
+      "falkland_islands_pound": "Falkland Islands pound",
+      "farad": "Farad",
+      "feet": "Feet",
+      "feet_per_second": "Feet Per Second",
+      "feet_per_second_squared": "Feet per Second Squared",
+      "femtofarad": "Femtofarad",
+      "femtoseconds": "Femtoseconds",
+      "fiji_dollar": "Fiji dollar",
+      "finnish_markka": "Finnish Markka",
+      "fluid_ounces": "Fluid Ounces",
+      "foot_pounds": "Foot Pounds",
+      "feet_per_minute": "FPM",
+      "frames_per_second": "fps",
+      "fr_school_grade": "FR School Grade",
+      "french_francs": "FRF",
+      "foot_ounces": "ft-oz",
+      "gravity": "g",
+      "gallons_per_day": "G/day",
+      "grams_per_liter": "g/L",
+      "gallons": "Gallons",
+      "gallons_per_flush": "Gallons per Flush",
+      "gallons_per_hour": "Gallons per Hour",
+      "gallons_per_minute": "Gallons per Minute",
+      "gambian_dalasi": "Gambian dalasi",
+      "gauge": "Gauge",
+      "GB": "GB",
+      "uk_pounds": "GBP",
+      "georgian_lari": "Georgian lari",
+      "ghanaian_cedi": "Ghanaian cedi",
+      "GHz": "GHz",
+      "gibraltar_pound": "Gibraltar pound",
+      "giga_samples_per_second": "Giga Samples per Second",
+      "gigabits_per_second": "Gigabits Per Second",
+      "gigabytes_per_hour": "Gigabytes Per Hour",
+      "gigabytes_per_second": "Gigabytes Per Second",
+      "gigafarad": "Gigafarad",
+      "gigaohms": "Gigaohms",
+      "gigapascals": "gigapascals",
+      "girls_us": "Girls US",
+      "us_school_grade": "grades",
+      "gram_meters": "Gram Meters",
+      "grams": "Grams",
+      "grams_per_100_kilometers": "Grams per 100 kilometers",
+      "grams_per_cubic_centimeter": "Grams per Cubic Centimeter",
+      "grams_per_kilometer": "Grams per Kilometer",
+      "grams_per_milliliter": "Grams per Milliliter",
+      "grams_per_minute": "Grams Per Minute",
+      "grams_per_square_meter": "Grams per Square Meter",
+      "greek_drachma": "Greek Drachma",
+      "guatemalan_quetzal": "Guatemalan quetzal",
+      "guinean_franc": "Guinean franc",
+      "guyanese_dollar": "Guyanese dollar",
+      "henry": "H",
+      "haitian_gourde": "Haitian gourde",
+      "hectofarad": "Hectofarad",
+      "honduran_lempira": "Honduran lempira",
+      "hong_kong_dollar": "Hong Kong dollar",
+      "hour": "Hour",
+      "hours": "Hours",
+      "hours_per_gallon": "Hours per Gallon",
+      "hours_per_liter": "Hours per Liter",
+      "horsepower": "hp",
+      "hectopascal": "hPa",
+      "hsl": "HSL",
+      "hsv": "HSV",
+      "hundredths_pounds": "Hundredths Pounds",
+      "hundredths_inches": "hundredths-inches",
+      "hungarian_forint": "Hungarian forint",
+      "hertz": "Hz",
+      "icelandic_krona": "Icelandic króna",
+      "images_per_minute": "Images per Minute",
+      "imperial_gallons": "Imperial Gallons",
+      "inches_mercury": "in Hg",
+      "inches_per_inches_degrees_fahrenheit": "in/in Degrees Fahrenheit",
+      "inch_ounces": "Inch Ounces",
+      "inch_pounds": "Inch Pounds",
+      "inches": "Inches",
+      "inches_water": "Inches of Water",
+      "inches_per_second": "Inches per Second",
+      "inches_per_second_squared": "Inches per Second Squared",
+      "inches_squared": "Inches Squared",
+      "indonesian_rupiah": "Indonesian Rupiah",
+      "infant_uk": "Infant UK",
+      "infant_us": "Infant US",
+      "indian_rupee": "INR",
+      "iranian_rial": "Iranian rial",
+      "iraqi_dinar": "Iraqi dinar",
+      "irla_score": "IRLA Score",
+      "iso": "ISO",
+      "israeli_new_shekel": "Israeli new shekel",
+      "italian_lira": "Italian Lira",
+      "jamaican_dollar": "Jamaican dollar",
+      "jordanian_dinar": "Jordanian dinar",
+      "joules": "Joules",
+      "japanese_yen": "JPY",
+      "juniors_us": "Juniors US",
+      "kazakhstani_tenge": "Kazakhstani tenge",
+      "KB": "KB",
+      "Kbaud": "KBaud",
+      "kilobits_per_second": "Kbps",
+      "kilobytes_per_second": "Kbps",
+      "kelvin": "Kelvin",
+      "kenyan_shilling": "Kenyan shilling",
+      "kilohenry": "kH",
+      "KHz": "KHz",
+      "kilo_samples_per_second": "Kilo Samples per Second",
+      "kiloamps": "Kiloamps",
+      "kilocalories": "Kilocalories",
+      "kilodaltons": "Kilodaltons",
+      "kilofarad": "Kilofarad",
+      "kilogram_centimeters": "Kilogram Centimeters",
+      "kilogram_force_meter": "Kilogram Force Meter",
+      "kilogram_meters": "Kilogram Meters",
+      "kilograms": "Kilograms",
+      "kilograms_per_cubic_meter": "Kilograms per Cubic Meter",
+      "kilograms_per_liter": "Kilograms per Liter",
+      "kilograms_per_millimeter": "Kilograms per Millimeter",
+      "kilograms_per_square_centimeter": "Kilograms Per Square Centimeter",
+      "kilojoules": "Kilojoules",
+      "kilometer": "Kilometer",
+      "kilometers": "Kilometers",
+      "kilometers_per_hour": "Kilometers per Hour",
+      "kilonewton_meters": "Kilonewton Meters",
+      "kilonewtons": "Kilonewtons",
+      "kiloohms": "Kiloohms",
+      "kilopixel": "Kilopixel",
+      "kilovolts": "Kilovolts",
+      "kilowatt_hours": "Kilowatt Hours",
+      "kilowatt_hours_per_100_cycles": "Kilowatt Hours per 100 cycles",
+      "kilowatt_hours_per_1000_hours": "Kilowatt Hours per 1000 hours",
+      "kilowatt_hours_per_year": "Kilowatt Hours Per Year",
+      "kilowatts": "Kilowatts",
+      "knoop": "Knoop",
+      "kilopascal": "kPa",
+      "kips_per_square_inch": "KSI",
+      "kuwaiti_dinar": "Kuwaiti dinar",
+      "kyrgyzstani_som": "Kyrgyzstani som",
+      "liters_per_day": "L/day",
+      "liters_per_second": "L/sec",
+      "liters_per_year": "L/year",
+      "lao_kip": "Lao kip",
+      "latvian_lats": "Latvian lats",
+      "layers": "Layers",
+      "lebanese_pound": "Lebanese pound",
+      "lesotho_loti": "Lesotho loti",
+      "levels": "Levels",
+      "lexile": "Lexile",
+      "lexile_code": "Lexile Code",
+      "lexile_number": "Lexile Number",
+      "liberian_dollar": "Liberian dollar",
+      "libyan_dinar": "Libyan dinar",
+      "lines": "Lines",
+      "lines_per_inch": "Lines Per Inch",
+      "links_per_foot": "Links Per Foot",
+      "links_per_inch": "Links Per Inch",
+      "liters": "Liters",
+      "liters_per_100_kilometers": "Liters per 100 Kilometers",
+      "liters_per_flush": "Liters Per Flush",
+      "lithuanian_litas": "Lithuanian litas",
+      "little_boys_us": "Little Boys US",
+      "little_child_us": "Little Child US",
+      "little_girls_us": "Little Girls US",
+      "lumen": "lm",
+      "load": "load",
+      "liters_per_hour": "LPH",
+      "liters_per_minute": "LPM",
+      "lux": "Lux",
+      "luxembourg_franc": "Luxembourg Franc",
+      "meters_per_meters_kelvin": "m/m Kelvin",
+      "macanese_pataca": "Macanese pataca",
+      "macedonian_denar": "Macedonian denar",
+      "malagasy_ariary": "Malagasy ariary",
+      "malawian_kwacha": "Malawian kwacha",
+      "malaysian_ringgit": "Malaysian ringgit",
+      "maldivian_rufiyaa": "Maldivian rufiyaa",
+      "mauritanian_ouguiya": "Mauritanian ouguiya",
+      "mauritian_rupee": "Mauritian rupee",
+      "MB": "MB",
+      "megabits": "Mbit",
+      "mega_samples_per_second": "Mega Samples per Second",
+      "megabits_per_second": "Megabits Per Second",
+      "megabytes_per_hour": "Megabytes Per Hour",
+      "megabytes_per_second": "Megabytes Per Second",
+      "megafarad": "Megafarad",
+      "megaohms": "Megaohms",
+      "megapascals": "megapascals",
+      "mens_au": "Mens AU",
+      "mens_uk": "Mens UK",
+      "mens_us": "Mens US",
+      "mesh_count_per_square_inch": "Mesh Count Per Square Inch",
+      "messages": "Messages",
+      "meter": "Meter",
+      "meters": "Meters",
+      "meters_per_second": "Meters per Second",
+      "meters_per_second_squared": "Meters per Second Squared",
+      "metric_tons_per_hectare": "Metric Tons per Hectare",
+      "mexican_peso": "Mexican Peso",
+      "millihenry": "mH",
+      "MHz": "MHz",
+      "microamps": "Microamps",
+      "microcandela": "microCandela",
+      "microfarad": "Microfarad",
+      "micrograms": "Micrograms",
+      "microhenry": "microH",
+      "microhertz": "Microhertz",
+      "microliters": "Microliters",
+      "microliters_per_minute": "Microliters per Minute",
+      "microliters_per_second": "Microliters per Second",
+      "micrometer": "Micrometer",
+      "micron": "Micron",
+      "micronewton_meters": "Micronewton Meters",
+      "microohms": "Microohms",
+      "microradian": "microrad",
+      "microseconds": "Microseconds",
+      "microvolts": "Microvolts",
+      "microwatts": "Microwatts",
+      "mile": "Mile",
+      "miles": "Miles",
+      "miles_per_hour": "Miles per Hour",
+      "milliamp_hours": "Milliamp Hours",
+      "milliampere_hour": "Milliampere Hour (mAh)",
+      "milliampere_second": "Milliampere Second (mAs)",
+      "milliamps": "milliamps",
+      "millibars": "Millibars",
+      "millicandela": "milliCandela",
+      "millifarad": "Millifarad",
+      "milligrams": "Milligrams",
+      "millihertz": "Millihertz",
+      "milliliters": "Milliliters",
+      "milliliters_per_second": "Milliliters per Second",
+      "millimeters": "Millimeters",
+      "millimeters_water": "Millimeters of Water",
+      "millimeters_per_second": "Millimeters per Second",
+      "millimeters_water_per_square_centimeter": "Millimeters Water Per Square Centimeter",
+      "millinewton_meters": "Millinewton Meters",
+      "milliohms": "Milliohms",
+      "milliradian": "millirad",
+      "milliseconds": "Milliseconds",
+      "millivolts": "Millivolts",
+      "milliwatts": "Milliwatts",
+      "milliwatts_per_centimeters_squared": "Milliwatts per Centimeters Squared",
+      "mils": "Mils",
+      "minute": "Minute",
+      "minutes": "minutes",
+      "minutes_per_liter": "Minutes per Liter",
+      "milliliters_per_minute": "ml/min",
+      "millimeters_mercury": "mm Hg",
+      "mohs": "Mohs",
+      "moldovan_leu": "Moldovan leu",
+      "mongolian_togrog": "Mongolian tögrög",
+      "months": "months",
+      "moroccan_dirham": "Moroccan dirham",
+      "mozambican_metical": "Mozambican metical",
+      "megapixels": "MP",
+      "mean_spherical_candle_power": "mscp",
+      "mt_s": "MT/s",
+      "millivolts_per_gravity": "mV/g",
+      "millivolts_per_pascals": "mV/Pa",
+      "millivolts_per_pounds_per_square_inch": "mV/psi",
+      "myanma_kyat": "Myanmar kyat",
+      "namibian_dollar": "Namibian dollar",
+      "nanoamps": "Nanoamps",
+      "nanofarad": "Nanofarad",
+      "nanoliters": "Nanoliters",
+      "nanoliters_per_minute": "Nanoliters per Minute",
+      "nanoliters_per_second": "Nanoliters per Second",
+      "nanometer": "Nanometer",
+      "nanoohms": "Nanoohms",
+      "nanoseconds": "Nanoseconds",
+      "nanovolts": "Nanovolts",
+      "nanowatts": "Nanowatts",
+      "nepalese_rupee": "Nepalese rupee",
+      "netherlands_antillean_guilder": "Netherlands Antillean guilder",
+      "new_taiwan_dollar": "New Taiwan dollar",
+      "new_zealand_dollar": "New Zealand dollar",
+      "newton_centimeters": "Newton Centimeters",
+      "newton_meters": "Newton Meters",
+      "newton_millimeters": "Newton Millimeters",
+      "newtons": "Newtons",
+      "newtons_per_square_millimeter": "Newtons Per Square Millimeter (N/mm2)",
+      "nanohenry": "nH",
+      "nicaraguan_cordoba": "Nicaraguan córdoba",
+      "nigerian_naira": "Nigerian naira",
+      "north_korean_won": "North Korean won",
+      "norwegian_krone": "Norwegian krone",
+      "ohm": "Ohm",
+      "ohms_per_centimeter": "Ohms Per Centimeter",
+      "ohms_per_inch": "Ohms Per Inch",
+      "ohms_per_meter": "Ohms Per Meter",
+      "omani_rial": "Omani rial",
+      "openings_per_square_cm": "openings_per_square_cm",
+      "openings_per_square_inch": "openings_per_square_inch",
+      "operations": "operations",
+      "ounces": "ounces",
+      "ounces_per_cubic_inch": "Ounces Per Cubic Inch",
+      "ounces_per_square_inch": "Ounces Per Square Inch",
+      "poise": "P",
+      "pascal_seconds": "P/s",
+      "pascal": "Pa",
+      "pages": "Pages",
+      "pages_per_month": "Pages per month",
+      "pages_per_second": "Pages per second",
+      "pages_per_sheet": "Pages Per Sheet",
+      "pakistani_rupee": "Pakistani rupee",
+      "panamanian_balboa": "Panamanian balboa",
+      "papua_new_guinean_kina": "Papua New Guinean kina",
+      "paraguayan_guarani": "Paraguayan guaraní",
+      "percent_by_volume": "Percent by Volume",
+      "percent_by_weight": "Percent by Weight",
+      "percent_daily_value_fda": "Percent Daily Value",
+      "percentage": "Percentage",
+      "peruvian_nuevo_sol": "Peruvian nuevo sol",
+      "petafarad": "Petafarad",
+      "ph": "pH",
+      "philippine_peso": "Philippine peso",
+      "photos": "Photos",
+      "picoamps": "Picoamps",
+      "picofarad": "Picofarad",
+      "picoliters": "Picoliters",
+      "picoliters_per_minute": "Picoliters per Minute",
+      "picoliters_per_second": "Picoliters per Second",
+      "picometer": "Picometer",
+      "picoohms": "Picoohms",
+      "picoseconds": "Picoseconds",
+      "picowatts": "Picowatts",
+      "pictures": "Pictures",
+      "pills": "pill(s)",
+      "pints": "Pints",
+      "pitch": "Pitch",
+      "pixels": "Pixels",
+      "pixels_per_inch": "Pixels Per Inch",
+      "place_settings": "Place Settings",
+      "pods": "Pods",
+      "polish_zloty": "Polish Zloty",
+      "portions": "Portion(s)",
+      "portuguese_escudos": "Portuguese Escudos",
+      "pound_per_square_foot": "Pound per Square Foot",
+      "pounds": "Pounds",
+      "pounds_per_cubic_foot": "Pounds per Cubic Foot",
+      "pounds_per_cubic_inch": "Pounds per Cubic Inch",
+      "pounds_per_cubic_yard": "Pounds per Cubic Yard",
+      "pounds_per_inch": "Pounds Per Inch",
+      "pounds_per_square_yard": "Pounds Per Square Yard",
+      "parts_per_billion": "ppb",
+      "parts_per_hundred": "pph",
+      "parts_per_million": "ppm",
+      "pages_per_minute": "ppm",
+      "parts_per_quadrillion": "ppq",
+      "parts_per_thousand": "ppt",
+      "parts_per_trillion": "ppt",
+      "primary": "Primary",
+      "pounds_per_square_inch": "PSI",
+      "pulses": "pulses",
+      "qatari_riyal": "Qatari riyal",
+      "quarters": "quarters",
+      "quarts": "Quarts",
+      "r_value": "R-value",
+      "r_value_metric": "R-value (Metric)",
+      "radians_per_second": "rad/sec",
+      "radians": "Radians",
+      "radians_per_second_squared": "Radians per Second Squared",
+      "revolutions_per_month": "rev/month",
+      "revolutions_per_second_squared": "Revolutions per Second Squared",
+      "revolutions": "revs",
+      "rockwell_15N": "rockwell 15N",
+      "rockwell_15T": "rockwell 15T",
+      "rockwell_30N": "rockwell 30N",
+      "rockwell_30T": "rockwell 30T",
+      "rockwell_45N": "rockwell 45N",
+      "rockwell_45T": "rockwell 45T",
+      "rockwell_a": "Rockwell A",
+      "rockwell_b": "Rockwell B",
+      "rockwell_c": "Rockwell C",
+      "rockwell_d": "Rockwell D",
+      "rockwell_E": "rockwell E",
+      "rockwell_f": "rockwell F",
+      "rockwell_g": "Rockwell G",
+      "rockwell_h": "Rockwell H",
+      "rockwell_k": "Rockwell K",
+      "rockwell_l": "Rockwell L",
+      "rockwell_M": "rockwell M",
+      "rockwell_p": "Rockwell P",
+      "rockwell_R": "rockwell R",
+      "rockwell_s": "Rockwell S",
+      "rockwell_v": "Rockwell V",
+      "romanian_leu": "Romanian Leu",
+      "rotations": "rotations",
+      "rows": "Rows",
+      "revolutions_per_hour": "rph",
+      "rpm": "RPM",
+      "revolutions_per_second": "rps",
+      "revolutions_per_week": "rpw",
+      "russian_rouble": "Russian rouble",
+      "russian_ruble": "Russian Ruble",
+      "rwandan_franc": "Rwandan franc",
+      "stokes": "S",
+      "saint_helena_pound": "Saint Helena pound",
+      "samoan_tala": "Samoan tala",
+      "samples_per_second": "Samples per Second",
+      "saudi_riyal": "Saudi Riyal",
+      "scoops": "scoop(s)",
+      "seconds": "seconds",
+      "serbian_dinar": "Serbian dinar",
+      "seychelles_rupee": "Seychelles rupee",
+      "shore_a": "Shore A",
+      "shore_b": "Shore B",
+      "shore_c": "Shore C",
+      "shore_d": "Shore D",
+      "shore_do": "Shore DO",
+      "shore_e": "Shore E",
+      "shore_m": "Shore M",
+      "shore_o": "Shore O",
+      "shore_oo": "Shore OO",
+      "shore_ooo": "Shore OOO",
+      "shore_ooo_s": "Shore OOO-S",
+      "shore_r": "Shore R",
+      "sierra_leonean_leone": "Sierra Leonean leone",
+      "singapore_dollar": "Singapore dollar",
+      "solomon_islands_dollar": "Solomon Islands dollar",
+      "somali_shilling": "Somali shilling",
+      "sones": "Sones",
+      "south_african_rand": "South African rand",
+      "south_korean_won": "South Korean Won",
+      "south_sudanese_pound": "South Sudanese pound",
+      "spanish_pesetas": "Spanish Pesetas",
+      "sun_protection_factor": "SPF",
+      "square_centimeters": "Square Centimeters",
+      "square_feet": "Square Feet",
+      "square_inches": "Square Inches",
+      "square_meters": "Square Meters",
+      "sri_lankan_rupee": "Sri Lankan rupee",
+      "stops": "Stops",
+      "sudanese_pound": "Sudanese pound",
+      "surinamese_dollar": "Surinamese dollar",
+      "swazi_lilangeni": "Swazi lilangeni",
+      "swedish_krona": "Swedish Krona",
+      "swiss_francs": "Swiss Francs",
+      "syrian_pound": "Syrian pound",
+      "sao_tome_and_principe_dobra": "São Tomé and Príncipe dobra",
+      "tablespoons": "tablespoon(s)",
+      "tajikistani_somoni": "Tajikistani somoni",
+      "tanzanian_shilling": "Tanzanian shilling",
+      "TB": "TB",
+      "terabytes_per_second": "TB/sec",
+      "teaspoons": "teaspoon(s)",
+      "teen_boys_us": "Teen Boys US",
+      "teen_girls_us": "Teen Girls US",
+      "teen_us": "Teen US",
+      "teeth": "Teeth",
+      "teeth_per_inch": "Teeth per Inch",
+      "ten_thousandths_inches": "Ten Thousandths Inches",
+      "terafarad": "Terafarad",
+      "teraohms": "Teraohms",
+      "tgw": "TGW",
+      "thai_baht": "Thai baht",
+      "thousandths_inches": "Thousandths Inches",
+      "threads_per_centimeter": "Threads Per Centimeter",
+      "threads_per_inch": "Threads Per Inch",
+      "terahertz": "THz",
+      "toddler_uk": "Toddler UK",
+      "toddler_us": "Toddler US",
+      "tog": "Tog",
+      "tongan_paanga": "Tongan paʻanga",
+      "tons": "Tons",
+      "tons_per_acre": "Tons per Acre",
+      "torr": "Torr",
+      "trinidad_and_tobago_dollar": "Trinidad and Tobago dollar",
+      "tunisian_dinar": "Tunisian dinar",
+      "turkish_lira": "Turkish Lira",
+      "turkmenistani_manat": "Turkmenistani manat",
+      "turns": "turns",
+      "turns_per_centimeter": "Turns Per Centimeter",
+      "turns_per_inch": "Turns Per Inch",
+      "ugandan_shilling": "Ugandan shilling",
+      "ukrainian_hryvnia": "Ukrainian hryvnia",
+      "unidad_de_valor_real": "Unidad de Valor Real",
+      "unisex_br": "Unisex BR",
+      "unisex_eu": "Unisex EU",
+      "unisex_jp": "Unisex JP",
+      "unit_of_alcohol": "Unit of Alcohol",
+      "united_arab_emirates_dirham": "United Arab Emirates dirham",
+      "units": "Units",
+      "unknown_modifier": "Unknown modifier",
+      "uruguayan_peso": "Uruguayan peso",
+      "us_dollars": "USD",
+      "uzbekistan_som": "Uzbekistani sum",
+      "volts_per_gravity": "V/g",
+      "vanuatu_vatu": "Vanuatu vatu",
+      "venezuelan_bolivar": "Venezuelan bolívar",
+      "vickers": "Vickers",
+      "vietnamese_dong": "Vietnamese dong",
+      "volt_amperes": "Volt Amperes",
+      "volts": "Volts",
+      "volts_of_alternating_current": "Volts (AC)",
+      "volts_of_direct_current": "Volts (DC)",
+      "watt_hours": "Watt Hours",
+      "watts": "Watts",
+      "watts_per_kilogram": "Watts per Kilogram",
+      "watts_per_meter_per_celsius": "Watts per Meter per Degree Celsius",
+      "watts_per_meter_per_kelvin": "Watts per Meter per Kelvin",
+      "weeks": "weeks",
+      "west_african_cfa_franc": "West African CFA franc",
+      "wir_euro": "WIR Euro",
+      "wir_franc": "WIR Franc",
+      "womens_au": "Womens AU",
+      "womens_uk": "Womens UK",
+      "womens_us": "Womens US",
+      "words": "Words",
+      "multiplier_x": "x",
+      "yards": "Yards",
+      "years": "years",
+      "yemeni_rial": "Yemeni rial",
+      "yoctofarad": "Yoctofarad",
+      "yottafarad": "Yottafarad",
+      "youth_uk": "Youth UK",
+      "youth_us": "Youth US",
+      "zambian_kwacha": "Zambian kwacha",
+      "zeptofarad": "Zeptofarad",
+      "zettafarad": "Zettafarad",
+      "zimbabwe_dollar": "Zimbabwe dollar"
+    }
+  },
+  {
+    "name": "volume_capacity_name.0.language_tag",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "tipsOptions": [
+      "en_US"
+    ],
+    "optionLabels": {
+      "en_US": "English (United States)"
+    }
+  },
+  {
+    "name": "volume_capacity_name.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "customer_package_type",
+    "fieldType": "string"
+  },
+  {
+    "name": "customer_package_type.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "customer_package_type.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "maxLength": 2176
+  },
+  {
+    "name": "customer_package_type.0.language_tag",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "tipsOptions": [
+      "en_US"
+    ],
+    "optionLabels": {
+      "en_US": "English (United States)"
+    }
+  },
+  {
+    "name": "customer_package_type.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "pattern",
+    "fieldType": "string"
+  },
+  {
+    "name": "pattern.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "pattern.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "maxLength": 2200,
+    "maxUtf8ByteLength": 2000
+  },
+  {
+    "name": "pattern.0.language_tag",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "tipsOptions": [
+      "en_US"
+    ],
+    "optionLabels": {
+      "en_US": "English (United States)"
+    }
+  },
+  {
+    "name": "pattern.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "is_expiration_dated_product",
+    "fieldType": "string"
+  },
+  {
+    "name": "is_expiration_dated_product.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "is_expiration_dated_product.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "options": [
+      false,
+      true
+    ],
+    "optionLabels": {
+      "false": "No",
+      "true": "Yes"
+    }
+  },
+  {
+    "name": "is_expiration_dated_product.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "unit_count",
+    "fieldType": "string"
+  },
+  {
+    "name": "unit_count.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "unit_count.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "unit_count.0.type",
+    "fieldType": "string",
+    "maxItems": 1
+  },
+  {
+    "name": "unit_count.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "included_components",
+    "fieldType": "string"
+  },
+  {
+    "name": "included_components.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "included_components.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "maxLength": 1000
+  },
+  {
+    "name": "included_components.0.language_tag",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "tipsOptions": [
+      "en_US"
+    ],
+    "optionLabels": {
+      "en_US": "English (United States)"
+    }
+  },
+  {
+    "name": "included_components.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "league_name",
+    "fieldType": "string"
+  },
+  {
+    "name": "league_name.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "league_name.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "maxLength": 100,
+    "maxUtf8ByteLength": 50
+  },
+  {
+    "name": "league_name.0.language_tag",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "tipsOptions": [
+      "en_US"
+    ],
+    "optionLabels": {
+      "en_US": "English (United States)"
+    }
+  },
+  {
+    "name": "league_name.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "team_name",
+    "fieldType": "string"
+  },
+  {
+    "name": "team_name.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "team_name.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "maxLength": 100,
+    "maxUtf8ByteLength": 50
+  },
+  {
+    "name": "team_name.0.language_tag",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "tipsOptions": [
+      "en_US"
+    ],
+    "optionLabels": {
+      "en_US": "English (United States)"
+    }
+  },
+  {
+    "name": "team_name.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "scent",
+    "fieldType": "string"
+  },
+  {
+    "name": "scent.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "scent.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "maxLength": 2200
+  },
+  {
+    "name": "scent.0.language_tag",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "tipsOptions": [
+      "en_US"
+    ],
+    "optionLabels": {
+      "en_US": "English (United States)"
+    }
+  },
+  {
+    "name": "scent.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "hand_orientation",
+    "fieldType": "string"
+  },
+  {
+    "name": "hand_orientation.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "hand_orientation.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "maxLength": 2200,
+    "maxUtf8ByteLength": 2000
+  },
+  {
+    "name": "hand_orientation.0.language_tag",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "tipsOptions": [
+      "en_US"
+    ],
+    "optionLabels": {
+      "en_US": "English (United States)"
+    }
+  },
+  {
+    "name": "hand_orientation.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "cup",
+    "fieldType": "string"
+  },
+  {
+    "name": "cup.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "cup.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "cup.0.size",
+    "fieldType": "string",
+    "maxItems": 1
+  },
+  {
+    "name": "grip",
+    "fieldType": "string"
+  },
+  {
+    "name": "grip.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "grip.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "grip.0.size",
+    "fieldType": "string",
+    "maxItems": 1
+  },
+  {
+    "name": "grip.0.type",
+    "fieldType": "string",
+    "maxItems": 1
+  },
+  {
+    "name": "grit",
+    "fieldType": "string"
+  },
+  {
+    "name": "grit.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "grit.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "grit.0.type",
+    "fieldType": "string",
+    "maxItems": 1
+  },
+  {
+    "name": "length_range",
+    "fieldType": "string"
+  },
+  {
+    "name": "length_range.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "length_range.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "maxUtf8ByteLength": 20
+  },
+  {
+    "name": "length_range.0.language_tag",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "tipsOptions": [
+      "en_US"
+    ],
+    "optionLabels": {
+      "en_US": "English (United States)"
+    }
+  },
+  {
+    "name": "length_range.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "matte_style",
+    "fieldType": "string"
+  },
+  {
+    "name": "matte_style.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "matte_style.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "maxLength": 1073
+  },
+  {
+    "name": "matte_style.0.language_tag",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "tipsOptions": [
+      "en_US"
+    ],
+    "optionLabels": {
+      "en_US": "English (United States)"
+    }
+  },
+  {
+    "name": "matte_style.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "item_thickness",
+    "fieldType": "string"
+  },
+  {
+    "name": "item_thickness.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "item_thickness.0.decimal_value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "maxLength": 5000
+  },
+  {
+    "name": "item_thickness.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "item_thickness.0.unit",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "options": [
+      "angstrom",
+      "centimeters",
+      "decimeters",
+      "feet",
+      "hundredths_inches",
+      "inches",
+      "kilometers",
+      "meters",
+      "micrometer",
+      "miles",
+      "millimeters",
+      "mils",
+      "nanometer",
+      "picometer",
+      "yards"
+    ],
+    "optionLabels": {
+      "angstrom": "Angstrom",
+      "centimeters": "Centimeters",
+      "decimeters": "Decimeters",
+      "feet": "Feet",
+      "hundredths_inches": "Hundredths-Inches",
+      "inches": "Inches",
+      "kilometers": "Kilometers",
+      "meters": "Meters",
+      "micrometer": "Micron",
+      "miles": "Miles",
+      "millimeters": "Millimeters",
+      "mils": "Mils",
+      "nanometer": "Nanometer",
+      "picometer": "Picometer",
+      "yards": "Yards"
+    }
+  },
+  {
+    "name": "automotive_fit_type",
+    "fieldType": "string"
+  },
+  {
+    "name": "automotive_fit_type.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "automotive_fit_type.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "options": [
+      "universal_fit",
+      "vehicle_specific_fit"
+    ],
+    "optionLabels": {
+      "universal_fit": "Universal Fit",
+      "vehicle_specific_fit": "Vehicle Specific Fit"
+    }
+  },
+  {
+    "name": "automotive_fit_type.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "parentage_level",
+    "fieldType": "string"
+  },
+  {
+    "name": "parentage_level.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "parentage_level.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "options": [
+      "child",
+      "parent"
+    ],
+    "optionLabels": {
+      "child": "Child",
+      "parent": "Parent"
+    }
+  },
+  {
+    "name": "parentage_level.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "child_parent_sku_relationship",
+    "fieldType": "string"
+  },
+  {
+    "name": "child_parent_sku_relationship.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "child_parent_sku_relationship.0.child_relationship_type",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "options": [
+      "variation"
+    ],
+    "optionLabels": {
+      "variation": "Variation"
+    }
+  },
+  {
+    "name": "child_parent_sku_relationship.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "child_parent_sku_relationship.0.parent_sku",
+    "fieldType": "string",
+    "maxItems": 1,
+    "minLength": 1,
+    "maxLength": 40,
+    "maxUtf8ByteLength": 40
+  },
+  {
+    "name": "variation_theme",
+    "fieldType": "string"
+  },
+  {
+    "name": "variation_theme.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "variation_theme.0.name",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "options": [
+      "AGE_GENDER_CATEGORY",
+      "AUTO_PART_POSITION/CONFIGURATION/COLOR_NAME",
+      "COLOR",
+      "COLOR_NAME",
+      "COLOR_NAME/CONFIGURATION",
+      "COLOR_NAME/CUSTOMER_PACKAGE_TYPE",
+      "COLOR_NAME/ITEM_PACKAGE_QUANTITY",
+      "COLOR_NAME/MATERIAL_TYPE",
+      "COLOR_NAME/NUMBER_OF_ITEMS",
+      "COLOR_NAME/PATTERN_NAME",
+      "COLOR_NAME/SIZE_NAME",
+      "COLOR_NAME/SIZE_NAME/CONFIGURATION",
+      "COLOR_NAME/SIZE_NAME/PATTERN_NAME",
+      "COLOR_NAME/SIZE_NAME/STYLE_NAME",
+      "COLOR_NAME/SIZE_NAME/STYLE_NAME/PATTERN_NAME",
+      "COLOR_NAME/STYLE_NAME",
+      "COLOR_NAME/STYLE_NAME/CONFIGURATION",
+      "COLOR_NAME/STYLE_NAME/PATTERN_NAME",
+      "COLOR_NAME/STYLE_NAME/PATTERN_NAME/CONFIGURATION",
+      "CONFIGURATION",
+      "CONFIGURATION/COLOR_NAME",
+      "CONFIGURATION/SIZE_NAME",
+      "CONFIGURATION/STYLE_NAME",
+      "CONNECTIVITY_TECHNOLOGY/CONFIGURATION",
+      "CUP_SIZE",
+      "CUSTOMER_PACKAGE_TYPE",
+      "FABRIC_TYPE/COLOR_NAME",
+      "FIT_TYPE/SIZE_NAME/COLOR_NAME",
+      "FLAVOR/SIZE",
+      "FLAVOR_NAME",
+      "GRIP_SIZE/GRIP_TYPE",
+      "GRIT_TYPE",
+      "GRIT_TYPE/COLOR_NAME",
+      "GRIT_TYPE/SIZE_NAME",
+      "HAND_ORIENTATION",
+      "ITEM_DISPLAY_LENGTH",
+      "ITEM_DISPLAY_WEIGHT",
+      "ITEM_DISPLAY_WIDTH",
+      "ITEM_LENGTH_STRING/ITEM_WIDTH_STRING/NUMBER_OF_ITEMS",
+      "ITEM_PACKAGE_QUANTITY",
+      "ITEM_PACKAGE_QUANTITY/COLOR_NAME",
+      "ITEM_PACKAGE_QUANTITY/SIZE_NAME",
+      "ITEM_PACKAGE_QUANTITY/STYLE_NAME",
+      "ITEM_SHAPE",
+      "ITEM_SHAPE/SIZE_NAME",
+      "ITEM_THICKNESS",
+      "ITEM_WEIGHT",
+      "LENGTH_RANGE",
+      "LENS_COLOR",
+      "MATERIAL_TYPE",
+      "MATERIAL_TYPE/COLOR_NAME",
+      "MATERIAL_TYPE/ITEM_DISPLAY_WEIGHT",
+      "MATERIAL_TYPE/SIZE_NAME",
+      "MATERIAL_TYPE/STYLE_NAME",
+      "MATTE_STYLE",
+      "MODEL",
+      "MODEL/COLOR_NAME",
+      "MODEL/SIZE_NAME",
+      "MODEL/STYLE_NAME",
+      "MODEL/STYLE_NAME/PART_NUMBER",
+      "MODEL/STYLE_NAME/SIZE_NAME/CAPACITY/NUMBER_OF_ITEMS/PART_NUMBER",
+      "MODEL_NAME",
+      "MODEL_NAME/COLOR_NAME",
+      "NUMBER_OF_ITEMS",
+      "NUMBER_OF_ITEMS/STYLE_NAME",
+      "PATTERN",
+      "PATTERN_NAME",
+      "PATTERN_NAME/COLOR_NAME",
+      "PATTERN_NAME/SIZE_NAME",
+      "PATTERN_NAME/STYLE_NAME",
+      "PATTERN_NAME/STYLE_NAME/COLOR_NAME",
+      "SCENT_NAME",
+      "SIZE",
+      "SIZE/COLOR",
+      "SIZE/PATTERN",
+      "SIZE_NAME",
+      "SIZE_NAME/COLOR_NAME",
+      "SIZE_NAME/COLOR_NAME/CONFIGURATION",
+      "SIZE_NAME/COLOR_NAME/NUMBER_OF_ITEMS",
+      "SIZE_NAME/COLOR_NAME/PATTERN_NAME",
+      "SIZE_NAME/CONFIGURATION",
+      "SIZE_NAME/CUSTOMER_PACKAGE_TYPE",
+      "SIZE_NAME/MATERIAL_TYPE",
+      "SIZE_NAME/NUMBER_OF_ITEMS",
+      "SIZE_NAME/PATTERN_NAME",
+      "SIZE_NAME/SCENT_NAME",
+      "SIZE_NAME/STYLE_NAME",
+      "SIZE_NAME/STYLE_NAME/COLOR_NAME",
+      "SIZE_NAME/STYLE_NAME/CONFIGURATION",
+      "SIZE_NAME/STYLE_NAME/CUSTOMER_PACKAGE_TYPE",
+      "SIZE_NAME/STYLE_NAME/PATTERN_NAME",
+      "SIZE_NAME/STYLE_NAME/PATTERN_NAME/CONFIGURATION",
+      "STYLE_NAME",
+      "STYLE_NAME/COLOR_NAME",
+      "STYLE_NAME/COLOR_NAME/CONFIGURATION",
+      "STYLE_NAME/COLOR_NAME/SIZE_NAME",
+      "STYLE_NAME/CONFIGURATION",
+      "STYLE_NAME/CUSTOMER_PACKAGE_TYPE",
+      "STYLE_NAME/ITEM_LENGTH/ITEM_WIDTH/COLOR_NAME",
+      "STYLE_NAME/MATERIAL_TYPE",
+      "STYLE_NAME/MODEL/MATERIAL_TYPE/SIZE_NAME/NUMBER_OF_ITEMS/PART_NUMBER",
+      "STYLE_NAME/MODEL/NUMBER_OF_ITEMS/PART_NUMBER",
+      "STYLE_NAME/PATTERN_NAME",
+      "STYLE_NAME/PATTERN_NAME/COLOR_NAME",
+      "STYLE_NAME/PATTERN_NAME/CONFIGURATION",
+      "STYLE_NAME/PATTERN_NAME/SIZE_NAME",
+      "STYLE_NAME/SIZE_NAME",
+      "STYLE_NAME/SIZE_NAME/COLOR_NAME",
+      "STYLE_NAME/SIZE_NAME/COLOR_NAME/CONFIGURATION",
+      "STYLE_NAME/SIZE_NAME/CONFIGURATION",
+      "TEAM_NAME",
+      "TEAM_NAME/SIZE_NAME",
+      "TEAM_NAME/SIZE_NAME/COLOR_NAME",
+      "UNIT_COUNT",
+      "VOLUME_CAPACITY_NAME"
+    ],
+    "optionLabels": {
+      "AGE_GENDER_CATEGORY": "AGE_GENDER_CATEGORY",
+      "AUTO_PART_POSITION/CONFIGURATION/COLOR_NAME": "AUTO_PART_POSITION/CONFIGURATION/COLOR_NAME",
+      "COLOR": "COLOR",
+      "COLOR_NAME": "COLOR_NAME",
+      "COLOR_NAME/CONFIGURATION": "COLOR_NAME/CONFIGURATION",
+      "COLOR_NAME/CUSTOMER_PACKAGE_TYPE": "COLOR_NAME/CUSTOMER_PACKAGE_TYPE",
+      "COLOR_NAME/ITEM_PACKAGE_QUANTITY": "COLOR_NAME/ITEM_PACKAGE_QUANTITY",
+      "COLOR_NAME/MATERIAL_TYPE": "COLOR_NAME/MATERIAL_TYPE",
+      "COLOR_NAME/NUMBER_OF_ITEMS": "COLOR_NAME/NUMBER_OF_ITEMS",
+      "COLOR_NAME/PATTERN_NAME": "COLOR_NAME/PATTERN_NAME",
+      "COLOR_NAME/SIZE_NAME": "COLOR_NAME/SIZE_NAME",
+      "COLOR_NAME/SIZE_NAME/CONFIGURATION": "COLOR_NAME/SIZE_NAME/CONFIGURATION",
+      "COLOR_NAME/SIZE_NAME/PATTERN_NAME": "COLOR_NAME/SIZE_NAME/PATTERN_NAME",
+      "COLOR_NAME/SIZE_NAME/STYLE_NAME": "COLOR_NAME/SIZE_NAME/STYLE_NAME",
+      "COLOR_NAME/SIZE_NAME/STYLE_NAME/PATTERN_NAME": "COLOR_NAME/SIZE_NAME/STYLE_NAME/PATTERN_NAME",
+      "COLOR_NAME/STYLE_NAME": "COLOR_NAME/STYLE_NAME",
+      "COLOR_NAME/STYLE_NAME/CONFIGURATION": "COLOR_NAME/STYLE_NAME/CONFIGURATION",
+      "COLOR_NAME/STYLE_NAME/PATTERN_NAME": "COLOR_NAME/STYLE_NAME/PATTERN_NAME",
+      "COLOR_NAME/STYLE_NAME/PATTERN_NAME/CONFIGURATION": "COLOR_NAME/STYLE_NAME/PATTERN_NAME/CONFIGURATION",
+      "CONFIGURATION": "CONFIGURATION",
+      "CONFIGURATION/COLOR_NAME": "CONFIGURATION/COLOR_NAME",
+      "CONFIGURATION/SIZE_NAME": "CONFIGURATION/SIZE_NAME",
+      "CONFIGURATION/STYLE_NAME": "CONFIGURATION/STYLE_NAME",
+      "CONNECTIVITY_TECHNOLOGY/CONFIGURATION": "CONNECTIVITY_TECHNOLOGY/CONFIGURATION",
+      "CUP_SIZE": "CUP_SIZE",
+      "CUSTOMER_PACKAGE_TYPE": "CUSTOMER_PACKAGE_TYPE",
+      "FABRIC_TYPE/COLOR_NAME": "FABRIC_TYPE/COLOR_NAME",
+      "FIT_TYPE/SIZE_NAME/COLOR_NAME": "FIT_TYPE/SIZE_NAME/COLOR_NAME",
+      "FLAVOR/SIZE": "FLAVOR/SIZE",
+      "FLAVOR_NAME": "FLAVOR_NAME",
+      "GRIP_SIZE/GRIP_TYPE": "GRIP_SIZE/GRIP_TYPE",
+      "GRIT_TYPE": "GRIT_TYPE",
+      "GRIT_TYPE/COLOR_NAME": "GRIT_TYPE/COLOR_NAME",
+      "GRIT_TYPE/SIZE_NAME": "GRIT_TYPE/SIZE_NAME",
+      "HAND_ORIENTATION": "HAND_ORIENTATION",
+      "ITEM_DISPLAY_LENGTH": "ITEM_DISPLAY_LENGTH",
+      "ITEM_DISPLAY_WEIGHT": "ITEM_DISPLAY_WEIGHT",
+      "ITEM_DISPLAY_WIDTH": "ITEM_DISPLAY_WIDTH",
+      "ITEM_LENGTH_STRING/ITEM_WIDTH_STRING/NUMBER_OF_ITEMS": "ITEM_LENGTH_STRING/ITEM_WIDTH_STRING/NUMBER_OF_ITEMS",
+      "ITEM_PACKAGE_QUANTITY": "ITEM_PACKAGE_QUANTITY",
+      "ITEM_PACKAGE_QUANTITY/COLOR_NAME": "ITEM_PACKAGE_QUANTITY/COLOR_NAME",
+      "ITEM_PACKAGE_QUANTITY/SIZE_NAME": "ITEM_PACKAGE_QUANTITY/SIZE_NAME",
+      "ITEM_PACKAGE_QUANTITY/STYLE_NAME": "ITEM_PACKAGE_QUANTITY/STYLE_NAME",
+      "ITEM_SHAPE": "ITEM_SHAPE",
+      "ITEM_SHAPE/SIZE_NAME": "ITEM_SHAPE/SIZE_NAME",
+      "ITEM_THICKNESS": "ITEM_THICKNESS",
+      "ITEM_WEIGHT": "ITEM_WEIGHT",
+      "LENGTH_RANGE": "LENGTH_RANGE",
+      "LENS_COLOR": "LENS_COLOR",
+      "MATERIAL_TYPE": "MATERIAL_TYPE",
+      "MATERIAL_TYPE/COLOR_NAME": "MATERIAL_TYPE/COLOR_NAME",
+      "MATERIAL_TYPE/ITEM_DISPLAY_WEIGHT": "MATERIAL_TYPE/ITEM_DISPLAY_WEIGHT",
+      "MATERIAL_TYPE/SIZE_NAME": "MATERIAL_TYPE/SIZE_NAME",
+      "MATERIAL_TYPE/STYLE_NAME": "MATERIAL_TYPE/STYLE_NAME",
+      "MATTE_STYLE": "MATTE_STYLE",
+      "MODEL": "MODEL",
+      "MODEL/COLOR_NAME": "MODEL/COLOR_NAME",
+      "MODEL/SIZE_NAME": "MODEL/SIZE_NAME",
+      "MODEL/STYLE_NAME": "MODEL/STYLE_NAME",
+      "MODEL/STYLE_NAME/PART_NUMBER": "MODEL/STYLE_NAME/PART_NUMBER",
+      "MODEL/STYLE_NAME/SIZE_NAME/CAPACITY/NUMBER_OF_ITEMS/PART_NUMBER": "MODEL/STYLE_NAME/SIZE_NAME/CAPACITY/NUMBER_OF_ITEMS/PART_NUMBER",
+      "MODEL_NAME": "MODEL_NAME",
+      "MODEL_NAME/COLOR_NAME": "MODEL_NAME/COLOR_NAME",
+      "NUMBER_OF_ITEMS": "NUMBER_OF_ITEMS",
+      "NUMBER_OF_ITEMS/STYLE_NAME": "NUMBER_OF_ITEMS/STYLE_NAME",
+      "PATTERN": "PATTERN",
+      "PATTERN_NAME": "PATTERN_NAME",
+      "PATTERN_NAME/COLOR_NAME": "PATTERN_NAME/COLOR_NAME",
+      "PATTERN_NAME/SIZE_NAME": "PATTERN_NAME/SIZE_NAME",
+      "PATTERN_NAME/STYLE_NAME": "PATTERN_NAME/STYLE_NAME",
+      "PATTERN_NAME/STYLE_NAME/COLOR_NAME": "PATTERN_NAME/STYLE_NAME/COLOR_NAME",
+      "SCENT_NAME": "SCENT_NAME",
+      "SIZE": "SIZE",
+      "SIZE/COLOR": "SIZE/COLOR",
+      "SIZE/PATTERN": "SIZE/PATTERN",
+      "SIZE_NAME": "SIZE_NAME",
+      "SIZE_NAME/COLOR_NAME": "SIZE_NAME/COLOR_NAME",
+      "SIZE_NAME/COLOR_NAME/CONFIGURATION": "SIZE_NAME/COLOR_NAME/CONFIGURATION",
+      "SIZE_NAME/COLOR_NAME/NUMBER_OF_ITEMS": "SIZE_NAME/COLOR_NAME/NUMBER_OF_ITEMS",
+      "SIZE_NAME/COLOR_NAME/PATTERN_NAME": "SIZE_NAME/COLOR_NAME/PATTERN_NAME",
+      "SIZE_NAME/CONFIGURATION": "SIZE_NAME/CONFIGURATION",
+      "SIZE_NAME/CUSTOMER_PACKAGE_TYPE": "SIZE_NAME/CUSTOMER_PACKAGE_TYPE",
+      "SIZE_NAME/MATERIAL_TYPE": "SIZE_NAME/MATERIAL_TYPE",
+      "SIZE_NAME/NUMBER_OF_ITEMS": "SIZE_NAME/NUMBER_OF_ITEMS",
+      "SIZE_NAME/PATTERN_NAME": "SIZE_NAME/PATTERN_NAME",
+      "SIZE_NAME/SCENT_NAME": "SIZE_NAME/SCENT_NAME",
+      "SIZE_NAME/STYLE_NAME": "SIZE_NAME/STYLE_NAME",
+      "SIZE_NAME/STYLE_NAME/COLOR_NAME": "SIZE_NAME/STYLE_NAME/COLOR_NAME",
+      "SIZE_NAME/STYLE_NAME/CONFIGURATION": "SIZE_NAME/STYLE_NAME/CONFIGURATION",
+      "SIZE_NAME/STYLE_NAME/CUSTOMER_PACKAGE_TYPE": "SIZE_NAME/STYLE_NAME/CUSTOMER_PACKAGE_TYPE",
+      "SIZE_NAME/STYLE_NAME/PATTERN_NAME": "SIZE_NAME/STYLE_NAME/PATTERN_NAME",
+      "SIZE_NAME/STYLE_NAME/PATTERN_NAME/CONFIGURATION": "SIZE_NAME/STYLE_NAME/PATTERN_NAME/CONFIGURATION",
+      "STYLE_NAME": "STYLE_NAME",
+      "STYLE_NAME/COLOR_NAME": "STYLE_NAME/COLOR_NAME",
+      "STYLE_NAME/COLOR_NAME/CONFIGURATION": "STYLE_NAME/COLOR_NAME/CONFIGURATION",
+      "STYLE_NAME/COLOR_NAME/SIZE_NAME": "STYLE_NAME/COLOR_NAME/SIZE_NAME",
+      "STYLE_NAME/CONFIGURATION": "STYLE_NAME/CONFIGURATION",
+      "STYLE_NAME/CUSTOMER_PACKAGE_TYPE": "STYLE_NAME/CUSTOMER_PACKAGE_TYPE",
+      "STYLE_NAME/ITEM_LENGTH/ITEM_WIDTH/COLOR_NAME": "STYLE_NAME/ITEM_LENGTH/ITEM_WIDTH/COLOR_NAME",
+      "STYLE_NAME/MATERIAL_TYPE": "STYLE_NAME/MATERIAL_TYPE",
+      "STYLE_NAME/MODEL/MATERIAL_TYPE/SIZE_NAME/NUMBER_OF_ITEMS/PART_NUMBER": "STYLE_NAME/MODEL/MATERIAL_TYPE/SIZE_NAME/NUMBER_OF_ITEMS/PART_NUMBER",
+      "STYLE_NAME/MODEL/NUMBER_OF_ITEMS/PART_NUMBER": "STYLE_NAME/MODEL/NUMBER_OF_ITEMS/PART_NUMBER",
+      "STYLE_NAME/PATTERN_NAME": "STYLE_NAME/PATTERN_NAME",
+      "STYLE_NAME/PATTERN_NAME/COLOR_NAME": "STYLE_NAME/PATTERN_NAME/COLOR_NAME",
+      "STYLE_NAME/PATTERN_NAME/CONFIGURATION": "STYLE_NAME/PATTERN_NAME/CONFIGURATION",
+      "STYLE_NAME/PATTERN_NAME/SIZE_NAME": "STYLE_NAME/PATTERN_NAME/SIZE_NAME",
+      "STYLE_NAME/SIZE_NAME": "STYLE_NAME/SIZE_NAME",
+      "STYLE_NAME/SIZE_NAME/COLOR_NAME": "STYLE_NAME/SIZE_NAME/COLOR_NAME",
+      "STYLE_NAME/SIZE_NAME/COLOR_NAME/CONFIGURATION": "STYLE_NAME/SIZE_NAME/COLOR_NAME/CONFIGURATION",
+      "STYLE_NAME/SIZE_NAME/CONFIGURATION": "STYLE_NAME/SIZE_NAME/CONFIGURATION",
+      "TEAM_NAME": "TEAM_NAME",
+      "TEAM_NAME/SIZE_NAME": "TEAM_NAME/SIZE_NAME",
+      "TEAM_NAME/SIZE_NAME/COLOR_NAME": "TEAM_NAME/SIZE_NAME/COLOR_NAME",
+      "UNIT_COUNT": "UNIT_COUNT",
+      "VOLUME_CAPACITY_NAME": "VOLUME_CAPACITY_NAME"
+    }
+  },
+  {
+    "name": "country_of_origin",
+    "fieldType": "string",
+    "required": true
+  },
+  {
+    "name": "country_of_origin.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "country_of_origin.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "options": [
+      "AF",
+      "AX",
+      "AL",
+      "DZ",
+      "AS",
+      "AD",
+      "AO",
+      "AI",
+      "AQ",
+      "AG",
+      "AR",
+      "AM",
+      "AW",
+      "AC",
+      "AU",
+      "AT",
+      "AZ",
+      "BH",
+      "BD",
+      "BB",
+      "BY",
+      "BE",
+      "BZ",
+      "BJ",
+      "BM",
+      "BT",
+      "BO",
+      "BQ",
+      "BA",
+      "BW",
+      "BV",
+      "BR",
+      "IO",
+      "VG",
+      "BN",
+      "BG",
+      "BF",
+      "BI",
+      "KH",
+      "CM",
+      "CA",
+      "IC",
+      "CV",
+      "KY",
+      "CF",
+      "TD",
+      "CL",
+      "CN",
+      "CX",
+      "CC",
+      "CO",
+      "KM",
+      "CG",
+      "CK",
+      "CR",
+      "HR",
+      "CU",
+      "CW",
+      "CY",
+      "CZ",
+      "KP",
+      "DK",
+      "DJ",
+      "DM",
+      "DO",
+      "TP",
+      "EC",
+      "EG",
+      "SV",
+      "GQ",
+      "ER",
+      "EE",
+      "ET",
+      "FK",
+      "FO",
+      "FM",
+      "FJ",
+      "FI",
+      "FR",
+      "GF",
+      "PF",
+      "TF",
+      "GA",
+      "GE",
+      "DE",
+      "GH",
+      "GI",
+      "GB",
+      "GR",
+      "GL",
+      "GD",
+      "GP",
+      "GU",
+      "GT",
+      "GG",
+      "GN",
+      "GW",
+      "GY",
+      "HT",
+      "HM",
+      "VA",
+      "HN",
+      "HK",
+      "HU",
+      "IS",
+      "IN",
+      "ID",
+      "IR",
+      "IE",
+      "IQ",
+      "IM",
+      "IL",
+      "IT",
+      "CI",
+      "JM",
+      "JP",
+      "JE",
+      "JO",
+      "KZ",
+      "KE",
+      "KI",
+      "KW",
+      "KG",
+      "LA",
+      "LV",
+      "LB",
+      "LS",
+      "LR",
+      "LY",
+      "LI",
+      "LT",
+      "LU",
+      "MO",
+      "MK",
+      "MG",
+      "MW",
+      "MY",
+      "MV",
+      "ML",
+      "MT",
+      "MH",
+      "MQ",
+      "MR",
+      "MU",
+      "YT",
+      "MX",
+      "MC",
+      "MN",
+      "ME",
+      "MS",
+      "MA",
+      "MZ",
+      "MM",
+      "NA",
+      "NR",
+      "NP",
+      "NL",
+      "AN",
+      "NC",
+      "NZ",
+      "NI",
+      "NE",
+      "NG",
+      "NU",
+      "NF",
+      "MP",
+      "NO",
+      "OM",
+      "PK",
+      "PW",
+      "PS",
+      "PA",
+      "PG",
+      "PY",
+      "PE",
+      "PH",
+      "PN",
+      "PL",
+      "PT",
+      "PR",
+      "QA",
+      "KR",
+      "MD",
+      "RE",
+      "RO",
+      "RU",
+      "RW",
+      "BL",
+      "SH",
+      "KN",
+      "LC",
+      "MF",
+      "PM",
+      "VC",
+      "WS",
+      "SM",
+      "ST",
+      "SA",
+      "SN",
+      "RS",
+      "CS",
+      "SC",
+      "SL",
+      "SG",
+      "SX",
+      "SK",
+      "SI",
+      "SB",
+      "SO",
+      "ZA",
+      "GS",
+      "SS",
+      "ES",
+      "LK",
+      "SD",
+      "SR",
+      "SJ",
+      "SZ",
+      "SE",
+      "CH",
+      "SY",
+      "TW",
+      "TJ",
+      "TH",
+      "BS",
+      "CD",
+      "GM",
+      "TL",
+      "TG",
+      "TK",
+      "TO",
+      "TT",
+      "TA",
+      "TN",
+      "TR",
+      "TM",
+      "TC",
+      "TV",
+      "VI",
+      "UG",
+      "UA",
+      "AE",
+      "UK",
+      "TZ",
+      "US",
+      "UM",
+      "unknown",
+      "UY",
+      "UZ",
+      "VU",
+      "VE",
+      "VN",
+      "WF",
+      "WD",
+      "EH",
+      "WZ",
+      "XB",
+      "XC",
+      "XE",
+      "XK",
+      "XM",
+      "XN",
+      "XY",
+      "YE",
+      "YU",
+      "ZR",
+      "ZM",
+      "ZW"
+    ],
+    "optionLabels": {
+      "AF": "Afghanistan",
+      "AX": "Aland Islands",
+      "AL": "Albania",
+      "DZ": "Algeria",
+      "AS": "American Samoa",
+      "AD": "Andorra",
+      "AO": "Angola",
+      "AI": "Anguilla",
+      "AQ": "Antarctica",
+      "AG": "Antigua and Barbuda",
+      "AR": "Argentina",
+      "AM": "Armenia",
+      "AW": "Aruba",
+      "AC": "Ascension Island",
+      "AU": "Australia",
+      "AT": "Austria",
+      "AZ": "Azerbaijan",
+      "BH": "Bahrain",
+      "BD": "Bangladesh",
+      "BB": "Barbados",
+      "BY": "Belarus",
+      "BE": "Belgium",
+      "BZ": "Belize",
+      "BJ": "Benin",
+      "BM": "Bermuda",
+      "BT": "Bhutan",
+      "BO": "Bolivia",
+      "BQ": "Bonaire, Saint Eustatius and Saba",
+      "BA": "Bosnia and Herzegovina",
+      "BW": "Botswana",
+      "BV": "Bouvet Island",
+      "BR": "Brazil",
+      "IO": "British Indian Ocean Territory",
+      "VG": "British Virgin Islands",
+      "BN": "Brunei Darussalam",
+      "BG": "Bulgaria",
+      "BF": "Burkina Faso",
+      "BI": "Burundi",
+      "KH": "Cambodia",
+      "CM": "Cameroon",
+      "CA": "Canada",
+      "IC": "Canary Islands",
+      "CV": "Cape Verde",
+      "KY": "Cayman Islands",
+      "CF": "Central African Republic",
+      "TD": "Chad",
+      "CL": "Chile",
+      "CN": "China",
+      "CX": "Christmas Island",
+      "CC": "Cocos (Keeling) Islands",
+      "CO": "Colombia",
+      "KM": "Comoros",
+      "CG": "Congo",
+      "CK": "Cook Islands",
+      "CR": "Costa Rica",
+      "HR": "Croatia",
+      "CU": "Cuba",
+      "CW": "Curaçao",
+      "CY": "Cyprus",
+      "CZ": "Czech Republic",
+      "KP": "Democratic People's Republic of Korea",
+      "DK": "Denmark",
+      "DJ": "Djibouti",
+      "DM": "Dominica",
+      "DO": "Dominican Republic",
+      "TP": "East Timor",
+      "EC": "Ecuador",
+      "EG": "Egypt",
+      "SV": "El Salvador",
+      "GQ": "Equatorial Guinea",
+      "ER": "Eritrea",
+      "EE": "Estonia",
+      "ET": "Ethiopia",
+      "FK": "Falkland Islands (Malvinas)",
+      "FO": "Faroe Islands",
+      "FM": "Federated States of Micronesia",
+      "FJ": "Fiji",
+      "FI": "Finland",
+      "FR": "France",
+      "GF": "French Guiana",
+      "PF": "French Polynesia",
+      "TF": "French Southern Territories",
+      "GA": "Gabon",
+      "GE": "Georgia",
+      "DE": "Germany",
+      "GH": "Ghana",
+      "GI": "Gibraltar",
+      "GB": "Great Britain",
+      "GR": "Greece",
+      "GL": "Greenland",
+      "GD": "Grenada",
+      "GP": "Guadeloupe",
+      "GU": "Guam",
+      "GT": "Guatemala",
+      "GG": "Guernsey",
+      "GN": "Guinea",
+      "GW": "Guinea-Bissau",
+      "GY": "Guyana",
+      "HT": "Haiti",
+      "HM": "Heard Island and the McDonald Islands",
+      "VA": "Holy See",
+      "HN": "Honduras",
+      "HK": "Hong Kong",
+      "HU": "Hungary",
+      "IS": "Iceland",
+      "IN": "India",
+      "ID": "Indonesia",
+      "IR": "Iran",
+      "IE": "Ireland",
+      "IQ": "Islamic Republic of Iraq",
+      "IM": "Isle of Man",
+      "IL": "Israel",
+      "IT": "Italy",
+      "CI": "Ivory Coast",
+      "JM": "Jamaica",
+      "JP": "Japan",
+      "JE": "Jersey",
+      "JO": "Jordan",
+      "KZ": "Kazakhstan",
+      "KE": "Kenya",
+      "KI": "Kiribati",
+      "KW": "Kuwait",
+      "KG": "Kyrgyzstan",
+      "LA": "Lao People's Democratic Republic",
+      "LV": "Latvia",
+      "LB": "Lebanon",
+      "LS": "Lesotho",
+      "LR": "Liberia",
+      "LY": "Libya",
+      "LI": "Liechtenstein",
+      "LT": "Lithuania",
+      "LU": "Luxembourg",
+      "MO": "Macao",
+      "MK": "Macedonia",
+      "MG": "Madagascar",
+      "MW": "Malawi",
+      "MY": "Malaysia",
+      "MV": "Maldives",
+      "ML": "Mali",
+      "MT": "Malta",
+      "MH": "Marshall Islands",
+      "MQ": "Martinique",
+      "MR": "Mauritania",
+      "MU": "Mauritius",
+      "YT": "Mayotte",
+      "MX": "Mexico",
+      "MC": "Monaco",
+      "MN": "Mongolia",
+      "ME": "Montenegro",
+      "MS": "Montserrat",
+      "MA": "Morocco",
+      "MZ": "Mozambique",
+      "MM": "Myanmar",
+      "NA": "Namibia",
+      "NR": "Nauru",
+      "NP": "Nepal",
+      "NL": "Netherlands",
+      "AN": "Netherlands Antilles",
+      "NC": "New Caledonia",
+      "NZ": "New Zealand",
+      "NI": "Nicaragua",
+      "NE": "Niger",
+      "NG": "Nigeria",
+      "NU": "Niue",
+      "NF": "Norfolk Island",
+      "MP": "Northern Mariana Islands",
+      "NO": "Norway",
+      "OM": "Oman",
+      "PK": "Pakistan",
+      "PW": "Palau",
+      "PS": "Palestinian Territories",
+      "PA": "Panama",
+      "PG": "Papua New Guinea",
+      "PY": "Paraguay",
+      "PE": "Peru",
+      "PH": "Philippines",
+      "PN": "Pitcairn",
+      "PL": "Poland",
+      "PT": "Portugal",
+      "PR": "Puerto Rico",
+      "QA": "Qatar",
+      "KR": "Republic of Korea",
+      "MD": "Republic of Moldova",
+      "RE": "Reunion",
+      "RO": "Romania",
+      "RU": "Russian Federation",
+      "RW": "Rwanda",
+      "BL": "Saint Barthelemy",
+      "SH": "Saint Helena, Ascension and Tristan da Cunha",
+      "KN": "Saint Kitts and Nevis",
+      "LC": "Saint Lucia",
+      "MF": "Saint Martin",
+      "PM": "Saint Pierre and Miquelon",
+      "VC": "Saint Vincent and the Grenadines",
+      "WS": "Samoa",
+      "SM": "San Marino",
+      "ST": "Sao Tome and Principe",
+      "SA": "Saudi Arabia",
+      "SN": "Senegal",
+      "RS": "Serbia",
+      "CS": "Serbia and Montenegro",
+      "SC": "Seychelles",
+      "SL": "Sierra Leone",
+      "SG": "Singapore",
+      "SX": "Sint Maarten",
+      "SK": "Slovakia",
+      "SI": "Slovenia",
+      "SB": "Solomon Islands",
+      "SO": "Somalia",
+      "ZA": "South Africa",
+      "GS": "South Georgia and the South Sandwich Islands",
+      "SS": "South Sudan",
+      "ES": "Spain",
+      "LK": "Sri Lanka",
+      "SD": "Sudan",
+      "SR": "Suriname",
+      "SJ": "Svalbard and Jan Mayen",
+      "SZ": "Swaziland",
+      "SE": "Sweden",
+      "CH": "Switzerland",
+      "SY": "Syria",
+      "TW": "Taiwan",
+      "TJ": "Tajikistan",
+      "TH": "Thailand",
+      "BS": "The Bahamas",
+      "CD": "The Democratic Republic of the Congo",
+      "GM": "The Gambia",
+      "TL": "Timor-Leste",
+      "TG": "Togo",
+      "TK": "Tokelau",
+      "TO": "Tonga",
+      "TT": "Trinidad and Tobago",
+      "TA": "Tristan da Cunha",
+      "TN": "Tunisia",
+      "TR": "Turkey",
+      "TM": "Turkmenistan",
+      "TC": "Turks and Caicos Islands",
+      "TV": "Tuvalu",
+      "VI": "U.S. Virgin Islands",
+      "UG": "Uganda",
+      "UA": "Ukraine",
+      "AE": "United Arab Emirates",
+      "UK": "United Kingdom",
+      "TZ": "United Republic of Tanzania",
+      "US": "United States",
+      "UM": "United States Minor Outlying Islands",
+      "unknown": "Unknown",
+      "UY": "Uruguay",
+      "UZ": "Uzbekistan",
+      "VU": "Vanuatu",
+      "VE": "Venezuela",
+      "VN": "Vietnam",
+      "WF": "Wallis and Futuna",
+      "WD": "WD",
+      "EH": "Western Sahara",
+      "WZ": "WZ",
+      "XB": "XB",
+      "XC": "XC",
+      "XE": "XE",
+      "XK": "XK",
+      "XM": "XM",
+      "XN": "XN",
+      "XY": "XY",
+      "YE": "Yemen",
+      "YU": "Yugoslavia",
+      "ZR": "Zaire",
+      "ZM": "Zambia",
+      "ZW": "Zimbabwe"
+    }
+  },
+  {
+    "name": "country_of_origin.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "warranty_description",
+    "fieldType": "string"
+  },
+  {
+    "name": "warranty_description.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "warranty_description.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "maxLength": 2000,
+    "maxUtf8ByteLength": 2000
+  },
+  {
+    "name": "warranty_description.0.language_tag",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "tipsOptions": [
+      "en_US"
+    ],
+    "optionLabels": {
+      "en_US": "English (United States)"
+    }
+  },
+  {
+    "name": "warranty_description.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "supplier_declared_dg_hz_regulation",
+    "fieldType": "string",
+    "required": true
+  },
+  {
+    "name": "supplier_declared_dg_hz_regulation.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "supplier_declared_dg_hz_regulation.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "options": [
+      "ghs",
+      "not_applicable",
+      "other",
+      "storage",
+      "transportation",
+      "unknown",
+      "waste"
+    ],
+    "optionLabels": {
+      "ghs": "GHS",
+      "not_applicable": "Not Applicable",
+      "other": "Other",
+      "storage": "Storage",
+      "transportation": "Transportation",
+      "unknown": "Unknown",
+      "waste": "Waste"
+    }
+  },
+  {
+    "name": "supplier_declared_dg_hz_regulation.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "ghs",
+    "fieldType": "string"
+  },
+  {
+    "name": "ghs.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "ghs.0.classification",
+    "fieldType": "string",
+    "maxItems": 1
+  },
+  {
+    "name": "ghs.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "hazmat",
+    "fieldType": "string"
+  },
+  {
+    "name": "hazmat.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "hazmat.0.aspect",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "options": [
+      "united_nations_regulatory_id"
+    ],
+    "optionLabels": {
+      "united_nations_regulatory_id": "UN Regulatory Id"
+    }
+  },
+  {
+    "name": "hazmat.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "maxLength": 2197
+  },
+  {
+    "name": "hazmat.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "safety_data_sheet_url",
+    "fieldType": "string"
+  },
+  {
+    "name": "safety_data_sheet_url.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "safety_data_sheet_url.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "maxLength": 23397
+  },
+  {
+    "name": "safety_data_sheet_url.0.language_tag",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "tipsOptions": [
+      "en_US"
+    ],
+    "optionLabels": {
+      "en_US": "English (United States)"
+    }
+  },
+  {
+    "name": "safety_data_sheet_url.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "item_weight",
+    "fieldType": "string"
+  },
+  {
+    "name": "item_weight.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "item_weight.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "maxLength": 5000
+  },
+  {
+    "name": "item_weight.0.unit",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "options": [
+      "grams",
+      "hundredths_pounds",
+      "kilograms",
+      "milligrams",
+      "ounces",
+      "pounds",
+      "tons"
+    ],
+    "optionLabels": {
+      "grams": "Grams",
+      "hundredths_pounds": "Hundredths Pounds",
+      "kilograms": "Kilograms",
+      "milligrams": "Milligrams",
+      "ounces": "Ounces",
+      "pounds": "Pounds",
+      "tons": "Tons"
+    }
+  },
+  {
+    "name": "item_weight.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "required_product_compliance_certificate",
+    "fieldType": "string"
+  },
+  {
+    "name": "required_product_compliance_certificate.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "required_product_compliance_certificate.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "maxLength": 100,
+    "options": [
+      "California Air Review Board (CARB)",
+      "Not Applicable"
+    ],
+    "optionLabels": {
+      "California Air Review Board (CARB)": "California Air Review Board (CARB)",
+      "Not Applicable": "Not Applicable"
+    }
+  },
+  {
+    "name": "required_product_compliance_certificate.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "legal_compliance_certifications",
+    "fieldType": "string"
+  },
+  {
+    "name": "legal_compliance_certifications.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "legal_compliance_certifications.0.regulatory_organization_name",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "maxUtf8ByteLength": 5000,
+    "options": [
+      "California Environmental Protection Agency - Air Resources Board"
+    ],
+    "optionLabels": {
+      "California Environmental Protection Agency - Air Resources Board": "California Environmental Protection Agency - Air Resources Board"
+    }
+  },
+  {
+    "name": "legal_compliance_certifications.0.certification_status",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "options": [
+      "Compliant",
+      "Exempt",
+      "NonCompliant"
+    ],
+    "optionLabels": {
+      "Compliant": "Compliant",
+      "Exempt": "Exempt",
+      "NonCompliant": "Non-compliant"
+    }
+  },
+  {
+    "name": "legal_compliance_certifications.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "maxLength": 135
+  },
+  {
+    "name": "legal_compliance_certifications.0.language_tag",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "tipsOptions": [
+      "en_US"
+    ],
+    "optionLabels": {
+      "en_US": "English (United States)"
+    }
+  },
+  {
+    "name": "legal_compliance_certifications.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "external_testing_certification",
+    "fieldType": "string"
+  },
+  {
+    "name": "external_testing_certification.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "external_testing_certification.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "maxLength": 23147
+  },
+  {
+    "name": "external_testing_certification.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "california_proposition_65",
+    "fieldType": "string"
+  },
+  {
+    "name": "california_proposition_65.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "california_proposition_65.0.compliance_type",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "options": [
+      "alcoholic_beverage",
+      "chemical",
+      "diesel_engines",
+      "food",
+      "furniture",
+      "on_product_cancer",
+      "on_product_combined_cancer_reproductive",
+      "on_product_reproductive",
+      "passenger_or_off_road_vehicle",
+      "raw_wood",
+      "recreational_vessel"
+    ],
+    "optionLabels": {
+      "alcoholic_beverage": "Alcoholic Beverage",
+      "chemical": "Chemical",
+      "diesel_engines": "Diesel Engines",
+      "food": "Food",
+      "furniture": "Furniture",
+      "on_product_cancer": "On Product Cancer",
+      "on_product_combined_cancer_reproductive": "On Product Combined Cancer Reproductive",
+      "on_product_reproductive": "On Product Reproductive",
+      "passenger_or_off_road_vehicle": "Passenger or Off Road Vehicle",
+      "raw_wood": "Raw Wood",
+      "recreational_vessel": "Recreational Vessel"
+    }
+  },
+  {
+    "name": "california_proposition_65.0.chemical_names",
+    "fieldType": "string",
+    "maxItems": 1
+  },
+  {
+    "name": "california_proposition_65.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "fcc_radio_frequency_emission_compliance",
+    "fieldType": "string"
+  },
+  {
+    "name": "fcc_radio_frequency_emission_compliance.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "fcc_radio_frequency_emission_compliance.0.registration_status",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "options": [
+      "fcc_supplier_declaration_of_conformity",
+      "has_fcc_id",
+      "fcc_incidental_radiator",
+      "not_capable_emitting_rf_energy"
+    ],
+    "optionLabels": {
+      "fcc_supplier_declaration_of_conformity": "Product has a Supplier's Declaration of Conformity (SDoC) with the FCC Rules",
+      "has_fcc_id": "Product has an FCC ID",
+      "fcc_incidental_radiator": "Product is an incidental radiator as defined by the FCC. It is not designed to intentionally use, generate or emit RF energy over 9 kHz. It does not require FCC RF equipment authorization",
+      "not_capable_emitting_rf_energy": "Product not capable of emitting radio frequency energy"
+    }
+  },
+  {
+    "name": "fcc_radio_frequency_emission_compliance.0.identification_number",
+    "fieldType": "string",
+    "maxItems": 1,
+    "maxLength": 100
+  },
+  {
+    "name": "fcc_radio_frequency_emission_compliance.0.point_of_contact_name",
+    "fieldType": "string",
+    "maxItems": 1,
+    "maxLength": 100
+  },
+  {
+    "name": "fcc_radio_frequency_emission_compliance.0.point_of_contact_address",
+    "fieldType": "string",
+    "maxItems": 1,
+    "maxLength": 2500
+  },
+  {
+    "name": "fcc_radio_frequency_emission_compliance.0.point_of_contact_email",
+    "fieldType": "string",
+    "maxItems": 1,
+    "maxLength": 300
+  },
+  {
+    "name": "fcc_radio_frequency_emission_compliance.0.point_of_contact_phone_number",
+    "fieldType": "string",
+    "maxItems": 1,
+    "maxLength": 100
+  },
+  {
+    "name": "fcc_radio_frequency_emission_compliance.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "regulatory_compliance_certification",
+    "fieldType": "string"
+  },
+  {
+    "name": "regulatory_compliance_certification.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "regulatory_compliance_certification.0.regulation_type",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "options": [
+      "carb_eo",
+      "cdpr_pest_id",
+      "energy_star_unique_id",
+      "certificate_of_conformity",
+      "fda_510_k",
+      "intertek_certificate_no",
+      "national_organic_program_id",
+      "tuv_certificate_no",
+      "ul_cetrification_no",
+      "wasda_pest_id"
+    ],
+    "optionLabels": {
+      "carb_eo": "CARB EO",
+      "cdpr_pest_id": "CDPR Pest Identification",
+      "energy_star_unique_id": "ENERGY STAR Unique ID",
+      "certificate_of_conformity": "EPA Certificate of Conformity (CoC)",
+      "fda_510_k": "FDA 510(k) Number",
+      "intertek_certificate_no": "Intertek Certificate Number",
+      "national_organic_program_id": "National Organic Program ID",
+      "tuv_certificate_no": "TUV Certificate Number",
+      "ul_cetrification_no": "UL Certificate Number",
+      "wasda_pest_id": "WASDA Pest Identification"
+    }
+  },
+  {
+    "name": "regulatory_compliance_certification.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "minLength": 1,
+    "maxLength": 135
+  },
+  {
+    "name": "regulatory_compliance_certification.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "dsa_responsible_party_address",
+    "fieldType": "string"
+  },
+  {
+    "name": "dsa_responsible_party_address.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "dsa_responsible_party_address.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "maxLength": 1000
+  },
+  {
+    "name": "dsa_responsible_party_address.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "compliance_media",
+    "fieldType": "string"
+  },
+  {
+    "name": "compliance_media.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "compliance_media.0.content_type",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "options": [
+      "application_guide",
+      "certificate_of_analysis",
+      "certificate_of_compliance",
+      "compatibility_guide",
+      "emergency_use_authorization",
+      "emergency_use_authorization_amendment",
+      "installation_manual",
+      "instructions_for_use",
+      "patient_fact_sheet",
+      "provider_fact_sheet",
+      "safety_data_sheet",
+      "safety_information",
+      "specification_sheet",
+      "troubleshooting_guide",
+      "user_guide",
+      "user_manual",
+      "warranty"
+    ],
+    "optionLabels": {
+      "application_guide": "Application Guide",
+      "certificate_of_analysis": "Certificate of Analysis",
+      "certificate_of_compliance": "Certificate of Compliance",
+      "compatibility_guide": "Compatibility Guide",
+      "emergency_use_authorization": "Emergency Use Authorization",
+      "emergency_use_authorization_amendment": "Emergency Use Authorization Amendment",
+      "installation_manual": "Installation Manual",
+      "instructions_for_use": "Instructions for Use",
+      "patient_fact_sheet": "Patient Fact Sheet",
+      "provider_fact_sheet": "Provider Fact Sheet",
+      "safety_data_sheet": "Safety Data Sheet",
+      "safety_information": "Safety Information",
+      "specification_sheet": "Specification Sheet",
+      "troubleshooting_guide": "Troubleshooting Guide",
+      "user_guide": "User Guide",
+      "user_manual": "User Manual",
+      "warranty": "Warranty"
+    }
+  },
+  {
+    "name": "compliance_media.0.content_language",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "options": [
+      "ar_AE",
+      "ar_BH",
+      "ar_DZ",
+      "ar_EG",
+      "ar_IQ",
+      "ar_JO",
+      "ar_KW",
+      "ar_LB",
+      "ar_LY",
+      "ar_MA",
+      "ar_OM",
+      "ar_QA",
+      "ar_SA",
+      "ar_SD",
+      "ar_SY",
+      "ar_TN",
+      "ar_YE",
+      "az_AZ",
+      "be_BY",
+      "bg_BG",
+      "bn_IN",
+      "bs_BA",
+      "ca_AD",
+      "ca_ES",
+      "cs_CZ",
+      "da_DK",
+      "de_AT",
+      "de_CH",
+      "de_DE",
+      "de_LU",
+      "el_CY",
+      "el_GR",
+      "en_AE",
+      "en_AU",
+      "en_CA",
+      "en_GB",
+      "en_IE",
+      "en_IN",
+      "en_MT",
+      "en_NG",
+      "en_NZ",
+      "en_PH",
+      "en_SG",
+      "en_US",
+      "en_ZA",
+      "es_AR",
+      "es_BO",
+      "es_CL",
+      "es_CO",
+      "es_CR",
+      "es_DO",
+      "es_EC",
+      "es_ES",
+      "es_GT",
+      "es_HN",
+      "es_MX",
+      "es_NI",
+      "es_PA",
+      "es_PE",
+      "es_PR",
+      "es_PY",
+      "es_SV",
+      "es_US",
+      "es_UY",
+      "es_VE",
+      "et_EE",
+      "fi_FI",
+      "fil",
+      "fil_PH",
+      "fr_BE",
+      "fr_CA",
+      "fr_CH",
+      "fr_FR",
+      "fr_LU",
+      "ga_IE",
+      "gu_IN",
+      "he_IL",
+      "hi_IN",
+      "hr_HR",
+      "hu_HU",
+      "id_ID",
+      "in_ID",
+      "is_IS",
+      "it_CH",
+      "it_IT",
+      "iw_IL",
+      "ja_JP",
+      "ka_GE",
+      "kn_IN",
+      "ko_KR",
+      "lt_LT",
+      "lv_LV",
+      "mk_MK",
+      "ml_IN",
+      "mr_IN",
+      "ms_MY",
+      "mt_MT",
+      "nb_NO",
+      "nl_BE",
+      "nl_NL",
+      "no_NO",
+      "pl_PL",
+      "pt_BR",
+      "pt_PT",
+      "ro_RO",
+      "ru_RU",
+      "sk_SK",
+      "sl_SI",
+      "sq_AL",
+      "sr_BA",
+      "sr_CS",
+      "sr_ME",
+      "sr_RS",
+      "sv_SE",
+      "ta_IN",
+      "te_IN",
+      "th_TH",
+      "tr_TR",
+      "uk_UA",
+      "vi_VN",
+      "zh_CN",
+      "zh_HK",
+      "zh_SG",
+      "zh_TW"
+    ],
+    "optionLabels": {
+      "ar_AE": "ar_AE",
+      "ar_BH": "ar_BH",
+      "ar_DZ": "ar_DZ",
+      "ar_EG": "ar_EG",
+      "ar_IQ": "ar_IQ",
+      "ar_JO": "ar_JO",
+      "ar_KW": "ar_KW",
+      "ar_LB": "ar_LB",
+      "ar_LY": "ar_LY",
+      "ar_MA": "ar_MA",
+      "ar_OM": "ar_OM",
+      "ar_QA": "ar_QA",
+      "ar_SA": "ar_SA",
+      "ar_SD": "ar_SD",
+      "ar_SY": "ar_SY",
+      "ar_TN": "ar_TN",
+      "ar_YE": "ar_YE",
+      "az_AZ": "az_AZ",
+      "be_BY": "be_BY",
+      "bg_BG": "bg_BG",
+      "bn_IN": "bn_IN",
+      "bs_BA": "bs_BA",
+      "ca_AD": "ca_AD",
+      "ca_ES": "ca_ES",
+      "cs_CZ": "cs_CZ",
+      "da_DK": "da_DK",
+      "de_AT": "de_AT",
+      "de_CH": "de_CH",
+      "de_DE": "de_DE",
+      "de_LU": "de_LU",
+      "el_CY": "el_CY",
+      "el_GR": "el_GR",
+      "en_AE": "en_AE",
+      "en_AU": "en_AU",
+      "en_CA": "en_CA",
+      "en_GB": "en_GB",
+      "en_IE": "en_IE",
+      "en_IN": "en_IN",
+      "en_MT": "en_MT",
+      "en_NG": "en_NG",
+      "en_NZ": "en_NZ",
+      "en_PH": "en_PH",
+      "en_SG": "en_SG",
+      "en_US": "en_US",
+      "en_ZA": "en_ZA",
+      "es_AR": "es_AR",
+      "es_BO": "es_BO",
+      "es_CL": "es_CL",
+      "es_CO": "es_CO",
+      "es_CR": "es_CR",
+      "es_DO": "es_DO",
+      "es_EC": "es_EC",
+      "es_ES": "es_ES",
+      "es_GT": "es_GT",
+      "es_HN": "es_HN",
+      "es_MX": "es_MX",
+      "es_NI": "es_NI",
+      "es_PA": "es_PA",
+      "es_PE": "es_PE",
+      "es_PR": "es_PR",
+      "es_PY": "es_PY",
+      "es_SV": "es_SV",
+      "es_US": "es_US",
+      "es_UY": "es_UY",
+      "es_VE": "es_VE",
+      "et_EE": "et_EE",
+      "fi_FI": "fi_FI",
+      "fil": "fil",
+      "fil_PH": "fil_PH",
+      "fr_BE": "fr_BE",
+      "fr_CA": "fr_CA",
+      "fr_CH": "fr_CH",
+      "fr_FR": "fr_FR",
+      "fr_LU": "fr_LU",
+      "ga_IE": "ga_IE",
+      "gu_IN": "gu_IN",
+      "he_IL": "he_IL",
+      "hi_IN": "hi_IN",
+      "hr_HR": "hr_HR",
+      "hu_HU": "hu_HU",
+      "id_ID": "id_ID",
+      "in_ID": "in_ID",
+      "is_IS": "is_IS",
+      "it_CH": "it_CH",
+      "it_IT": "it_IT",
+      "iw_IL": "iw_IL",
+      "ja_JP": "ja_JP",
+      "ka_GE": "ka_GE",
+      "kn_IN": "kn_IN",
+      "ko_KR": "ko_KR",
+      "lt_LT": "lt_LT",
+      "lv_LV": "lv_LV",
+      "mk_MK": "mk_MK",
+      "ml_IN": "ml_IN",
+      "mr_IN": "mr_IN",
+      "ms_MY": "ms_MY",
+      "mt_MT": "mt_MT",
+      "nb_NO": "nb_NO",
+      "nl_BE": "nl_BE",
+      "nl_NL": "nl_NL",
+      "no_NO": "no_NO",
+      "pl_PL": "pl_PL",
+      "pt_BR": "pt_BR",
+      "pt_PT": "pt_PT",
+      "ro_RO": "ro_RO",
+      "ru_RU": "ru_RU",
+      "sk_SK": "sk_SK",
+      "sl_SI": "sl_SI",
+      "sq_AL": "sq_AL",
+      "sr_BA": "sr_BA",
+      "sr_CS": "sr_CS",
+      "sr_ME": "sr_ME",
+      "sr_RS": "sr_RS",
+      "sv_SE": "sv_SE",
+      "ta_IN": "ta_IN",
+      "te_IN": "te_IN",
+      "th_TH": "th_TH",
+      "tr_TR": "tr_TR",
+      "uk_UA": "uk_UA",
+      "vi_VN": "vi_VN",
+      "zh_CN": "zh_CN",
+      "zh_HK": "zh_HK",
+      "zh_SG": "zh_SG",
+      "zh_TW": "zh_TW"
+    }
+  },
+  {
+    "name": "compliance_media.0.source_location",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "compliance_media.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "gpsr_safety_attestation",
+    "fieldType": "string"
+  },
+  {
+    "name": "gpsr_safety_attestation.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "gpsr_safety_attestation.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "options": [
+      false,
+      true
+    ],
+    "optionLabels": {
+      "false": "No",
+      "true": "Yes"
+    }
+  },
+  {
+    "name": "gpsr_safety_attestation.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "gpsr_manufacturer_reference",
+    "fieldType": "string"
+  },
+  {
+    "name": "gpsr_manufacturer_reference.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "gpsr_manufacturer_reference.0.gpsr_manufacturer_email_address",
+    "fieldType": "string",
+    "maxItems": 1,
+    "maxLength": 100
+  },
+  {
+    "name": "gpsr_manufacturer_reference.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "ships_globally",
+    "fieldType": "string"
+  },
+  {
+    "name": "ships_globally.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "ships_globally.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "options": [
+      false,
+      true
+    ],
+    "optionLabels": {
+      "false": "No",
+      "true": "Yes"
+    }
+  },
+  {
+    "name": "ships_globally.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "ghs_chemical_h_code",
+    "fieldType": "string"
+  },
+  {
+    "name": "ghs_chemical_h_code.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "ghs_chemical_h_code.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "options": [
+      "EUH014",
+      "EUH018",
+      "EUH019",
+      "EUH029",
+      "EUH031",
+      "EUH032",
+      "EUH044",
+      "EUH066",
+      "EUH070",
+      "EUH071",
+      "EUH201",
+      "EUH201A",
+      "EUH202",
+      "EUH203",
+      "EUH204",
+      "EUH205",
+      "EUH206",
+      "EUH207",
+      "EUH208",
+      "EUH209",
+      "EUH209A",
+      "EUH210",
+      "EUH211",
+      "EUH212",
+      "EUH380",
+      "EUH381",
+      "EUH401",
+      "EUH430",
+      "EUH431",
+      "EUH440",
+      "EUH441",
+      "EUH450",
+      "EUH451",
+      "H200",
+      "H201",
+      "H202",
+      "H203",
+      "H204",
+      "H205",
+      "H220",
+      "H221",
+      "H222",
+      "H223",
+      "H224",
+      "H225",
+      "H226",
+      "H228",
+      "H229",
+      "H230",
+      "H231",
+      "H240",
+      "H241",
+      "H242",
+      "H250",
+      "H251",
+      "H252",
+      "H260",
+      "H261",
+      "H270",
+      "H271",
+      "H272",
+      "H280",
+      "H281",
+      "H290",
+      "H300",
+      "H301",
+      "H302",
+      "H304",
+      "H310",
+      "H311",
+      "H312",
+      "H314",
+      "H315",
+      "H317",
+      "H318",
+      "H319",
+      "H330",
+      "H331",
+      "H332",
+      "H334",
+      "H335",
+      "H336",
+      "H340",
+      "H341",
+      "H350",
+      "H350I",
+      "H351",
+      "H360",
+      "H361",
+      "H362",
+      "H370",
+      "H371",
+      "H372",
+      "H373",
+      "H400",
+      "H410",
+      "H411",
+      "H412",
+      "H413",
+      "H420"
+    ],
+    "optionLabels": {
+      "EUH014": "EUH014",
+      "EUH018": "EUH018",
+      "EUH019": "EUH019",
+      "EUH029": "EUH029",
+      "EUH031": "EUH031",
+      "EUH032": "EUH032",
+      "EUH044": "EUH044",
+      "EUH066": "EUH066",
+      "EUH070": "EUH070",
+      "EUH071": "EUH071",
+      "EUH201": "EUH201",
+      "EUH201A": "EUH201A",
+      "EUH202": "EUH202",
+      "EUH203": "EUH203",
+      "EUH204": "EUH204",
+      "EUH205": "EUH205",
+      "EUH206": "EUH206",
+      "EUH207": "EUH207",
+      "EUH208": "EUH208",
+      "EUH209": "EUH209",
+      "EUH209A": "EUH209A",
+      "EUH210": "EUH210",
+      "EUH211": "EUH211",
+      "EUH212": "EUH212",
+      "EUH380": "EUH380",
+      "EUH381": "EUH381",
+      "EUH401": "EUH401",
+      "EUH430": "EUH430",
+      "EUH431": "EUH431",
+      "EUH440": "EUH440",
+      "EUH441": "EUH441",
+      "EUH450": "EUH450",
+      "EUH451": "EUH451",
+      "H200": "H200",
+      "H201": "H201",
+      "H202": "H202",
+      "H203": "H203",
+      "H204": "H204",
+      "H205": "H205",
+      "H220": "H220",
+      "H221": "H221",
+      "H222": "H222",
+      "H223": "H223",
+      "H224": "H224",
+      "H225": "H225",
+      "H226": "H226",
+      "H228": "H228",
+      "H229": "H229",
+      "H230": "H230",
+      "H231": "H231",
+      "H240": "H240",
+      "H241": "H241",
+      "H242": "H242",
+      "H250": "H250",
+      "H251": "H251",
+      "H252": "H252",
+      "H260": "H260",
+      "H261": "H261",
+      "H270": "H270",
+      "H271": "H271",
+      "H272": "H272",
+      "H280": "H280",
+      "H281": "H281",
+      "H290": "H290",
+      "H300": "H300",
+      "H301": "H301",
+      "H302": "H302",
+      "H304": "H304",
+      "H310": "H310",
+      "H311": "H311",
+      "H312": "H312",
+      "H314": "H314",
+      "H315": "H315",
+      "H317": "H317",
+      "H318": "H318",
+      "H319": "H319",
+      "H330": "H330",
+      "H331": "H331",
+      "H332": "H332",
+      "H334": "H334",
+      "H335": "H335",
+      "H336": "H336",
+      "H340": "H340",
+      "H341": "H341",
+      "H350": "H350",
+      "H350I": "H350I",
+      "H351": "H351",
+      "H360": "H360",
+      "H361": "H361",
+      "H362": "H362",
+      "H370": "H370",
+      "H371": "H371",
+      "H372": "H372",
+      "H373": "H373",
+      "H400": "H400",
+      "H410": "H410",
+      "H411": "H411",
+      "H412": "H412",
+      "H413": "H413",
+      "H420": "H420"
+    }
+  },
+  {
+    "name": "ghs_chemical_h_code.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "main_product_image_locator",
+    "fieldType": "string"
+  },
+  {
+    "name": "main_product_image_locator.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "main_product_image_locator.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "main_product_image_locator.0.media_location",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "other_product_image_locator_1",
+    "fieldType": "string"
+  },
+  {
+    "name": "other_product_image_locator_1.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "other_product_image_locator_1.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "other_product_image_locator_1.0.media_location",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "other_product_image_locator_2",
+    "fieldType": "string"
+  },
+  {
+    "name": "other_product_image_locator_2.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "other_product_image_locator_2.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "other_product_image_locator_2.0.media_location",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "other_product_image_locator_3",
+    "fieldType": "string"
+  },
+  {
+    "name": "other_product_image_locator_3.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "other_product_image_locator_3.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "other_product_image_locator_3.0.media_location",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "other_product_image_locator_4",
+    "fieldType": "string"
+  },
+  {
+    "name": "other_product_image_locator_4.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "other_product_image_locator_4.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "other_product_image_locator_4.0.media_location",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "other_product_image_locator_5",
+    "fieldType": "string"
+  },
+  {
+    "name": "other_product_image_locator_5.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "other_product_image_locator_5.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "other_product_image_locator_5.0.media_location",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "other_product_image_locator_6",
+    "fieldType": "string"
+  },
+  {
+    "name": "other_product_image_locator_6.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "other_product_image_locator_6.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "other_product_image_locator_6.0.media_location",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "other_product_image_locator_7",
+    "fieldType": "string"
+  },
+  {
+    "name": "other_product_image_locator_7.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "other_product_image_locator_7.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "other_product_image_locator_7.0.media_location",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "other_product_image_locator_8",
+    "fieldType": "string"
+  },
+  {
+    "name": "other_product_image_locator_8.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "other_product_image_locator_8.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "other_product_image_locator_8.0.media_location",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "swatch_product_image_locator",
+    "fieldType": "string"
+  },
+  {
+    "name": "swatch_product_image_locator.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "swatch_product_image_locator.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "swatch_product_image_locator.0.media_location",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "item_dimensions_fraction",
+    "fieldType": "string"
+  },
+  {
+    "name": "item_dimensions_fraction.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "item_dimensions_fraction.0.height",
+    "fieldType": "string",
+    "maxItems": 1
+  },
+  {
+    "name": "item_dimensions_fraction.0.length",
+    "fieldType": "string",
+    "maxItems": 1
+  },
+  {
+    "name": "item_dimensions_fraction.0.width",
+    "fieldType": "string",
+    "maxItems": 1
+  },
+  {
+    "name": "item_dimensions_fraction.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "item_dimensions",
+    "fieldType": "string"
+  },
+  {
+    "name": "item_dimensions.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "item_dimensions.0.length",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "item_dimensions.0.width",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "item_dimensions.0.height",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "item_dimensions.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "item_package_dimensions",
+    "fieldType": "string"
+  },
+  {
+    "name": "item_package_dimensions.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "item_package_dimensions.0.length",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "item_package_dimensions.0.width",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "item_package_dimensions.0.height",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "item_package_dimensions.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "item_package_weight",
+    "fieldType": "string"
+  },
+  {
+    "name": "item_package_weight.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "item_package_weight.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "item_package_weight.0.unit",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "options": [
+      "grams",
+      "hundredths_pounds",
+      "kilograms",
+      "milligrams",
+      "ounces",
+      "pounds",
+      "tons"
+    ],
+    "optionLabels": {
+      "grams": "Grams",
+      "hundredths_pounds": "Hundredths Pounds",
+      "kilograms": "Kilograms",
+      "milligrams": "Milligrams",
+      "ounces": "Ounces",
+      "pounds": "Pounds",
+      "tons": "Tons"
+    }
+  },
+  {
+    "name": "item_package_weight.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "abpa_partslink_number",
+    "fieldType": "string"
+  },
+  {
+    "name": "abpa_partslink_number.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "abpa_partslink_number.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "maxLength": 20531
+  },
+  {
+    "name": "abpa_partslink_number.0.language_tag",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "tipsOptions": [
+      "en_US"
+    ],
+    "optionLabels": {
+      "en_US": "English (United States)"
+    }
+  },
+  {
+    "name": "abpa_partslink_number.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "item_display_weight",
+    "fieldType": "string"
+  },
+  {
+    "name": "item_display_weight.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "item_display_weight.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "maxLength": 5000
+  },
+  {
+    "name": "item_display_weight.0.unit",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true,
+    "options": [
+      "grams",
+      "hundredths_pounds",
+      "kilograms",
+      "milligrams",
+      "ounces",
+      "pounds",
+      "tons"
+    ],
+    "optionLabels": {
+      "grams": "Grams",
+      "hundredths_pounds": "Hundredths Pounds",
+      "kilograms": "Kilograms",
+      "milligrams": "Milligrams",
+      "ounces": "Ounces",
+      "pounds": "Pounds",
+      "tons": "Tons"
+    }
+  },
+  {
+    "name": "item_display_weight.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  },
+  {
+    "name": "number_of_boxes",
+    "fieldType": "string"
+  },
+  {
+    "name": "number_of_boxes.0",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "number_of_boxes.0.value",
+    "fieldType": "string",
+    "maxItems": 1,
+    "required": true
+  },
+  {
+    "name": "number_of_boxes.0.marketplace_id",
+    "fieldType": "string",
+    "maxItems": 1,
+    "tipsOptions": [
+      "ATVPDKIKX0DER"
+    ],
+    "optionLabels": {
+      "ATVPDKIKX0DER": "Amazon.com"
+    }
+  }
+]
