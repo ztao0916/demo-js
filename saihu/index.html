@@ -20,9 +20,9 @@
       .then(response => response.json())
       .then(schema => {
         const fields = convertSchemaToFields(schema);
-        const beFunction = convertSchemaToBeFunction(schema); 
-        console.log('beFunction:', beFunction);
-        console.log('fields:', fields);
+        //遍历fields，返回拥有title属性的对象
+        const titleFields = fields.filter(field => field.title);
+        console.log('titleFields:', titleFields);
       });
   </script>
 </body>
