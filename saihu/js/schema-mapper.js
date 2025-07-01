@@ -33,6 +33,33 @@ class SchemaToFieldMapper {
   }
 
   /**
+   * 判断字段是否必填
+   * @param {boolean} isInRequiredArray - 字段是否在required数组中
+   * @param {Object} schema - 字段的schema对象
+   * @returns {boolean} 字段是否必填
+   */
+  isFieldRequired(isInRequiredArray, schema) {
+    // 如果字段不存在于required对象中，非必填
+    if (!isInRequiredArray) {
+      return false;
+    }
+    
+    // 如果存在于required字段中，且属性值中存在enum，则必填
+    if (schema.enum) {
+      return true;
+    }
+    
+    // 如果存在于required字段中，且属性值中不存在enum，只要存在minLength>=0或minimum>=0，则必填
+    if ((schema.minLength !== undefined && schema.minLength >= 0) || 
+        (schema.minimum !== undefined && schema.minimum >= 0)) {
+      return true;
+    }
+    
+    // 其他情况非必填
+    return false;
+  }
+
+  /**
    * 处理单个字段
    * @param {string} fieldName - 字段名
    * @param {Object} fieldSchema - 字段 Schema
@@ -48,10 +75,8 @@ class SchemaToFieldMapper {
       fieldType: this.getFieldType(fieldSchema)
     };
 
-    // 判断必填逻辑：
-    // 1. 有required且enum不存在且minLength存在 -> 必填
-    // 2. 有required且enum存在 -> 必填
-    if (isRequired && (fieldSchema.enum || fieldSchema.minLength >=0 || fieldSchema.minimum >=0)) {
+    // 使用统一的必填判断逻辑
+    if (this.isFieldRequired(isRequired, fieldSchema)) {
       rootMapping.required = true; // 对应 JS 中的 !0
     }
 
@@ -91,9 +116,7 @@ class SchemaToFieldMapper {
     };
 
     // 数组元素继承父级必填状态或有 minItems 约束
-    // 1. 有required且enum不存在且minLength存在 -> 必填
-    // 2. 有required且enum存在 -> 必填
-    if ((parentRequired && (items.enum || items.minLength >=0) || (items.minimum>=0)) || fieldSchema.minItems > 0) {
+    if (this.isFieldRequired(parentRequired, items) || fieldSchema.minItems > 0) {
       arrayElementMapping.required = true;
     }
 
@@ -133,10 +156,8 @@ class SchemaToFieldMapper {
         maxItems: 1
       };
 
-      // 判断必填逻辑：
-      // 1. 有required且enum不存在且minLength存在 -> 必填
-      // 2. 有required且enum存在 -> 必填
-      if (isRequired && (propSchema.enum || propSchema.minLength !== undefined)) {
+      // 使用统一的必填判断逻辑
+      if (this.isFieldRequired(isRequired, propSchema)) {
         propMapping.required = true;
       }
 
