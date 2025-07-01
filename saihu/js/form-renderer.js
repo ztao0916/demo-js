@@ -102,9 +102,15 @@ function renderFieldGroups(fieldGroups, container) {
   Object.keys(fieldGroups).forEach(groupName => {
     const group = fieldGroups[groupName];
     
-    // 如果有子字段，则渲染为分组
+    // 如果有子字段，根据子字段数量决定渲染方式
     if (group.children.length > 0) {
-      renderFieldGroup(group, container);
+      // 只有一个子字段时，直接渲染子字段，不进行分组
+      if (group.children.length === 1) {
+        renderField(group.children[0], container);
+      } else {
+        // 多个子字段时，进行分组渲染
+        renderFieldGroup(group, container);
+      }
     } else if (group.parent) {
       // 如果没有子字段但有父字段，则直接渲染父字段
       renderField(group.parent, container);

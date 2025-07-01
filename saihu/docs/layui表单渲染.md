@@ -7,15 +7,17 @@
 2. 如果字段有 options 字段，则表单渲染为 select 下拉选择框，否则渲染为 input 输入框
 3. 包含 required 字段，且为 true，则表单项为必填项
 4. 具有父子关系的字段进行分组，父级字段（如 item_name）作为分组标题，子级字段（如 item_name.0.value）作为实际表单项
+5. 如果父级字段下只有一个子字段，则不进行分组，只展示子字段，父级字段不做渲染
 
 ## 实现方案
 
-采用模块化设计，创建独立的表单渲染模块，实现表单的动态生成功能。包括字段分组处理，使表单结构更加清晰。
+采用模块化设计，创建独立的表单渲染模块，实现表单的动态生成功能。包括字段分组处理，使表单结构更加清晰，同时优化单子字段的情况。
 
 ### 方案优势
 - 代码结构清晰，职责分离
 - 表单渲染逻辑可复用
 - 字段分组使表单结构更加清晰易用
+- 优化了单子字段的情况，避免不必要的分组
 - 便于后续扩展更复杂的表单功能
 
 ## 实现步骤
@@ -25,7 +27,8 @@
 创建独立的表单渲染模块，实现以下功能：
 - 接收字段数据和表单容器选择器
 - 分析字段关系，将字段按照父子关系分组
-- 将父级字段作为分组标题，子级字段作为实际表单项
+- 识别只有一个子字段的情况，直接渲染子字段
+- 对于多个子字段的情况，将父级字段作为分组标题，子级字段作为实际表单项
 - 动态创建表单项（input 或 select）
 - 处理必填项验证
 - 添加提交和重置按钮
@@ -73,6 +76,31 @@ function groupFieldsByParent(fields) {
   });
   
   return groups;
+}
+```
+
+### 优化的渲染逻辑
+
+```javascript
+function renderFieldGroups(fieldGroups, container) {
+  // 遍历所有字段组
+  Object.keys(fieldGroups).forEach(groupName => {
+    const group = fieldGroups[groupName];
+    
+    // 如果有子字段，根据子字段数量决定渲染方式
+    if (group.children.length > 0) {
+      // 只有一个子字段时，直接渲染子字段，不进行分组
+      if (group.children.length === 1) {
+        renderField(group.children[0], container);
+      } else {
+        // 多个子字段时，进行分组渲染
+        renderFieldGroup(group, container);
+      }
+    } else if (group.parent) {
+      // 如果没有子字段但有父字段，则直接渲染父字段
+      renderField(group.parent, container);
+    }
+  });
 }
 ```
 
@@ -142,7 +170,9 @@ function renderField(field, container) {
 3. 过滤出有 title 属性的字段
 4. 分析字段关系，将字段按照父子关系分组
 5. 调用 renderForm 函数渲染表单
-6. 父级字段作为分组标题，子级字段作为实际表单项
+6. 判断父级字段下子字段数量：
+   - 如果只有一个子字段，则直接渲染子字段，不显示父级字段
+   - 如果有多个子字段，则父级字段作为分组标题，子级字段作为实际表单项
 7. 表单项根据字段属性自动渲染为输入框或下拉选择框
 8. 必填项会显示红点标记，并在提交时进行验证
 

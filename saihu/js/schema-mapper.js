@@ -51,7 +51,7 @@ class SchemaToFieldMapper {
     // 判断必填逻辑：
     // 1. 有required且enum不存在且minLength存在 -> 必填
     // 2. 有required且enum存在 -> 必填
-    if (isRequired && (fieldSchema.enum || fieldSchema.minLength !== undefined)) {
+    if (isRequired && (fieldSchema.enum || fieldSchema.minLength >=0 || fieldSchema.minimum >=0)) {
       rootMapping.required = true; // 对应 JS 中的 !0
     }
 
