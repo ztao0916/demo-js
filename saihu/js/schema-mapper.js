@@ -48,7 +48,8 @@ class SchemaToFieldMapper {
       fieldType: this.getFieldType(fieldSchema)
     };
 
-    if (isRequired) {
+    // 判断必填逻辑：required存在但minLength不存在时不设为必填
+    if (isRequired && (fieldSchema.minLength !== undefined)) {
       rootMapping.required = true; // 对应 JS 中的 !0
     }
 
@@ -87,8 +88,8 @@ class SchemaToFieldMapper {
       maxItems: 1
     };
 
-    // 数组元素继承父级必填状态或有 minItems 约束
-    if (parentRequired || fieldSchema.minItems > 0) {
+    // 数组元素继承父级必填状态或有 minItems 约束，但需要有minLength约束
+    if ((parentRequired && items.minLength !== undefined) || fieldSchema.minItems > 0) {
       arrayElementMapping.required = true;
     }
 
@@ -128,7 +129,8 @@ class SchemaToFieldMapper {
         maxItems: 1
       };
 
-      if (isRequired) {
+      // 判断必填逻辑：required存在但minLength不存在时不设为必填
+      if (isRequired && propSchema.minLength !== undefined) {
         propMapping.required = true;
       }
 

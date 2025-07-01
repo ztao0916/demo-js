@@ -2,7 +2,6 @@
   {
     "name": "item_name",
     "fieldType": "string",
-    "required": true,
     "title": "Title",
     "description": "Provide a title for the item that may be customer facing"
   },
@@ -19,7 +18,6 @@
   {
     "name": "brand",
     "fieldType": "string",
-    "required": true,
     "title": "Brand Name",
     "description": "Max. 50 characters"
   },
@@ -43,7 +41,6 @@
     "name": "externally_assigned_product_identifier.0.type",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "External Product ID Type",
     "description": "Select the type of external ID (barcode) that is being used to identify this product",
     "options": [
@@ -61,7 +58,6 @@
     "name": "externally_assigned_product_identifier.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "External Product ID",
     "description": "Provide the corresponding external product id value based on the type that was selected"
   },
@@ -92,7 +88,6 @@
     "name": "supplier_declared_has_product_identifier_exemption.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Is exempt from supplier declared external product identifier",
     "description": "Please specify if the product is exempt from supplier declared external product identifiers.",
     "options": [
@@ -107,7 +102,6 @@
   {
     "name": "item_type_keyword",
     "fieldType": "string",
-    "required": true,
     "title": "Item Type Keyword",
     "description": "Item type keywords are used to place new ASINs in the appropriate place(s) within the graph. Select the most specific accurate term for optimal placement."
   },
@@ -115,7 +109,6 @@
     "name": "item_type_keyword.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Item Type Keyword",
     "description": "Item type keywords are used to place new ASINs in the appropriate place(s) within the graph. Select the most specific accurate term for optimal placement.",
     "maxLength": 20090
@@ -130,7 +123,6 @@
     "name": "package_level.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Package Level",
     "description": "Provide the package level of the item. Choose “Unit” when package hierarchy is not provided or applicable. Provide one “Unit” item for every package hierarchy.",
     "options": [
@@ -154,7 +146,6 @@
     "name": "package_contains_sku.0.quantity",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Package Contains SKU Quantity",
     "description": "Provide the quantity of each unit, case, or pallet identified in Package Level."
   },
@@ -179,7 +170,6 @@
     "name": "age_gender_category.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Age Gender Category",
     "description": "Specify the department where the product should be found",
     "maxLength": 2398
@@ -243,7 +233,6 @@
     "name": "skip_offer.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Skip Offer",
     "description": "Please indicate whether the offer should be skipped and a buyable offer should not be created. A value of \"Yes\", means no offer will be created.",
     "options": [
@@ -265,7 +254,6 @@
     "name": "fulfillment_availability.0.fulfillment_channel_code",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Fulfillment Channel Code",
     "description": "For those merchants using Amazon fulfillment services, this designates which fulfillment network will be used. Specifying a value other than DEFAULT will cancel the Merchant-fulfilled offering.",
     "options": [
@@ -323,7 +311,6 @@
     "name": "map_policy.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Minimum Advertised Price Display",
     "description": "Select one.",
     "options": [
@@ -452,7 +439,6 @@
     "name": "condition_type.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Item Condition",
     "description": "Provide the actual condition type of the product",
     "options": [
@@ -496,7 +482,6 @@
     "name": "condition_note.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Offer Condition Note",
     "description": "Provide descriptive text explaining the actual condition of the item",
     "maxLength": 2204
@@ -511,7 +496,6 @@
     "name": "list_price.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "List Price",
     "description": "Provide the list price for the product not including tax. List Price is the suggested retail price of a product as provided by a manufacturer, supplier, or seller. This is not the offering or cost price. If you are unable to provide a value, enter 0.",
     "maxLength": 20
@@ -520,7 +504,6 @@
     "name": "list_price.0.currency",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "List Price Currency",
     "description": "Select the corresponding currency",
     "options": [
@@ -540,7 +523,6 @@
     "name": "product_tax_code.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Product Tax Code",
     "description": "Enter the product tax code supplied to you by Amazon.com",
     "maxLength": 949
@@ -555,7 +537,6 @@
     "name": "merchant_release_date.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Merchant Release Date",
     "description": "Provide the merchant release date using YYYY-MM-DD format"
   },
@@ -569,7 +550,6 @@
     "name": "merchant_shipping_group.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Merchant Shipping Group",
     "description": "The ship configuration group for an offer. The ship configuration group is created and managed by the seller through the ship setting UI.",
     "maxLength": 100
@@ -584,7 +564,6 @@
     "name": "max_order_quantity.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Maximum Order Quantity",
     "description": "Max order quantity."
   },
@@ -634,7 +613,6 @@
     "name": "main_offer_image_locator.0.media_location",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Main Image Location",
     "description": "The URL where the main offer-specific image of the product is located"
   },
@@ -648,7 +626,6 @@
     "name": "other_offer_image_locator_1.0.media_location",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Other Image Location",
     "description": "The URL for additional images of your product. These images will be shown on the detail page when the customer clicks through to see other views associated with the product."
   },
@@ -662,7 +639,6 @@
     "name": "other_offer_image_locator_2.0.media_location",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Other Image Location",
     "description": "The URL for additional images of your product. These images will be shown on the detail page when the customer clicks through to see other views associated with the product."
   },
@@ -676,7 +652,6 @@
     "name": "other_offer_image_locator_3.0.media_location",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Other Image Location",
     "description": "The URL for additional images of your product. These images will be shown on the detail page when the customer clicks through to see other views associated with the product."
   },
@@ -690,7 +665,6 @@
     "name": "other_offer_image_locator_4.0.media_location",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Other Image Location",
     "description": "The URL for additional images of your product. These images will be shown on the detail page when the customer clicks through to see other views associated with the product."
   },
@@ -704,7 +678,6 @@
     "name": "other_offer_image_locator_5.0.media_location",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Other Image Location",
     "description": "The URL for additional images of your product. These images will be shown on the detail page when the customer clicks through to see other views associated with the product."
   },
@@ -861,7 +834,6 @@
     "name": "handmade_classification.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Handmade Classification",
     "description": "Select the value that best describes how the product was produced",
     "options": [
@@ -882,7 +854,6 @@
   {
     "name": "product_description",
     "fieldType": "string",
-    "required": true,
     "title": "Product Description",
     "description": "The description you provide should pertain to the product in general, not your particular item. There is a 2,000 character maximum."
   },
@@ -890,7 +861,6 @@
     "name": "product_description.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Product Description",
     "description": "Provide a text description of the product. This information will appear in paragraph form on the detail page of your product. Include unique product features, product line details, and product specifications. Do not use all caps.",
     "maxUtf8ByteLength": 10000
@@ -898,7 +868,6 @@
   {
     "name": "bullet_point",
     "fieldType": "string",
-    "required": true,
     "title": "Key Product Features",
     "description": "Max. 100 characters per line. Use these to highlight some of the product's most important qualities. Each line will be displayed as a separate bullet point above the product description."
   },
@@ -939,7 +908,6 @@
     "name": "style.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Style",
     "description": "Provide the style of the product. Style refers to the aesthetic choices of a person or a group of people. It describes the distinctive visual representation of a product",
     "maxLength": 2200,
@@ -955,7 +923,6 @@
     "name": "material.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Material",
     "description": "Specify the primary materials used for manufacturing the item",
     "maxUtf8ByteLength": 2000
@@ -970,7 +937,6 @@
     "name": "fabric_type.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Fabric Type",
     "description": "List all fabrics separated by ','. Indicate with % composition. Always add \"Viscose\" or \"Rayon\" instead of \"Bamboo\", and \"Azlon\" for Soy",
     "maxLength": 2311
@@ -985,7 +951,6 @@
     "name": "number_of_items.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Number of Items",
     "description": "Provide the total number of identical items in the selling unit to the customer"
   },
@@ -999,7 +964,6 @@
     "name": "item_package_quantity.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Item Package Quantity",
     "description": "Provide the number of packages sold as part of a single item. An ASIN selling 5 boxes of paperclips with 100 paperclips per box would have item package quantity = '5'"
   },
@@ -1028,7 +992,6 @@
     "name": "size.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Size",
     "description": "Provide the size of the item",
     "maxLength": 50,
@@ -1060,7 +1023,6 @@
     "name": "item_shape.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Item Shape",
     "description": "Specify the shape of the item",
     "maxUtf8ByteLength": 2000
@@ -1075,7 +1037,6 @@
     "name": "fit_type.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Fit Type",
     "description": "Specify the item's fit type",
     "maxLength": 2201
@@ -1090,7 +1051,6 @@
     "name": "oe_manufacturer.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Model Brand Part Fits",
     "description": "Enter one model brand name that this replacement part fits.",
     "maxLength": 2200,
@@ -1106,7 +1066,6 @@
     "name": "oem_equivalent_part_number.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "OEM Equivalent Part Number",
     "description": "Provide the part number assigned by the original manufacturer of the component for which the item will serve as a replacement.",
     "maxLength": 2200,
@@ -1122,7 +1081,6 @@
     "name": "configuration.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Configuration",
     "description": "Indicate the configuration of the item",
     "maxLength": 3261
@@ -1137,7 +1095,6 @@
     "name": "auto_part_position.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Auto Part Position",
     "description": "Provide the position of the auto part",
     "options": [
@@ -1297,7 +1254,6 @@
     "name": "compatibility_options.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Compatibility Options",
     "description": "Specify the product's compatibility options",
     "maxLength": 1961
@@ -1312,7 +1268,6 @@
     "name": "part_type_id.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Part Type ID",
     "description": "The attribute indicates the Part Type Id of the product",
     "maxLength": 734
@@ -1327,7 +1282,6 @@
     "name": "capacity.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Capacity",
     "description": "Provide the capacity of the item as a numeric value",
     "maxLength": 5000
@@ -1336,7 +1290,6 @@
     "name": "capacity.0.unit",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Capacity Unit",
     "description": "Select the unit of measure for Capacity. If a value is provided for Capacity, you must also enter the corresponding unit.",
     "options": [
@@ -1432,7 +1385,6 @@
     "name": "is_assembly_required.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Required Assembly",
     "description": "Indicate whether or not the item requires assembly by the customer",
     "options": [
@@ -1508,7 +1460,6 @@
     "name": "flavor.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Flavor",
     "description": "Specify the flavor of the product",
     "maxLength": 2200
@@ -1523,7 +1474,6 @@
     "name": "connectivity_technology.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Connectivity Technology",
     "description": "Specify the product's connectivity technology",
     "maxUtf8ByteLength": 2000
@@ -1538,7 +1488,6 @@
     "name": "volume_capacity_name.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Volume Capacity",
     "description": "Provide the volume capacity of the item as a numeric value",
     "maxLength": 2200
@@ -2928,7 +2877,6 @@
     "name": "customer_package_type.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Customer Package Type",
     "description": "Provide the products package type",
     "maxLength": 2176
@@ -2943,7 +2891,6 @@
     "name": "pattern.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Pattern",
     "description": "Provide the most prominent repeated decorative design of the item",
     "maxLength": 2200,
@@ -2959,7 +2906,6 @@
     "name": "is_expiration_dated_product.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Is Product Expirable",
     "description": "Provide whether the product has an expiration date",
     "options": [
@@ -2981,7 +2927,6 @@
     "name": "unit_count.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Unit Count",
     "description": "For products that are consumed by volume, weight, linear dimension, etc., provide the net quantity that would be shipped to a customer who orders one ASIN (e.g. 12 pack of 6 floz. bottles of water = 72, vs. a single 2 liter bottle = 2). For products consumed as individual units, provide the total number of units (pack of 12 pens = 12). For packed assortments of non-identical items, enter 1"
   },
@@ -3002,7 +2947,6 @@
     "name": "included_components.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Included Components",
     "description": "Specify the items that are included with this product",
     "maxLength": 1000
@@ -3017,7 +2961,6 @@
     "name": "league_name.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "League Name",
     "description": "Provide the league name associated with this product",
     "maxLength": 100,
@@ -3033,7 +2976,6 @@
     "name": "team_name.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Team Name",
     "description": "Please enter the team name of this product",
     "maxLength": 100,
@@ -3049,7 +2991,6 @@
     "name": "scent.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Scent",
     "description": "Provide a description of the scent of the item",
     "maxLength": 2200
@@ -3064,7 +3005,6 @@
     "name": "hand_orientation.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Hand Orientation",
     "description": "Provide the hand orientation that the item is built for; left, right or both",
     "maxLength": 2200,
@@ -3126,7 +3066,6 @@
     "name": "length_range.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Length Range",
     "description": "Length range for blinds",
     "maxUtf8ByteLength": 20
@@ -3141,7 +3080,6 @@
     "name": "matte_style.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Matte Style",
     "description": "The type of matte on the product, typically furniture.",
     "maxLength": 1073
@@ -3164,7 +3102,6 @@
     "name": "item_thickness.0.unit",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Item Thickness Unit",
     "description": "Select the unit of measure for Item Thickness. If a value is provided for Item Thickness, you must also enter the corresponding unit.",
     "options": [
@@ -3212,7 +3149,6 @@
     "name": "automotive_fit_type.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Automotive Fit Type",
     "description": "Provide whether the item is designed to fit a specific vehicle type or all vehicle types.",
     "options": [
@@ -3234,7 +3170,6 @@
     "name": "parentage_level.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Parentage Level",
     "description": "Specify whether a SKU is a parent or child",
     "options": [
@@ -3256,7 +3191,6 @@
     "name": "child_parent_sku_relationship.0.child_relationship_type",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Child Relationship Type",
     "description": "The relationship that the child has to the parent",
     "options": [
@@ -3286,7 +3220,6 @@
     "name": "variation_theme.0.name",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Variation Theme Name",
     "description": "Specify the variation theme that the product will use. The theme's attributes must be populated for all items in the grouping.",
     "options": [
@@ -3527,7 +3460,6 @@
   {
     "name": "country_of_origin",
     "fieldType": "string",
-    "required": true,
     "title": "Country of Publication",
     "description": "The country in which the product was published."
   },
@@ -3535,7 +3467,6 @@
     "name": "country_of_origin.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Country of Origin",
     "description": "Select the product's country of origin",
     "options": [
@@ -4089,7 +4020,6 @@
     "name": "warranty_description.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Warranty Description",
     "description": "Provide a description of the product's warranty",
     "maxLength": 2000,
@@ -4098,7 +4028,6 @@
   {
     "name": "supplier_declared_dg_hz_regulation",
     "fieldType": "string",
-    "required": true,
     "title": "Dangerous Goods Regulations",
     "description": "Provide the regulations that apply to the item if it is classified as a dangerous good, hazardous material, substance, or waste."
   },
@@ -4106,7 +4035,6 @@
     "name": "supplier_declared_dg_hz_regulation.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Dangerous Goods Regulations",
     "description": "Provide the regulations that apply to the item if it is classified as a dangerous good, hazardous material, substance, or waste.",
     "options": [
@@ -4151,7 +4079,6 @@
     "name": "hazmat.0.aspect",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Hazmat Aspect",
     "description": "Select the aspect or regulatory body used for the hazardous product information",
     "options": [
@@ -4165,7 +4092,6 @@
     "name": "hazmat.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Hazmat",
     "description": "Provide hazmat information that is relevant to the product based on the aspect selected",
     "maxLength": 2197
@@ -4180,7 +4106,6 @@
     "name": "safety_data_sheet_url.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Safety Data Sheet (SDS or MSDS) URL",
     "description": "Provide the web address for the Safety Data Sheet, containing essential safety information for potentially hazardous materials.",
     "maxLength": 23397
@@ -4195,7 +4120,6 @@
     "name": "item_weight.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Item Weight",
     "description": "Provide the item weight numeric value (not including the packaging)",
     "maxLength": 5000
@@ -4204,7 +4128,6 @@
     "name": "item_weight.0.unit",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Item Weight Unit",
     "description": "Provide unit for item weight",
     "options": [
@@ -4236,7 +4159,6 @@
     "name": "required_product_compliance_certificate.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Product Compliance Certificate",
     "description": "Select the regulation/restriction your product is subject to that requires a certificate such as an EO Number or Judgement Order for compliance. If your product is not subject to any of these regulations, select Not Applicable",
     "maxLength": 100,
@@ -4259,7 +4181,6 @@
     "name": "legal_compliance_certifications.0.regulatory_organization_name",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Regulatory Organization Name",
     "description": "Select the applicable authority governing the regulation/restriction",
     "maxUtf8ByteLength": 5000,
@@ -4274,7 +4195,6 @@
     "name": "legal_compliance_certifications.0.certification_status",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Compliance Certification Status",
     "description": "If you have the required certification for compliance, select Compliant; if not, select, Non-compliant, and if not needed, select Exempt",
     "options": [
@@ -4292,7 +4212,6 @@
     "name": "legal_compliance_certifications.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Compliance Certification Value",
     "description": "Provide the required certification information to indicate compliance, such as an EO Number or judgement order. If you do not have one or are Exempt, please submit \"NA\"",
     "maxLength": 135
@@ -4307,7 +4226,6 @@
     "name": "external_testing_certification.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "External Testing Certification",
     "description": "Provide the product's external testing certification",
     "maxLength": 23147
@@ -4322,7 +4240,6 @@
     "name": "california_proposition_65.0.compliance_type",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "California Proposition 65 Warning Type",
     "description": "Select the warning type applicable to your product, if any. You certify that the warning provided satisfies legal requirements and that you’ll remove a warning previously provided only if it is no longer legally required.",
     "options": [
@@ -4369,7 +4286,6 @@
     "name": "fcc_radio_frequency_emission_compliance.0.registration_status",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Radio Frequency Emission & Authorization Status",
     "description": "Indicate whether this product is capable of emitting radio frequency energy, and if so, what type of FCC RF equipment authorization this product has.",
     "options": [
@@ -4435,7 +4351,6 @@
     "name": "regulatory_compliance_certification.0.regulation_type",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Compliance Regulation Type",
     "description": "Select applicable regulation type",
     "options": [
@@ -4483,7 +4398,6 @@
     "name": "dsa_responsible_party_address.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Responsible Person's Email or Electronic Address",
     "description": "Provide the email address or URL for the EU Responsible Person, representing the product in compliance with EU regulations.",
     "maxLength": 1000
@@ -4498,7 +4412,6 @@
     "name": "compliance_media.0.content_type",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Compliance Media Content Type",
     "description": "Please enter the content type of the compliance document.",
     "options": [
@@ -4544,7 +4457,6 @@
     "name": "compliance_media.0.content_language",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Compliance Media Language",
     "description": "Provide the language used for the content of the compliance media.",
     "options": [
@@ -4804,7 +4716,6 @@
     "name": "compliance_media.0.source_location",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Compliance Media Source Location",
     "description": "Provide the source location of the compliance media."
   },
@@ -4818,7 +4729,6 @@
     "name": "gpsr_safety_attestation.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "GPSR Safety Attestation",
     "description": "Check “yes” if your product doesn’t have any warning and safety information, as it can be used safely and as intended without it.",
     "options": [
@@ -4854,7 +4764,6 @@
     "name": "ships_globally.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Ships Globally",
     "description": "Provide whether the item can be shipped globally by Amazon ",
     "options": [
@@ -4876,7 +4785,6 @@
     "name": "ghs_chemical_h_code.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "GHS Chemical H Code",
     "description": "Provide the GHS chemical hazard codes for the chemical substance/mixture in order to display warnings to customers.",
     "options": [
@@ -5094,7 +5002,6 @@
     "name": "main_product_image_locator.0.media_location",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Main Image URL",
     "description": "The URL where the main offer-specific image of the product is located."
   },
@@ -5108,7 +5015,6 @@
     "name": "other_product_image_locator_1.0.media_location",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Other Image URL",
     "description": "The URL for additional images of your product. These images will be shown on the detail page when the customer clicks through to see other views associated with the product."
   },
@@ -5122,7 +5028,6 @@
     "name": "other_product_image_locator_2.0.media_location",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Other Image URL",
     "description": "The URL for additional images of your product. These images will be shown on the detail page when the customer clicks through to see other views associated with the product."
   },
@@ -5136,7 +5041,6 @@
     "name": "other_product_image_locator_3.0.media_location",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Other Image URL",
     "description": "The URL for additional images of your product. These images will be shown on the detail page when the customer clicks through to see other views associated with the product."
   },
@@ -5150,7 +5054,6 @@
     "name": "other_product_image_locator_4.0.media_location",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Other Image URL",
     "description": "The URL for additional images of your product. These images will be shown on the detail page when the customer clicks through to see other views associated with the product."
   },
@@ -5164,7 +5067,6 @@
     "name": "other_product_image_locator_5.0.media_location",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Other Image URL",
     "description": "The URL for additional images of your product. These images will be shown on the detail page when the customer clicks through to see other views associated with the product."
   },
@@ -5178,7 +5080,6 @@
     "name": "other_product_image_locator_6.0.media_location",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Other Image URL",
     "description": "The URL for additional images of your product. These images will be shown on the detail page when the customer clicks through to see other views associated with the product."
   },
@@ -5192,7 +5093,6 @@
     "name": "other_product_image_locator_7.0.media_location",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Other Image URL",
     "description": "The URL for additional images of your product. These images will be shown on the detail page when the customer clicks through to see other views associated with the product."
   },
@@ -5206,7 +5106,6 @@
     "name": "other_product_image_locator_8.0.media_location",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Other Image URL",
     "description": "The URL for additional images of your product. These images will be shown on the detail page when the customer clicks through to see other views associated with the product."
   },
@@ -5220,7 +5119,6 @@
     "name": "swatch_product_image_locator.0.media_location",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Swatch Image URL",
     "description": "The URL where an image of a color swatch from the product is located"
   },
@@ -5261,7 +5159,6 @@
     "name": "item_dimensions.0.length",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Item Length",
     "description": "Provide the length of the item"
   },
@@ -5269,7 +5166,6 @@
     "name": "item_dimensions.0.width",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Item Width",
     "description": "Provide the width of the item"
   },
@@ -5277,7 +5173,6 @@
     "name": "item_dimensions.0.height",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Item Height",
     "description": "Provide the height of the item"
   },
@@ -5291,7 +5186,6 @@
     "name": "item_package_dimensions.0.length",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Package Length",
     "description": "Provide the package length"
   },
@@ -5299,7 +5193,6 @@
     "name": "item_package_dimensions.0.width",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Package Width",
     "description": "Provide the package width"
   },
@@ -5307,7 +5200,6 @@
     "name": "item_package_dimensions.0.height",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Package Height",
     "description": "Provide the package height"
   },
@@ -5321,7 +5213,6 @@
     "name": "item_package_weight.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Package Weight",
     "description": "This attribute represents the weight of the item plus the packaging. If your item is shipped to the customer in multiple packages, enter the dimensions of the heaviest package"
   },
@@ -5329,7 +5220,6 @@
     "name": "item_package_weight.0.unit",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Package Weight Unit",
     "description": "Select the unit of measure for Package Weight. If a value is provided for Package Weight, you must also enter the corresponding unit.",
     "options": [
@@ -5361,7 +5251,6 @@
     "name": "abpa_partslink_number.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "ABPA Parts Link Number",
     "description": "Provide the abpa partslink number for this item",
     "maxLength": 20531
@@ -5376,7 +5265,6 @@
     "name": "item_display_weight.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Item Display Weight",
     "description": "Provide the item weight (numeric) if the product is a solid",
     "maxLength": 5000
@@ -5385,7 +5273,6 @@
     "name": "item_display_weight.0.unit",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Item Display Weight Unit",
     "description": "Select the corresponding unit",
     "options": [
@@ -5417,7 +5304,6 @@
     "name": "number_of_boxes.0.value",
     "fieldType": "string",
     "maxItems": 1,
-    "required": true,
     "title": "Number of Boxes",
     "description": "Provide the number of boxes that the product will be shipped in"
   }
