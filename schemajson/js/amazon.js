@@ -69,6 +69,74 @@
 
         return false;
       };
+      
+      /**
+       * 检查字段是否为必填项
+       * @param {String} key - 字段键名
+       * @param {Object} value - 字段值
+       * @param {Array} required - 必填字段列表
+       * @return {Boolean} 是否为必填项
+       */
+      const isFieldRequired = function (key, value, required) {
+        // 规则1: 如果字段不存在于required中,非必填
+        if (!required || !required.includes(key)) {
+          return false;
+        }
+        
+        // 规则2: 检查minLength/maxLength或minimum/maximum的组合
+        if (!value.enum) {
+          // 检查minLength和maxLength
+          const hasMinLength = typeof value.minLength === 'number';
+          const hasMaxLength = typeof value.maxLength === 'number';
+          
+          // 检查minimum和maximum
+          const hasMinimum = typeof value.minimum === 'number';
+          const hasMaximum = typeof value.maximum === 'number';
+          
+          // 如果只有一个长度限制存在，则为非必填
+          if ((hasMinLength && !hasMaxLength) || (!hasMinLength && hasMaxLength)) {
+            return false;
+          }
+          
+          // 如果只有一个数值限制存在，则为非必填
+          if ((hasMinimum && !hasMaximum) || (!hasMinimum && hasMaximum)) {
+            return false;
+          }
+          
+          // 如果同时存在minLength/maxLength或minimum/maximum，并且有效，则为必填
+          if ((hasMinLength && hasMaxLength && value.minLength >= 0 && value.maxLength >= 1) || 
+              (hasMinimum && hasMaximum && value.minimum >= 0 && value.maximum >= 1)) {
+            return true;
+          }
+        }
+        
+        // 规则3: 检查enum相关条件
+        if (value.enum) {
+          const hasEnumNames = Array.isArray(value.enumNames) && value.enumNames.length > 0;
+          
+          // 将enum和enumNames转换为字符串后比较是否相等
+          let enumsEqual = false;
+          if (hasEnumNames && value.enum.length === value.enumNames.length) {
+            // 比较每个元素的字符串形式是否相等
+            enumsEqual = value.enum.every((enumVal, index) => 
+              String(enumVal) === String(value.enumNames[index])
+            );
+          }
+          
+          // 情况1: enum = enumNames 且 editable = false
+          if (enumsEqual && value.editable === false) {
+            return true;
+          }
+          
+          // 情况2: enum != enumNames 且 editable = true
+          if (hasEnumNames && !enumsEqual && value.editable === true) {
+            return true;
+          }
+        }
+        
+        // 默认情况下，如果在required中但不满足特殊条件，仍然视为必填
+        return true;
+      };
 
       // 临时存储所有字段
       const requiredFields = [];
@@ -86,7 +154,7 @@
             key,
             label: value.tTitle || value.title || key,
             description: value.tDescription || value.description || "",
-            required: schema.required ? schema.required.includes(key) : false,
+            required: isFieldRequired(key, value, schema.required),
             type: "input", // 默认为输入框
           };
 
@@ -150,7 +218,7 @@
                           propValue.properties.value.tDescription ||
                           propValue.properties.value.description ||
                           "",
-                        required: (propValue.required || []).includes("value"),
+                        required: isFieldRequired("value", propValue.properties.value, propValue.required),
                         type: "input",
                       };
                       
@@ -198,7 +266,7 @@
                           propValue.properties.unit.tDescription ||
                           propValue.properties.unit.description ||
                           "",
-                        required: (propValue.required || []).includes("unit"),
+                        required: isFieldRequired("unit", propValue.properties.unit, propValue.required),
                         type: "input",
                       };
                       
@@ -239,7 +307,7 @@
                       label: propValue.tTitle || propValue.title || propKey,
                       description:
                         propValue.tDescription || propValue.description || "",
-                      required: requiredFields.includes(propKey),
+                      required: isFieldRequired(propKey, propValue, requiredFields),
                       type: "input",
                     };
 
@@ -549,7 +617,6 @@
         }
       })
       
-      console.log('amazonjs-497-formData:', formData)
       return formData
     },
     /**
