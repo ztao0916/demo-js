@@ -7,20 +7,21 @@
   <link rel="stylesheet" href="./css/layui.css">
   <style>
     .container {
-      padding: 20px;
-      max-width: 800px;
-      margin: 0 auto;
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 0 15px;
     }
     .form-title {
-      font-size: 20px;
-      margin-bottom: 20px;
-      border-bottom: 1px solid #eee;
-      padding-bottom: 10px;
+      font-size: 24px;
+      text-align: center;
+      margin-bottom: 30px;
+      color: #333;
     }
-    .required-label:after {
-      content: "*";
-      color: red;
-      margin-left: 4px;
+    .layui-form-label {
+      width: 180px;
+    }
+    .layui-input-block {
+      margin-left: 210px;
     }
   </style>
 </head>
@@ -37,128 +38,15 @@
     </div>
   </div>
 
-  <!-- 引入映射器脚本 -->
+  <!-- 引入脚本 -->
   <script src="./js/layui.all.js"></script>
   <script src="js/schema-mapper.js"></script>
+  <script src="js/form-renderer.js"></script>
   <script>
     // 获取layui的相关模块
     const form = layui.form;
     const layer = layui.layer;
     
-    // 渲染表单函数
-    function renderForm(fields) {
-      const formContainer = document.querySelector('#formContainer .layui-form');
-      
-      // 清空表单容器
-      formContainer.innerHTML = '';
-      
-      // 遍历字段并渲染
-      fields.forEach(field => {
-        const fieldItem = document.createElement('div');
-        fieldItem.className = 'layui-form-item';
-        
-        // 创建标签
-        const label = document.createElement('label');
-        label.className = field.required ? 'layui-form-label required-label' : 'layui-form-label';
-        label.textContent = field.title || field.label || field.key;
-        
-        // 创建输入区域
-        const inputBlock = document.createElement('div');
-        inputBlock.className = 'layui-input-block';
-        
-        // 根据字段类型创建不同的输入元素
-        if (field.options) {
-          // 下拉框
-          const select = document.createElement('select');
-          select.name = field.key;
-          select.setAttribute('lay-verify', field.required ? 'required' : '');
-          
-          // 添加默认选项
-          const defaultOption = document.createElement('option');
-          defaultOption.value = '';
-          defaultOption.textContent = '请选择';
-          select.appendChild(defaultOption);
-          
-          // 添加选项
-          field.options.forEach(option => {
-            const optionEl = document.createElement('option');
-            optionEl.value = option.value || option;
-            optionEl.textContent = option.label || option.name || option;
-            select.appendChild(optionEl);
-          });
-          
-          inputBlock.appendChild(select);
-        } else {
-          // 输入框
-          const input = document.createElement('input');
-          input.type = 'text';
-          input.name = field.key;
-          input.className = 'layui-input';
-          input.placeholder = field.placeholder || `请输入${field.title || field.label || field.key}`;
-          
-          // 设置验证规则
-          if (field.required) {
-            input.setAttribute('lay-verify', 'required');
-          }
-          
-          // 设置最大长度
-          if (field.maxLength) {
-            input.setAttribute('maxlength', field.maxLength);
-          }
-          
-          inputBlock.appendChild(input);
-        }
-        
-        // 如果有描述信息，添加描述
-        if (field.description) {
-          const desc = document.createElement('div');
-          desc.className = 'layui-form-mid layui-word-aux';
-          desc.textContent = field.description;
-          inputBlock.appendChild(desc);
-        }
-        
-        // 将标签和输入区域添加到字段项
-        fieldItem.appendChild(label);
-        fieldItem.appendChild(inputBlock);
-        
-        // 将字段项添加到表单容器
-        formContainer.appendChild(fieldItem);
-      });
-      
-      // 添加提交按钮
-      const submitItem = document.createElement('div');
-      submitItem.className = 'layui-form-item';
-      
-      const submitBlock = document.createElement('div');
-      submitBlock.className = 'layui-input-block';
-      
-      const submitBtn = document.createElement('button');
-      submitBtn.className = 'layui-btn';
-      submitBtn.setAttribute('lay-submit', '');
-      submitBtn.setAttribute('lay-filter', 'formSubmit');
-      submitBtn.textContent = '提交';
-      
-      const resetBtn = document.createElement('button');
-      resetBtn.type = 'reset';
-      resetBtn.className = 'layui-btn layui-btn-primary';
-      resetBtn.textContent = '重置';
-      
-      submitBlock.appendChild(submitBtn);
-      submitBlock.appendChild(resetBtn);
-      submitItem.appendChild(submitBlock);
-      formContainer.appendChild(submitItem);
-      
-      // 重新渲染表单
-      form.render();
-    }
-    
-    // 监听表单提交
-    form.on('submit(formSubmit)', function(data) {
-      layer.alert(JSON.stringify(data.field), {
-        title: '表单数据'
-      });
-      return false; // 阻止表单跳转
-    });
 
     // 获取JSON Schema并渲染表单
     fetch('./dxm.json')
@@ -169,8 +57,8 @@
         const titleFields = fields.filter(field => field.title);
         console.log('titleFields:', titleFields);
         
-        // 渲染表单
-        renderForm(titleFields);
+        // 调用renderForm函数渲染表单
+        renderForm(titleFields, '#formContainer form');
       })
       .catch(error => {
         console.error('加载Schema失败:', error);
