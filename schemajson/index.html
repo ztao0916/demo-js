@@ -521,7 +521,33 @@
         originalSchemaData = schemaData;
 
         // 使用amazon.js转换Schema为表单配置
-        const formConfig = transformJsonSchemaToForm(schemaData);
+        const formConfig = transformJsonSchemaToForm(schemaData, [
+        "included_components",
+        "item_package_weight",
+        "required_product_compliance_certificate",
+        "externally_assigned_product_identifier",
+        "manufacturer",
+        "number_of_boxes",
+        "model_name",
+        "bullet_point",
+        "fulfillment_availability",
+        "model_number",
+        "product_description",
+        "supplier_declared_dg_hz_regulation",
+        "brand",
+        "is_expiration_dated_product",
+        "purchasable_offer",
+        "country_of_origin",
+        "automotive_fit_type",
+        "list_price",
+        "item_type_keyword",
+        "number_of_items",
+        "merchant_suggested_asin",
+        "item_package_dimensions",
+        "is_assembly_required",
+        "warranty_description",
+        "part_number"
+    ]);
         
         console.log('525-formConfig:', formConfig);
         // 渲染表单
