@@ -100,7 +100,6 @@
       // 处理属性
       if (schema.properties) {
         let newRequiredTopFields = [...new Set(requiredTopFields.concat(schema.required))];
-        console.log("newRequiredTopFields", newRequiredTopFields);
         Object.entries(schema.properties).forEach(function ([key, value]) {
           // 跳过隐藏字段和引用字段
           if (value.hidden || isRefField(value, key) || isFilteredField(key))
@@ -302,7 +301,6 @@
 
                     // 递归处理嵌套的properties，但不是unit和value的情况
                     if (propValue.properties) {
-                      console.log("propValue.required", propValue.required);
                       fieldObj.children = [];
                       processProperties(
                         propValue.properties,
