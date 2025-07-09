@@ -312,7 +312,6 @@
             <div class="group-title ${groupClass}">
               <div class="field-label-container">
                 <span class="${labelClass}" ${tipAttribute}>${field.label}</span>
-                ${isRequired ? '<span class="required-mark">*</span>' : ''}
               </div>
             </div>
             <div class="group-content ${groupClass}">
@@ -325,14 +324,14 @@
               ...child,
               label: child.label || field.label,
               description: child.description || '',
-              required: isRequired || child.required
+              required: child.required
             };
 
             // 如果子属性有自己的children，递归调用renderField
             if (child.children && child.children.length > 0) {
-              html += renderField(childWithLabel, isRequired);
+              html += renderField(childWithLabel, child.required);
             } else {
-              html += renderBasicField(childWithLabel, isRequired, isInRequired);
+              html += renderBasicField(childWithLabel, child.required, isInRequired);
             }
           });
 
