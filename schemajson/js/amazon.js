@@ -22,11 +22,6 @@
       const formConfig = {
         fields: [],
       };
-      // 参数类型检查
-      if (!Array.isArray(requiredTopFields)) {
-        console.error('requiredTopFields 参数必须是数组类型');
-        requiredTopFields = [];
-      }
 
       /**
        * 检查是否为引用字段(引用字段不参与表单渲染)
@@ -52,12 +47,34 @@
       const isFilteredField = function (key) {
         // 需要过滤的字段列表
         const filteredFields = [
-          "item_name", // 标题
-          "bullet_point", // 卖点
-          "product_description", // 描述
-          "generic_keyword", // 关键词
-          "main_product_image_locator", // 主图
-          "swatch_product_image_locator", // 变体图
+           // 基本信息
+           "condition_type",    // 商品状态
+           "brand",            // 品牌
+           "item_name",        // 标题
+           "product_description", // 描述
+           "generic_keyword",  // 关键词
+           "bullet_point",     // 卖点
+ 
+           // 产品标识和关系
+           "part_number",      // 部件号
+           "parentage_level",  // 父子关系级别
+           "child_parent_sku_relationship", // 父子SKU关系
+           "variation_theme",  // 变体主题
+           "supplier_declared_has_product_identifier_exemption", // 产品标识符豁免声明
+           "externally_assigned_product_identifier", // 外部分配的产品标识符
+ 
+           // 图片相关
+           "main_product_image_locator",     // 主图
+           "swatch_product_image_locator",   // 变体图
+           "other_product_image_locator",    // 其他图片（基础）
+ 
+           // 变体属性
+          //  "color",            // 颜色
+          //  "size",            // 尺寸
+          //  "style",           // 样式
+ 
+           // 价格
+           "list_price",       // 标价
         ];
 
         // 检查是否为基本过滤字段
@@ -75,19 +92,6 @@
 
         return false;
       };
-      
-      /**
-       * 检查字段是否为必填项(requiredTopFields为空时，无必填项;requiredTopFields不为空时，关联requiredTopFields)
-       * @param {String} key - 字段键名
-       * @return {Boolean} 是否为必填项
-       */
-      const isTopFieldRequired = function (key) {
-        // 如果key在requiredTopFields中，则该属性对应的字段及子字段为必填项
-        if (requiredTopFields.includes(key)) {
-          return true;
-        }
-        return false;
-      };
 
       // 临时存储所有字段
       const requiredFields = [];
@@ -95,6 +99,8 @@
 
       // 处理属性
       if (schema.properties) {
+        let newRequiredTopFields = [...new Set(requiredTopFields.concat(schema.required))];
+        console.log("newRequiredTopFields", newRequiredTopFields);
         Object.entries(schema.properties).forEach(function ([key, value]) {
           // 跳过隐藏字段和引用字段
           if (value.hidden || isRefField(value, key) || isFilteredField(key))
@@ -105,17 +111,17 @@
             key,
             label: value.tTitle || value.title || key,
             description: value.tDescription || value.description || "",
-            required: isTopFieldRequired(key),
+            required: newRequiredTopFields.includes(key) ? true : false,
             type: "input", // 默认为输入框
           };
 
           // 处理枚举值 - 转为选择框
           if (value.enum) {
             field.type = "select";
-            field.options = value.enum.map(function (val, index) {
+            field.options = value.enum.map(function (val) {
               return {
                 value: val,
-                label: value.enumNames ? value.enumNames[index] : val,
+                label: val
               };
             });
           }
@@ -169,6 +175,7 @@
                           propValue.properties.value.tDescription ||
                           propValue.properties.value.description ||
                           "",
+                        required: newRequiredTopFields.includes(key) ? (propValue.required || []).includes("value"): false,
                         type: "input",
                       };
                       
@@ -216,6 +223,7 @@
                           propValue.properties.unit.tDescription ||
                           propValue.properties.unit.description ||
                           "",
+                        required: newRequiredTopFields.includes(key) ? (propValue.required || []).includes("unit") : false,
                         type: "input",
                       };
                       
@@ -256,7 +264,7 @@
                       label: propValue.tTitle || propValue.title || propKey,
                       description:
                         propValue.tDescription || propValue.description || "",
-                      required: isTopFieldRequired(propKey),
+                      required: newRequiredTopFields.includes(key) ?requiredFields.includes(propKey): false,
                       type: "input",
                     };
 
