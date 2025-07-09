@@ -175,7 +175,7 @@
                           propValue.properties.value.tDescription ||
                           propValue.properties.value.description ||
                           "",
-                        required: newRequiredTopFields.includes(key) ? (propValue.required || []).includes("value"): false,
+                        required: newRequiredTopFields.includes(key) ? ((propValue.required || []).includes("value") ? true : false) : false,
                         type: "input",
                       };
                       
@@ -223,7 +223,7 @@
                           propValue.properties.unit.tDescription ||
                           propValue.properties.unit.description ||
                           "",
-                        required: newRequiredTopFields.includes(key) ? (propValue.required || []).includes("unit") : false,
+                        required: newRequiredTopFields.includes(key) ? ((propValue.required || []).includes("unit") ? true : false) : false,
                         type: "input",
                       };
                       
@@ -302,6 +302,7 @@
 
                     // 递归处理嵌套的properties，但不是unit和value的情况
                     if (propValue.properties) {
+                      console.log("propValue.required", propValue.required);
                       fieldObj.children = [];
                       processProperties(
                         propValue.properties,
