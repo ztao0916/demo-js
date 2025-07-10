@@ -17,7 +17,7 @@
      * @param {Array} requiredTopFields - 顶层必填字段列表,必填字段列表
      * @return {Object} 表单配置对象
      */
-    transformJsonSchemaToForm: function (schema, requiredTopFields) {
+    transformJsonSchemaToForm: function (schema, requiredTopFields=[]) {
       // 基础配置
       const formConfig = {
         fields: [],
@@ -141,7 +141,6 @@
                * @param {Array} requiredFields - 必填字段列表
                * @param {Number} depth - 当前嵌套深度
                * @param {String} parentPath - 父级路径，用于生成层级标识
-               * @param {Boolean} isParentRequired - 父属性是否必填
                */
               const processProperties = function (
                 properties,
@@ -149,8 +148,7 @@
                 targetArray,
                 requiredFields = [],
                 depth = 0,
-                parentPath = "",
-                isParentRequired = false
+                parentPath = ""
               ) {
                 // 为属性排序，确保渲染顺序稳定
                 const sortedEntries = Object.entries(properties).sort((a, b) => {
