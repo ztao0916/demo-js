@@ -99,7 +99,7 @@
 
       // 处理属性
       if (schema.properties) {
-        let newRequiredTopFields = [...new Set(requiredTopFields.concat(schema.required))];
+        let newRequiredTopFields = [...new Set(requiredTopFields.concat(schema.required || []))];
         Object.entries(schema.properties).forEach(function ([key, value]) {
           // 跳过隐藏字段和引用字段
           if (value.hidden || isRefField(value, key) || isFilteredField(key))
@@ -134,184 +134,156 @@
               field.children = [];
 
               /**
-               * 处理嵌套的properties字段，将第三层级的数据挪到第二层
+               * 处理嵌套的properties字段，递归到最底层并扁平化处理
                * @param {Object} properties - 属性对象
                * @param {String} parentKey - 父级键名
                * @param {Array} targetArray - 目标数组
                * @param {Array} requiredFields - 必填字段列表
+               * @param {Number} depth - 当前嵌套深度
+               * @param {String} parentPath - 父级路径，用于生成层级标识
+               * @param {Boolean} isParentRequired - 父属性是否必填
                */
               const processProperties = function (
                 properties,
                 parentKey,
                 targetArray,
-                requiredFields = []
+                requiredFields = [],
+                depth = 0,
+                parentPath = "",
+                isParentRequired = false
               ) {
-                Object.entries(properties).forEach(function ([
-                  propKey,
-                  propValue,
-                ]) {
+                // 为属性排序，确保渲染顺序稳定
+                const sortedEntries = Object.entries(properties).sort((a, b) => {
+                  // 同类型属性按名称排序
+                  return a[0].localeCompare(b[0]);
+                });
+
+                for (const [propKey, propValue] of sortedEntries) {
                   // 跳过隐藏字段和引用字段
-                  if (isRefField(propValue, propKey)) return;
+                  if (isRefField(propValue, propKey)) continue;
 
-                  // 如果属性有properties且包含unit和value，将它们提升到当前层级
-                  if (
-                    propValue.properties &&
-                    propValue.properties.unit &&
-                    propValue.properties.value
+                  // 生成当前属性的路径
+                  const currentPath = parentPath 
+                    ? `${parentPath}.${propKey}` 
+                    : propKey;
+                    
+                  // 检查属性是否为必填
+                  // 关键逻辑：只有当最外层属性是必填(newRequiredTopFields.includes(key))时，
+                  // 才考虑使用properties的required属性判断子属性是否必填
+                  const isRequired = newRequiredTopFields.includes(key) && 
+                    (requiredFields.includes(propKey));
+
+                  
+                  // 生成字段键名
+                  const fieldKey = parentKey
+                    ? `${parentKey}.${propKey}`
+                    : propKey;
+                  
+                  // 生成标签：嵌套层级较深时，添加前缀以区分
+                  let fieldLabel = propValue.tTitle || propValue.title || propKey;
+                  if (depth > 0) {
+                    // 使用路径的最后两级作为前缀，避免标签过长
+                    const pathParts = currentPath.split('.');
+                    const prefix = pathParts.length > 1 
+                      ? pathParts[pathParts.length - 2]
+                      : '';
+                    if (prefix && prefix !== propKey) {
+                      fieldLabel = `${prefix} - ${fieldLabel}`;
+                    }
+                  }
+                  
+                  // 创建基础字段对象
+                  const fieldObj = {
+                    key: fieldKey,
+                    label: fieldLabel,
+                    description: propValue.tDescription || propValue.description || "",
+                    required: isRequired,
+                    type: "input",
+                    // 添加路径和深度信息
+                    _path: currentPath,
+                    _depth: depth
+                  };
+
+                  // 处理maxlength属性
+                  if (propValue.maxLength) {
+                    fieldObj.maxLength = propValue.maxLength;
+                  }
+
+                  // 处理placeholder (example或examples)
+                  if (propValue.example !== undefined) {
+                    fieldObj.placeholder = propValue.example;
+                  } else if (
+                    propValue.examples &&
+                    Array.isArray(propValue.examples) &&
+                    propValue.examples.length > 0
                   ) {
-                    // 处理value字段
-                    if (propValue.properties.value) {
-                      const valueKey = parentKey
-                        ? `${parentKey}.${propKey}_value`
-                        : `${propKey}_value`;
-                      const valueObj = {
-                        key: valueKey,
-                        label:
-                          propValue.properties.value.tTitle ||
-                          propValue.properties.value.title ||
-                          `${propValue.title || propKey} Value`,
-                        description:
-                          propValue.properties.value.tDescription ||
-                          propValue.properties.value.description ||
-                          "",
-                        required: newRequiredTopFields.includes(key) ? ((propValue.required || []).includes("value") ? true : false) : false,
-                        type: "input",
-                      };
-                      
-                      // 处理placeholder (example或examples)
-                      if (propValue.properties.value.example !== undefined) {
-                        valueObj.placeholder = propValue.properties.value.example;
-                      } else if (
-                        propValue.properties.value.examples &&
-                        Array.isArray(propValue.properties.value.examples) &&
-                        propValue.properties.value.examples.length > 0
-                      ) {
-                        valueObj.placeholder = propValue.properties.value.examples[0];
-                      }
+                    fieldObj.placeholder = propValue.examples[0];
+                  }
 
-                      // 处理枚举值
-                      if (propValue.properties.value.enum) {
-                        valueObj.type = "select";
-                        valueObj.options = propValue.properties.value.enum.map(
-                          function (val, index) {
-                            return {
-                              value: val,
-                              label: propValue.properties.value.enumNames
-                                ? propValue.properties.value.enumNames[index]
-                                : val,
-                            };
-                          }
-                        );
-                      }
-
-                      targetArray.push(valueObj);
-                    }
-
-                    // 处理unit字段
-                    if (propValue.properties.unit) {
-                      const unitKey = parentKey
-                        ? `${parentKey}.${propKey}_unit`
-                        : `${propKey}_unit`;
-                      const unitObj = {
-                        key: unitKey,
-                        label:
-                          propValue.properties.unit.tTitle ||
-                          propValue.properties.unit.title ||
-                          `${propValue.title || propKey} Unit`,
-                        description:
-                          propValue.properties.unit.tDescription ||
-                          propValue.properties.unit.description ||
-                          "",
-                        required: newRequiredTopFields.includes(key) ? ((propValue.required || []).includes("unit") ? true : false) : false,
-                        type: "input",
-                      };
-                      
-                      // 处理placeholder (example或examples)
-                      if (propValue.properties.unit.example !== undefined) {
-                        unitObj.placeholder = propValue.properties.unit.example;
-                      } else if (
-                        propValue.properties.unit.examples &&
-                        Array.isArray(propValue.properties.unit.examples) &&
-                        propValue.properties.unit.examples.length > 0
-                      ) {
-                        unitObj.placeholder = propValue.properties.unit.examples[0];
-                      }
-
-                      // 处理枚举值
-                      if (propValue.properties.unit.enum) {
-                        unitObj.type = "select";
-                        unitObj.options = propValue.properties.unit.enum.map(
-                          function (val, index) {
-                            return {
-                              value: val,
-                              label: propValue.properties.unit.enumNames
-                                ? propValue.properties.unit.enumNames[index]
-                                : val,
-                            };
-                          }
-                        );
-                      }
-
-                      targetArray.push(unitObj);
-                    }
-                  } else {
-                    const fieldKey = parentKey
-                      ? `${parentKey}.${propKey}`
-                      : propKey;
-                    const fieldObj = {
-                      key: fieldKey,
-                      label: propValue.tTitle || propValue.title || propKey,
-                      description:
-                        propValue.tDescription || propValue.description || "",
-                      required: newRequiredTopFields.includes(key) ?requiredFields.includes(propKey): false,
-                      type: "input",
-                    };
-
-                    // 处理maxlength属性
-                    if (propValue.maxLength) {
-                      fieldObj.maxLength = propValue.maxLength
-                    }
-
-                    // 处理placeholder (example或examples)
-                    if (propValue.example !== undefined) {
-                      fieldObj.placeholder = propValue.example;
-                    } else if (
-                      propValue.examples &&
-                      Array.isArray(propValue.examples) &&
-                      propValue.examples.length > 0
+                  // 处理枚举值
+                  if (propValue.enum) {
+                    fieldObj.type = "select";
+                    fieldObj.options = propValue.enum.map(function (
+                      val,
+                      index
                     ) {
-                      fieldObj.placeholder = propValue.examples[0]
-                    }
+                      return {
+                        value: val,
+                        label: propValue.enumNames
+                          ? propValue.enumNames[index]
+                          : val,
+                      };
+                    });
+                  }
 
-                    // 处理枚举值
-                    if (propValue.enum) {
-                      fieldObj.type = "select";
-                      fieldObj.options = propValue.enum.map(function (
-                        val,
-                        index
-                      ) {
-                        return {
-                          value: val,
-                          label: propValue.enumNames
-                            ? propValue.enumNames[index]
-                            : val,
-                        };
-                      });
-                    }
-
-                    // 递归处理嵌套的properties，但不是unit和value的情况
-                    if (propValue.properties) {
+                  // 递归处理嵌套的properties
+                  if (propValue.properties) {
+                    // 处理特殊情况或深层嵌套结构 - 将子属性扁平化添加到同一层级
+                    if (key === 'purchasable_offer' || depth > 0) {
+                      // 递归处理所有子属性，并将它们直接添加到目标数组
+                      processProperties(
+                        propValue.properties,
+                        parentKey,
+                        targetArray,
+                        propValue.required || [],
+                        depth + 1,
+                        currentPath,
+                        isRequired
+                      );
+                    } else {
+                      // 常规处理 - 保持嵌套结构
                       fieldObj.children = [];
+                      
+                      // 递归调用，处理下一层properties
                       processProperties(
                         propValue.properties,
                         fieldKey,
                         fieldObj.children,
-                        propValue.required || []
+                        propValue.required || [],
+                        depth + 1,
+                        currentPath,
+                        isRequired
                       );
+                      
+                      // 添加字段对象到目标数组
+                      targetArray.push(fieldObj);
                     }
-
+                  } else {
+                    // 没有嵌套properties，直接添加字段
                     targetArray.push(fieldObj);
                   }
+                }
+                
+                // 对目标数组进行排序：必填在前，非必填在后
+                targetArray.sort((a, b) => {
+                  if (a.required !== b.required) {
+                    return a.required ? -1 : 1;
+                  }
+                  // 同等必填性的情况下，按深度和路径排序
+                  if (a._depth !== b._depth) {
+                    return a._depth - b._depth;
+                  }
+                  return (a._path || '').localeCompare(b._path || '');
                 });
               };
 
@@ -320,20 +292,16 @@
                 value.items.properties,
                 key,
                 field.children,
-                value.items.required || []
+                value.items.required || [],
+                0,
+                "",
+                field.required
               );
 
               // 如果没有有效的子字段，则跳过该数组字段
               if (field.children.length === 0) {
                 return;
               }
-
-              // 对子字段进行排序：必填在前，非必填在后
-              field.children.sort(function (a, b) {
-                if (a.required && !b.required) return -1;
-                if (!a.required && b.required) return 1;
-                return 0;
-              });
             }
           }
 
