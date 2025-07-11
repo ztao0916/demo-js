@@ -135,12 +135,14 @@
 
               /**
                * 处理嵌套的properties字段，递归到最底层并扁平化处理
+               * 所有叶子节点都会被提升到最外层的children数组中
                * @param {Object} properties - 属性对象
                * @param {String} parentKey - 父级键名
                * @param {Array} targetArray - 目标数组
                * @param {Array} requiredFields - 必填字段列表
                * @param {Number} depth - 当前嵌套深度
                * @param {String} parentPath - 父级路径，用于生成层级标识
+               * @param {Boolean} parentRequired - 父节点是否必填
                */
               const processProperties = function (
                 properties,
@@ -148,7 +150,8 @@
                 targetArray,
                 requiredFields = [],
                 depth = 0,
-                parentPath = ""
+                parentPath = "",
+                parentRequired = false
               ) {
                 // 为属性排序，确保渲染顺序稳定
                 const sortedEntries = Object.entries(properties).sort((a, b) => {
@@ -158,7 +161,7 @@
 
                 for (const [propKey, propValue] of sortedEntries) {
                   // 跳过隐藏字段和引用字段
-                  if (isRefField(propValue, propKey)) continue;
+                  if (propValue.hidden || isRefField(propValue, propKey)) continue;
 
                   // 生成当前属性的路径
                   const currentPath = parentPath 
@@ -166,29 +169,19 @@
                     : propKey;
                     
                   // 检查属性是否为必填
-                  // 关键逻辑：只有当最外层属性是必填(newRequiredTopFields.includes(key))时，
-                  // 才考虑使用properties的required属性判断子属性是否必填
-                  const isRequired = newRequiredTopFields.includes(key) && 
-                    (requiredFields.includes(propKey));
+                  // 如果父节点必填，则子节点也必填；否则检查当前节点是否在必填列表中
+                  const isRequired = newRequiredTopFields.includes(key) && requiredFields.includes(propKey);
 
-                  
                   // 生成字段键名
                   const fieldKey = parentKey
                     ? `${parentKey}.${propKey}`
                     : propKey;
                   
-                  // 生成标签：嵌套层级较深时，添加前缀以区分
+                  // 生成有层次感的标签
                   let fieldLabel = propValue.tTitle || propValue.title || propKey;
-                  if (depth > 0) {
-                    // 使用路径的最后两级作为前缀，避免标签过长
-                    const pathParts = currentPath.split('.');
-                    const prefix = pathParts.length > 1 
-                      ? pathParts[pathParts.length - 2]
-                      : '';
-                    if (prefix && prefix !== propKey) {
-                      fieldLabel = `${prefix} - ${fieldLabel}`;
-                    }
-                  }
+                  
+                  // 不再为深层嵌套的字段添加父级路径信息到标签中
+                  // 仅使用当前字段的标题，保持简洁
                   
                   // 创建基础字段对象
                   const fieldObj = {
@@ -234,55 +227,43 @@
                     });
                   }
 
-                  // 递归处理嵌套的properties
-                  if (propValue.properties) {
-                    // 处理特殊情况或深层嵌套结构 - 将子属性扁平化添加到同一层级
-                    if (key === 'purchasable_offer' || depth > 0) {
-                      // 递归处理所有子属性，并将它们直接添加到目标数组
-                      processProperties(
-                        propValue.properties,
-                        parentKey,
-                        targetArray,
-                        propValue.required || [],
-                        depth + 1,
-                        currentPath,
-                        isRequired
-                      );
-                    } else {
-                      // 常规处理 - 保持嵌套结构
-                      fieldObj.children = [];
-                      
-                      // 递归调用，处理下一层properties
+                  // 判断是否为叶子节点 - 检查是否有properties或items.properties
+                  const hasNestedProperties = 
+                    propValue.properties || 
+                    (propValue.items && propValue.items.properties);
+
+                  // 递归处理嵌套的properties - 扁平化处理
+                  if (hasNestedProperties) {
+                    // 如果有properties，处理这些属性
+                    if (propValue.properties) {
                       processProperties(
                         propValue.properties,
                         fieldKey,
-                        fieldObj.children,
+                        targetArray, // 直接使用外层传入的targetArray，实现扁平化
                         propValue.required || [],
                         depth + 1,
                         currentPath,
                         isRequired
                       );
-                      
-                      // 添加字段对象到目标数组
-                      targetArray.push(fieldObj);
+                    }
+                    
+                    // 如果有items.properties，也需要处理这些属性
+                    if (propValue.items && propValue.items.properties) {
+                      processProperties(
+                        propValue.items.properties,
+                        `${fieldKey}.items`,
+                        targetArray,
+                        propValue.items.required || [],
+                        depth + 1,
+                        `${currentPath}.items`,
+                        isRequired
+                      );
                     }
                   } else {
-                    // 没有嵌套properties，直接添加字段
+                    // 没有嵌套properties，这是真正的叶子节点，直接添加到目标数组
                     targetArray.push(fieldObj);
                   }
                 }
-                
-                // 对目标数组进行排序：必填在前，非必填在后
-                targetArray.sort((a, b) => {
-                  if (a.required !== b.required) {
-                    return a.required ? -1 : 1;
-                  }
-                  // 同等必填性的情况下，按深度和路径排序
-                  if (a._depth !== b._depth) {
-                    return a._depth - b._depth;
-                  }
-                  return (a._path || '').localeCompare(b._path || '');
-                });
               };
 
               // 处理items.properties
@@ -295,6 +276,18 @@
                 "",
                 field.required
               );
+
+              // 对目标数组进行排序：必填在前，非必填在后
+              field.children.sort((a, b) => {
+                if (a.required !== b.required) {
+                  return a.required ? -1 : 1;
+                }
+                // 同等必填性的情况下，按深度和路径排序
+                if (a._depth !== b._depth) {
+                  return a._depth - b._depth;
+                }
+                return (a._path || '').localeCompare(b._path || '');
+              });
 
               // 如果没有有效的子字段，则跳过该数组字段
               if (field.children.length === 0) {
