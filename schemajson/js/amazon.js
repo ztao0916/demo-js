@@ -248,14 +248,15 @@
                     }
                     
                     // 如果有items.properties，也需要处理这些属性
+                    // 注意：跳过items层级，直接使用当前字段键名和路径
                     if (propValue.items && propValue.items.properties) {
                       processProperties(
                         propValue.items.properties,
-                        `${fieldKey}.items`,
+                        fieldKey, // 不添加.items，直接使用当前字段键名
                         targetArray,
                         propValue.items.required || [],
                         depth + 1,
-                        `${currentPath}.items`,
+                        currentPath, // 不添加.items，直接使用当前路径
                         isRequired
                       );
                     }
