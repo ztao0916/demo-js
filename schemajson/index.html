@@ -133,7 +133,7 @@
   <script src="./js/amazon.js"></script>
   <script>
     var demoStr = `brand:[{"marketplace_id":"ATVPDKIKX0DER","language_tag":"en_US","value":"5"}]#,#item_type_keyword:[{"marketplace_id":"ATVPDKIKX0DER","language_tag":"en_US","value":"5"}]#,#country_of_origin:[{"marketplace_id":"ATVPDKIKX0DER","language_tag":"en_US","value":"AF"}]#,#supplier_declared_dg_hz_regulation:[{"marketplace_id":"ATVPDKIKX0DER","language_tag":"en_US","value":"not_applicable"}]#,#externally_assigned_product_identifier:[{"marketplace_id":"ATVPDKIKX0DER","language_tag":"en_US","type":"upc","value":"3"}]#,#merchant_suggested_asin:[{"marketplace_id":"ATVPDKIKX0DER","language_tag":"en_US","value":"3"}]#,#supplier_declared_has_product_identifier_exemption:[{"marketplace_id":"ATVPDKIKX0DER","language_tag":"en_US","value":"false"}]#,#package_level:[{"marketplace_id":"ATVPDKIKX0DER","language_tag":"en_US","value":"case"}]#,#item_depth_width_height:[{"marketplace_id":"ATVPDKIKX0DER","language_tag":"en_US","depth":{"value":80,"unit":"inches"},"height":{"value":90,"unit":"inches"},"width":{"value":100,"unit":"inches"}}]`
-    let parsedData = parseAmazonData(demoStr)
+    let parsedData = amazonParseFormData(demoStr)
     // console.log('parsedData:', parsedData.brand)
     // 存储原始schema数据
     let originalSchemaData = null;
@@ -456,7 +456,7 @@
       });
 
       // 使用amazon.js处理表单数据
-      const processedData = processFormData(formData);
+      const processedData = amazonProcessFormData(formData);
 
       // 关闭之前的结果弹窗（如果有）
       if (currentResultLayerIndex !== null) {
@@ -521,7 +521,7 @@
         originalSchemaData = schemaData;
 
         // 使用amazon.js转换Schema为表单配置
-        const formConfig = transformJsonSchemaToForm(schemaData, [
+        const formConfig = transformAmazonJsonSchemaToForm(schemaData, [
         "included_components",
         "item_package_weight",
         "required_product_compliance_certificate",
@@ -554,7 +554,7 @@
         renderFormFields(formConfig);
         
         // 解析示例数据并回显到表单
-        const formData = parseAmazonData(demoStr);
+        const formData = amazonParseFormData(demoStr);
         setTimeout(() => {
           setFormValues(formData);
         }, 500); // 等待表单渲染完成

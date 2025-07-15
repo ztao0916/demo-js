@@ -4,10 +4,10 @@
  */
 
 // 创建全局对象供直接引用
-;(function (global) {
+(function (global) {
   // 定义常量
-  const DEFAULT_MARKETPLACE_ID = 'ATVPDKIKX0DER'
-  const DEFAULT_LANGUAGE_TAG = 'en_US'
+  const DEFAULT_MARKETPLACE_ID = "ATVPDKIKX0DER";
+  const DEFAULT_LANGUAGE_TAG = "en_US";
 
   // 定义对象
   global.amazonUtils = {
@@ -308,6 +308,28 @@
 
       // 合并必填和非必填字段
       formConfig.fields = [...requiredFields, ...optionalFields];
+      for(let i = 0; i < formConfig.fields.length; i++) {
+        let item = formConfig.fields[i]
+        if(item.key === 'fulfillment_availability') {
+          //遍历item.children,如果item.children中的元素的label == Quantity,则将该项的required设置为true
+          for(let j = 0; j < item.children.length; j++) {
+            if(item.children[j].label === 'Quantity') {
+              item.children[j].required = true
+            }
+          }
+        }
+        if(item.key === 'purchasable_offer') {
+          //遍历item.children,如果item.children中的元素的label == Quantity,则将该项的required设置为true
+          for(let j = 0; j < item.children.length; j++) {
+            if(item.children[j].label === 'Your Price') {
+              item.children[j].required = true
+            }else{
+              item.children[j].required = false
+            }
+          }
+        }
+
+      }
       console.log("处理后的表单配置formConfig", formConfig);
       return formConfig;
     },
@@ -320,80 +342,11 @@
     processFormData: function (formData) {
       const result = {}
 
-      // 预处理：收集所有具有相同前缀的字段
-      const prefixMap = {}
-
-      // 第一步：收集所有字段的前缀信息
-      Object.keys(formData).forEach(key => {
-        if (key.includes('.')) {
-          const [parent, child] = key.split('.')
-
-          // 检查是否包含下划线
-          if (child.includes('_')) {
-            // 提取前缀（下划线前的部分）
-            const prefix = child.split('_')[0]
-
-            // 将字段归类到对应前缀组
-            if (!prefixMap[parent]) {
-              prefixMap[parent] = {}
-            }
-
-            if (!prefixMap[parent][prefix]) {
-              prefixMap[parent][prefix] = []
-            }
-
-            prefixMap[parent][prefix].push(child)
-          }
-        }
-      })
-
       // 处理所有字段
-      Object.entries(formData).forEach(function ([key, value]) {
+      Object.entries(formData).forEach(function([key, value]) {
         if (key.includes('.')) {
           // 处理嵌套属性
-          const [parent, child] = key.split('.')
-
-          // 初始化父级对象
-          if (!result[parent]) {
-            result[parent] = [
-              {
-                // 添加默认的 marketplace_id 和 language_tag
-                marketplace_id: DEFAULT_MARKETPLACE_ID,
-                language_tag: DEFAULT_LANGUAGE_TAG
-              }
-            ]
-          }
-
-          // 检查是否为带下划线的字段
-          if (child.includes('_')) {
-            const parts = child.split('_')
-            const prefix = parts[0]
-            const suffix = parts[1]
-
-            // 检查是否需要进行嵌套处理
-            // 判断条件：同一个前缀下有多个字段（至少有一对value和unit）
-            const hasPrefixGroup =
-              prefixMap[parent] &&
-              prefixMap[parent][prefix] &&
-              prefixMap[parent][prefix].length >= 2
-
-            if (hasPrefixGroup && (suffix === 'value' || suffix === 'unit')) {
-              // 创建嵌套结构
-              if (!result[parent][0][prefix]) {
-                result[parent][0][prefix] = {}
-              }
-
-              // 设置value或unit值
-              result[parent][0][prefix][suffix] =
-                suffix === 'value' ? this.tryParseNumber(value) : value
-            } else {
-              // 不需要嵌套的字段，直接添加
-              result[parent][0][child] = value
-            }
-          } else {
-            // 普通字段，直接添加
-            result[parent][0][child] = value
-          }
+          amazonUtils.setNestedValue(result, key, value)
         } else {
           // 对于非嵌套属性，检查是否需要包装成数组
           if (key === 'brand' || key === 'item_name') {
@@ -414,175 +367,177 @@
     },
 
     /**
+     * 解析点分隔的路径为数组
+     * @param {String} path - 点分隔的路径，如 "fulfillment_availability.quantity"
+     * @return {Array} 路径数组，如 ["fulfillment_availability", "quantity"]
+     */
+    parseNestedPath: function(path) {
+      return path.split('.')
+    },
+
+    /**
+     * 在嵌套对象中设置值，支持任意深度嵌套
+     * @param {Object} obj - 目标对象
+     * @param {String} path - 点分隔的路径
+     * @param {*} value - 要设置的值
+     */
+    setNestedValue: function(obj, path, value) {
+      const pathArray = this.parseNestedPath(path)
+      const topLevelKey = pathArray[0]
+
+      // 确保顶级字段存在并且是数组格式
+      if (!obj[topLevelKey]) {
+        obj[topLevelKey] = [
+          {
+            marketplace_id: DEFAULT_MARKETPLACE_ID,
+            language_tag: DEFAULT_LANGUAGE_TAG
+          }
+        ]
+      }
+
+      // 获取数组中的第一个对象
+      const targetObj = obj[topLevelKey][0]
+
+      // 如果只有两层路径，直接设置值
+      if (pathArray.length === 2) {
+        const finalKey = pathArray[1]
+        targetObj[finalKey] = this.tryParseNumber(value)
+        return
+      }
+
+      // 处理多层嵌套路径
+      let current = targetObj
+      for (let i = 1; i < pathArray.length - 1; i++) {
+        const key = pathArray[i]
+        if (!current[key]) {
+          current[key] = {}
+        }
+        current = current[key]
+      }
+
+      // 设置最终值
+      const finalKey = pathArray[pathArray.length - 1]
+      current[finalKey] = this.tryParseNumber(value)
+    },
+    
+    /**
      * 尝试将字符串转换为数字，如果转换失败则返回原字符串
      * @param {String} valueStr - 要转换的字符串
      * @return {Number|String} 转换结果
      */
-    tryParseNumber: function (valueStr) {
+    tryParseNumber: function(valueStr) {
       if (valueStr === null || valueStr === undefined || valueStr === '') {
-        return valueStr
+        return valueStr;
       }
-
-      const num = Number(valueStr)
-      return isNaN(num) ? valueStr : num
+      
+      const num = Number(valueStr);
+      return isNaN(num) ? valueStr : num;
     },
-          /**
+    /**
      * 解析亚马逊数据字符串，支持嵌套结构并处理为表单可用格式
      * @param {String} dataString - 以#,#分隔的亚马逊数据字符串
      * @return {Object} 解析后的表单数据对象
      */
     parseAmazonData: function (dataString) {
-      if (!dataString || typeof dataString !== 'string') {
-        console.error('数据字符串无效')
-        return {}
+      if (!dataString || typeof dataString !== "string") {
+        console.error("数据字符串无效");
+        return {};
       }
 
       // 分割字符串获取键值对
-      const pairs = dataString.split('#,#')
-      const parsedData = {}
-      const formData = {}
+      const pairs = dataString.split("#,#");
+      const parsedData = {};
+      const formData = {};
 
       // 解析每个键值对
-      pairs.forEach(pair => {
+      pairs.forEach((pair) => {
         try {
           // 提取键和值
-          const colonIndex = pair.indexOf(':')
-          if (colonIndex === -1) return
+          const colonIndex = pair.indexOf(":");
+          if (colonIndex === -1) return;
 
-          const key = pair.substring(0, colonIndex)
-          let valueStr = pair.substring(colonIndex + 1)
+          const key = pair.substring(0, colonIndex);
+          let valueStr = pair.substring(colonIndex + 1);
 
           // 解析值部分（JSON格式）
-          const value = JSON.parse(valueStr)
-          parsedData[key] = value
+          const value = JSON.parse(valueStr);
+          parsedData[key] = value;
         } catch (error) {
-          console.error('解析键值对时出错:', error, pair)
+          console.error("解析键值对时出错:", error, pair);
         }
-      })
+      });
 
       // 处理解析后的数据为表单可用格式
       Object.entries(parsedData).forEach(([key, value]) => {
-        // 处理数组数据
-        if (Array.isArray(value) && value.length > 0) {
-          const firstItem = value[0]
+        // 提取数组中的数据对象
+        const dataObj = amazonUtils.extractArrayData(value);
 
-          // 判断是否为包含value的简单对象
-          const isSimpleValueObject = 
-            firstItem.value !== undefined && 
-            Object.keys(firstItem).filter(k => 
-              k !== 'value' && 
-              k !== 'marketplace_id' && 
-              k !== 'language_tag'
-            ).length === 0;
-            
-          if (isSimpleValueObject) {
-            // 普通键值对（如brand、item_name等）
-            formData[key] = firstItem.value
-          } else {
-            // 处理嵌套对象和包含多个属性的对象
-            Object.entries(firstItem).forEach(([nestedKey, nestedValue]) => {
-              // 过滤marketplace_id和language_tag
-              if (
-                nestedKey === 'marketplace_id' ||
-                nestedKey === 'language_tag'
-              ) {
-                return
-              }
-              
-              // 处理普通字段（如type、value等）
-              if (typeof nestedValue !== 'object' || nestedValue === null) {
-                formData[`${key}.${nestedKey}`] = nestedValue
-              } 
-              // 处理嵌套对象（如dimension相关字段）
-              else {
-                // 对象包含value和unit属性
-                if (nestedValue.value !== undefined) {
-                  formData[`${key}.${nestedKey}_value`] = nestedValue.value
-                }
-                if (nestedValue.unit !== undefined) {
-                  formData[`${key}.${nestedKey}_unit`] = nestedValue.unit
-                }
-                
-                // 处理可能存在的其他属性
-                Object.entries(nestedValue).forEach(([subKey, subValue]) => {
-                  if (subKey !== 'value' && subKey !== 'unit') {
-                    formData[`${key}.${nestedKey}_${subKey}`] = subValue
-                  }
-                })
-              }
-            })
-          }
-        } else if (typeof value === 'object' && value !== null) {
-          // 处理非数组的对象
-          if (value.value !== undefined) {
-            formData[key] = value.value
-            
-            // 处理对象中的其他属性
-            Object.entries(value).forEach(([subKey, subValue]) => {
-              if (subKey !== 'value' && subKey !== 'marketplace_id' && subKey !== 'language_tag') {
-                formData[`${key}.${subKey}`] = subValue
-              }
-            })
-          } else {
-            // 对象没有value属性，保持原样
-            formData[key] = value
-          }
-        } else {
-          // 处理简单值
-          formData[key] = value
-        }
-      })
-      
-      return formData
+        // 扁平化对象
+        amazonUtils.flattenObject(dataObj, key, formData);
+      });
+
+      console.log("amazonjs-529-formData:", formData);
+      return formData;
     },
+
     /**
-     * 返回properties中单个字段的数据
-     * @param {Object} properties - 属性对象
-     * @param {String} key - 字段键名
-     * @param {String} value - 字段值
-     * @return {Object} 单个字段的数据
+     * 从数组或对象中提取数据对象
+     * @param {*} value - 输入值
+     * @return {Object} 提取的数据对象
      */
-    processSingleField: function (schemaJson, key) {
-      let processEnumValues = propertyObj => {
-        if (!propertyObj.enum) return []
-
-        const enumArr = propertyObj.enum
-        if (!propertyObj.enumNames || !propertyObj.enumNames.length)
-          return enumArr
-
-        const enumNames = propertyObj.enumNames
-        if (JSON.stringify(enumNames) === JSON.stringify(enumArr))
-          return enumArr
-
-        return enumNames.map((name, i) => ({
-          name: name,
-          value: enumArr[i]
-        }))
-      }
-      let obj = schemaJson[key]
-      // 添加对obj是否存在的检查
-      if (!obj || !obj.items) return []
-
-      const items = obj.items
-      let propertyObj
-
-      if (items.required && items.required.length > 0) {
-        propertyObj = items.properties[items.required[0]]
+    extractArrayData: function(value) {
+      if (Array.isArray(value) && value.length > 0) {
+        return value[0];
+      } else if (typeof value === "object" && value !== null) {
+        return value;
       } else {
-        const itemsKeys = Object.keys(items.properties)
-        if (!itemsKeys.length) return []
-        propertyObj = items.properties[itemsKeys[0]]
+        return { value: value };
+      }
+    },
+
+    /**
+     * 判断是否应该跳过字段
+     * @param {String} fieldName - 字段名
+     * @return {Boolean} 是否跳过
+     */
+    shouldSkipField: function(fieldName) {
+      return fieldName === "marketplace_id" || fieldName === "language_tag";
+    },
+
+    /**
+     * 递归扁平化对象为点分隔格式
+     * @param {Object} obj - 要扁平化的对象
+     * @param {String} prefix - 前缀
+     * @param {Object} result - 结果对象
+     */
+    flattenObject: function(obj, prefix, result) {
+      if (!obj || typeof obj !== "object") {
+        return;
       }
 
-      return processEnumValues(propertyObj)
-    }
-  }
+      Object.entries(obj).forEach(([key, value]) => {
+        // 跳过指定字段
+        if (amazonUtils.shouldSkipField(key)) {
+          return;
+        }
+
+        const newKey = prefix ? `${prefix}.${key}` : key;
+
+        if (typeof value === "object" && value !== null && !Array.isArray(value)) {
+          // 递归处理嵌套对象
+          amazonUtils.flattenObject(value, newKey, result);
+        } else {
+          // 设置最终值
+          result[newKey] = value;
+        }
+      });
+    },
+  };
 
   // 为兼容性考虑，也直接暴露方法
-  global.transformJsonSchemaToForm =
-    global.amazonUtils.transformJsonSchemaToForm
-  global.processFormData = global.amazonUtils.processFormData
-  global.parseAmazonData = global.amazonUtils.parseAmazonData
-  global.processSingleField = global.amazonUtils.processSingleField
-  global.tryParseNumber = global.amazonUtils.tryParseNumber
-})(typeof window !== 'undefined' ? window : this)
+  global.transformAmazonJsonSchemaToForm =
+    global.amazonUtils.transformJsonSchemaToForm;
+  global.amazonProcessFormData = global.amazonUtils.processFormData;
+  global.amazonParseFormData = global.amazonUtils.parseAmazonData;
+  global.tryParseNumber = global.amazonUtils.tryParseNumber;
+})(typeof window !== "undefined" ? window : this);
