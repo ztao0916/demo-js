@@ -5,12 +5,40 @@
 
 // 创建全局对象供直接引用
 (function (global) {
-  // 定义常量
-  const DEFAULT_MARKETPLACE_ID = "ATVPDKIKX0DER";
-  const DEFAULT_LANGUAGE_TAG = "en_US";
+  // 动态获取默认值的函数
+  const getDefaultValues = function (schema) {
+    let marketplaceId = "ATVPDKIKX0DER"; // 默认值
+    let languageTag = "en_US"; // 默认值
+
+    // 从schema的$defs中获取默认值
+    if (schema && schema.$defs) {
+      if (schema.$defs.marketplace_id && schema.$defs.marketplace_id.default) {
+        marketplaceId = schema.$defs.marketplace_id.default;
+      }
+      if (schema.$defs.language_tag && schema.$defs.language_tag.default) {
+        languageTag = schema.$defs.language_tag.default;
+      }
+    }
+
+    return { marketplaceId, languageTag };
+  };
 
   // 定义对象
   global.amazonUtils = {
+    // 存储当前schema的默认值
+    _currentDefaults: {
+      marketplaceId: "ATVPDKIKX0DER",
+      languageTag: "en_US",
+    },
+
+    /**
+     * 设置当前默认值
+     * @param {Object} schema - JSON Schema对象
+     */
+    setCurrentDefaults: function (schema) {
+      const defaults = getDefaultValues(schema);
+      amazonUtils._currentDefaults = defaults;
+    },
     /**
      * 转换JSON Schema为表单结构
      * @param {Object} schema - JSON Schema对象
@@ -18,6 +46,13 @@
      * @return {Object} 表单配置对象
      */
     transformJsonSchemaToForm: function (schema, requiredTopFields = []) {
+      // 设置当前默认值
+      amazonUtils.setCurrentDefaults(schema);
+
+      const {
+        marketplaceId: DEFAULT_MARKETPLACE_ID,
+        languageTag: DEFAULT_LANGUAGE_TAG,
+      } = amazonUtils._currentDefaults;
       // 基础配置
       const formConfig = {
         fields: [],
@@ -363,6 +398,10 @@
      */
     processFormData: function (formData) {
       const result = {};
+      const {
+        marketplaceId: DEFAULT_MARKETPLACE_ID,
+        languageTag: DEFAULT_LANGUAGE_TAG,
+      } = amazonUtils._currentDefaults;
 
       // 处理所有字段
       Object.entries(formData).forEach(function ([key, value]) {
@@ -406,6 +445,10 @@
     setNestedValue: function (obj, path, value) {
       const pathArray = this.parseNestedPath(path);
       const topLevelKey = pathArray[0];
+      const {
+        marketplaceId: DEFAULT_MARKETPLACE_ID,
+        languageTag: DEFAULT_LANGUAGE_TAG,
+      } = amazonUtils._currentDefaults;
 
       // 确保顶级字段存在并且是数组格式
       if (!obj[topLevelKey]) {
@@ -427,14 +470,16 @@
         return;
       }
 
-      // 处理多层嵌套路径
+      // 处理多层嵌套路径 - 所有中间层级都创建为数组格式
       let current = targetObj;
       for (let i = 1; i < pathArray.length - 1; i++) {
         const key = pathArray[i];
         if (!current[key]) {
-          current[key] = {};
+          // 创建数组格式的中间层级
+          current[key] = [{}];
         }
-        current = current[key];
+        // 访问数组中的第一个对象
+        current = current[key][0];
       }
 
       // 设置最终值
@@ -498,7 +543,6 @@
         amazonUtils.flattenObject(dataObj, key, formData);
       });
 
-      console.log("amazonjs-529-formData:", formData);
       return formData;
     },
 
@@ -552,6 +596,16 @@
         ) {
           // 递归处理嵌套对象
           amazonUtils.flattenObject(value, newKey, result);
+        } else if (Array.isArray(value) && value.length > 0) {
+          // 处理数组：取第一个元素
+          const firstElement = value[0];
+          if (typeof firstElement === "object" && firstElement !== null) {
+            // 如果数组元素是对象，递归扁平化其属性
+            amazonUtils.flattenObject(firstElement, newKey, result);
+          } else {
+            // 如果数组元素不是对象，直接设置值
+            result[newKey] = value;
+          }
         } else {
           // 设置最终值
           result[newKey] = value;
