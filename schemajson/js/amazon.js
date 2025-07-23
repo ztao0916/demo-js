@@ -902,7 +902,197 @@
       });
 
       return result;
-    }
+    },
+
+    /**
+     * 根据 schema 结构转换 submitData，确保数据结构符合规范
+     * @param {Object} submitData - 原始提交数据
+     * @param {Array} newProperties - schema 属性定义数组
+     * @returns {Object} 转换后的数据
+     */
+    transformSubmitDataBySchema: function (submitData, newProperties) {
+      if (!submitData || !newProperties) {
+        console.warn("transformSubmitDataBySchema: 缺少必要参数");
+        return submitData;
+      }
+
+      const result = JSON.parse(JSON.stringify(submitData)); // 深拷贝
+      const {
+        marketplaceId: DEFAULT_MARKETPLACE_ID,
+        languageTag: DEFAULT_LANGUAGE_TAG,
+      } = amazonUtils._currentDefaults;
+
+      // 遍历 newProperties，找到对应的字段进行转换
+      newProperties.forEach((propertyObj) => {
+        const fieldName = Object.keys(propertyObj)[0];
+        const schemaDefinition = propertyObj[fieldName];
+
+        if (result[fieldName]) {
+          result[fieldName] = amazonUtils.processFieldBySchema(
+            result[fieldName],
+            schemaDefinition,
+            fieldName,
+            DEFAULT_MARKETPLACE_ID,
+            DEFAULT_LANGUAGE_TAG
+          );
+        }
+      });
+
+      return result;
+    },
+
+    /**
+     * 根据 schema 定义处理单个字段
+     * @param {*} fieldValue - 字段值
+     * @param {Object} schemaDefinition - schema 定义
+     * @param {String} fieldName - 字段名（用于调试和日志）
+     * @param {String} marketplaceId - marketplace_id 默认值
+     * @param {String} languageTag - language_tag 默认值
+     * @returns {*} 处理后的字段值
+     */
+    processFieldBySchema: function (
+      fieldValue,
+      schemaDefinition,
+      fieldName,
+      marketplaceId,
+      languageTag
+    ) {
+      if (!fieldValue || !schemaDefinition) {
+        console.debug(
+          `processFieldBySchema: 跳过字段 ${fieldName}，缺少必要数据`
+        );
+        return fieldValue;
+      }
+
+      // 如果 schema 定义为数组类型
+      if (schemaDefinition.type === "array" && schemaDefinition.items) {
+        console.debug(`processFieldBySchema: 处理数组字段 ${fieldName}`);
+        return amazonUtils.ensureArrayStructure(
+          fieldValue,
+          schemaDefinition.items,
+          marketplaceId,
+          languageTag
+        );
+      }
+
+      return fieldValue;
+    },
+
+    /**
+     * 确保数组结构符合 schema 规范
+     * @param {*} value - 原始值
+     * @param {Object} itemsSchema - items 的 schema 定义
+     * @param {String} marketplaceId - marketplace_id 默认值
+     * @param {String} languageTag - language_tag 默认值
+     * @returns {Array} 符合规范的数组
+     */
+    ensureArrayStructure: function (
+      value,
+      itemsSchema,
+      marketplaceId,
+      languageTag
+    ) {
+      if (!Array.isArray(value)) {
+        return value;
+      }
+
+      return value.map((item) => {
+        if (!item || typeof item !== "object") {
+          return item;
+        }
+
+        const processedItem = { ...item };
+
+        // 确保包含 marketplace_id
+        if (
+          itemsSchema.properties &&
+          itemsSchema.properties.marketplace_id &&
+          !processedItem.marketplace_id
+        ) {
+          processedItem.marketplace_id = marketplaceId;
+        }
+
+        // 确保包含 language_tag
+        if (
+          itemsSchema.properties &&
+          itemsSchema.properties.language_tag &&
+          !processedItem.language_tag
+        ) {
+          processedItem.language_tag = languageTag;
+        }
+
+        // 处理嵌套的数组字段
+        if (itemsSchema.properties) {
+          Object.keys(itemsSchema.properties).forEach((propName) => {
+            const propSchema = itemsSchema.properties[propName];
+
+            if (
+              processedItem[propName] &&
+              propSchema.type === "array" &&
+              propSchema.items
+            ) {
+              // 如果当前字段值不是数组，需要转换为数组
+              if (!Array.isArray(processedItem[propName])) {
+                // 如果是简单对象 {value: "xxx"}，转换为数组格式
+                if (
+                  typeof processedItem[propName] === "object" &&
+                  processedItem[propName].value !== undefined
+                ) {
+                  const newItem = { ...processedItem[propName] };
+
+                  // 根据 schema 要求添加必要字段
+                  if (propSchema.items.properties) {
+                    if (
+                      propSchema.items.properties.marketplace_id &&
+                      !newItem.marketplace_id
+                    ) {
+                      newItem.marketplace_id = marketplaceId;
+                    }
+                    if (
+                      propSchema.items.properties.language_tag &&
+                      !newItem.language_tag
+                    ) {
+                      newItem.language_tag = languageTag;
+                    }
+                  }
+
+                  processedItem[propName] = [newItem];
+                }
+              } else {
+                // 如果已经是数组，确保每个元素都包含必要字段
+                processedItem[propName] = processedItem[propName].map(
+                  (arrayItem) => {
+                    if (typeof arrayItem === "object" && arrayItem !== null) {
+                      const newArrayItem = { ...arrayItem };
+
+                      if (propSchema.items.properties) {
+                        if (
+                          propSchema.items.properties.marketplace_id &&
+                          !newArrayItem.marketplace_id
+                        ) {
+                          newArrayItem.marketplace_id = marketplaceId;
+                        }
+                        if (
+                          propSchema.items.properties.language_tag &&
+                          !newArrayItem.language_tag
+                        ) {
+                          newArrayItem.language_tag = languageTag;
+                        }
+                      }
+
+                      return newArrayItem;
+                    }
+                    return arrayItem;
+                  }
+                );
+              }
+            }
+          });
+        }
+
+        return processedItem;
+      });
+    },
   };
 
   // 为兼容性考虑，也直接暴露方法
@@ -912,4 +1102,6 @@
   global.amazonParseFormData = global.amazonUtils.parseAmazonData;
   global.amazonParseSchemaProperties = global.amazonUtils.parseSchemaProperties;
   global.amazonConvertToObjectArray = global.amazonUtils.convertToObjectArray;
+  global.amazonTransformSubmitDataBySchema =
+    global.amazonUtils.transformSubmitDataBySchema;
 })(typeof window !== "undefined" ? window : this);
