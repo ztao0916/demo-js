@@ -742,10 +742,6 @@
         });
         console.log("newProperties", newProperties);
 
-        // 使用新的格式化函数处理 submitData
-        let formattedSubmitData = amazonUtils.formatSubmitDataBySchema(submitData, newProperties);
-        console.log("格式化后的 submitData:", formattedSubmitData);
-
         // 保存原始schema数据，用于后续判断字段是否在required中
         originalSchemaData = schemaData;
 
