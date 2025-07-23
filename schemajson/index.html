@@ -566,10 +566,8 @@
           // 获取Schema数据
           const schemaData = await getSchemaContent();
           if (!schemaData) return;
-          console.log(
-            "index.html-518-schemaData-allOf",
-            schemaData.allOf.length
-          );
+          let parseProperties = amazonParseSchemaProperties(schemaData);
+          let convertProperties = amazonConvertToObjectArray(parseProperties);
 
           // 保存原始schema数据，用于后续判断字段是否在required中
           originalSchemaData = schemaData;
