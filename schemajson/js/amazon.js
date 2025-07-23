@@ -965,7 +965,6 @@
 
       // 如果 schema 定义为数组类型
       if (schemaDefinition.type === "array" && schemaDefinition.items) {
-        console.debug(`processFieldBySchema: 处理数组字段 ${fieldName}`);
         return amazonUtils.ensureArrayStructure(
           fieldValue,
           schemaDefinition.items,
