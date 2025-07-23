@@ -557,7 +557,6 @@
           item.children[0].required = true;
         }
       });
-      console.log("处理后的表单配置formConfig", formConfig);
       return formConfig;
     },
 
