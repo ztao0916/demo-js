@@ -182,12 +182,12 @@
 
         // 添加"更多选填属性"按钮
         const moreOptionsBtn = `
-        <div class="more-options-btn">
-          <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" id="moreOptionsBtn">
-            <span>显示更多选填属性</span> <i class="layui-icon layui-icon-down"></i>
-          </button>
-        </div>
-      `;
+              <div class="more-options-btn">
+                <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" id="moreOptionsBtn">
+                  <span>显示更多选填属性</span> <i class="layui-icon layui-icon-down"></i>
+                </button>
+              </div>
+            `;
 
         // 组合所有内容
         const formHtml =
@@ -331,13 +331,13 @@
               isInRequired && field.description ? "label-with-tip" : "";
 
             let html = `
-            <div class="group-title ${groupClass}">
-              <div class="field-label-container">
-                <span class="${labelClass}" ${tipAttribute}>${field.label}</span>
-              </div>
-            </div>
-            <div class="group-content ${groupClass}">
-          `;
+                  <div class="group-title ${groupClass}">
+                    <div class="field-label-container">
+                      <span class="${labelClass}" ${tipAttribute}>${field.label}</span>
+                    </div>
+                  </div>
+                  <div class="group-content ${groupClass}">
+                `;
 
             // 渲染所有子属性
             field.children.forEach((child) => {
@@ -403,22 +403,24 @@
           isInRequired && field.description ? "label-with-tip" : "";
 
         let html = `
-        <div class="${fieldClass}">
-          <label class="layui-form-label">
-            <div class="field-label-container">
-              <span class="${labelClass}" ${tipAttribute}>${field.label}</span>
-              ${isRequired ? '<span class="required-mark">*</span>' : ""}
-            </div>
-          </label>
-          <div class="layui-input-block">
-      `;
+              <div class="${fieldClass}">
+                <label class="layui-form-label">
+                  <div class="field-label-container">
+                    <span class="${labelClass}" ${tipAttribute}>${
+          field.label
+        }</span>
+                    ${isRequired ? '<span class="required-mark">*</span>' : ""}
+                  </div>
+                </label>
+                <div class="layui-input-block">
+            `;
 
         // 根据字段类型渲染不同的表单元素
         if (field.type === "select") {
           html += `<select name="${field.key}" ${
             isRequired ? 'lay-verify="required"' : ""
           } data-required="${isRequired}">
-          <option value="">请选择</option>`;
+                <option value="">请选择</option>`;
 
           field.options.forEach((option) => {
             html += `<option value="${option.value}">${option.label}</option>`;
@@ -479,11 +481,11 @@
         if (!validation.isValid) {
           // 显示错误消息
           const errorMsg = `
-          <div class="error-message">
-            <i class="layui-icon layui-icon-tips"></i>
-            请填写以下必填项: ${validation.missingFields.join(", ")}
-          </div>
-        `;
+                <div class="error-message">
+                  <i class="layui-icon layui-icon-tips"></i>
+                  请填写以下必填项: ${validation.missingFields.join(", ")}
+                </div>
+              `;
           document.getElementById("errorContainer").innerHTML = errorMsg;
           return;
         }
@@ -574,28 +576,42 @@
               {
                 marketplace_id: "ATVPDKIKX0DER",
                 language_tag: "en_US",
-                value: "B007k",
+                value: "B007KQBXN1",
               },
             ],
             item_type_keyword: [
               {
                 marketplace_id: "ATVPDKIKX0DER",
                 language_tag: "en_US",
-                value: "body-butters",
+                value: "food-service-tray-carts",
               },
             ],
-            target_audience_keyword: [
+            target_audience: [
               {
                 marketplace_id: "ATVPDKIKX0DER",
                 language_tag: "en_US",
-                value: "Teens",
+                value: "Tweens",
+              },
+            ],
+            model_number: [
+              {
+                marketplace_id: "ATVPDKIKX0DER",
+                language_tag: "en_US",
+                value: "RXZER23",
+              },
+            ],
+            model_name: [
+              {
+                marketplace_id: "ATVPDKIKX0DER",
+                language_tag: "en_US",
+                value: "MacBook Pro",
               },
             ],
             manufacturer: [
               {
                 marketplace_id: "ATVPDKIKX0DER",
                 language_tag: "en_US",
-                value: "nike",
+                value: "Nike, Procter & Gamble",
               },
             ],
             fulfillment_availability: [
@@ -606,77 +622,50 @@
                 quantity: "300",
               },
             ],
-            lifestyle: [
+            special_feature: [
               {
                 marketplace_id: "ATVPDKIKX0DER",
                 language_tag: "en_US",
-                value: "beautiy",
-              },
-            ],
-            age_range_description: [
-              {
-                marketplace_id: "ATVPDKIKX0DER",
-                language_tag: "en_US",
-                value: "adult",
+                value: "Fade Resistant",
               },
             ],
             number_of_items: [
               {
                 marketplace_id: "ATVPDKIKX0DER",
                 language_tag: "en_US",
-                value: 45,
+                value: 5,
               },
             ],
-            is_heat_sensitive: [
+            number_of_shelves: [
               {
                 marketplace_id: "ATVPDKIKX0DER",
                 language_tag: "en_US",
-                value: "false",
+                value: 6,
               },
             ],
-            active_ingredients: [
+            recommended_uses_for_product: [
               {
                 marketplace_id: "ATVPDKIKX0DER",
                 language_tag: "en_US",
-                value: "acid",
+                value: "Cycling",
               },
             ],
-            is_expiration_dated_product: [
+            item_depth_width_height: [
               {
                 marketplace_id: "ATVPDKIKX0DER",
                 language_tag: "en_US",
-                value: "false",
-              },
-            ],
-            item_form: [
-              {
-                marketplace_id: "ATVPDKIKX0DER",
-                language_tag: "en_US",
-                value: "cream",
-              },
-            ],
-            unit_count: [
-              {
-                marketplace_id: "ATVPDKIKX0DER",
-                language_tag: "en_US",
-                value: 72,
-                type: {
-                  value: "Count",
+                depth: {
+                  unit: "inches",
+                  value: 40,
                 },
-              },
-            ],
-            skin_type: [
-              {
-                marketplace_id: "ATVPDKIKX0DER",
-                language_tag: "en_US",
-                value: "qily",
-              },
-            ],
-            safety_warning: [
-              {
-                marketplace_id: "ATVPDKIKX0DER",
-                language_tag: "en_US",
-                value: "use only",
+                height: {
+                  unit: "inches",
+                  value: 30,
+                },
+                width: {
+                  unit: "inches",
+                  value: 30,
+                },
               },
             ],
             country_of_origin: [
@@ -693,31 +682,55 @@
                 value: "false",
               },
             ],
-            contains_liquid_contents: [
+            supplier_declared_dg_hz_regulation: [
               {
                 marketplace_id: "ATVPDKIKX0DER",
                 language_tag: "en_US",
-                value: "false",
+                value: "ghs",
               },
             ],
-            item_volume: [
+            required_product_compliance_certificate: [
               {
                 marketplace_id: "ATVPDKIKX0DER",
                 language_tag: "en_US",
-                unit: "centiliters",
+                value: "California Air Review Board (CARB)",
+              },
+            ],
+            number_of_boxes: [
+              {
+                marketplace_id: "ATVPDKIKX0DER",
+                language_tag: "en_US",
                 value: 5,
               },
             ],
-            unit_count: [
+            ghs: [
               {
                 marketplace_id: "ATVPDKIKX0DER",
-                value: 72.0,
-                type: {
-                  value: "Ounce",
+                language_tag: "en_US",
+                classification: {
+                  class: "compressed_gas",
                 },
               },
             ],
+            safety_data_sheet_url: [
+              {
+                marketplace_id: "ATVPDKIKX0DER",
+                language_tag: "en_US",
+                value: "www.safetysheetsRus.com/hazardous_substance/msds.pdf",
+              },
+            ],
+            legal_compliance_certifications: [
+              {
+                marketplace_id: "ATVPDKIKX0DER",
+                language_tag: "en_US",
+                certification_status: "Compliant",
+                regulatory_organization_name:
+                  "California Environmental Protection Agency - Air Resources Board",
+                value: "Not Applicable",
+              },
+            ],
           };
+
           //获取到convertProperties中和submitData的key相同项并打印
           let submitKeys = Object.keys(submitData);
           console.log("submitKeys", submitKeys);

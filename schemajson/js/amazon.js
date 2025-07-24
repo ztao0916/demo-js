@@ -243,6 +243,7 @@
       marketplaceId: "ATVPDKIKX0DER",
       languageTag: "en_US",
     },
+    _schemaProperties: null,
 
     /**
      * 设置当前默认值
@@ -251,6 +252,7 @@
     setCurrentDefaults: function (schema) {
       const defaults = getDefaultValues(schema);
       amazonUtils._currentDefaults = defaults;
+      amazonUtils._schemaProperties = schema.properties || {};
     },
     /**
      * 转换JSON Schema为表单结构
