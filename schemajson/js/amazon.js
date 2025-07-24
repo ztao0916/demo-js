@@ -133,14 +133,45 @@
           hidden: itemPropTypeInfo.hidden,
         };
 
-        // 如果是对象类型且有 properties，继续递归
+        // 如果是对象类型且有 properties，直接递归处理其 properties
         if (itemProperty.type === "object" && itemProperty.properties) {
-          const nestedResults = amazonUtils.parseSchemaProperties(
-            itemProperty,
-            `${currentPath}.properties.${itemPropName}`,
-            rootSchema
-          );
-          itemsInfo.properties[itemPropName].nestedProperties = nestedResults;
+          itemsInfo.properties[itemPropName].properties = {};
+
+          // 直接处理嵌套的 properties
+          Object.keys(itemProperty.properties).forEach((nestedPropName) => {
+            const nestedProperty = itemProperty.properties[nestedPropName];
+            const nestedPropTypeInfo = getPropertyType(
+              nestedProperty,
+              rootSchema
+            );
+
+            itemsInfo.properties[itemPropName].properties[nestedPropName] = {
+              type: nestedPropTypeInfo.type,
+              title: nestedPropTypeInfo.title || nestedProperty.title,
+              description:
+                nestedPropTypeInfo.description || nestedProperty.description,
+              examples: nestedPropTypeInfo.examples || nestedProperty.examples,
+              required: itemProperty.required
+                ? itemProperty.required.includes(nestedPropName)
+                : false,
+              enum: nestedPropTypeInfo.enum,
+              enumNames: nestedPropTypeInfo.enumNames,
+              default: nestedPropTypeInfo.default,
+              editable: nestedPropTypeInfo.editable,
+              hidden: nestedPropTypeInfo.hidden,
+            };
+
+            // 如果嵌套属性也是数组类型，继续递归处理
+            if (nestedProperty.type === "array" && nestedProperty.items) {
+              itemsInfo.properties[itemPropName].properties[
+                nestedPropName
+              ].items = processItemsRecursively(
+                nestedProperty.items,
+                `${currentPath}.properties.${itemPropName}.properties.${nestedPropName}.items`,
+                rootSchema
+              );
+            }
+          });
         }
 
         // 如果是数组类型且有 items，递归处理嵌套的 items
@@ -182,10 +213,22 @@
           );
         }
 
-        // 如果有嵌套的 properties，递归处理
-        if (itemProp.nestedProperties && itemProp.nestedProperties.length > 0) {
-          itemsObj.properties[itemPropName].nestedProperties =
-            amazonUtils.convertToObjectArray(itemProp.nestedProperties);
+        // 如果有嵌套的 properties，直接复制结构
+        if (itemProp.properties) {
+          itemsObj.properties[itemPropName].properties = {};
+          Object.keys(itemProp.properties).forEach((nestedPropName) => {
+            const nestedProp = itemProp.properties[nestedPropName];
+            itemsObj.properties[itemPropName].properties[nestedPropName] = {
+              type: nestedProp.type,
+            };
+
+            // 如果嵌套属性有 items，递归处理
+            if (nestedProp.items) {
+              itemsObj.properties[itemPropName].properties[
+                nestedPropName
+              ].items = convertItemsToObject(nestedProp.items);
+            }
+          });
         }
       });
     }
@@ -842,14 +885,43 @@
           );
         }
 
-        // 如果是对象类型且有 properties，递归处理
+        // 如果是对象类型且有 properties，直接处理其 properties
         if (property.type === "object" && property.properties) {
-          const nestedResults = amazonUtils.parseSchemaProperties(
-            property,
-            currentPath,
-            rootSchema
-          );
-          propertyInfo.nestedProperties = nestedResults;
+          propertyInfo.properties = {};
+
+          // 直接处理嵌套的 properties
+          Object.keys(property.properties).forEach((nestedPropName) => {
+            const nestedProperty = property.properties[nestedPropName];
+            const nestedTypeInfo = getPropertyType(nestedProperty, rootSchema);
+
+            propertyInfo.properties[nestedPropName] = {
+              name: nestedPropName,
+              path: `${currentPath}.${nestedPropName}`,
+              type: nestedTypeInfo.type,
+              title: nestedTypeInfo.title || nestedProperty.title,
+              description:
+                nestedTypeInfo.description || nestedProperty.description,
+              examples: nestedTypeInfo.examples || nestedProperty.examples,
+              required: property.required
+                ? property.required.includes(nestedPropName)
+                : false,
+              enum: nestedTypeInfo.enum,
+              enumNames: nestedTypeInfo.enumNames,
+              default: nestedTypeInfo.default,
+              editable: nestedTypeInfo.editable,
+              hidden: nestedTypeInfo.hidden,
+            };
+
+            // 如果嵌套属性是数组类型，处理其 items
+            if (nestedProperty.type === "array" && nestedProperty.items) {
+              propertyInfo.properties[nestedPropName].items =
+                processItemsRecursively(
+                  nestedProperty.items,
+                  `${currentPath}.${nestedPropName}.items`,
+                  rootSchema
+                );
+            }
+          });
         }
 
         // 添加其他可能的属性（这些已经在 typeInfo 中处理了，但保留兼容性）
@@ -890,11 +962,21 @@
           obj[prop.name].items = convertItemsToObject(prop.items);
         }
 
-        // 如果有嵌套属性，递归处理
-        if (prop.nestedProperties && prop.nestedProperties.length > 0) {
-          obj[prop.name].nestedProperties = amazonUtils.convertToObjectArray(
-            prop.nestedProperties
-          );
+        // 如果有嵌套的 properties，直接复制结构
+        if (prop.properties) {
+          obj[prop.name].properties = {};
+          Object.keys(prop.properties).forEach((nestedPropName) => {
+            const nestedProp = prop.properties[nestedPropName];
+            obj[prop.name].properties[nestedPropName] = {
+              type: nestedProp.type,
+            };
+
+            // 如果嵌套属性有 items，递归处理
+            if (nestedProp.items) {
+              obj[prop.name].properties[nestedPropName].items =
+                convertItemsToObject(nestedProp.items);
+            }
+          });
         }
 
         result.push(obj);
@@ -1024,8 +1106,15 @@
           Object.keys(itemsSchema.properties).forEach((propName) => {
             const propSchema = itemsSchema.properties[propName];
 
+            // 检查是否为属性数据字段（而非类型定义）
+            const isPropertyField = amazonUtils.isPropertyField(
+              propName,
+              propSchema
+            );
+
             if (
               processedItem[propName] &&
+              isPropertyField &&
               propSchema.type === "array" &&
               propSchema.items
             ) {
@@ -1084,12 +1173,83 @@
                   }
                 );
               }
+            } else if (
+              processedItem[propName] &&
+              isPropertyField &&
+              propSchema.type === "object" &&
+              propSchema.properties
+            ) {
+              // 处理对象类型的属性字段（如 type 字段）
+              // 如果不是数组但 schema 要求是对象，确保包含必要字段
+              if (
+                typeof processedItem[propName] === "object" &&
+                processedItem[propName] !== null
+              ) {
+                const newItem = { ...processedItem[propName] };
+
+                // 根据 schema 要求添加必要字段
+                if (
+                  propSchema.properties.marketplace_id &&
+                  !newItem.marketplace_id
+                ) {
+                  newItem.marketplace_id = marketplaceId;
+                }
+                if (
+                  propSchema.properties.language_tag &&
+                  !newItem.language_tag
+                ) {
+                  newItem.language_tag = languageTag;
+                }
+
+                processedItem[propName] = newItem;
+              }
             }
           });
         }
 
         return processedItem;
       });
+    },
+
+    /**
+     * 判断字段是否为属性数据字段（而非类型定义）
+     * @param {String} fieldName - 字段名
+     * @param {Object} fieldSchema - 字段的 schema 定义
+     * @returns {Boolean} 是否为属性数据字段
+     */
+    isPropertyField: function (fieldName, fieldSchema) {
+      // 如果字段有 properties 或 items，说明是属性数据而非类型定义
+      if (fieldSchema.properties || fieldSchema.items) {
+        return true;
+      }
+
+      // 如果字段有 title 或 description，通常也是属性数据
+      if (fieldSchema.title || fieldSchema.description) {
+        return true;
+      }
+
+      // 特殊处理：如果字段名为 "type" 且 schema 类型为 "object"，
+      // 并且有具体的属性定义，则认为是属性数据
+      if (fieldName === "type" && fieldSchema.type === "object") {
+        return true;
+      }
+
+      // 如果 schema 类型是基本类型字符串（string, number, boolean, array, object）
+      // 且没有其他属性定义，可能是类型定义
+      const basicTypes = ["string", "number", "boolean", "array", "object"];
+      if (
+        typeof fieldSchema.type === "string" &&
+        basicTypes.includes(fieldSchema.type) &&
+        !fieldSchema.enum &&
+        !fieldSchema.examples &&
+        !fieldSchema.minLength &&
+        !fieldSchema.maxLength
+      ) {
+        return false;
+      }
+
+      // 默认认为是属性数据
+      return true;
     },
   };
 
