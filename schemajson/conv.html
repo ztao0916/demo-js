@@ -193,6 +193,37 @@
       border: 1px solid #f5c6cb;
     }
     
+    /* 右上角弹框样式 */
+    .toast-notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      z-index: 9999;
+      transform: translateX(100%);
+      transition: transform 0.3s ease-in-out;
+      max-width: 300px;
+      word-wrap: break-word;
+    }
+    
+    .toast-notification.show {
+      transform: translateX(0);
+    }
+    
+    .toast-notification.success {
+      background: #4caf50;
+      color: white;
+    }
+    
+    .toast-notification.error {
+      background: #f44336;
+      color: white;
+    }
+    
     @media (max-width: 768px) {
       .main-content {
         flex-direction: column;
@@ -272,16 +303,36 @@
     // 全局分隔符变量
     let currentSeparator = '#,#';
     
-    // 显示状态信息
+    // 显示状态信息 - 右上角弹框
     function showStatus(elementId, message, type = 'success') {
-      const statusEl = document.getElementById(elementId);
-      statusEl.textContent = message;
-      statusEl.className = `status ${type}`;
-      statusEl.style.display = 'block';
+      // 移除已存在的弹框
+      const existingToast = document.querySelector('.toast-notification');
+      if (existingToast) {
+        existingToast.remove();
+      }
       
+      // 创建新的弹框
+      const toast = document.createElement('div');
+      toast.className = `toast-notification ${type}`;
+      toast.textContent = message;
+      
+      // 添加到页面
+      document.body.appendChild(toast);
+      
+      // 显示动画
       setTimeout(() => {
-        statusEl.style.display = 'none';
-      }, 3000);
+        toast.classList.add('show');
+      }, 10);
+      
+      // 1秒后自动关闭
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => {
+          if (toast.parentNode) {
+            toast.parentNode.removeChild(toast);
+          }
+        }, 300); // 等待动画完成
+      }, 1000);
     }
     
     // 更新分隔符
