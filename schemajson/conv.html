@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>数据转换工具</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Microsoft YaHei', Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+    
+    .header {
+      background: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);
+      color: white;
+      padding: 30px;
+      text-align: center;
+    }
+    
+    .header h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      font-weight: 300;
+    }
+    
+    .header p {
+      font-size: 1.1em;
+      opacity: 0.9;
+    }
+    
+    .main-content {
+      display: flex;
+      min-height: calc(100vh - 200px);
+    }
+    
+    .input-section {
+      flex: 1;
+      padding: 30px;
+      border-right: 2px solid #f0f0f0;
+    }
+    
+    .output-section {
+      flex: 1;
+      padding: 30px;
+    }
+    
+    .section-title {
+      font-size: 1.3em;
+      color: #333;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+    
+    .textarea-container {
+      position: relative;
+      margin-bottom: 20px;
+    }
+    
+    textarea {
+      width: 100%;
+      height: calc(100vh - 350px);
+      min-height: 400px;
+      padding: 15px;
+      border: 2px solid #e1e5e9;
+      border-radius: 8px;
+      font-family: 'Consolas', 'Monaco', monospace;
+      font-size: 14px;
+      line-height: 1.5;
+      resize: vertical;
+      transition: border-color 0.3s ease;
+    }
+    
+    textarea:focus {
+      outline: none;
+      border-color: #4facfe;
+      box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.1);
+    }
+    
+    .controls {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      z-index: 10;
+    }
+    
+    .btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 25px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-width: 140px;
+      text-align: center;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);
+      color: white;
+      box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3);
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(79, 172, 254, 0.4);
+    }
+    
+    .btn-secondary {
+      background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    }
+    
+    .btn-secondary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    }
+    
+    .btn-clear {
+      background: #f8f9fa;
+      color: #6c757d;
+      border: 2px solid #e9ecef;
+    }
+    
+    .btn-clear:hover {
+      background: #e9ecef;
+      color: #495057;
+    }
+    
+    .example-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+      flex-wrap: wrap;
+    }
+    
+    .btn-example {
+      padding: 8px 16px;
+      background: #f8f9fa;
+      border: 1px solid #dee2e6;
+      border-radius: 20px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-example:hover {
+      background: #e9ecef;
+      border-color: #adb5bd;
+    }
+    
+    .status {
+      margin-top: 15px;
+      padding: 10px;
+      border-radius: 5px;
+      font-size: 14px;
+      display: none;
+    }
+    
+    .status.success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+    
+    .status.error {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+    
+    @media (max-width: 768px) {
+      .main-content {
+        flex-direction: column;
+      }
+      
+      .input-section {
+        border-right: none;
+        border-bottom: 2px solid #f0f0f0;
+      }
+      
+      .controls {
+        position: static;
+        transform: none;
+        flex-direction: row;
+        justify-content: center;
+        margin: 20px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>数据转换工具</h1>
+      <p>支持对象与字符串的双向转换，可自定义分隔符</p>
+      <div style="margin-top: 20px; display: flex; align-items: center; justify-content: center; gap: 15px; flex-wrap: wrap;">
+        <label style="color: white; font-weight: 500;">分隔符设置：</label>
+        <input type="text" id="separatorInput" value="#,#" 
+               style="padding: 8px 12px; border: none; border-radius: 20px; font-size: 14px; width: 120px; text-align: center;"
+               placeholder="输入分隔符">
+        <button onclick="updateSeparator()" 
+                style="padding: 8px 16px; background: rgba(255,255,255,0.2); color: white; border: 1px solid rgba(255,255,255,0.3); border-radius: 20px; cursor: pointer; font-size: 14px; transition: all 0.3s ease;"
+                onmouseover="this.style.background='rgba(255,255,255,0.3)'" 
+                onmouseout="this.style.background='rgba(255,255,255,0.2)'">应用</button>
+        <span id="currentSeparator" style="color: rgba(255,255,255,0.8); font-size: 14px;">当前：#,#</span>
+      </div>
+    </div>
+    
+    <div class="main-content">
+      <div class="input-section">
+        <h3 class="section-title">📝 对象输入区</h3>
+        <div class="textarea-container">
+          <textarea id="objectInput" placeholder='请输入JSON对象，例如：\n{\n  "name": "张三",\n  "age": 25,\n  "city": "北京"\n}'></textarea>
+        </div>
+        <div class="example-buttons">
+          <button class="btn-example" onclick="loadObjectExample()">加载示例</button>
+          <button class="btn-example" onclick="clearObject()">清空</button>
+        </div>
+        <div id="objectStatus" class="status"></div>
+      </div>
+      
+      <div class="controls">
+        <button class="btn btn-primary" onclick="convertToString()">
+          对象 → 字符串
+        </button>
+        <button class="btn btn-secondary" onclick="convertToObject()">
+          字符串 → 对象
+        </button>
+        <button class="btn btn-clear" onclick="clearAll()">
+          清空全部
+        </button>
+      </div>
+      
+      <div class="output-section">
+        <h3 class="section-title">🔗 字符串输出区</h3>
+        <div class="textarea-container">
+          <textarea id="stringOutput" placeholder='转换后的字符串将显示在这里...\n\n格式：key1:"value1"#,#key2:"value2"#,#...'></textarea>
+        </div>
+        <div class="example-buttons">
+          <button class="btn-example" onclick="loadStringExample()">加载示例</button>
+          <button class="btn-example" onclick="clearString()">清空</button>
+        </div>
+        <div id="stringStatus" class="status"></div>
+      </div>
+    </div>
+  </div>
+  
+  <script src="./js/convert.js"></script>
+  <script>
+    // 全局分隔符变量
+    let currentSeparator = '#,#';
+    
+    // 显示状态信息
+    function showStatus(elementId, message, type = 'success') {
+      const statusEl = document.getElementById(elementId);
+      statusEl.textContent = message;
+      statusEl.className = `status ${type}`;
+      statusEl.style.display = 'block';
+      
+      setTimeout(() => {
+        statusEl.style.display = 'none';
+      }, 3000);
+    }
+    
+    // 更新分隔符
+    function updateSeparator() {
+      const separatorInput = document.getElementById('separatorInput');
+      const newSeparator = separatorInput.value.trim();
+      
+      if (!newSeparator) {
+        alert('分隔符不能为空！');
+        separatorInput.value = currentSeparator;
+        return;
+      }
+      
+      currentSeparator = newSeparator;
+      document.getElementById('currentSeparator').textContent = `当前：${currentSeparator}`;
+      
+      // 更新placeholder提示
+      const stringOutput = document.getElementById('stringOutput');
+      stringOutput.placeholder = `转换后的字符串将显示在这里...\n\n格式：key1:"value1"${currentSeparator}key2:"value2"${currentSeparator}...`;
+      
+      showStatus('objectStatus', `分隔符已更新为：${currentSeparator}`, 'success');
+      showStatus('stringStatus', `分隔符已更新为：${currentSeparator}`, 'success');
+    }
+    
+    // 自定义对象转字符串函数（支持自定义分隔符）
+    function convertObjectToStringCustom(obj, separator) {
+      const parts = [];
+      
+      for (const key in obj) {
+        if (obj.hasOwnProperty(key)) {
+          const valueStr = JSON.stringify(obj[key]);
+          const escapedValue = valueStr.replace(/"/g, '\\"');
+          parts.push(`${key}:${escapedValue}`);
+        }
+      }
+      
+      return parts.join(separator);
+    }
+    
+    // 自定义字符串转对象函数（支持自定义分隔符）
+    function convertStringToObjectCustom(str, separator) {
+      const pairs = str.split(separator);
+      const result = {};
+      
+      pairs.forEach((pair) => {
+        const colonIndex = pair.indexOf(':');
+        if (colonIndex === -1) return;
+        
+        const key = pair.substring(0, colonIndex);
+        const valueStr = pair.substring(colonIndex + 1);
+        
+        try {
+          const value = JSON.parse(valueStr);
+          result[key] = value;
+        } catch (e) {
+          result[key] = valueStr;
+          console.error(`解析 ${key} 时出错:`, e);
+        }
+      });
+      
+      return result;
+    }
+    
+    // 对象转字符串
+     function convertToString() {
+       const objectInput = document.getElementById('objectInput');
+       const stringOutput = document.getElementById('stringOutput');
+       
+       try {
+         const inputText = objectInput.value.trim();
+         if (!inputText) {
+           showStatus('objectStatus', '请输入要转换的对象', 'error');
+           return;
+         }
+         
+         // 解析JSON对象
+         const obj = JSON.parse(inputText);
+         
+         // 调用自定义转换函数
+         const result = convertObjectToStringCustom(obj, currentSeparator);
+         
+         // 显示结果
+         stringOutput.value = result;
+         showStatus('objectStatus', `转换成功！使用分隔符：${currentSeparator}`, 'success');
+         showStatus('stringStatus', '已生成转换结果', 'success');
+         
+       } catch (error) {
+         showStatus('objectStatus', '输入的不是有效的JSON对象：' + error.message, 'error');
+       }
+     }
+    
+    // 字符串转对象
+     function convertToObject() {
+       const stringOutput = document.getElementById('stringOutput');
+       const objectInput = document.getElementById('objectInput');
+       
+       try {
+         const inputText = stringOutput.value.trim();
+         if (!inputText) {
+           showStatus('stringStatus', '请输入要转换的字符串', 'error');
+           return;
+         }
+         
+         // 调用自定义转换函数
+         const result = convertStringToObjectCustom(inputText, currentSeparator);
+         
+         // 显示结果
+         objectInput.value = JSON.stringify(result, null, 2);
+         showStatus('stringStatus', `转换成功！使用分隔符：${currentSeparator}`, 'success');
+         showStatus('objectStatus', '已生成转换结果', 'success');
+         
+       } catch (error) {
+         showStatus('stringStatus', '转换失败：' + error.message, 'error');
+       }
+     }
+    
+    // 加载对象示例
+    function loadObjectExample() {
+      const objectInput = document.getElementById('objectInput');
+      const example = {
+        "name": "张三",
+        "age": 25,
+        "city": "北京",
+        "hobbies": ["读书", "游泳", "编程"],
+        "isStudent": false
+      };
+      objectInput.value = JSON.stringify(example, null, 2);
+      showStatus('objectStatus', '已加载示例数据', 'success');
+    }
+    
+    // 加载字符串示例
+     function loadStringExample() {
+       const stringOutput = document.getElementById('stringOutput');
+       // 使用当前分隔符生成示例
+       const exampleObj = {
+         "name": "李四",
+         "age": 30,
+         "city": "上海",
+         "hobbies": ["音乐", "旅行"],
+         "isStudent": true
+       };
+       const example = convertObjectToStringCustom(exampleObj, currentSeparator);
+       stringOutput.value = example;
+       showStatus('stringStatus', `已加载示例数据（分隔符：${currentSeparator}）`, 'success');
+     }
+    
+    // 清空对象区域
+    function clearObject() {
+      document.getElementById('objectInput').value = '';
+      showStatus('objectStatus', '已清空对象输入区', 'success');
+    }
+    
+    // 清空字符串区域
+    function clearString() {
+      document.getElementById('stringOutput').value = '';
+      showStatus('stringStatus', '已清空字符串输出区', 'success');
+    }
+    
+    // 清空全部
+    function clearAll() {
+      document.getElementById('objectInput').value = '';
+      document.getElementById('stringOutput').value = '';
+      showStatus('objectStatus', '已清空所有内容', 'success');
+      showStatus('stringStatus', '已清空所有内容', 'success');
+    }
+  </script>
+</body>
+</html>
