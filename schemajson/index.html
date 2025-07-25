@@ -571,26 +571,26 @@
           let parseProperties = amazonParseSchemaProperties(schemaData);
           let convertProperties = amazonConvertToObjectArray(parseProperties);
           console.log("convertProperties", convertProperties);
-          let submitData = {
+          const submitData = {
             merchant_suggested_asin: [
               {
                 marketplace_id: "ATVPDKIKX0DER",
                 language_tag: "en_US",
-                value: "B007KQBXN1",
+                value: "B007KQBXN0",
+              },
+            ],
+            plant_or_animal_product_type: [
+              {
+                marketplace_id: "ATVPDKIKX0DER",
+                language_tag: "en_US",
+                value: "flower",
               },
             ],
             item_type_keyword: [
               {
                 marketplace_id: "ATVPDKIKX0DER",
                 language_tag: "en_US",
-                value: "food-service-tray-carts",
-              },
-            ],
-            target_audience: [
-              {
-                marketplace_id: "ATVPDKIKX0DER",
-                language_tag: "en_US",
-                value: "Tweens",
+                value: "artificial-flowers",
               },
             ],
             model_number: [
@@ -604,14 +604,14 @@
               {
                 marketplace_id: "ATVPDKIKX0DER",
                 language_tag: "en_US",
-                value: "MacBook Pro",
+                value: "macbook pro",
               },
             ],
             manufacturer: [
               {
                 marketplace_id: "ATVPDKIKX0DER",
                 language_tag: "en_US",
-                value: "Nike, Procter & Gamble",
+                value: "nike",
               },
             ],
             fulfillment_availability: [
@@ -622,11 +622,34 @@
                 quantity: "300",
               },
             ],
-            special_feature: [
+            purchasable_offer: [
               {
                 marketplace_id: "ATVPDKIKX0DER",
                 language_tag: "en_US",
-                value: "Fade Resistant",
+                maximum_seller_allowed_price: {
+                  schedule: {
+                    value_with_tax: 250,
+                  },
+                },
+                minimum_seller_allowed_price: {
+                  schedule: {
+                    value_with_tax: 250,
+                  },
+                },
+              },
+            ],
+            material: [
+              {
+                marketplace_id: "ATVPDKIKX0DER",
+                language_tag: "en_US",
+                value: "Bamboo, Engineered Wood",
+              },
+            ],
+            fabric_type: [
+              {
+                marketplace_id: "ATVPDKIKX0DER",
+                language_tag: "en_US",
+                value: "60% Cotton, 40% Polyester",
               },
             ],
             number_of_items: [
@@ -636,18 +659,57 @@
                 value: 5,
               },
             ],
-            number_of_shelves: [
+            item_shape: [
               {
                 marketplace_id: "ATVPDKIKX0DER",
                 language_tag: "en_US",
-                value: 6,
+                value: "round",
               },
             ],
-            recommended_uses_for_product: [
+            included_components: [
               {
                 marketplace_id: "ATVPDKIKX0DER",
                 language_tag: "en_US",
-                value: "Cycling",
+                value: "Camera Body",
+              },
+            ],
+            specific_uses_for_product: [
+              {
+                marketplace_id: "ATVPDKIKX0DER",
+                language_tag: "en_US",
+                value: "Dry Sanding",
+              },
+            ],
+            container: [
+              {
+                marketplace_id: "ATVPDKIKX0DER",
+                language_tag: "en_US",
+                material: [
+                  {
+                    value: "Glass",
+                    marketplace_id: "ATVPDKIKX0DER",
+                    language_tag: "en_US",
+                  },
+                ],
+                shape: [
+                  {
+                    value: "Cube",
+                    language_tag: "en_US",
+                  },
+                ],
+                type: [
+                  {
+                    value: "Bottle",
+                    language_tag: "en_US",
+                  },
+                ],
+              },
+            ],
+            indoor_outdoor_usage: [
+              {
+                marketplace_id: "ATVPDKIKX0DER",
+                language_tag: "en_US",
+                value: "indoor",
               },
             ],
             item_depth_width_height: [
@@ -656,15 +718,15 @@
                 language_tag: "en_US",
                 depth: {
                   unit: "inches",
-                  value: 40,
+                  value: 20,
                 },
                 height: {
                   unit: "inches",
-                  value: 30,
+                  value: 40,
                 },
                 width: {
                   unit: "inches",
-                  value: 30,
+                  value: 20,
                 },
               },
             ],
@@ -686,47 +748,7 @@
               {
                 marketplace_id: "ATVPDKIKX0DER",
                 language_tag: "en_US",
-                value: "ghs",
-              },
-            ],
-            required_product_compliance_certificate: [
-              {
-                marketplace_id: "ATVPDKIKX0DER",
-                language_tag: "en_US",
-                value: "California Air Review Board (CARB)",
-              },
-            ],
-            number_of_boxes: [
-              {
-                marketplace_id: "ATVPDKIKX0DER",
-                language_tag: "en_US",
-                value: 5,
-              },
-            ],
-            ghs: [
-              {
-                marketplace_id: "ATVPDKIKX0DER",
-                language_tag: "en_US",
-                classification: {
-                  class: "compressed_gas",
-                },
-              },
-            ],
-            safety_data_sheet_url: [
-              {
-                marketplace_id: "ATVPDKIKX0DER",
-                language_tag: "en_US",
-                value: "www.safetysheetsRus.com/hazardous_substance/msds.pdf",
-              },
-            ],
-            legal_compliance_certifications: [
-              {
-                marketplace_id: "ATVPDKIKX0DER",
-                language_tag: "en_US",
-                certification_status: "Compliant",
-                regulatory_organization_name:
-                  "California Environmental Protection Agency - Air Resources Board",
-                value: "Not Applicable",
+                value: "not_applicable",
               },
             ],
           };
