@@ -380,6 +380,17 @@
             });
           }
 
+          // 处理 anyOf 结构 - 当存在多个选项时转为选择框
+          if (value.anyOf && value.anyOf.length > 1 && value.anyOf[1] && value.anyOf[1].enum) {
+            field.type = "select";
+            field.options = value.anyOf[1].enum.map(function (val, index) {
+              return {
+                value: val,
+                label: value.anyOf[1].enumNames && value.anyOf[1].enumNames[index] ? value.anyOf[1].enumNames[index] : val,
+              };
+            });
+          }
+
           // 处理数组类型
           if (value.type === "array") {
             field.isArray = true;
@@ -485,6 +496,17 @@
                         label: propValue.enumNames
                           ? propValue.enumNames[index]
                           : val,
+                      };
+                    });
+                  }
+
+                  // 处理 anyOf 结构 - 当存在多个选项时转为选择框
+                  if (propValue.anyOf && propValue.anyOf.length > 1 && propValue.anyOf[1] && propValue.anyOf[1].enum) {
+                    fieldObj.type = "select";
+                    fieldObj.options = propValue.anyOf[1].enum.map(function (val, index) {
+                      return {
+                        value: val,
+                        label: propValue.anyOf[1].enumNames && propValue.anyOf[1].enumNames[index] ? propValue.anyOf[1].enumNames[index] : val,
                       };
                     });
                   }

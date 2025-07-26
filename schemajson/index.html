@@ -1,816 +1,113 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>schemaJSON数据渲染</title>
-    <link rel="stylesheet" href="./css/layui.css" />
-    <style>
-      /* 表单容器样式 */
-      #form-container {
-        width: 800px;
-        margin: 0 auto;
-        padding: 20px;
-      }
 
-      /* 表单标题样式 */
-      .form-title {
-        font-size: 18px;
-        font-weight: bold;
-        margin-bottom: 15px;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>schemaJSON数据渲染</title>
+  <link rel="stylesheet" href="./css/layui.css" />
+  <link rel="stylesheet" href="./css/index.css" />
+</head>
 
-      /* 表单项目样式 */
-      .layui-form-item {
-        margin-bottom: 15px;
-      }
+<body>
+  <h1 class="schema-header">测试json schema数据解析</h1>
+  <div>
+    <!-- 表单渲染 -->
+    <div id="form-container">
+      <form class="layui-form"></form>
+    </div>
+  </div>
 
-      /* 字段描述样式 - 默认不显示，通过lay-tips展示 */
-      .field-description {
-        display: none;
-      }
-
-      /* 修改标签宽度 */
-      .layui-form-label {
-        width: 400px;
-        box-sizing: border-box;
-      }
-
-      /* 调整输入框左侧边距，避免重叠 */
-      .layui-input-block {
-        margin-left: 430px;
-      }
-
-      /* 分组标题样式 */
-      .group-title {
-        font-weight: bold;
-        margin: 15px 0 10px 0;
-        padding: 8px;
-        background-color: #f8f8f8;
-        border-left: 4px solid #1e9fff;
-      }
-
-      /* 分组内容样式 */
-      .group-content {
-        margin-left: 20px;
-        padding: 10px;
-        border-left: 1px dashed #e6e6e6;
-      }
-
-      /* 选填属性默认隐藏 */
-      .optional-field {
-        display: none;
-      }
-
-      /* 选填分组默认隐藏 */
-      .optional-group {
-        display: none;
-      }
-
-      /* 更多选填属性按钮 */
-      .more-options-btn {
-        margin: 20px 0;
-        text-align: center;
-      }
-
-      .more-options-btn .layui-btn {
-        padding: 0 30px;
-      }
-
-      /* 带有提示的标签样式 */
-      .label-with-tip {
-        cursor: help;
-        border-bottom: 1px dashed #1e9fff;
-      }
-
-      .label-with-tips-container {
-        color: #fff;
-        padding: 8px;
-        border-radius: 5px;
-      }
-
-      /* 必填项标记 */
-      .required-mark {
-        color: #ff5722;
-        margin-left: 5px;
-      }
-
-      /* 字段名称和必填标记容器 */
-      .field-label-container {
-        display: inline-block;
-      }
-
-      /* 错误提示样式 */
-      .error-message {
-        color: #ff5722;
-        margin-top: 10px;
-        padding: 10px;
-        background-color: #fff2f0;
-        border: 1px solid #ffccc7;
-        border-radius: 4px;
-      }
-    </style>
-  </head>
-
-  <body>
-    <h1 style="text-align: center; margin: 20px 0">测试json schema数据解析</h1>
-    <div>
-      <!-- 表单渲染 -->
-      <div id="form-container">
-        <form class="layui-form">
-          <!-- 表单内容将通过JS动态渲染 -->
-          <div class="layui-form-item">
-            <button type="button" class="layui-btn" id="submitBtn">
-              提交表单
-            </button>
-            <div id="errorContainer"></div>
+  <!-- 模板引擎 -->
+  <script type="text/html" id="amazonCateSpecificsNewTempV2">
+    <div class="layui-col-md12 amazonCateSpecifics">
+      <div class="layui-card">
+        <div class="layui-card-body layui-row" id="requireValue">
+          {{# layui.each(d.fields||[], function(index, item){ }} 
+          {{# if(item.required){ }}
+          <div class="layui-form-item toggleClass requireEle">
+            {{# if(item.children){ }} 
+            {{# if(item.children.length > 1){ }}
+            <div style="font-weight:700;font-size:18px;" lay-tips="{{item.description}}" class="attrTitle">
+              {{item.label}}
+            </div>
+            {{# } }} 
+            {{# layui.each(item.children||[], function(childIndex,childItem){ }}
+            <div>
+              <label class="layui-form-label {{childItem.required ? 'redStar': '' }}" data-local="{{childItem.label}}"
+                data-eng="{{childItem.key}}" lay-tips="{{childItem.description}}">{{childItem.label}}</label>
+              <span class="disN labelField">{{childItem.label}}</span>
+              <div class="layui-input-block">
+                {{# if(childItem.type == "input"){ }} <input type="text" class="layui-input" name="{{childItem.key}}" {{['Quantity',
+                  'Your Price'].includes(childItem.label) ? 'disabled': '' }}
+                  data-required="{{childItem.required ? 'true' : 'false'}}" {{childItem.placeholder ?
+                  'placeholder="Example:'+childItem.placeholder+'"' : ''}} {{childItem.maxLength ? 'maxlength="'+childItem.maxLength+'"'
+                  : ''}}> {{# }else if(childItem.type == "select"){ }}
+                <select data-required="{{childItem.required ? 'true' : 'false'}}" name="{{childItem.key}}"
+                  lay-filter="{{childItem.label}}">
+                  <option value="">请选择</option>
+                  {{# layui.each(childItem.options||[], function(cpIndex,
+                    cpItem){ }}
+                  <option value="{{cpItem.value}}">{{cpItem.label}}</option>
+                  {{# }); }}
+                </select>
+                {{# } }}
+              </div>
+            </div>
+            {{# }); }} {{# } }}
           </div>
-        </form>
+          {{# } }} {{# }) }}
+          <div>
+            <a class="layui-btn layui-btn-xs" id="publish_moreAttrBtn">展开分类属性</a>
+          </div>
+          <div id="optionValue" class="disN">
+            {{# layui.each(d.fields||[], function(index, item){ }} {{#
+              if(!item.required){ }}
+            <div class="layui-form-item">
+              {{# if(item.children){ }} {{# if(item.children.length > 1){ }}
+              <div style="font-weight:700;font-size:18px;" lay-tips="{{item.description}}" class="attrTitle">
+                {{item.label}}
+              </div>
+              {{# } }} {{# layui.each(item.children||[], function(childIndex,
+                childItem){ }}
+              <div>
+                {{# if(childItem.required){ }}
+                <label class="layui-form-label redStar" data-local="{{childItem.label}}" data-eng="{{childItem.key}}"
+                  lay-tips="{{childItem.description}}">{{childItem.label}}</label>
+                {{# }else{ }}
+                <label class="layui-form-label" data-local="{{childItem.label}}" data-eng="{{childItem.key}}"
+                  lay-tips="{{childItem.description}}">{{childItem.label}}</label>
+                {{# } }}
+                <span class="disN labelField">{{childItem.label}}</span>
+                <div class="layui-input-block">
+                  {{# if(childItem.type == "input"){ }} <input type="text" class="layui-input" name="{{childItem.key}}" {{['Quantity',
+                    'Your Price'].includes(childItem.label) ? 'disabled': '' }} {{childItem.placeholder ?
+                    'placeholder="Example:'+childItem.placeholder+'"' : ''}} {{childItem.maxLength ?
+                    'maxlength="'+childItem.maxLength+'"' : ''}}> {{# }else
+                    if(childItem.type == "select"){ }}
+                  <select name="{{childItem.key}}">
+                    <option value="">请选择</option>
+                    {{# layui.each(childItem.options||[], function(cpIndex,
+                      cpItem){ }}
+                    <option value="{{cpItem.value}}">{{cpItem.label}}</option>
+                    {{# }); }}
+                  </select>
+                  {{# } }}
+                </div>
+              </div>
+              {{# }); }} {{# } }}
+            </div>
+            {{# } }} {{# }) }}
+          </div>
+        </div>
       </div>
     </div>
+  </script>
 
-    <!-- 引入所需的JS库 -->
-    <script src="./js/layui.all.js"></script>
-    <script src="./js/amazon.js"></script>
-    <script>
-      // 存储原始schema数据
-      let originalSchemaData = null;
-      // 存储当前打开的结果弹窗索引
-      let currentResultLayerIndex = null;
+  <!-- 引入所需的JS库 -->
+  <script src="./js/layui.all.js"></script>
+  <script src="./js/amazon.js"></script>
+  <script src="./js/index.js"></script>
+</body>
 
-      /**
-       * 获取JSON Schema数据
-       * @return {Promise<Object>} Schema数据对象
-       */
-      const getSchemaContent = async () => {
-        try {
-          const response = await fetch("./demo.json");
-          return await response.json();
-        } catch (error) {
-          console.error("获取Schema数据失败:", error);
-          return null;
-        }
-      };
-
-      /**
-       * 渲染表单字段
-       * @param {Object} formConfig - 表单配置对象
-       */
-      const renderFormFields = (formConfig) => {
-        const formContainer = document.querySelector(
-          "#form-container .layui-form"
-        );
-        let requiredFieldsHtml = "";
-        let optionalFieldsHtml = "";
-
-        // 遍历所有字段
-        formConfig.fields.forEach((field) => {
-          // 判断字段是否在原始schema的required数组中
-          const isInRequired =
-            originalSchemaData.required &&
-            originalSchemaData.required.includes(field.key);
-
-          const fieldHtml = renderField(field, field.required);
-
-          // 如果字段在required数组中，则默认显示，否则放入可选字段
-          if (isInRequired) {
-            requiredFieldsHtml += fieldHtml;
-          } else {
-            optionalFieldsHtml += fieldHtml;
-          }
-        });
-
-        // 添加"更多选填属性"按钮
-        const moreOptionsBtn = `
-              <div class="more-options-btn">
-                <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" id="moreOptionsBtn">
-                  <span>显示更多选填属性</span> <i class="layui-icon layui-icon-down"></i>
-                </button>
-              </div>
-            `;
-
-        // 组合所有内容
-        const formHtml =
-          requiredFieldsHtml + moreOptionsBtn + optionalFieldsHtml;
-
-        // 添加到表单容器
-        formContainer.innerHTML = formHtml + formContainer.innerHTML;
-
-        // 重新渲染表单
-        layui.form.render();
-
-        // 添加事件监听
-        bindEvents();
-      };
-
-      /**
-       * 绑定所有事件处理
-       */
-      const bindEvents = () => {
-        // 监听"更多选填属性"按钮点击
-        document
-          .getElementById("moreOptionsBtn")
-          .addEventListener("click", function () {
-            toggleOptionalFields(this);
-          });
-
-        // 监听表单提交
-        document
-          .getElementById("submitBtn")
-          .addEventListener("click", submitForm);
-
-        // 为带有提示的标签添加鼠标事件
-        document.querySelectorAll(".label-with-tip").forEach((label) => {
-          const tipContent = label.getAttribute("data-tip");
-          if (tipContent) {
-            // 鼠标悬浮显示提示
-            label.addEventListener("mouseenter", function () {
-              layui.layer.tips(
-                `<div class="label-with-tips-container">${tipContent}</div>`,
-                this,
-                {
-                  tips: [1, "#000"],
-                  time: 0,
-                }
-              );
-            });
-
-            // 鼠标离开时关闭所有tips
-            label.addEventListener("mouseleave", function () {
-              layui.layer.closeAll("tips");
-            });
-          }
-        });
-      };
-
-      /**
-       * 切换选填属性的显示/隐藏
-       * @param {HTMLElement} btn - 触发切换的按钮元素
-       */
-      const toggleOptionalFields = (btn) => {
-        const optionalFields = document.querySelectorAll(".optional-field");
-        const optionalGroups = document.querySelectorAll(".optional-group");
-        const btnText = btn.querySelector("span");
-        const btnIcon = btn.querySelector("i");
-
-        // 检查当前是否显示选填字段
-        const isShowing =
-          optionalFields.length > 0 &&
-          optionalFields[0].style.display === "block";
-
-        // 切换显示状态
-        optionalFields.forEach((field) => {
-          field.style.display = isShowing ? "none" : "block";
-        });
-
-        optionalGroups.forEach((group) => {
-          group.style.display = isShowing ? "none" : "block";
-        });
-
-        // 更新按钮文本和图标
-        if (isShowing) {
-          btnText.textContent = "显示更多选填属性";
-          btnIcon.className = "layui-icon layui-icon-down";
-        } else {
-          btnText.textContent = "隐藏选填属性";
-          btnIcon.className = "layui-icon layui-icon-up";
-        }
-      };
-
-      /**
-       * 渲染单个字段
-       * @param {Object} field - 字段配置对象
-       * @param {Boolean} isParentRequired - 父级是否为必填
-       * @return {String} 字段HTML
-       */
-      const renderField = (field, isParentRequired = false) => {
-        // 计算当前字段是否必填（自身必填或父级必填）
-        const isRequired = field.required || isParentRequired;
-
-        // 判断字段是否在原始schema的required数组中
-        const isInRequired =
-          originalSchemaData.required &&
-          originalSchemaData.required.includes(field.key);
-
-        // 判断是否有子属性
-        if (
-          (field.isArray || field.children) &&
-          field.children &&
-          field.children.length > 0
-        ) {
-          // 如果只有一个子属性，检查是否有嵌套的children
-          if (field.children.length === 1 && !field.children[0].children) {
-            const child = field.children[0];
-            // 使用子属性的label，如果没有则使用父属性的label
-            return renderBasicField(
-              {
-                key: child.key,
-                label: child.label || field.label,
-                description: child.description || field.description,
-                required: isRequired || child.required,
-                type: child.type,
-                options: child.options,
-              },
-              isRequired,
-              isInRequired
-            );
-          }
-          // 如果有多个子属性或子属性有嵌套，以分组形式渲染
-          else {
-            // 确定分组是否为选填
-            const groupClass = isInRequired ? "" : "optional-group";
-
-            // 判断是否添加提示
-            const tipAttribute =
-              isInRequired && field.description
-                ? `data-tip="${field.description}"`
-                : "";
-
-            // 添加带提示样式
-            const labelClass =
-              isInRequired && field.description ? "label-with-tip" : "";
-
-            let html = `
-                  <div class="group-title ${groupClass}">
-                    <div class="field-label-container">
-                      <span class="${labelClass}" ${tipAttribute}>${field.label}</span>
-                    </div>
-                  </div>
-                  <div class="group-content ${groupClass}">
-                `;
-
-            // 渲染所有子属性
-            field.children.forEach((child) => {
-              // 如果子属性没有label，则使用父属性的label
-              const childWithLabel = {
-                ...child,
-                label: child.label || field.label,
-                description: child.description || "",
-                required: child.required,
-              };
-
-              // 如果子属性有自己的children，递归调用renderField
-              if (child.children && child.children.length > 0) {
-                html += renderField(childWithLabel, child.required);
-              } else {
-                html += renderBasicField(
-                  childWithLabel,
-                  child.required,
-                  isInRequired
-                );
-              }
-            });
-
-            html += `</div>`;
-            return html;
-          }
-        }
-        // 没有子属性，直接渲染基本字段
-        else {
-          return renderBasicField(field, isRequired, isInRequired);
-        }
-      };
-
-      /**
-       * 渲染基本表单字段（无子属性）
-       * @param {Object} field - 字段配置对象
-       * @param {Boolean} isParentRequired - 父级是否为必填
-       * @param {Boolean} isInRequired - 字段是否在原始schema的required数组中
-       * @return {String} 字段HTML
-       */
-      const renderBasicField = (
-        field,
-        isParentRequired = false,
-        isInRequired = false
-      ) => {
-        // 计算当前字段是否必填（自身必填或父级必填）
-        const isRequired = field.required || isParentRequired;
-
-        // 为选填字段添加特殊类名
-        // 如果字段不在原始schema的required数组中，则默认隐藏
-        const fieldClass = isInRequired
-          ? "layui-form-item"
-          : "layui-form-item optional-field";
-
-        // 判断是否添加提示
-        const tipAttribute =
-          isInRequired && field.description
-            ? `data-tip="${field.description}"`
-            : "";
-
-        // 添加带提示样式
-        const labelClass =
-          isInRequired && field.description ? "label-with-tip" : "";
-
-        let html = `
-              <div class="${fieldClass}">
-                <label class="layui-form-label">
-                  <div class="field-label-container">
-                    <span class="${labelClass}" ${tipAttribute}>${
-          field.label
-        }</span>
-                    ${isRequired ? '<span class="required-mark">*</span>' : ""}
-                  </div>
-                </label>
-                <div class="layui-input-block">
-            `;
-
-        // 根据字段类型渲染不同的表单元素
-        if (field.type === "select") {
-          html += `<select name="${field.key}" ${
-            isRequired ? 'lay-verify="required"' : ""
-          } data-required="${isRequired}">
-                <option value="">请选择</option>`;
-
-          field.options.forEach((option) => {
-            html += `<option value="${option.value}">${option.label}</option>`;
-          });
-
-          html += `</select>`;
-        } else {
-          // 添加placeholder属性
-          html += `<input type="text" name="${field.key}" class="layui-input" ${
-            isRequired ? 'lay-verify="required"' : ""
-          } ${
-            field.placeholder ? `placeholder="${field.placeholder}"` : ""
-          } data-required="${isRequired}">`;
-        }
-
-        html += `</div></div>`;
-
-        return html;
-      };
-
-      /**
-       * 验证必填项是否已填写
-       * @return {Object} 验证结果，包含isValid和missingFields
-       */
-      const validateRequiredFields = () => {
-        const form = document.querySelector(".layui-form");
-        const requiredFields = form.querySelectorAll('[data-required="true"]');
-
-        let isValid = true;
-        const missingFields = [];
-
-        requiredFields.forEach((field) => {
-          if (!field.value) {
-            isValid = false;
-            // 获取字段标签名
-            const label = field
-              .closest(".layui-form-item")
-              .querySelector(
-                ".layui-form-label .field-label-container span"
-              ).textContent;
-            missingFields.push(label);
-          }
-        });
-
-        return { isValid, missingFields };
-      };
-
-      /**
-       * 提交表单
-       */
-      const submitForm = () => {
-        // 验证必填项
-        const validation = validateRequiredFields();
-
-        // 清除之前的错误提示
-        document.getElementById("errorContainer").innerHTML = "";
-
-        if (!validation.isValid) {
-          // 显示错误消息
-          const errorMsg = `
-                <div class="error-message">
-                  <i class="layui-icon layui-icon-tips"></i>
-                  请填写以下必填项: ${validation.missingFields.join(", ")}
-                </div>
-              `;
-          document.getElementById("errorContainer").innerHTML = errorMsg;
-          return;
-        }
-
-        const form = document.querySelector(".layui-form");
-        const formData = {};
-
-        // 收集表单数据
-        const formElements = form.querySelectorAll("input, select, textarea");
-        formElements.forEach((element) => {
-          if (element.name && element.value) {
-            formData[element.name] = element.value;
-          }
-        });
-
-        // 使用amazon.js处理表单数据
-        const processedData = amazonUtils.processFormData(formData);
-
-        // 关闭之前的结果弹窗（如果有）
-        if (currentResultLayerIndex !== null) {
-          layui.layer.close(currentResultLayerIndex);
-        }
-
-        // 显示处理后的数据
-        currentResultLayerIndex = layui.layer.open({
-          type: 1,
-          title: "处理后的表单数据",
-          area: ["800px", "600px"],
-          content: `<pre style="padding: 20px;">${JSON.stringify(
-            processedData,
-            null,
-            2
-          )}</pre>`,
-        });
-      };
-
-      /**
-       * 设置表单数据
-       * @param {Object} formData - 表单数据对象
-       */
-      const setFormValues = (formData) => {
-        if (!formData) return;
-
-        // 延迟设置表单值，确保DOM已完全渲染
-        setTimeout(() => {
-          // 获取所有表单元素
-          const formElements = document.querySelectorAll(".layui-form [name]");
-
-          // 遍历表单元素并设置值
-          formElements.forEach((element) => {
-            const name = element.getAttribute("name");
-            if (name && formData[name] !== undefined) {
-              if (element.tagName === "SELECT") {
-                element.value = formData[name];
-                // 触发选择框的显示更新
-                layui.form.render("select");
-              } else {
-                element.value = formData[name];
-              }
-            }
-          });
-
-          // 自动展开所有选填字段，以便查看回显数据
-          const moreOptionsBtn = document.getElementById("moreOptionsBtn");
-          if (moreOptionsBtn) {
-            const optionalFields = document.querySelectorAll(".optional-field");
-            if (
-              optionalFields.length > 0 &&
-              optionalFields[0].style.display !== "block"
-            ) {
-              moreOptionsBtn.click();
-            }
-          }
-        }, 300);
-      };
-
-      // 页面加载完成后执行
-      document.addEventListener("DOMContentLoaded", async () => {
-        try {
-          // 获取Schema数据
-          const schemaData = await getSchemaContent();
-          if (!schemaData) return;
-          let parseProperties = amazonParseSchemaProperties(schemaData);
-          let convertProperties = amazonConvertToObjectArray(parseProperties);
-          console.log("convertProperties", convertProperties);
-          const submitData = {
-            merchant_suggested_asin: [
-              {
-                marketplace_id: "ATVPDKIKX0DER",
-                language_tag: "en_US",
-                value: "B007KQBXN0",
-              },
-            ],
-            plant_or_animal_product_type: [
-              {
-                marketplace_id: "ATVPDKIKX0DER",
-                language_tag: "en_US",
-                value: "flower",
-              },
-            ],
-            item_type_keyword: [
-              {
-                marketplace_id: "ATVPDKIKX0DER",
-                language_tag: "en_US",
-                value: "artificial-flowers",
-              },
-            ],
-            model_number: [
-              {
-                marketplace_id: "ATVPDKIKX0DER",
-                language_tag: "en_US",
-                value: "RXZER23",
-              },
-            ],
-            model_name: [
-              {
-                marketplace_id: "ATVPDKIKX0DER",
-                language_tag: "en_US",
-                value: "macbook pro",
-              },
-            ],
-            manufacturer: [
-              {
-                marketplace_id: "ATVPDKIKX0DER",
-                language_tag: "en_US",
-                value: "nike",
-              },
-            ],
-            fulfillment_availability: [
-              {
-                marketplace_id: "ATVPDKIKX0DER",
-                language_tag: "en_US",
-                fulfillment_channel_code: "DEFAULT",
-                quantity: "300",
-              },
-            ],
-            purchasable_offer: [
-              {
-                marketplace_id: "ATVPDKIKX0DER",
-                language_tag: "en_US",
-                maximum_seller_allowed_price: {
-                  schedule: {
-                    value_with_tax: 250,
-                  },
-                },
-                minimum_seller_allowed_price: {
-                  schedule: {
-                    value_with_tax: 250,
-                  },
-                },
-              },
-            ],
-            material: [
-              {
-                marketplace_id: "ATVPDKIKX0DER",
-                language_tag: "en_US",
-                value: "Bamboo, Engineered Wood",
-              },
-            ],
-            fabric_type: [
-              {
-                marketplace_id: "ATVPDKIKX0DER",
-                language_tag: "en_US",
-                value: "60% Cotton, 40% Polyester",
-              },
-            ],
-            number_of_items: [
-              {
-                marketplace_id: "ATVPDKIKX0DER",
-                language_tag: "en_US",
-                value: 5,
-              },
-            ],
-            item_shape: [
-              {
-                marketplace_id: "ATVPDKIKX0DER",
-                language_tag: "en_US",
-                value: "round",
-              },
-            ],
-            included_components: [
-              {
-                marketplace_id: "ATVPDKIKX0DER",
-                language_tag: "en_US",
-                value: "Camera Body",
-              },
-            ],
-            specific_uses_for_product: [
-              {
-                marketplace_id: "ATVPDKIKX0DER",
-                language_tag: "en_US",
-                value: "Dry Sanding",
-              },
-            ],
-            container: [
-              {
-                marketplace_id: "ATVPDKIKX0DER",
-                language_tag: "en_US",
-                material: [
-                  {
-                    value: "Glass",
-                    marketplace_id: "ATVPDKIKX0DER",
-                    language_tag: "en_US",
-                  },
-                ],
-                shape: [
-                  {
-                    value: "Cube",
-                    language_tag: "en_US",
-                  },
-                ],
-                type: [
-                  {
-                    value: "Bottle",
-                    language_tag: "en_US",
-                  },
-                ],
-              },
-            ],
-            indoor_outdoor_usage: [
-              {
-                marketplace_id: "ATVPDKIKX0DER",
-                language_tag: "en_US",
-                value: "indoor",
-              },
-            ],
-            item_depth_width_height: [
-              {
-                marketplace_id: "ATVPDKIKX0DER",
-                language_tag: "en_US",
-                depth: {
-                  unit: "inches",
-                  value: 20,
-                },
-                height: {
-                  unit: "inches",
-                  value: 40,
-                },
-                width: {
-                  unit: "inches",
-                  value: 20,
-                },
-              },
-            ],
-            country_of_origin: [
-              {
-                marketplace_id: "ATVPDKIKX0DER",
-                language_tag: "en_US",
-                value: "AF",
-              },
-            ],
-            batteries_required: [
-              {
-                marketplace_id: "ATVPDKIKX0DER",
-                language_tag: "en_US",
-                value: "false",
-              },
-            ],
-            supplier_declared_dg_hz_regulation: [
-              {
-                marketplace_id: "ATVPDKIKX0DER",
-                language_tag: "en_US",
-                value: "not_applicable",
-              },
-            ],
-          };
-
-          //获取到convertProperties中和submitData的key相同项并打印
-          let submitKeys = Object.keys(submitData);
-          console.log("submitKeys", submitKeys);
-          //遍历convertProperties,如果item对应的key在submitKeys中,就提出来
-          let newProperties = [];
-          convertProperties.forEach((item) => {
-            let itemKey = Object.keys(item)[0];
-            if (submitKeys.includes(itemKey)) {
-              newProperties.push(item);
-            }
-          });
-          console.log("newProperties", newProperties);
-
-          // 使用新的转换函数处理 submitData，确保数据结构符合 schema 规范
-          let transformedSubmitData = amazonTransformSubmitDataBySchema(
-            submitData,
-            newProperties
-          );
-          console.log("转换前的 submitData:", submitData);
-          console.log("转换后的 transformedSubmitData:", transformedSubmitData);
-
-          // 保存原始schema数据，用于后续判断字段是否在required中
-          originalSchemaData = schemaData;
-
-          // 使用amazon.js转换Schema为表单配置
-          const formConfig = transformAmazonJsonSchemaToForm(schemaData, [
-            "included_components",
-            "item_package_weight",
-            "required_product_compliance_certificate",
-            "externally_assigned_product_identifier",
-            "manufacturer",
-            "number_of_boxes",
-            "model_name",
-            "bullet_point",
-            "fulfillment_availability",
-            "model_number",
-            "product_description",
-            "supplier_declared_dg_hz_regulation",
-            "brand",
-            "is_expiration_dated_product",
-            "purchasable_offer",
-            "country_of_origin",
-            "automotive_fit_type",
-            "list_price",
-            "item_type_keyword",
-            "number_of_items",
-            "merchant_suggested_asin",
-            "item_package_dimensions",
-            "is_assembly_required",
-            "warranty_description",
-            "part_number",
-          ]);
-          // 渲染表单
-          renderFormFields(formConfig);
-        } catch (error) {
-          console.error("初始化失败:", error);
-        }
-      });
-    </script>
-  </body>
 </html>
