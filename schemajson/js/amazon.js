@@ -252,7 +252,9 @@
     setCurrentDefaults: function (schema) {
       const defaults = getDefaultValues(schema);
       amazonUtils._currentDefaults = defaults;
-      amazonUtils._schemaData = schema || {};
+    },
+    setSchemaData: function (schema) {
+      amazonUtils._schemaData = schema;
     },
     /**
      * 转换JSON Schema为表单结构
@@ -261,9 +263,10 @@
      * @return {Object} 表单配置对象
      */
     transformJsonSchemaToForm: function (schema, requiredTopFields = []) {
+      console.log("获取到的json-schema数据", schema);
       // 设置当前默认值
       amazonUtils.setCurrentDefaults(schema);
-
+      amazonUtils.setSchemaData(schema);
       const {
         marketplaceId: DEFAULT_MARKETPLACE_ID,
         languageTag: DEFAULT_LANGUAGE_TAG,
@@ -602,6 +605,7 @@
           item.children[0].required = true;
         }
       });
+      console.log("处理后的表单配置formConfig", formConfig);
       return formConfig;
     },
 
@@ -684,16 +688,16 @@
         return;
       }
 
-      // 处理多层嵌套路径 - 所有中间层级都创建为数组格式
+      // 处理多层嵌套路径 - 中间层级创建为对象格式
       let current = targetObj;
       for (let i = 1; i < pathArray.length - 1; i++) {
         const key = pathArray[i];
         if (!current[key]) {
-          // 创建数组格式的中间层级
-          current[key] = [{}];
+          // 创建对象格式的中间层级
+          current[key] = {};
         }
-        // 访问数组中的第一个对象
-        current = current[key][0];
+        // 直接访问对象
+        current = current[key];
       }
 
       // 设置最终值
@@ -767,12 +771,55 @@
      */
     extractArrayData: function (value) {
       if (Array.isArray(value) && value.length > 0) {
-        return value[0];
+        // 提取数组第一个元素，但保持其内部结构
+        const firstItem = value[0];
+        if (typeof firstItem === "object" && firstItem !== null) {
+          // 递归处理内部结构，将嵌套数组转换为对象
+          return amazonUtils.convertNestedArraysToObjects(firstItem);
+        }
+        return firstItem;
       } else if (typeof value === "object" && value !== null) {
-        return value;
+        return amazonUtils.convertNestedArraysToObjects(value);
       } else {
         return { value: value };
       }
+    },
+
+    /**
+     * 将嵌套结构中的数组转换为对象（除了最外层）
+     * @param {Object} obj - 要转换的对象
+     * @return {Object} 转换后的对象
+     */
+    convertNestedArraysToObjects: function (obj) {
+      if (!obj || typeof obj !== "object") {
+        return obj;
+      }
+
+      const result = {};
+      Object.entries(obj).forEach(([key, value]) => {
+        // 跳过 marketplace_id 和 language_tag
+        if (amazonUtils.shouldSkipField(key)) {
+          result[key] = value;
+          return;
+        }
+
+        if (Array.isArray(value) && value.length > 0) {
+          // 对于数组，取第一个元素并递归处理
+          const firstItem = value[0];
+          if (typeof firstItem === "object" && firstItem !== null) {
+            result[key] = amazonUtils.convertNestedArraysToObjects(firstItem);
+          } else {
+            result[key] = firstItem;
+          }
+        } else if (typeof value === "object" && value !== null) {
+          // 递归处理嵌套对象
+          result[key] = amazonUtils.convertNestedArraysToObjects(value);
+        } else {
+          result[key] = value;
+        }
+      });
+
+      return result;
     },
 
     /**
