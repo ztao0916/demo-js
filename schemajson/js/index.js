@@ -1,6 +1,8 @@
 let form = layui.form;
 let table = layui.table;
 let laytpl = layui.laytpl;
+let $ = layui.$;
+let needHiddenUtilLableList = ['Your Price','Quantity'];
 let mustRequire = [
   "container",
   "color",
@@ -17,7 +19,7 @@ let mustRequire = [
   "product_description",
   "supplier_declared_dg_hz_regulation",
   "brand",
-  "purchasable_offer",
+  // "purchasable_offer", //默认不展示,即使有必填
   "country_of_origin",
   "list_price",
   "batteries_required",
@@ -75,11 +77,34 @@ const initFormRender = async () => {
     // 重新渲染layui表单组件
     form.render();
     
+    // 隐藏指定的label项
+    hideSpecifiedLabels();
+    
     // 绑定展开/收起按钮事件
     bindToggleEvents();
   } catch (error) {
     console.error("表单渲染失败:", error);
   }
+};
+
+/**
+ * 隐藏指定的label项
+ */
+const hideSpecifiedLabels = () => {
+  needHiddenUtilLableList.forEach(labelText => {
+    // 查找所有包含指定文本的label元素
+    $('.layui-form-label').each(function() {
+      if ($(this).text().trim() === labelText) {
+        // 隐藏整个表单项容器
+        const $formItem = $(this).closest('.layui-form-item').length ? $(this).closest('.layui-form-item') : $(this).closest('div');
+        if ($formItem.find('div').length === 2) {
+          $formItem.hide();
+        } else {
+          $(this).closest('div').hide();
+        }
+      }
+    });
+  });
 };
 
 /**
