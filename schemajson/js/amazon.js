@@ -75,7 +75,7 @@
       description: property.description,
       examples: property.examples,
       enum: property.enum,
-      enumNames: property.enumNames,
+      enumNames: property.enum,
       minLength: property.minLength,
       maxLength: property.maxLength,
       minimum: property.minimum,
@@ -127,7 +127,7 @@
             ? itemsProperty.required.includes(itemPropName)
             : false,
           enum: itemPropTypeInfo.enum,
-          enumNames: itemPropTypeInfo.enumNames,
+          enumNames: itemPropTypeInfo.enum,
           default: itemPropTypeInfo.default,
           editable: itemPropTypeInfo.editable,
           hidden: itemPropTypeInfo.hidden,
@@ -155,7 +155,7 @@
                 ? itemProperty.required.includes(nestedPropName)
                 : false,
               enum: nestedPropTypeInfo.enum,
-              enumNames: nestedPropTypeInfo.enumNames,
+              enumNames: nestedPropTypeInfo.enum,
               default: nestedPropTypeInfo.default,
               editable: nestedPropTypeInfo.editable,
               hidden: nestedPropTypeInfo.hidden,
@@ -381,12 +381,17 @@
           }
 
           // 处理 anyOf 结构 - 当存在多个选项时转为选择框
-          if (value.anyOf && value.anyOf.length > 1 && value.anyOf[1] && value.anyOf[1].enum) {
+          if (
+            value.anyOf &&
+            value.anyOf.length > 1 &&
+            value.anyOf[1] &&
+            value.anyOf[1].enum
+          ) {
             field.type = "select";
             field.options = value.anyOf[1].enum.map(function (val, index) {
               return {
                 value: val,
-                label: value.anyOf[1].enumNames && value.anyOf[1].enumNames[index] ? value.anyOf[1].enumNames[index] : val,
+                label: val,
               };
             });
           }
@@ -493,20 +498,26 @@
                     ) {
                       return {
                         value: val,
-                        label: propValue.enumNames
-                          ? propValue.enumNames[index]
-                          : val,
+                        label: val,
                       };
                     });
                   }
 
                   // 处理 anyOf 结构 - 当存在多个选项时转为选择框
-                  if (propValue.anyOf && propValue.anyOf.length > 1 && propValue.anyOf[1] && propValue.anyOf[1].enum) {
+                  if (
+                    propValue.anyOf &&
+                    propValue.anyOf.length > 1 &&
+                    propValue.anyOf[1] &&
+                    propValue.anyOf[1].enum
+                  ) {
                     fieldObj.type = "select";
-                    fieldObj.options = propValue.anyOf[1].enum.map(function (val, index) {
+                    fieldObj.options = propValue.anyOf[1].enum.map(function (
+                      val,
+                      index
+                    ) {
                       return {
                         value: val,
-                        label: propValue.anyOf[1].enumNames && propValue.anyOf[1].enumNames[index] ? propValue.anyOf[1].enumNames[index] : val,
+                        label: val,
                       };
                     });
                   }
@@ -685,19 +696,10 @@
     setNestedValue: function (obj, path, value) {
       const pathArray = this.parseNestedPath(path);
       const topLevelKey = pathArray[0];
-      const {
-        marketplaceId: DEFAULT_MARKETPLACE_ID,
-        languageTag: DEFAULT_LANGUAGE_TAG,
-      } = amazonUtils._currentDefaults;
 
       // 确保顶级字段存在并且是数组格式
       if (!obj[topLevelKey]) {
-        obj[topLevelKey] = [
-          {
-            marketplace_id: DEFAULT_MARKETPLACE_ID,
-            language_tag: DEFAULT_LANGUAGE_TAG,
-          },
-        ];
+        obj[topLevelKey] = [{}];
       }
 
       // 获取数组中的第一个对象
@@ -941,7 +943,7 @@
             : false,
           // 添加更多属性信息
           enum: typeInfo.enum,
-          enumNames: typeInfo.enumNames,
+          enumNames: typeInfo.enum,
           default: typeInfo.default,
           editable: typeInfo.editable,
           hidden: typeInfo.hidden,
@@ -977,7 +979,7 @@
                 ? property.required.includes(nestedPropName)
                 : false,
               enum: nestedTypeInfo.enum,
-              enumNames: nestedTypeInfo.enumNames,
+              enumNames: nestedTypeInfo.enum,
               default: nestedTypeInfo.default,
               editable: nestedTypeInfo.editable,
               hidden: nestedTypeInfo.hidden,
@@ -1191,10 +1193,10 @@
             ) {
               // 如果当前字段值不是数组，需要转换为数组
               if (!Array.isArray(processedItem[propName])) {
-                // 如果是简单对象 {value: "xxx"}，转换为数组格式
+                // 将对象转换为数组格式
                 if (
                   typeof processedItem[propName] === "object" &&
-                  processedItem[propName].value !== undefined
+                  processedItem[propName] !== null
                 ) {
                   const newItem = { ...processedItem[propName] };
 
@@ -1212,12 +1214,22 @@
                     ) {
                       newItem.language_tag = languageTag;
                     }
+                    
+                    // 递归处理转换后的数组元素内部的嵌套字段
+                    const processedNewItem = amazonUtils.processNestedObjectProperties(
+                      newItem,
+                      propSchema.items.properties,
+                      marketplaceId,
+                      languageTag
+                    );
+                    
+                    processedItem[propName] = [processedNewItem];
+                  } else {
+                    processedItem[propName] = [newItem];
                   }
-
-                  processedItem[propName] = [newItem];
                 }
               } else {
-                // 如果已经是数组，确保每个元素都包含必要字段
+                // 如果已经是数组，确保每个元素都包含必要字段并递归处理
                 processedItem[propName] = processedItem[propName].map(
                   (arrayItem) => {
                     if (typeof arrayItem === "object" && arrayItem !== null) {
@@ -1236,6 +1248,14 @@
                         ) {
                           newArrayItem.language_tag = languageTag;
                         }
+                        
+                        // 递归处理数组元素内部的嵌套字段
+                        return amazonUtils.processNestedObjectProperties(
+                          newArrayItem,
+                          propSchema.items.properties,
+                          marketplaceId,
+                          languageTag
+                        );
                       }
 
                       return newArrayItem;
@@ -1272,7 +1292,15 @@
                   newItem.language_tag = languageTag;
                 }
 
-                processedItem[propName] = newItem;
+                // 递归处理对象内部的数组字段
+                const processedNestedItem = amazonUtils.processNestedObjectProperties(
+                  newItem,
+                  propSchema.properties,
+                  marketplaceId,
+                  languageTag
+                );
+
+                processedItem[propName] = processedNestedItem;
               }
             }
           });
@@ -1322,6 +1350,69 @@
       // 默认认为是属性数据
       return true;
     },
+
+    /**
+     * 递归处理嵌套对象内部的数组字段
+     * @param {Object} obj - 要处理的对象
+     * @param {Object} schemaProperties - schema 属性定义
+     * @param {String} marketplaceId - marketplace_id 默认值
+     * @param {String} languageTag - language_tag 默认值
+     * @returns {Object} 处理后的对象
+     */
+    processNestedObjectProperties: function (
+      obj,
+      schemaProperties,
+      marketplaceId,
+      languageTag
+    ) {
+      const processedObj = { ...obj };
+
+      // 遍历schema中定义的属性
+      Object.keys(schemaProperties).forEach((propName) => {
+        const propSchema = schemaProperties[propName];
+        
+        // 如果当前对象中存在该属性
+        if (processedObj[propName] !== undefined) {
+          // 如果schema定义为数组类型，但当前值不是数组，则转换为数组
+          if (propSchema.type === "array" && !Array.isArray(processedObj[propName])) {
+            const arrayItem = processedObj[propName];
+            
+            // 如果数组项有schema定义，需要根据items的properties添加必要字段
+            if (propSchema.items && propSchema.items.properties) {
+              const newArrayItem = { ...arrayItem };
+              
+              // 添加必要字段
+              if (propSchema.items.properties.marketplace_id && !newArrayItem.marketplace_id) {
+                newArrayItem.marketplace_id = marketplaceId;
+              }
+              if (propSchema.items.properties.language_tag && !newArrayItem.language_tag) {
+                newArrayItem.language_tag = languageTag;
+              }
+              
+              processedObj[propName] = [newArrayItem];
+            } else {
+              processedObj[propName] = [arrayItem];
+            }
+          }
+          // 如果是对象类型且有properties定义，递归处理
+          else if (
+            propSchema.type === "object" &&
+            propSchema.properties &&
+            typeof processedObj[propName] === "object" &&
+            processedObj[propName] !== null
+          ) {
+            processedObj[propName] = amazonUtils.processNestedObjectProperties(
+              processedObj[propName],
+              propSchema.properties,
+              marketplaceId,
+              languageTag
+            );
+          }
+        }
+      });
+
+      return processedObj;
+    },
   };
 
   // 为兼容性考虑，也直接暴露方法
@@ -1333,4 +1424,4 @@
   global.amazonConvertToObjectArray = global.amazonUtils.convertToObjectArray;
   global.amazonTransformSubmitDataBySchema =
     global.amazonUtils.transformSubmitDataBySchema;
-})(typeof window !== "undefined" ? window : this);
+})(window);
