@@ -82,6 +82,9 @@ const initFormRender = async () => {
     
     // 绑定展开/收起按钮事件
     bindToggleEvents();
+    
+    // 绑定新增的提交相关事件
+    bindSubmitEvents();
   } catch (error) {
     console.error("表单渲染失败:", error);
   }
@@ -153,9 +156,137 @@ document.addEventListener('DOMContentLoaded', () => {
   initFormRender();
 });
 
+/**
+ * 获取表单中有值的字段数据
+ * @return {Object} 只包含有值字段的表单数据对象
+ */
+const getFormDataWithValues = () => {
+  const formData = {};
+  const formElement = document.querySelector('#form-container .layui-form');
+  
+  if (formElement) {
+    const inputs = formElement.querySelectorAll('input, select, textarea');
+    inputs.forEach(input => {
+      // 只收集有值的字段
+      if (input.name && input.value.trim() !== '') {
+        formData[input.name] = input.value;
+      }
+    });
+  }
+  
+  return formData;
+};
+
+/**
+ * 自动填写必填项
+ */
+const fillRequiredFields = () => {
+  const formElement = document.querySelector('#form-container .layui-form');
+  
+  if (formElement) {
+    // 查找所有必填项
+    const requiredInputs = formElement.querySelectorAll('input[data-required="true"], select[data-required="true"]');
+    
+    requiredInputs.forEach(input => {
+      if (input.tagName.toLowerCase() === 'input') {
+        // 为input类型设置默认值
+        input.value = '示例值';
+      } else if (input.tagName.toLowerCase() === 'select') {
+        // 为select类型选择第一个非空选项
+        const options = input.querySelectorAll('option');
+        for (let i = 0; i < options.length; i++) {
+          if (options[i].value) {
+            input.value = options[i].value;
+            break;
+          }
+        }
+      }
+    });
+    
+    // 重新渲染表单，使select的选中状态生效
+    form.render();
+  }
+};
+
+
+function standardJsonSchemaDataHandle(submitData){
+  let parseProperties = amazonParseSchemaProperties(amazonUtils._schemaData);
+  let convertProperties = amazonConvertToObjectArray(parseProperties);
+  //获取到convertProperties中和submitData的key相同项并打印
+  let submitKeys = Object.keys(submitData);
+  //遍历convertProperties,如果item对应的key在submitKeys中,就提出来
+  let newProperties = [];
+  convertProperties.forEach((item) => {
+    let itemKey = Object.keys(item)[0];
+    if (submitKeys.includes(itemKey)) {
+      newProperties.push(item);
+    }
+  });
+  console.log('newProperties', newProperties);
+  // 使用新的转换函数处理 submitData，确保数据结构符合 schema 规范
+  let transformedSubmitData = amazonTransformSubmitDataBySchema(submitData,newProperties);
+  //遍历transformedSubmitData,是一个对象
+  Object.keys(transformedSubmitData).forEach((key) => {
+    if (key == 'fulfillment_availability') {
+      transformedSubmitData[key].forEach(item => {
+        if(item['fulfillment_channel_code'] == 'AMAZON_NA'){
+          delete item.quantity;
+        }else{
+          item.quantity = Number(item.quantity)
+        }
+      })
+    }
+  });
+  return transformedSubmitData;
+}
+
+/**
+ * 提交表单数据
+ */
+const submitFormData = () => {
+  // 获取只有值的表单数据
+  const formData = getFormDataWithValues();
+  let processData = amazonProcessFormData(formData);
+  let standardData = standardJsonSchemaDataHandle(processData);
+  
+  // 输出到控制台
+  console.log('提交的表单数据:', standardData);
+  
+  // 使用layui的弹窗显示提交的数据
+  layer.open({
+    type: 1,
+    title: '提交的表单数据',
+    content: '<pre>' + JSON.stringify(standardData, null, 2) + '</pre>',
+    area: ['500px', '300px']
+  });
+  
+  // 这里可以添加实际的表单提交逻辑，如AJAX请求等
+};
+
+/**
+ * 绑定提交相关的按钮事件
+ */
+const bindSubmitEvents = () => {
+  // 填写必填项按钮事件
+  const fillRequiredBtn = document.getElementById('fillRequiredBtn');
+  if (fillRequiredBtn) {
+    fillRequiredBtn.addEventListener('click', fillRequiredFields);
+  }
+  
+  // 提交表单按钮事件
+  const submitFormBtn = document.getElementById('submitFormBtn');
+  if (submitFormBtn) {
+    submitFormBtn.addEventListener('click', submitFormData);
+  }
+};
+
 // 导出函数供外部使用
 window.schemaFormUtils = {
   initFormRender,
   getFormData,
-  bindToggleEvents
+  getFormDataWithValues,
+  fillRequiredFields,
+  submitFormData,
+  bindToggleEvents,
+  bindSubmitEvents
 };
