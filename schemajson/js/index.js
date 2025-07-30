@@ -222,6 +222,14 @@ function standardJsonSchemaDataHandle(submitData){
       newProperties.push(item);
     }
   });
+  //遍历submitData,如果key=list_price,就把newProperties中key=list_price的currency的enum中第一项赋值给submitData的list_price的currency字段
+  if (submitKeys.includes('list_price')) {
+    let listPriceObj= newProperties.find(item => item['list_price'])['list_price'];
+    let listPriceArr = submitData['list_price'];
+    listPriceArr.forEach(item => {
+      item.currency = listPriceObj.items.properties.currency.enum[0];
+    })
+  }
   console.log('newProperties', newProperties);
   // 使用新的转换函数处理 submitData，确保数据结构符合 schema 规范
   let transformedSubmitData = amazonTransformSubmitDataBySchema(submitData,newProperties);

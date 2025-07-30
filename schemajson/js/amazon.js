@@ -196,6 +196,7 @@
   const convertItemsToObject = function (itemsInfo) {
     const itemsObj = {
       type: itemsInfo.type,
+      enum: itemsInfo.enum || [],
     };
 
     if (itemsInfo.properties) {
@@ -204,6 +205,7 @@
         const itemProp = itemsInfo.properties[itemPropName];
         itemsObj.properties[itemPropName] = {
           type: itemProp.type,
+          enum: itemProp.enum || [],
         };
 
         // 如果有嵌套的 items，递归处理
@@ -220,6 +222,7 @@
             const nestedProp = itemProp.properties[nestedPropName];
             itemsObj.properties[itemPropName].properties[nestedPropName] = {
               type: nestedProp.type,
+              enum: nestedProp.enum || [],
             };
 
             // 如果嵌套属性有 items，递归处理
@@ -327,7 +330,7 @@
           //  "style",           // 样式
 
           // 价格
-          "list_price", // 标价
+          // "list_price", // 标价
         ];
 
         // 检查是否为基本过滤字段
@@ -1028,6 +1031,7 @@
         const obj = {};
         obj[prop.name] = {
           type: prop.type,
+          enum: prop.enum || [],
         };
 
         // 如果有 items，使用递归函数处理
@@ -1042,6 +1046,7 @@
             const nestedProp = prop.properties[nestedPropName];
             obj[prop.name].properties[nestedPropName] = {
               type: nestedProp.type,
+              enum: nestedProp.enum || [],
             };
 
             // 如果嵌套属性有 items，递归处理
