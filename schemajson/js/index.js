@@ -40,7 +40,7 @@ let mustRequire = [
  */
 const getSchemaContent = async () => {
   try {
-    const response = await fetch("./demo.json");
+    const response = await fetch("./json/us.json");
     return await response.json();
   } catch (error) {
     console.error("获取Schema数据失败:", error);
