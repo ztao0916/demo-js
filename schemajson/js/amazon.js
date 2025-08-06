@@ -1418,6 +1418,59 @@
 
       return processedObj;
     },
+    /**
+     * 获取schema中item_name对象内层value对象的maxLength值
+     * @param {Object} schema - JSON Schema对象
+     * @returns {number|null} maxLength值，如果未找到则返回null
+     */
+    getItemNameMaxLength: function(schema) {
+      try {
+        // 检查schema是否存在且有properties
+        if (!schema || !schema.properties) {
+          console.warn('Schema或properties不存在');
+          return null;
+        }
+
+        // 检查item_name属性是否存在
+        if (!schema.properties.item_name) {
+          console.warn('item_name属性不存在');
+          return null;
+        }
+
+        const itemName = schema.properties.item_name;
+        
+        // 检查item_name是否为数组类型且有items
+        if (itemName.type !== 'array' || !itemName.items) {
+          console.warn('item_name不是数组类型或没有items定义');
+          return null;
+        }
+
+        // 检查items是否有properties
+        if (!itemName.items.properties) {
+          console.warn('item_name.items没有properties定义');
+          return null;
+        }
+
+        // 检查value属性是否存在
+        if (!itemName.items.properties.value) {
+          console.warn('item_name.items.properties.value不存在');
+          return null;
+        }
+
+        const valueProperty = itemName.items.properties.value;
+        
+        // 返回maxLength值
+        if (valueProperty.maxLength !== undefined) {
+          return valueProperty.maxLength;
+        } else {
+          console.warn('value属性没有maxLength定义');
+          return null;
+        }
+      } catch (error) {
+        console.error('获取item_name maxLength时发生错误:', error);
+        return null;
+      }
+    },
   };
 
   // 为兼容性考虑，也直接暴露方法
@@ -1429,4 +1482,5 @@
   global.amazonConvertToObjectArray = global.amazonUtils.convertToObjectArray;
   global.amazonTransformSubmitDataBySchema =
     global.amazonUtils.transformSubmitDataBySchema;
+  global.amazonGetItemNameMaxLength = global.amazonUtils.getItemNameMaxLength;
 })(window);

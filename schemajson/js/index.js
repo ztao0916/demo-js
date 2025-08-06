@@ -59,6 +59,7 @@ const initFormRender = async () => {
       console.error("无法获取Schema数据");
       return;
     }
+    console.log(amazonGetItemNameMaxLength(schemaData));
 
     // 使用transformJsonSchemaToForm函数转换数据
     const formData = amazonUtils.transformJsonSchemaToForm(schemaData, mustRequire);
