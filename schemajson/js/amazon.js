@@ -1233,6 +1233,32 @@
                   } else {
                     processedItem[propName] = [newItem];
                   }
+                }else if(typeof processedItem[propName] === 'string'){
+                  const stringValue = processedItem[propName];
+                  
+                  // 根据 schema 要求创建包含必要字段的对象
+                  if (propSchema.items.properties) {
+                    const newItem = { value: stringValue };
+                    
+                    // 添加必要字段
+                    if (
+                      propSchema.items.properties.marketplace_id &&
+                      !newItem.marketplace_id
+                    ) {
+                      newItem.marketplace_id = marketplaceId;
+                    }
+                    if (
+                      propSchema.items.properties.language_tag &&
+                      !newItem.language_tag
+                    ) {
+                      newItem.language_tag = languageTag;
+                    }
+                    
+                    processedItem[propName] = [newItem];
+                  } else {
+                    // 如果没有定义 properties，直接转换为字符串数组
+                    processedItem[propName] = [stringValue];
+                  }
                 }
               } else {
                 // 如果已经是数组，确保每个元素都包含必要字段并递归处理
