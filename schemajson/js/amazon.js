@@ -768,6 +768,35 @@
       return formData;
     },
 
+        /**
+     * 处理已解析的数据对象，转换为表单可用格式
+     * @param {Object} parseData - 已处理过的解析数据对象
+     * @return {Object} 转换后的表单数据对象
+     */
+    processParseData: function(parseData) {
+      if (!parseData || typeof parseData !== "object") {
+        console.error("传入的parseData无效");
+        return {};
+      }
+
+      const formData = {};
+
+      // 遍历parseData对象的每个属性
+      Object.entries(parseData).forEach(([key, value]) => {
+        try {
+          // 提取数组中的数据对象
+          const dataObj = amazonUtils.extractArrayData(value);
+
+          // 扁平化对象到表单数据中
+          amazonUtils.flattenObject(dataObj, key, formData);
+        } catch (error) {
+          console.error("处理parseData属性时出错:", error, key, value);
+        }
+      });
+
+      return formData;
+    },
+
     /**
      * 处理已解析的数据对象，转换为表单可用格式
      * @param {Object} parseData - 已处理过的解析数据对象

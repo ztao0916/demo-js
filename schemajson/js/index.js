@@ -289,6 +289,121 @@ const bindSubmitEvents = () => {
   }
 };
 
+//添加重量/尺寸处理
+let amazonDefaultAttrValue = {
+    "model_number": [
+        {
+            "value": "--d2--4807",
+            "marketplace_id": "ATVPDKIKX0DER"
+        }
+    ],
+    "model_name": [
+        {
+            "value": "Appliances >> Garbage Disposals & Compactors >> Garbage Disposals",
+            "language_tag": "en_US"
+        }
+    ],
+    "manufacturer": [
+        {
+            "value": "Genenic",
+            "language_tag": "en_US",
+            "marketplace_id": "ATVPDKIKX0DER"
+        }
+    ],
+    "country_of_origin": [
+        {
+            "value": "CN",
+            "marketplace_id": "ATVPDKIKX0DER"
+        }
+    ],
+    "supplier_declared_dg_hz_regulation": [
+        {
+            "value": "not_applicable",
+            "marketplace_id": "ATVPDKIKX0DER"
+        }
+    ],
+    "number_of_boxes": [
+        {
+            "value": "1",
+            "marketplace_id": "ATVPDKIKX0DER"
+        }
+    ],
+    "number_of_items": [
+        {
+            "value": "1",
+            "marketplace_id": "ATVPDKIKX0DER"
+        }
+    ],
+    "unit_count": [
+        {
+            "value": "1",
+            "type": {
+                "value": "Count",
+                "language_tag": "en_US"
+            }
+        }
+    ],
+    "batteries_required": [
+        {
+            "marketplace_id": "ATVPDKIKX0DER",
+            "value": false
+        }
+    ],
+    "import_designation": [
+        {
+            "value": "imported",
+            "language_tag": "en_US",
+            "marketplace_id": "ATVPDKIKX0DER"
+        }
+    ],
+    "cpsia_cautionary_statement": [
+        {
+            "value": "no_warning_applicable",
+            "marketplace_id": "ATVPDKIKX0DER"
+        }
+    ],
+    "item_package_dimensions": [
+        {
+            "height": {
+                "value": 12,
+                "marketplace_id": "ATVPDKIKX0DER"
+            },
+            "length": {
+                "value": 14,
+                "marketplace_id": "ATVPDKIKX0DER"
+            },
+            "width": {
+                "value": 13,
+                "marketplace_id": "ATVPDKIKX0DER"
+            },
+            "marketplace_id": "ATVPDKIKX0DER"
+        }
+    ],
+    "item_package_weight": [
+        {
+            "value": 30,
+            "marketplace_id": "ATVPDKIKX0DER"
+        }
+    ]
+}
+
+/**
+ * 功能: 根据传入的对象获取到重量和尺寸,进行匹配转换,需要适应匹配规则:重量规则和尺寸规则
+ * @param {*} obj
+ * @param {*} obj.data 属性对象
+ * @param {*} obj.propertiesName 重量属性名
+ * @param {*} obj.typeRules 规则类型: 重量规则或尺寸规则
+ * @return {*} 转换后的重量和尺寸对象
+ */
+const convertWeightAndDimension = (obj) => {
+  let {data, propertiesName, typeRules} = obj;
+  let currentObj = data[propertiesName];
+  //定义默认的重量规则: 首先取第一项,如果没有取第二项,以此类推
+  let propertiesNameArr = ['item_package_dimensions'];
+  console.log('propertiesNameArr', propertiesNameArr)
+}
+
+
 // 导出函数供外部使用
 window.schemaFormUtils = {
   initFormRender,
