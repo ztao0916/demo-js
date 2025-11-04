@@ -256,7 +256,7 @@
       const defaults = getDefaultValues(schema);
       amazonUtils._currentDefaults = defaults;
     },
-    setSchemaData: function(schema) {
+    setSchemaData: function (schema) {
       amazonUtils._schemaData = schema;
     },
     /**
@@ -265,8 +265,8 @@
      * @param {Array} requiredTopFields - 顶层必填字段列表,必填字段列表
      * @return {Object} 表单配置对象
      */
-    transformJsonSchemaToForm: function (schema, requiredTopFields=[]) {
-      console.log('获取到的json-schema数据', schema);
+    transformJsonSchemaToForm: function (schema, requiredTopFields = []) {
+      console.log("获取到的json-schema数据", schema);
       // 设置当前默认值
       amazonUtils.setCurrentDefaults(schema);
       amazonUtils.setSchemaData(schema);
@@ -303,34 +303,34 @@
       const isFilteredField = function (key) {
         // 需要过滤的字段列表
         const filteredFields = [
-           // 基本信息
-           "condition_type",    // 商品状态
-           "brand",            // 品牌
-           "item_name",        // 标题
-           "product_description", // 描述
-           "generic_keyword",  // 关键词
-           "bullet_point",     // 卖点
- 
-           // 产品标识和关系
-           "part_number",      // 部件号
-           "parentage_level",  // 父子关系级别
-           "child_parent_sku_relationship", // 父子SKU关系
-           "variation_theme",  // 变体主题
-           "supplier_declared_has_product_identifier_exemption", // 产品标识符豁免声明
-           "externally_assigned_product_identifier", // 外部分配的产品标识符
- 
-           // 图片相关
-           "main_product_image_locator",     // 主图
-           "swatch_product_image_locator",   // 变体图
-           "other_product_image_locator",    // 其他图片（基础）
- 
-           // 变体属性
+          // 基本信息
+          "condition_type", // 商品状态
+          "brand", // 品牌
+          "item_name", // 标题
+          "product_description", // 描述
+          "generic_keyword", // 关键词
+          "bullet_point", // 卖点
+
+          // 产品标识和关系
+          "part_number", // 部件号
+          "parentage_level", // 父子关系级别
+          "child_parent_sku_relationship", // 父子SKU关系
+          "variation_theme", // 变体主题
+          "supplier_declared_has_product_identifier_exemption", // 产品标识符豁免声明
+          "externally_assigned_product_identifier", // 外部分配的产品标识符
+
+          // 图片相关
+          "main_product_image_locator", // 主图
+          "swatch_product_image_locator", // 变体图
+          "other_product_image_locator", // 其他图片（基础）
+
+          // 变体属性
           //  "color",            // 颜色
           //  "size",            // 尺寸
           //  "style",           // 样式
- 
-           // 价格
-           "list_price",       // 标价
+
+          // 价格
+          "list_price", // 标价
         ];
 
         // 检查是否为基本过滤字段
@@ -355,7 +355,9 @@
 
       // 处理属性
       if (schema.properties) {
-        let newRequiredTopFields = [...new Set(requiredTopFields.concat(schema.required || []))];
+        let newRequiredTopFields = [
+          ...new Set(requiredTopFields.concat(schema.required || [])),
+        ];
         Object.entries(schema.properties).forEach(function ([key, value]) {
           // 跳过隐藏字段和引用字段
           if (value.hidden || isRefField(value, key) || isFilteredField(key))
@@ -376,18 +378,26 @@
             field.options = value.enum.map(function (val) {
               return {
                 value: val,
-                label: val
+                label: val,
               };
             });
           }
 
           // 处理 anyOf 结构 - 当存在多个选项时转为选择框
-          if (value.anyOf && value.anyOf.length > 1 && value.anyOf[1] && value.anyOf[1].enum) {
+          if (
+            value.anyOf &&
+            value.anyOf.length > 1 &&
+            value.anyOf[1] &&
+            value.anyOf[1].enum
+          ) {
             field.type = "select";
             field.options = value.anyOf[1].enum.map(function (val, index) {
               return {
                 value: val,
-                label: value.anyOf[1].enumNames && value.anyOf[1].enumNames[index] ? value.anyOf[1].enumNames[index] : val
+                label:
+                  value.anyOf[1].enumNames && value.anyOf[1].enumNames[index]
+                    ? value.anyOf[1].enumNames[index]
+                    : val,
               };
             });
           }
@@ -421,45 +431,52 @@
                 parentRequired = false
               ) {
                 // 为属性排序，确保渲染顺序稳定
-                const sortedEntries = Object.entries(properties).sort((a, b) => {
-                  // 同类型属性按名称排序
-                  return a[0].localeCompare(b[0]);
-                });
+                const sortedEntries = Object.entries(properties).sort(
+                  (a, b) => {
+                    // 同类型属性按名称排序
+                    return a[0].localeCompare(b[0]);
+                  }
+                );
 
                 for (const [propKey, propValue] of sortedEntries) {
                   // 跳过隐藏字段和引用字段
-                  if (propValue.hidden || isRefField(propValue, propKey)) continue;
+                  if (propValue.hidden || isRefField(propValue, propKey))
+                    continue;
 
                   // 生成当前属性的路径
-                  const currentPath = parentPath 
-                    ? `${parentPath}.${propKey}` 
+                  const currentPath = parentPath
+                    ? `${parentPath}.${propKey}`
                     : propKey;
-                    
+
                   // 检查属性是否为必填
                   // 如果父节点必填，则子节点也必填；否则检查当前节点是否在必填列表中
-                  const isRequired = newRequiredTopFields.includes(key) && requiredFields.includes(propKey);
+                  const isRequired =
+                    newRequiredTopFields.includes(key) &&
+                    requiredFields.includes(propKey);
 
                   // 生成字段键名
                   const fieldKey = parentKey
                     ? `${parentKey}.${propKey}`
                     : propKey;
-                  
+
                   // 生成有层次感的标签
-                  let fieldLabel = propValue.tTitle || propValue.title || propKey;
-                  
+                  let fieldLabel =
+                    propValue.tTitle || propValue.title || propKey;
+
                   // 不再为深层嵌套的字段添加父级路径信息到标签中
                   // 仅使用当前字段的标题，保持简洁
-                  
+
                   // 创建基础字段对象
                   const fieldObj = {
                     key: fieldKey,
                     label: fieldLabel,
-                    description: propValue.tDescription || propValue.description || "",
+                    description:
+                      propValue.tDescription || propValue.description || "",
                     required: isRequired,
                     type: "input",
                     // 添加路径和深度信息
                     _path: currentPath,
-                    _depth: depth
+                    _depth: depth,
                   };
 
                   // 处理maxlength属性
@@ -495,19 +512,31 @@
                   }
 
                   // 处理 anyOf 结构 - 当存在多个选项时转为选择框
-                  if (propValue.anyOf && propValue.anyOf.length > 1 && propValue.anyOf[1] && propValue.anyOf[1].enum) {
+                  if (
+                    propValue.anyOf &&
+                    propValue.anyOf.length > 1 &&
+                    propValue.anyOf[1] &&
+                    propValue.anyOf[1].enum
+                  ) {
                     fieldObj.type = "select";
-                    fieldObj.options = propValue.anyOf[1].enum.map(function (val, index) {
+                    fieldObj.options = propValue.anyOf[1].enum.map(function (
+                      val,
+                      index
+                    ) {
                       return {
                         value: val,
-                        label: propValue.anyOf[1].enumNames && propValue.anyOf[1].enumNames[index] ? propValue.anyOf[1].enumNames[index] : val,
+                        label:
+                          propValue.anyOf[1].enumNames &&
+                          propValue.anyOf[1].enumNames[index]
+                            ? propValue.anyOf[1].enumNames[index]
+                            : val,
                       };
                     });
                   }
 
                   // 判断是否为叶子节点 - 检查是否有properties或items.properties
-                  const hasNestedProperties = 
-                    propValue.properties || 
+                  const hasNestedProperties =
+                    propValue.properties ||
                     (propValue.items && propValue.items.properties);
 
                   // 递归处理嵌套的properties - 扁平化处理
@@ -524,7 +553,7 @@
                         isRequired
                       );
                     }
-                    
+
                     // 如果有items.properties，也需要处理这些属性
                     // 注意：跳过items层级，直接使用当前字段键名和路径
                     if (propValue.items && propValue.items.properties) {
@@ -565,7 +594,7 @@
                 if (a._depth !== b._depth) {
                   return a._depth - b._depth;
                 }
-                return (a._path || '').localeCompare(b._path || '');
+                return (a._path || "").localeCompare(b._path || "");
               });
 
               // 如果没有有效的子字段，则跳过该数组字段
@@ -589,21 +618,21 @@
 
       // 字段规则配置
       const fieldRules = {
-        'fulfillment_availability': {
-          requiredLabels: ['Quantity']
+        fulfillment_availability: {
+          requiredLabels: ["Quantity"],
         },
-        'purchasable_offer': {
-          requiredLabels: ['Your Price'],
-          setOthersOptional: true
-        }
+        purchasable_offer: {
+          requiredLabels: ["Your Price"],
+          setOthersOptional: true,
+        },
       };
 
       // 处理字段必填状态
-      formConfig.fields.forEach(item => {
+      formConfig.fields.forEach((item) => {
         const rule = fieldRules[item.key];
 
         if (rule && item.children) {
-          item.children.forEach(child => {
+          item.children.forEach((child) => {
             if (rule.requiredLabels.includes(child.label)) {
               child.required = true;
             } else if (rule.setOthersOptional) {
@@ -613,7 +642,11 @@
         }
 
         // 单子项且父项必填时，子项也设为必填
-        if (item.children && item.children.length === 1 && item.required === true) {
+        if (
+          item.children &&
+          item.children.length === 1 &&
+          item.required === true
+        ) {
           item.children[0].required = true;
         }
       });
@@ -627,34 +660,34 @@
      * @return {Object} 处理后的数据对象
      */
     processFormData: function (formData) {
-      const result = {}
+      const result = {};
       const {
         marketplaceId: DEFAULT_MARKETPLACE_ID,
         languageTag: DEFAULT_LANGUAGE_TAG,
       } = amazonUtils._currentDefaults;
 
       // 处理所有字段
-      Object.entries(formData).forEach(function([key, value]) {
-        if (key.includes('.')) {
+      Object.entries(formData).forEach(function ([key, value]) {
+        if (key.includes(".")) {
           // 处理嵌套属性
-          amazonUtils.setNestedValue(result, key, value)
+          amazonUtils.setNestedValue(result, key, value);
         } else {
           // 对于非嵌套属性，检查是否需要包装成数组
-          if (key === 'brand' || key === 'item_name') {
+          if (key === "brand" || key === "item_name") {
             result[key] = [
               {
                 value: value,
                 marketplace_id: DEFAULT_MARKETPLACE_ID,
-                language_tag: DEFAULT_LANGUAGE_TAG
-              }
-            ]
+                language_tag: DEFAULT_LANGUAGE_TAG,
+              },
+            ];
           } else {
-            result[key] = value
+            result[key] = value;
           }
         }
-      })
+      });
 
-      return result
+      return result;
     },
 
     /**
@@ -662,8 +695,8 @@
      * @param {String} path - 点分隔的路径，如 "fulfillment_availability.quantity"
      * @return {Array} 路径数组，如 ["fulfillment_availability", "quantity"]
      */
-    parseNestedPath: function(path) {
-      return path.split('.')
+    parseNestedPath: function (path) {
+      return path.split(".");
     },
 
     /**
@@ -672,53 +705,56 @@
      * @param {String} path - 点分隔的路径
      * @param {*} value - 要设置的值
      */
-    setNestedValue: function(obj, path, value) {
-      const pathArray = this.parseNestedPath(path)
-      const topLevelKey = pathArray[0]
-      const { marketplaceId: DEFAULT_MARKETPLACE_ID, languageTag: DEFAULT_LANGUAGE_TAG } = amazonUtils._currentDefaults;
+    setNestedValue: function (obj, path, value) {
+      const pathArray = this.parseNestedPath(path);
+      const topLevelKey = pathArray[0];
+      const {
+        marketplaceId: DEFAULT_MARKETPLACE_ID,
+        languageTag: DEFAULT_LANGUAGE_TAG,
+      } = amazonUtils._currentDefaults;
 
       // 确保顶级字段存在并且是数组格式
       if (!obj[topLevelKey]) {
-        obj[topLevelKey] = [{}]
+        obj[topLevelKey] = [{}];
       }
 
       // 获取数组中的第一个对象
-      const targetObj = obj[topLevelKey][0]
+      const targetObj = obj[topLevelKey][0];
 
       // 如果只有两层路径，直接设置值
       if (pathArray.length === 2) {
-        const finalKey = pathArray[1]
-        targetObj[finalKey] = this.tryParseNumber(value)
-        return
+        const finalKey = pathArray[1];
+        targetObj[finalKey] = this.tryParseNumber(value);
+        return;
       }
 
       // 处理多层嵌套路径 - 中间层级创建为对象格式
-      let current = targetObj
+      let current = targetObj;
       for (let i = 1; i < pathArray.length - 1; i++) {
-        const key = pathArray[i]
+        const key = pathArray[i];
         if (!current[key]) {
           // 创建对象格式的中间层级
-          current[key] = {}
+          current[key] = {};
         }
         // 直接访问对象
-        current = current[key]
+        current = current[key];
       }
 
       // 设置最终值
-      const finalKey = pathArray[pathArray.length - 1]
-      current[finalKey] = this.tryParseNumber(value)
+      const finalKey = pathArray[pathArray.length - 1];
+      current[finalKey] = this.tryParseNumber(value);
     },
-    
+
     /**
      * 尝试将字符串转换为数字，如果转换失败则返回原字符串
      * @param {String} valueStr - 要转换的字符串
      * @return {Number|String} 转换结果
      */
-    tryParseNumber: function(valueStr) {
-      if (valueStr === null || valueStr === undefined || valueStr === '') {
+    tryParseNumber: function (valueStr) {
+      if (valueStr === null || valueStr === undefined || valueStr === "") {
         return valueStr;
       }
-      
+
       const num = Number(valueStr);
       return isNaN(num) ? valueStr : num;
     },
@@ -768,12 +804,12 @@
       return formData;
     },
 
-        /**
+    /**
      * 处理已解析的数据对象，转换为表单可用格式
      * @param {Object} parseData - 已处理过的解析数据对象
      * @return {Object} 转换后的表单数据对象
      */
-    processParseData: function(parseData) {
+    processParseData: function (parseData) {
       if (!parseData || typeof parseData !== "object") {
         console.error("传入的parseData无效");
         return {};
@@ -802,7 +838,7 @@
      * @param {Object} parseData - 已处理过的解析数据对象
      * @return {Object} 转换后的表单数据对象
      */
-    processParseData: function(parseData) {
+    processParseData: function (parseData) {
       if (!parseData || typeof parseData !== "object") {
         console.error("传入的parseData无效");
         return {};
@@ -831,7 +867,7 @@
      * @param {*} value - 输入值
      * @return {Object} 提取的数据对象
      */
-    extractArrayData: function(value) {
+    extractArrayData: function (value) {
       if (Array.isArray(value) && value.length > 0) {
         // 提取数组第一个元素，但保持其内部结构
         const firstItem = value[0];
@@ -852,7 +888,7 @@
      * @param {Object} obj - 要转换的对象
      * @return {Object} 转换后的对象
      */
-    convertNestedArraysToObjects: function(obj) {
+    convertNestedArraysToObjects: function (obj) {
       if (!obj || typeof obj !== "object") {
         return obj;
       }
@@ -889,7 +925,7 @@
      * @param {String} fieldName - 字段名
      * @return {Boolean} 是否跳过
      */
-    shouldSkipField: function(fieldName) {
+    shouldSkipField: function (fieldName) {
       return fieldName === "marketplace_id" || fieldName === "language_tag";
     },
 
@@ -899,7 +935,7 @@
      * @param {String} prefix - 前缀
      * @param {Object} result - 结果对象
      */
-    flattenObject: function(obj, prefix, result) {
+    flattenObject: function (obj, prefix, result) {
       if (!obj || typeof obj !== "object") {
         return;
       }
@@ -912,7 +948,11 @@
 
         const newKey = prefix ? `${prefix}.${key}` : key;
 
-        if (typeof value === "object" && value !== null && !Array.isArray(value)) {
+        if (
+          typeof value === "object" &&
+          value !== null &&
+          !Array.isArray(value)
+        ) {
           // 递归处理嵌套对象
           amazonUtils.flattenObject(value, newKey, result);
         } else if (Array.isArray(value) && value.length > 0) {
@@ -1249,26 +1289,27 @@
                     ) {
                       newItem.language_tag = languageTag;
                     }
-                    
+
                     // 递归处理转换后的数组元素内部的嵌套字段
-                    const processedNewItem = amazonUtils.processNestedObjectProperties(
-                      newItem,
-                      propSchema.items.properties,
-                      marketplaceId,
-                      languageTag
-                    );
-                    
+                    const processedNewItem =
+                      amazonUtils.processNestedObjectProperties(
+                        newItem,
+                        propSchema.items.properties,
+                        marketplaceId,
+                        languageTag
+                      );
+
                     processedItem[propName] = [processedNewItem];
                   } else {
                     processedItem[propName] = [newItem];
                   }
-                }else if(typeof processedItem[propName] === 'string'){
+                } else if (typeof processedItem[propName] === "string") {
                   const stringValue = processedItem[propName];
-                  
+
                   // 根据 schema 要求创建包含必要字段的对象
                   if (propSchema.items.properties) {
                     const newItem = { value: stringValue };
-                    
+
                     // 添加必要字段
                     if (
                       propSchema.items.properties.marketplace_id &&
@@ -1282,7 +1323,7 @@
                     ) {
                       newItem.language_tag = languageTag;
                     }
-                    
+
                     processedItem[propName] = [newItem];
                   } else {
                     // 如果没有定义 properties，直接转换为字符串数组
@@ -1309,7 +1350,7 @@
                         ) {
                           newArrayItem.language_tag = languageTag;
                         }
-                        
+
                         // 递归处理数组元素内部的嵌套字段
                         return amazonUtils.processNestedObjectProperties(
                           newArrayItem,
@@ -1354,12 +1395,13 @@
                 }
 
                 // 递归处理对象内部的数组字段
-                const processedNestedItem = amazonUtils.processNestedObjectProperties(
-                  newItem,
-                  propSchema.properties,
-                  marketplaceId,
-                  languageTag
-                );
+                const processedNestedItem =
+                  amazonUtils.processNestedObjectProperties(
+                    newItem,
+                    propSchema.properties,
+                    marketplaceId,
+                    languageTag
+                  );
 
                 processedItem[propName] = processedNestedItem;
               }
@@ -1412,7 +1454,7 @@
       return true;
     },
 
-        /**
+    /**
      * 递归处理嵌套对象内部的数组字段
      * @param {Object} obj - 要处理的对象
      * @param {Object} schemaProperties - schema 属性定义
@@ -1431,25 +1473,34 @@
       // 遍历schema中定义的属性
       Object.keys(schemaProperties).forEach((propName) => {
         const propSchema = schemaProperties[propName];
-        
+
         // 如果当前对象中存在该属性
         if (processedObj[propName] !== undefined) {
           // 如果schema定义为数组类型，但当前值不是数组，则转换为数组
-          if (propSchema.type === "array" && !Array.isArray(processedObj[propName])) {
+          if (
+            propSchema.type === "array" &&
+            !Array.isArray(processedObj[propName])
+          ) {
             const arrayItem = processedObj[propName];
-            
+
             // 如果数组项有schema定义，需要根据items的properties添加必要字段
             if (propSchema.items && propSchema.items.properties) {
               const newArrayItem = { ...arrayItem };
-              
+
               // 添加必要字段
-              if (propSchema.items.properties.marketplace_id && !newArrayItem.marketplace_id) {
+              if (
+                propSchema.items.properties.marketplace_id &&
+                !newArrayItem.marketplace_id
+              ) {
                 newArrayItem.marketplace_id = marketplaceId;
               }
-              if (propSchema.items.properties.language_tag && !newArrayItem.language_tag) {
+              if (
+                propSchema.items.properties.language_tag &&
+                !newArrayItem.language_tag
+              ) {
                 newArrayItem.language_tag = languageTag;
               }
-              
+
               processedObj[propName] = [newArrayItem];
             } else {
               processedObj[propName] = [arrayItem];
@@ -1474,58 +1525,117 @@
 
       return processedObj;
     },
-     /**
+    /**
      * 获取schema中item_name对象内层value对象的maxLength值
      * @param {Object} schema - JSON Schema对象
      * @returns {number|null} maxLength值，如果未找到则返回null
      */
-    getItemNameMaxLength: function(schema) {
+    getItemNameMaxLength: function (schema) {
       try {
         // 检查schema是否存在且有properties
         if (!schema || !schema.properties) {
-          console.warn('Schema或properties不存在');
+          console.warn("Schema或properties不存在");
           return null;
         }
 
         // 检查item_name属性是否存在
         if (!schema.properties.item_name) {
-          console.warn('item_name属性不存在');
+          console.warn("item_name属性不存在");
           return null;
         }
 
         const itemName = schema.properties.item_name;
-        
+
         // 检查item_name是否为数组类型且有items
-        if (itemName.type !== 'array' || !itemName.items) {
-          console.warn('item_name不是数组类型或没有items定义');
+        if (itemName.type !== "array" || !itemName.items) {
+          console.warn("item_name不是数组类型或没有items定义");
           return null;
         }
 
         // 检查items是否有properties
         if (!itemName.items.properties) {
-          console.warn('item_name.items没有properties定义');
+          console.warn("item_name.items没有properties定义");
           return null;
         }
 
         // 检查value属性是否存在
         if (!itemName.items.properties.value) {
-          console.warn('item_name.items.properties.value不存在');
+          console.warn("item_name.items.properties.value不存在");
           return null;
         }
 
         const valueProperty = itemName.items.properties.value;
-        
+
         // 返回maxLength值
         if (valueProperty.maxLength !== undefined) {
           return valueProperty.maxLength;
         } else {
-          console.warn('value属性没有maxLength定义');
+          console.warn("value属性没有maxLength定义");
           return null;
         }
       } catch (error) {
-        console.error('获取item_name maxLength时发生错误:', error);
+        console.error("获取item_name maxLength时发生错误:", error);
         return null;
       }
+    },
+    /**
+     * 功能: 根据传入的对象获取到重量和尺寸,进行匹配转换
+     * @param {*} obj
+     * @param {*} obj.data 属性对象
+     * @return {*} 转换后的重量和尺寸对象
+    */
+    convertWeightAndDimension: function (obj) {
+      let { data } = obj;
+      //需要处理的属性名数组
+      let propertiesNameArr = [
+        "item_package_dimensions",
+        "item_package_weight",
+      ];
+      //获取data的所有属性名
+      let dataPropertiesNameArr = Object.keys(data);
+      //遍历dataPropertiesNameArr,如果propertiesNameArr包含,则执行转换
+      dataPropertiesNameArr.forEach((item) => {
+        if (propertiesNameArr.includes(item)) {
+          if (item == "item_package_dimensions") {
+            //尺寸规则
+            //currentObj 是一个数组,取第一个对象,遍历内部所有对象,执行cm和inches的转换
+            let currentObj = data[item];
+            let firstObj = currentObj[0];
+            for (let key in firstObj) {
+              if (key == "height" || key == "length" || key == "width") {
+                if (!firstObj[key].unit || firstObj[key].unit == "cm") {
+                  firstObj[key].value = firstObj[key].value * 0.3937;
+                  // 保留四位小数的英寸值
+                  firstObj[key].value =
+                    Math.round(firstObj[key].value * 0.3937 * 10000) / 10000;
+                  firstObj[key].unit = "inches";
+                }
+              }
+            }
+            console.log("尺寸firstObj", firstObj);
+            //替换item_package_dimensions
+            data[item] = [firstObj];
+          } else if (item == "item_package_weight") {
+            //currentObj 是一个数组,取第一个对象,遍历内部所有对象,执行g和pounds的转换
+            let currentObj = data[item];
+            let firstObj = currentObj[0];
+            for (let key in firstObj) {
+              if (firstObj[key] && key == "value") {
+                if (!firstObj.unit || firstObj.unit == "g") {
+                  // 保留四位小数的磅值
+                  firstObj.value =
+                    Math.round((firstObj.value / 453.59237) * 10000) / 10000;
+                  firstObj.unit = "pounds";
+                }
+              }
+            }
+            console.log("重量firstObj", firstObj);
+            //替换item_package_weight
+            data[item] = [firstObj];
+          }
+        }
+      });
+      return data;
     },
   };
 
@@ -1537,6 +1647,8 @@
   global.amazonProcessParseData = global.amazonUtils.processParseData;
   global.amazonParseSchemaProperties = global.amazonUtils.parseSchemaProperties;
   global.amazonConvertToObjectArray = global.amazonUtils.convertToObjectArray;
-  global.amazonTransformSubmitDataBySchema = global.amazonUtils.transformSubmitDataBySchema;
+  global.amazonTransformSubmitDataBySchema =
+    global.amazonUtils.transformSubmitDataBySchema;
   global.amazonGetItemNameMaxLength = global.amazonUtils.getItemNameMaxLength;
+  global.amazonConvertWeightAndDimension = global.amazonUtils.convertWeightAndDimension;
 })(window);

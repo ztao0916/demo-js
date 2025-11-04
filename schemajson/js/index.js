@@ -387,21 +387,9 @@ let amazonDefaultAttrValue = {
     ]
 }
 
-/**
- * 功能: 根据传入的对象获取到重量和尺寸,进行匹配转换,需要适应匹配规则:重量规则和尺寸规则
- * @param {*} obj
- * @param {*} obj.data 属性对象
- * @param {*} obj.propertiesName 重量属性名
- * @param {*} obj.typeRules 规则类型: 重量规则或尺寸规则
- * @return {*} 转换后的重量和尺寸对象
- */
-const convertWeightAndDimension = (obj) => {
-  let {data, propertiesName, typeRules} = obj;
-  let currentObj = data[propertiesName];
-  //定义默认的重量规则: 首先取第一项,如果没有取第二项,以此类推
-  let propertiesNameArr = ['item_package_dimensions'];
-  console.log('propertiesNameArr', propertiesNameArr)
-}
+
+console.log('amazonDefaultAttrValue', amazonConvertWeightAndDimension({data: amazonDefaultAttrValue}));
+
 
 
 // 导出函数供外部使用
