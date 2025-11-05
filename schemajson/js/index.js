@@ -388,7 +388,7 @@ let amazonDefaultAttrValue = {
 }
 
 
-console.log('amazonDefaultAttrValue', amazonConvertWeightAndDimension({data: amazonDefaultAttrValue}));
+console.log('amazonDefaultAttrValue',amazonParseFormDataToString(amazonDefaultAttrValue));
 
 
 

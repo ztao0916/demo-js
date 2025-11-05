@@ -803,7 +803,33 @@
 
       return formData;
     },
+    /**
+     * 解析表单数据，转换为亚马逊数据字符串
+     * @param {Object} formData - 表单数据对象
+     * @return {String} 转换后的亚马逊数据字符串
+     */
+    parseAmazonDataToString: function(formData) {
+      if (!formData || typeof formData !== "object") {
+        console.error("传入的formData无效");
+        return "";
+      }
+      const parts = [];
 
+      // 遍历对象的每个键值对
+      for (const key in formData) {
+        if (formData.hasOwnProperty(key)) {
+          // 将值转换为JSON字符串
+          const valueStr = JSON.stringify(formData[key]);
+          // 对双引号添加转义符
+          const escapedValue = valueStr.replace(/"/g, '\\"');
+          // 组合键和值，添加到数组中
+          parts.push(`${key}:${escapedValue}`);
+        }
+      }
+
+      // 用#,#连接所有部分
+      return parts.join("#,#");
+    },
     /**
      * 处理已解析的数据对象，转换为表单可用格式
      * @param {Object} parseData - 已处理过的解析数据对象
@@ -1644,6 +1670,7 @@
     global.amazonUtils.transformJsonSchemaToForm;
   global.amazonProcessFormData = global.amazonUtils.processFormData;
   global.amazonParseFormData = global.amazonUtils.parseAmazonData;
+  global.amazonParseFormDataToString = global.amazonUtils.parseAmazonDataToString;
   global.amazonProcessParseData = global.amazonUtils.processParseData;
   global.amazonParseSchemaProperties = global.amazonUtils.parseSchemaProperties;
   global.amazonConvertToObjectArray = global.amazonUtils.convertToObjectArray;
