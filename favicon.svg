@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+  <defs>
+    <linearGradient id="navGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- 背景圆 -->
+  <circle cx="16" cy="16" r="15" fill="url(#navGradient)" stroke="#fff" stroke-width="1"/>
+  
+  <!-- 导航图标 - 网格状 -->
+  <g fill="#fff" transform="translate(8,8)">
+    <!-- 左上角方块 -->
+    <rect x="0" y="0" width="4" height="4" rx="1"/>
+    <!-- 右上角方块 -->
+    <rect x="8" y="0" width="4" height="4" rx="1"/>
+    <!-- 左下角方块 -->
+    <rect x="0" y="8" width="4" height="4" rx="1"/>
+    <!-- 右下角方块 -->
+    <rect x="8" y="8" width="4" height="4" rx="1"/>
+    <!-- 中心点 -->
+    <circle cx="6" cy="6" r="1.5"/>
+  </g>
+  
+  <!-- 装饰性外圈 -->
+  <circle cx="16" cy="16" r="12" fill="none" stroke="#fff" stroke-width="0.5" opacity="0.3"/>
+</svg>
