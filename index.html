@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>项目导航 - Demo JS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .projects-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            background: rgba(255, 255, 255, 1);
+        }
+
+        .project-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #667eea;
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .project-description {
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .project-link {
+            display: inline-block;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .project-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .stats {
+            margin-top: 50px;
+            text-align: center;
+            color: white;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .projects-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .project-card {
+                padding: 25px;
+            }
+        }
+
+        .loading {
+            text-align: center;
+            color: white;
+            font-size: 1.2rem;
+            margin: 50px 0;
+        }
+
+        .error {
+            text-align: center;
+            color: #ff6b6b;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🚀 Demo JS 项目导航</h1>
+        <p>探索精彩的前端项目和工具</p>
+    </div>
+
+    <div id="loading" class="loading">正在加载项目列表...</div>
+    <div id="error" class="error" style="display: none;"></div>
+    <div id="projects" class="projects-container" style="display: none;"></div>
+
+    <div class="stats">
+        <p id="project-count"></p>
+    </div>
+
+    <script>
+        // 项目描述映射
+        const projectDescriptions = {
+            'copy': '复制功能演示项目，展示基本的复制操作和界面设计',
+            'echarts': '数据可视化图表库，提供丰富的图表类型和交互功能',
+            'imageEditor': '在线图片编辑器，支持图片处理和编辑功能',
+            'layui': 'Layui前端框架演示，展示表单和界面组件',
+            'saihu': '赛虎项目，包含数据处理和表单渲染功能',
+            'schemajson': 'JSON Schema处理工具，支持数据结构转换和验证'
+        };
+
+        // 项目图标映射
+        const projectIcons = {
+            'copy': '📋',
+            'echarts': '📊',
+            'imageEditor': '🖼️',
+            'layui': '🎨',
+            'saihu': '🐅',
+            'schemajson': '🔧'
+        };
+
+        // 忽略的文件夹列表
+        const ignoreFolders = ['.github', 'docs', 'node_modules', '.git', '.vscode'];
+
+        async function loadProjects() {
+            try {
+                // 预定义的项目列表（基于实际扫描结果）
+                const projects = ['copy', 'echarts', 'imageEditor', 'layui', 'saihu', 'schemajson'];
+                
+                // 直接显示所有预定义项目，不进行网络验证
+                // 这样可以避免CORS和文件系统访问问题
+                displayProjects(projects);
+                
+            } catch (error) {
+                showError('加载项目列表失败: ' + error.message);
+            }
+        }
+
+        function displayProjects(projects) {
+            const loadingEl = document.getElementById('loading');
+            const projectsEl = document.getElementById('projects');
+            const projectCountEl = document.getElementById('project-count');
+
+            if (projects.length === 0) {
+                showError('没有找到可用的项目');
+                return;
+            }
+
+            // 隐藏加载状态
+            loadingEl.style.display = 'none';
+            
+            // 显示项目
+            projectsEl.innerHTML = projects.map(project => `
+                <div class="project-card">
+                    <div class="project-icon">${projectIcons[project] || '📁'}</div>
+                    <h3 class="project-title">${project}</h3>
+                    <p class="project-description">${projectDescriptions[project] || '前端项目演示'}</p>
+                    <a href="./${project}/index.html" class="project-link" target="_blank">
+                        查看项目 →
+                    </a>
+                </div>
+            `).join('');
+
+            // 显示统计信息
+            projectCountEl.textContent = `共发现 ${projects.length} 个项目`;
+            
+            // 显示项目容器
+            projectsEl.style.display = 'grid';
+        }
+
+        function showError(message) {
+            const loadingEl = document.getElementById('loading');
+            const errorEl = document.getElementById('error');
+            
+            loadingEl.style.display = 'none';
+            errorEl.textContent = message;
+            errorEl.style.display = 'block';
+        }
+
+        // 页面加载完成后自动加载项目
+        document.addEventListener('DOMContentLoaded', loadProjects);
+    </script>
+</body>
+</html>
