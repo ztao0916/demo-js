@@ -6,6 +6,18 @@
     <title>项目导航 - Demo JS</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --accent-color: #f093fb;
+            --text-primary: #333;
+            --text-secondary: #666;
+            --bg-card: rgba(255, 255, 255, 0.95);
+            --shadow-light: 0 8px 32px rgba(0,0,0,0.1);
+            --shadow-heavy: 0 15px 40px rgba(0,0,0,0.2);
+            --transition-speed: 0.3s;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -20,79 +32,289 @@
             flex-direction: column;
             align-items: center;
             padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* 动态背景粒子效果 */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            animation: float 15s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) translateX(0) scale(1);
+                opacity: 0.2;
+            }
+            25% {
+                transform: translateY(-20px) translateX(10px) scale(1.1);
+                opacity: 0.3;
+            }
+            50% {
+                transform: translateY(10px) translateX(-10px) scale(0.9);
+                opacity: 0.2;
+            }
+            75% {
+                transform: translateY(-10px) translateX(15px) scale(1.05);
+                opacity: 0.3;
+            }
         }
 
         .header {
             text-align: center;
             margin-bottom: 40px;
             color: white;
+            animation: fadeInDown 0.8s ease-out;
+            z-index: 1;
+            width: 100%;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .header h1 {
             font-size: 2.5rem;
             margin-bottom: 10px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            letter-spacing: 1px;
         }
 
         .header p {
             font-size: 1.1rem;
             opacity: 0.9;
+            margin-bottom: 20px;
         }
 
+        /* 搜索框样式 */
+        .search-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto 30px;
+            position: relative;
+            animation: fadeIn 1s ease-out 0.3s both;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 15px 50px 15px 20px;
+            border-radius: 50px;
+            border: none;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: var(--shadow-light);
+            font-size: 1rem;
+            transition: all var(--transition-speed);
+            backdrop-filter: blur(10px);
+        }
+
+        .search-box:focus {
+            outline: none;
+            box-shadow: var(--shadow-heavy);
+            background: rgba(255, 255, 255, 1);
+            transform: translateY(-2px);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+
+        /* 标签过滤器 */
+        .filter-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            width: 100%;
+            max-width: 800px;
+            animation: fadeIn 1s ease-out 0.5s both;
+        }
+
+        .filter-tag {
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            cursor: pointer;
+            transition: all var(--transition-speed);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            font-size: 0.9rem;
+        }
+
+        .filter-tag:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .filter-tag.active {
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        /* 项目容器 */
         .projects-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 25px;
             max-width: 1200px;
             width: 100%;
+            z-index: 1;
         }
 
         .project-card {
-            background: rgba(255, 255, 255, 0.95);
+            background: var(--bg-card);
             border-radius: 15px;
             padding: 30px;
             text-align: center;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            transition: all var(--transition-speed);
+            box-shadow: var(--shadow-light);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.6s ease-out;
+            transform-origin: center;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform var(--transition-speed);
+        }
+
+        .project-card:hover::before {
+            transform: scaleX(1);
         }
 
         .project-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: var(--shadow-heavy);
             background: rgba(255, 255, 255, 1);
         }
 
         .project-icon {
             font-size: 3rem;
             margin-bottom: 20px;
-            color: #667eea;
+            color: var(--primary-color);
+            transition: all var(--transition-speed);
+            display: inline-block;
+        }
+
+        .project-card:hover .project-icon {
+            transform: scale(1.1) rotate(5deg);
         }
 
         .project-title {
             font-size: 1.5rem;
             font-weight: 600;
-            color: #333;
+            color: var(--text-primary);
             margin-bottom: 15px;
+            transition: color var(--transition-speed);
+        }
+
+        .project-card:hover .project-title {
+            color: var(--primary-color);
         }
 
         .project-description {
-            color: #666;
-            margin-bottom: 25px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
             line-height: 1.6;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .project-tag {
+            padding: 4px 10px;
+            border-radius: 12px;
+            background: rgba(102, 126, 234, 0.1);
+            color: var(--primary-color);
+            font-size: 0.8rem;
+            font-weight: 500;
         }
 
         .project-link {
             display: inline-block;
-            background: linear-gradient(45deg, #667eea, #764ba2);
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
             color: white;
             text-decoration: none;
             padding: 12px 30px;
             border-radius: 25px;
             font-weight: 500;
-            transition: all 0.3s ease;
+            transition: all var(--transition-speed);
             box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.6s;
+        }
+
+        .project-link:hover::before {
+            left: 100%;
         }
 
         .project-link:hover {
@@ -105,8 +327,10 @@
             text-align: center;
             color: white;
             opacity: 0.8;
+            animation: fadeIn 1s ease-out 0.7s both;
         }
 
+        /* 响应式设计 */
         @media (max-width: 768px) {
             .header h1 {
                 font-size: 2rem;
@@ -120,13 +344,24 @@
             .project-card {
                 padding: 25px;
             }
+
+            .search-container {
+                max-width: 100%;
+            }
         }
 
+        /* 加载和错误状态 */
         .loading {
             text-align: center;
             color: white;
             font-size: 1.2rem;
             margin: 50px 0;
+            animation: pulse 1.5s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
         }
 
         .error {
@@ -136,89 +371,291 @@
             padding: 20px;
             border-radius: 10px;
             margin: 20px 0;
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .no-results {
+            text-align: center;
+            color: white;
+            font-size: 1.2rem;
+            margin: 50px 0;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        /* 返回顶部按钮 */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-speed);
+            box-shadow: var(--shadow-light);
+            z-index: 100;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-heavy);
         }
     </style>
 </head>
 <body>
+    <!-- 动态背景粒子 -->
+    <div class="particles" id="particles"></div>
+
     <div class="header">
         <h1>🚀 Demo JS 项目导航</h1>
         <p>探索精彩的前端项目和工具</p>
     </div>
 
+    <!-- 搜索框 -->
+    <div class="search-container">
+        <input type="text" id="search" class="search-box" placeholder="搜索项目名称或描述...">
+        <span class="search-icon">🔍</span>
+    </div>
+
+    <!-- 标签过滤器 -->
+    <div class="filter-container" id="filter-container">
+        <div class="filter-tag active" data-filter="all">全部</div>
+        <div class="filter-tag" data-filter="tool">工具</div>
+        <div class="filter-tag" data-filter="library">库</div>
+        <div class="filter-tag" data-filter="demo">演示</div>
+        <div class="filter-tag" data-filter="ui">UI组件</div>
+    </div>
+
     <div id="loading" class="loading">正在加载项目列表...</div>
     <div id="error" class="error" style="display: none;"></div>
+    <div id="no-results" class="no-results" style="display: none;">没有找到匹配的项目</div>
     <div id="projects" class="projects-container" style="display: none;"></div>
 
     <div class="stats">
         <p id="project-count"></p>
     </div>
 
+    <!-- 返回顶部按钮 -->
+    <div class="back-to-top" id="back-to-top">↑</div>
+
     <script>
-        // 项目描述映射
-        const projectDescriptions = {
-            'copy': '复制功能演示项目，展示基本的复制操作和界面设计',
-            'echarts': '数据可视化图表库，提供丰富的图表类型和交互功能',
-            'layui': 'Layui前端框架演示，展示表单和界面组件',
-            'schemajson': 'JSON Schema处理工具，支持数据结构转换和验证'
-        };
+        // 项目数据
+        const projectsData = [
+            {
+                name: 'copy',
+                title: '复制功能演示',
+                description: '复制功能演示项目，展示基本的复制操作和界面设计',
+                icon: '📋',
+                tags: ['工具', '演示'],
+                category: 'tool'
+            },
+            {
+                name: 'echarts',
+                title: '数据可视化',
+                description: '数据可视化图表库，提供丰富的图表类型和交互功能',
+                icon: '📊',
+                tags: ['库', '数据可视化'],
+                category: 'library'
+            },
+            {
+                name: 'layui',
+                title: 'Layui框架',
+                description: 'Layui前端框架演示，展示表单和界面组件',
+                icon: '🎨',
+                tags: ['UI组件', '框架'],
+                category: 'ui'
+            },
+            {
+                name: 'schemajson',
+                title: 'JSON Schema工具',
+                description: 'JSON Schema处理工具，支持数据结构转换和验证',
+                icon: '🔧',
+                tags: ['工具', '数据处理'],
+                category: 'tool'
+            }
+        ];
 
-        // 项目图标映射
-        const projectIcons = {
-            'copy': '📋',
-            'echarts': '📊',
-            'layui': '🎨',
-            'schemajson': '🔧'
-        };
+        // 初始化变量
+        let currentFilter = 'all';
+        let searchTerm = '';
+        let filteredProjects = [...projectsData];
 
-        // 忽略的文件夹列表
-        const ignoreFolders = ['.github', 'docs', 'node_modules', '.git', '.vscode'];
+        // 创建背景粒子
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // 随机大小
+                const size = Math.random() * 15 + 5;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // 随机位置
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                
+                // 随机动画延迟和持续时间
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                particle.style.animationDuration = `${Math.random() * 10 + 10}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
 
+        // 加载项目
         async function loadProjects() {
             try {
-                // 预定义的项目列表（基于实际扫描结果）
-                const projects = ['copy', 'echarts', 'layui', 'schemajson'];
-                
-                // 直接显示所有预定义项目，不进行网络验证
-                // 这样可以避免CORS和文件系统访问问题
-                displayProjects(projects);
-                
+                // 使用预定义的项目数据
+                filteredProjects = [...projectsData];
+                displayProjects(filteredProjects);
+                setupEventListeners();
             } catch (error) {
                 showError('加载项目列表失败: ' + error.message);
             }
         }
 
+        // 显示项目
         function displayProjects(projects) {
             const loadingEl = document.getElementById('loading');
             const projectsEl = document.getElementById('projects');
+            const noResultsEl = document.getElementById('no-results');
             const projectCountEl = document.getElementById('project-count');
 
             if (projects.length === 0) {
-                showError('没有找到可用的项目');
+                loadingEl.style.display = 'none';
+                noResultsEl.style.display = 'block';
+                projectsEl.style.display = 'none';
                 return;
             }
 
-            // 隐藏加载状态
+            // 隐藏加载和无结果状态
             loadingEl.style.display = 'none';
+            noResultsEl.style.display = 'none';
             
             // 显示项目
-            projectsEl.innerHTML = projects.map(project => `
-                <div class="project-card">
-                    <div class="project-icon">${projectIcons[project] || '📁'}</div>
-                    <h3 class="project-title">${project}</h3>
-                    <p class="project-description">${projectDescriptions[project] || '前端项目演示'}</p>
-                    <a href="./${project}/index.html" class="project-link" target="_blank">
+            projectsEl.innerHTML = projects.map((project, index) => `
+                <div class="project-card" style="animation-delay: ${index * 0.1}s">
+                    <div class="project-icon">${project.icon}</div>
+                    <h3 class="project-title">${project.title}</h3>
+                    <p class="project-description">${project.description}</p>
+                    <div class="project-tags">
+                        ${project.tags.map(tag => `<span class="project-tag">${tag}</span>`).join('')}
+                    </div>
+                    <a href="./${project.name}/index.html" class="project-link" target="_blank">
                         查看项目 →
                     </a>
                 </div>
             `).join('');
 
             // 显示统计信息
-            projectCountEl.textContent = `共发现 ${projects.length} 个项目`;
+            const totalProjects = projectsData.length;
+            const showingText = currentFilter === 'all' && !searchTerm 
+                ? `共发现 ${totalProjects} 个项目` 
+                : `显示 ${projects.length} / ${totalProjects} 个项目`;
+            projectCountEl.textContent = showingText;
             
             // 显示项目容器
             projectsEl.style.display = 'grid';
         }
 
+        // 设置事件监听器
+        function setupEventListeners() {
+            // 搜索功能
+            const searchInput = document.getElementById('search');
+            searchInput.addEventListener('input', handleSearch);
+
+            // 标签过滤功能
+            const filterTags = document.querySelectorAll('.filter-tag');
+            filterTags.forEach(tag => {
+                tag.addEventListener('click', handleFilter);
+            });
+
+            // 返回顶部按钮
+            const backToTopBtn = document.getElementById('back-to-top');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('visible');
+                } else {
+                    backToTopBtn.classList.remove('visible');
+                }
+            });
+
+            backToTopBtn.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+
+        // 处理搜索
+        function handleSearch(e) {
+            searchTerm = e.target.value.toLowerCase();
+            filterProjects();
+        }
+
+        // 处理标签过滤
+        function handleFilter(e) {
+            // 更新活动标签状态
+            document.querySelectorAll('.filter-tag').forEach(tag => {
+                tag.classList.remove('active');
+            });
+            e.target.classList.add('active');
+
+            // 更新当前过滤器
+            currentFilter = e.target.dataset.filter;
+            filterProjects();
+        }
+
+        // 过滤项目
+        function filterProjects() {
+            filteredProjects = projectsData.filter(project => {
+                // 应用标签过滤
+                if (currentFilter !== 'all' && project.category !== currentFilter) {
+                    return false;
+                }
+
+                // 应用搜索过滤
+                if (searchTerm) {
+                    const matchesTitle = project.title.toLowerCase().includes(searchTerm);
+                    const matchesDescription = project.description.toLowerCase().includes(searchTerm);
+                    const matchesTags = project.tags.some(tag => tag.toLowerCase().includes(searchTerm));
+                    
+                    if (!matchesTitle && !matchesDescription && !matchesTags) {
+                        return false;
+                    }
+                }
+
+                return true;
+            });
+
+            displayProjects(filteredProjects);
+        }
+
+        // 显示错误
         function showError(message) {
             const loadingEl = document.getElementById('loading');
             const errorEl = document.getElementById('error');
@@ -228,8 +665,11 @@
             errorEl.style.display = 'block';
         }
 
-        // 页面加载完成后自动加载项目
-        document.addEventListener('DOMContentLoaded', loadProjects);
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+            loadProjects();
+        });
     </script>
 </body>
 </html>
