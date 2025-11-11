@@ -361,11 +361,12 @@
         Object.entries(schema.properties).forEach(function ([key, value]) {
           // 跳过隐藏字段和引用字段
           if (value.hidden || isRefField(value, key) || isFilteredField(key))
-            return;
+            return;       
 
           // 基础字段信息
           const field = {
             key,
+            maxUniqueItems: value.maxUniqueItems || 1,
             label: value.tTitle || value.title || key,
             description: value.tDescription || value.description || "",
             required: newRequiredTopFields.includes(key) ? true : false,

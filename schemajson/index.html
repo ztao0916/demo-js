@@ -65,6 +65,10 @@
                 </div>
                 {{# } }}
               {{# }); }} {{# } }}
+              {{# if(item.maxUniqueItems && item.maxUniqueItems > 1){ }}
+              <span class="layui-btn layui-btn-xs layui-btn-normal">添加</span>
+              <span class="layui-btn layui-btn-xs layui-btn-danger">删除</span>
+              {{# } }}
             </div>
             {{# } }}
           {{# }) }}
@@ -115,6 +119,10 @@
                   </div>
                   {{# } }}
                 {{# }); }} {{# } }}
+                {{# if(item.maxUniqueItems && item.maxUniqueItems > 1){ }}
+                  <span class="layui-btn layui-btn-xs layui-btn-normal">添加</span>
+                  <span class="layui-btn layui-btn-xs layui-btn-danger">删除</span>
+                {{# } }}
               </div>
               {{# } }}
             {{# }) }}
