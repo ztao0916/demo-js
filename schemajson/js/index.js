@@ -86,10 +86,86 @@ const initFormRender = async () => {
     
     // 绑定新增的提交相关事件
     bindSubmitEvents();
+
+    // 绑定maxUniqueItemsBtns按钮事件
+    bindMaxUniqueItemsBtnsEvents();
   } catch (error) {
     console.error("表单渲染失败:", error);
   }
 };
+
+
+function bindMaxUniqueItemsBtnsEvents() {
+  // 新增按钮点击事件
+  $(document).on('click', '.addMaxUniqueItemsBtn', function() {
+    const $buttonGroup = $(this).parent();
+    const $inputBlock = $buttonGroup.parent();
+    const max = $buttonGroup.data('max');
+    const childrenLength = $buttonGroup.data('children-length');
+    const $items = $inputBlock.find('.attrContent');
+
+    if ($items.length / childrenLength >= max) {
+      layer.msg('最多只能添加' + max + '项', { icon: 7 });
+      return;
+    }
+
+    // 提取并克隆模板组
+    const $templateGroup = $items.slice(0, childrenLength).clone();
+    $templateGroup.find('input, select').val(''); // 清空克隆项的值
+
+    // 将克隆组添加到按钮组之前
+    $buttonGroup.before($templateGroup);
+    form.render(); // 重新渲染layui表单
+
+    // 更新按钮状态
+    updateButtonsState($inputBlock);
+  });
+
+  // 移除按钮点击事件
+  $(document).on('click', '.removeMaxUniqueItemsBtn', function() {
+    const $buttonGroup = $(this).parent();
+    const $inputBlock = $buttonGroup.parent();
+    const childrenLength = $buttonGroup.data('children-length');
+    const $items = $inputBlock.find('.attrContent');
+
+    if ($items.length / childrenLength <= 1) {
+      layer.msg('最少保留一个', { icon: 7 });
+      return;
+    }
+
+    // 移除最后一组
+    $items.slice(-childrenLength).remove();
+    updateButtonsState($inputBlock);
+  });
+
+  // 初始化按钮状态
+  $('.layui-input-block').each(function() {
+    updateButtonsState($(this));
+  });
+}
+
+/**
+ * 更新添加/删除按钮的状态
+ * @param {JQuery} $inputBlock - a JQuery object representing the .layui-input-block container
+ */
+function updateButtonsState($inputBlock) {
+  const $buttonGroup = $inputBlock.find('.maxUniqueItemsBtns');
+  if ($buttonGroup.length === 0) return; // 如果没有按钮组，则直接返回
+
+  const max = $buttonGroup.data('max');
+  const childrenLength = $buttonGroup.data('children-length');
+  const $items = $inputBlock.find('.attrContent');
+  const $addBtn = $buttonGroup.find('.addMaxUniqueItemsBtn');
+  const $removeBtn = $buttonGroup.find('.removeMaxUniqueItemsBtn');
+
+  const currentGroupCount = $items.length / childrenLength;
+
+  // 控制删除按钮的显隐
+  $removeBtn.toggle(currentGroupCount > 1);
+
+  // 控制添加按钮的显隐
+  $addBtn.toggle(currentGroupCount < max);
+}
 
 /**
  * 隐藏指定的label项

@@ -2,7 +2,7 @@
   text-align: center;
   margin: 20px 0;
 }
-.disNone {
+.disN {
   display: none;
 }
 .disN {
@@ -29,4 +29,8 @@
 .layui-input-block {
   margin-left: 410px;
   width: 400px;
+}
+.maxUniqueItemsBtns {
+  display: flex;
+  justify-content: flex-start;
 }

@@ -43,7 +43,7 @@
               {{# } }} 
               {{# layui.each(item.children||[], function(childIndex,childItem){ }}
                 {{# if(childItem.required){ }}
-                <div>
+                <div class="attrContent">
                   <label class="layui-form-label redStar" data-local="{{childItem.label}}"
                     data-eng="{{childItem.key}}" lay-tips="{{childItem.description}}">{{childItem.label}}</label>
                   <span class="disN labelField">{{childItem.label}}</span>
@@ -66,8 +66,10 @@
                 {{# } }}
               {{# }); }} {{# } }}
               {{# if(item.maxUniqueItems && item.maxUniqueItems > 1){ }}
-              <span class="layui-btn layui-btn-xs layui-btn-normal">添加</span>
-              <span class="layui-btn layui-btn-xs layui-btn-danger">删除</span>
+                <div class="maxUniqueItemsBtns" data-max="{{item.maxUniqueItems}}" data-children-length="{{item.children.length}}">
+                  <span class="layui-btn layui-btn-xs layui-btn-normal addMaxUniqueItemsBtn">添加</span>
+                  <span class="layui-btn layui-btn-xs layui-btn-danger disN removeMaxUniqueItemsBtn">删除</span>
+                </div>
               {{# } }}
             </div>
             {{# } }}
@@ -98,7 +100,7 @@
                 {{# } }} {{# layui.each(item.children||[], function(childIndex,
                   childItem){ }}
                   {{# if(!childItem.required){ }}
-                  <div>
+                  <div class="attrContent">
                     <label class="layui-form-label" data-local="{{childItem.label}}" data-eng="{{childItem.key}}"
                       lay-tips="{{childItem.description}}">{{childItem.label}}</label>
                     <span class="disN labelField">{{childItem.label}}</span>
@@ -120,8 +122,10 @@
                   {{# } }}
                 {{# }); }} {{# } }}
                 {{# if(item.maxUniqueItems && item.maxUniqueItems > 1){ }}
-                  <span class="layui-btn layui-btn-xs layui-btn-normal">添加</span>
-                  <span class="layui-btn layui-btn-xs layui-btn-danger">删除</span>
+                <div class="maxUniqueItemsBtns" data-max="{{item.maxUniqueItems}}" data-children-length="{{item.children.length}}">
+                  <span class="layui-btn layui-btn-xs layui-btn-normal addMaxUniqueItemsBtn">添加</span>
+                  <span class="layui-btn layui-btn-xs layui-btn-danger removeMaxUniqueItemsBtn">删除</span>
+                </div>
                 {{# } }}
               </div>
               {{# } }}
