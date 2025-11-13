@@ -2,7 +2,7 @@ let form = layui.form;
 let table = layui.table;
 let laytpl = layui.laytpl;
 let $ = layui.$;
-let needHiddenUtilLableList = ['Your Price','Quantity'];
+let needHiddenUtilLableList = ["Your Price", "Quantity"];
 let mustRequire = [
   "container",
   "color",
@@ -31,8 +31,8 @@ let mustRequire = [
   "plant_or_animal_product_type",
   "item_package_dimensions",
   "material",
-  "specific_uses_for_product"
-]
+  "specific_uses_for_product",
+];
 
 /**
  * 获取JSON Schema数据
@@ -62,28 +62,33 @@ const initFormRender = async () => {
     console.log(amazonGetItemNameMaxLength(schemaData));
 
     // 使用transformJsonSchemaToForm函数转换数据
-    const formData = amazonUtils.transformJsonSchemaToForm(schemaData, mustRequire);
+    const formData = amazonUtils.transformJsonSchemaToForm(
+      schemaData,
+      mustRequire
+    );
 
     // 获取模板
-    const templateStr = document.getElementById('amazonCateSpecificsNewTempV2').innerHTML;
-    
+    const templateStr = document.getElementById(
+      "amazonCateSpecificsNewTempV2"
+    ).innerHTML;
+
     // 使用laytpl渲染模板
     const template = laytpl(templateStr);
     const renderedHtml = template.render(formData);
-    
+
     // 将渲染结果插入到表单容器中
-    const formContainer = document.querySelector('#form-container .layui-form');
+    const formContainer = document.querySelector("#form-container .layui-form");
     formContainer.innerHTML = renderedHtml;
-    
+
     // 重新渲染layui表单组件
     form.render();
-    
+
     // 隐藏指定的label项
     hideSpecifiedLabels();
-    
+
     // 绑定展开/收起按钮事件
     bindToggleEvents();
-    
+
     // 绑定新增的提交相关事件
     bindSubmitEvents();
 
@@ -94,32 +99,29 @@ const initFormRender = async () => {
   }
 };
 
-
 function bindMaxUniqueItemsBtnsEvents() {
   // 新增按钮点击事件
-  $(document).on('click', '.addMaxUniqueItemsBtn', function() {
+  $(document).on("click", ".addMaxUniqueItemsBtn", function () {
     const $buttonGroup = $(this).parent();
     const $inputBlock = $buttonGroup.parent();
-    const max = $buttonGroup.data('max');
-    const childrenLength = $buttonGroup.data('children-length');
-    const $items = $inputBlock.find('.attrContent');
+    const max = $buttonGroup.data("max");
+    const childrenLength = $buttonGroup.data("children-length");
+    const $items = $inputBlock.find(".attrContent");
 
     if ($items.length / childrenLength >= max) {
-      layer.msg('最多只能添加' + max + '项', { icon: 7 });
+      layer.msg("最多只能添加" + max + "项", { icon: 7 });
       return;
     }
 
     // 提取并克隆模板组
     const $templateGroup = $items.slice(0, childrenLength).clone();
-    $templateGroup.find('input, select').val(''); // 清空克隆项的值
+    $templateGroup.find("input, select").val(""); // 清空克隆项的值
     //为克隆项中的input,select添加类名=input,select的name,同时移除name
-    $templateGroup.find('input, select').each(function() {
+    $templateGroup.find("input, select").each(function () {
       const $input = $(this);
-      const name = $input.attr('name');
-      $input.addClass(name).removeAttr('name');
+      const name = $input.attr("name");
+      $input.addClass(name).removeAttr("name");
     });
-
-
 
     // 将克隆组添加到按钮组之前
     $buttonGroup.before($templateGroup);
@@ -130,14 +132,14 @@ function bindMaxUniqueItemsBtnsEvents() {
   });
 
   // 移除按钮点击事件
-  $(document).on('click', '.removeMaxUniqueItemsBtn', function() {
+  $(document).on("click", ".removeMaxUniqueItemsBtn", function () {
     const $buttonGroup = $(this).parent();
     const $inputBlock = $buttonGroup.parent();
-    const childrenLength = $buttonGroup.data('children-length');
-    const $items = $inputBlock.find('.attrContent');
+    const childrenLength = $buttonGroup.data("children-length");
+    const $items = $inputBlock.find(".attrContent");
 
     if ($items.length / childrenLength <= 1) {
-      layer.msg('最少保留一个', { icon: 7 });
+      layer.msg("最少保留一个", { icon: 7 });
       return;
     }
 
@@ -147,7 +149,7 @@ function bindMaxUniqueItemsBtnsEvents() {
   });
 
   // 初始化按钮状态
-  $('.layui-input-block').each(function() {
+  $(".layui-input-block").each(function () {
     updateButtonsState($(this));
   });
 }
@@ -157,14 +159,14 @@ function bindMaxUniqueItemsBtnsEvents() {
  * @param {JQuery} $inputBlock - a JQuery object representing the .layui-input-block container
  */
 function updateButtonsState($inputBlock) {
-  const $buttonGroup = $inputBlock.find('.maxUniqueItemsBtns');
+  const $buttonGroup = $inputBlock.find(".maxUniqueItemsBtns");
   if ($buttonGroup.length === 0) return; // 如果没有按钮组，则直接返回
 
-  const max = $buttonGroup.data('max');
-  const childrenLength = $buttonGroup.data('children-length');
-  const $items = $inputBlock.find('.attrContent');
-  const $addBtn = $buttonGroup.find('.addMaxUniqueItemsBtn');
-  const $removeBtn = $buttonGroup.find('.removeMaxUniqueItemsBtn');
+  const max = $buttonGroup.data("max");
+  const childrenLength = $buttonGroup.data("children-length");
+  const $items = $inputBlock.find(".attrContent");
+  const $addBtn = $buttonGroup.find(".addMaxUniqueItemsBtn");
+  const $removeBtn = $buttonGroup.find(".removeMaxUniqueItemsBtn");
 
   const currentGroupCount = $items.length / childrenLength;
 
@@ -179,16 +181,18 @@ function updateButtonsState($inputBlock) {
  * 隐藏指定的label项
  */
 const hideSpecifiedLabels = () => {
-  needHiddenUtilLableList.forEach(labelText => {
+  needHiddenUtilLableList.forEach((labelText) => {
     // 查找所有包含指定文本的label元素
-    $('.layui-form-label').each(function() {
+    $(".layui-form-label").each(function () {
       if ($(this).text().trim() === labelText) {
         // 隐藏整个表单项容器
-        const $formItem = $(this).closest('.layui-form-item').length ? $(this).closest('.layui-form-item') : $(this).closest('div');
-        if ($formItem.find('div').length === 2) {
+        const $formItem = $(this).closest(".layui-form-item").length
+          ? $(this).closest(".layui-form-item")
+          : $(this).closest("div");
+        if ($formItem.find("div").length === 2) {
           $formItem.hide();
         } else {
-          $(this).closest('div').hide();
+          $(this).closest("div").hide();
         }
       }
     });
@@ -200,17 +204,17 @@ const hideSpecifiedLabels = () => {
  */
 const bindToggleEvents = () => {
   // 展开分类属性按钮事件
-  const moreAttrBtn = document.getElementById('publish_moreAttrBtn');
-  const optionValue = document.getElementById('optionValue');
-  
+  const moreAttrBtn = document.getElementById("publish_moreAttrBtn");
+  const optionValue = document.getElementById("optionValue");
+
   if (moreAttrBtn && optionValue) {
-    moreAttrBtn.addEventListener('click', function() {
-      if (optionValue.classList.contains('disN')) {
-        optionValue.classList.remove('disN');
-        this.textContent = '收起分类属性';
+    moreAttrBtn.addEventListener("click", function () {
+      if (optionValue.classList.contains("disN")) {
+        optionValue.classList.remove("disN");
+        this.textContent = "收起分类属性";
       } else {
-        optionValue.classList.add('disN');
-        this.textContent = '展开分类属性';
+        optionValue.classList.add("disN");
+        this.textContent = "展开分类属性";
       }
     });
   }
@@ -222,22 +226,22 @@ const bindToggleEvents = () => {
  */
 const getFormData = () => {
   const formData = {};
-  const formElement = document.querySelector('#form-container .layui-form');
-  
+  const formElement = document.querySelector("#form-container .layui-form");
+
   if (formElement) {
-    const inputs = formElement.querySelectorAll('input, select, textarea');
-    inputs.forEach(input => {
+    const inputs = formElement.querySelectorAll("input, select, textarea");
+    inputs.forEach((input) => {
       if (input.name && input.value) {
         formData[input.name] = input.value;
       }
     });
   }
-  
+
   return formData;
 };
 
 // 页面加载完成后初始化
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
   initFormRender();
 });
 
@@ -247,29 +251,42 @@ document.addEventListener('DOMContentLoaded', () => {
  */
 const getFormDataWithValues = () => {
   const formData = {};
-  const formElement = document.querySelector('#form-container .layui-form');
-  
+  const formElement = document.querySelector("#form-container .layui-form");
+
   if (formElement) {
-    const inputs = formElement.querySelectorAll('input, select, textarea');
-    inputs.forEach(input => {
+    const inputs = formElement.querySelectorAll("input, select, textarea");
+    inputs.forEach((input) => {
       // 只收集有值的字段
-      if (input.name && input.value.trim() !== '') {
+      if (input.name && input.value.trim() !== "") {
         formData[input.name] = input.value;
       }
     });
     //获取到所有inputs的class
-    const inputClasses = [...inputs].map(input => input.classList.value);
+    const inputClasses = [...inputs].map((input) => input.classList.value);
     //遍历classes,如果class不为空,且包含.required字符串,就返回
-    const requiredClasses = inputClasses.filter(cls => cls !== '' && cls.indexOf('.') !== -1);
+    const requiredClasses = inputClasses.filter(
+      (cls) => cls !== "" && cls.indexOf(".") !== -1
+    );
     //获取到requiredClasses中class元素对应的值,同时组成class:value形式对象,存到数组中
-    const requiredClassesWithValue = requiredClasses.map(cls => ({
-      [cls]: formElement.querySelector(`.${cls}`).value().trim()
-    }));
+    const classCountMap = {}; // 记录每个类名已取的次数
 
-    console.log('requiredClasses',requiredClasses, requiredClassesWithValue);
+    const requiredClassesWithValue = requiredClasses
+      .map((cls) => {
+        const escapedCls = cls.replace(/\./g, "\\.");
+        const elements = formElement.querySelectorAll(`.${escapedCls}`);
+        // 计数器：如果没有则初始化为0
+        classCountMap[cls] = classCountMap[cls] || 0;
+        const element = elements[classCountMap[cls]];
+        classCountMap[cls]++; // 下次遇到同名类，计数器+1
+        const value = element ? element.value.trim() : "";
+        if (value !== "") {
+          return { [cls]: value };
+        }
+      })
+      .filter(Boolean); // 过滤掉 undefined
 
+    formData.classValue = requiredClassesWithValue;
   }
-  console.log('getFormDataWithValues',formData);
   return formData;
 };
 
@@ -277,19 +294,21 @@ const getFormDataWithValues = () => {
  * 自动填写必填项
  */
 const fillRequiredFields = () => {
-  const formElement = document.querySelector('#form-container .layui-form');
-  
+  const formElement = document.querySelector("#form-container .layui-form");
+
   if (formElement) {
     // 查找所有必填项
-    const requiredInputs = formElement.querySelectorAll('input[data-required="true"], select[data-required="true"]');
-    
-    requiredInputs.forEach(input => {
-      if (input.tagName.toLowerCase() === 'input') {
+    const requiredInputs = formElement.querySelectorAll(
+      'input[data-required="true"], select[data-required="true"]'
+    );
+
+    requiredInputs.forEach((input) => {
+      if (input.tagName.toLowerCase() === "input") {
         // 为input类型设置默认值
-        input.value = '示例值';
-      } else if (input.tagName.toLowerCase() === 'select') {
+        input.value = "示例值";
+      } else if (input.tagName.toLowerCase() === "select") {
         // 为select类型选择第一个非空选项
-        const options = input.querySelectorAll('option');
+        const options = input.querySelectorAll("option");
         for (let i = 0; i < options.length; i++) {
           if (options[i].value) {
             input.value = options[i].value;
@@ -298,14 +317,13 @@ const fillRequiredFields = () => {
         }
       }
     });
-    
+
     // 重新渲染表单，使select的选中状态生效
     form.render();
   }
 };
 
-
-function standardJsonSchemaDataHandle(submitData){
+function standardJsonSchemaDataHandle(submitData) {
   let parseProperties = amazonParseSchemaProperties(amazonUtils._schemaData);
   let convertProperties = amazonConvertToObjectArray(parseProperties);
   //获取到convertProperties中和submitData的key相同项并打印
@@ -319,26 +337,31 @@ function standardJsonSchemaDataHandle(submitData){
     }
   });
   //遍历submitData,如果key=list_price,就把newProperties中key=list_price的currency的enum中第一项赋值给submitData的list_price的currency字段
-  if (submitKeys.includes('list_price')) {
-    let listPriceObj= newProperties.find(item => item['list_price'])['list_price'];
-    let listPriceArr = submitData['list_price'];
-    listPriceArr.forEach(item => {
+  if (submitKeys.includes("list_price")) {
+    let listPriceObj = newProperties.find((item) => item["list_price"])[
+      "list_price"
+    ];
+    let listPriceArr = submitData["list_price"];
+    listPriceArr.forEach((item) => {
       item.currency = listPriceObj.items.properties.currency.enum[0];
-    })
+    });
   }
-  console.log('newProperties', newProperties);
+  console.log("newProperties", newProperties);
   // 使用新的转换函数处理 submitData，确保数据结构符合 schema 规范
-  let transformedSubmitData = amazonTransformSubmitDataBySchema(submitData,newProperties);
+  let transformedSubmitData = amazonTransformSubmitDataBySchema(
+    submitData,
+    newProperties
+  );
   //遍历transformedSubmitData,是一个对象
   Object.keys(transformedSubmitData).forEach((key) => {
-    if (key == 'fulfillment_availability') {
-      transformedSubmitData[key].forEach(item => {
-        if(item['fulfillment_channel_code'] == 'AMAZON_NA'){
+    if (key == "fulfillment_availability") {
+      transformedSubmitData[key].forEach((item) => {
+        if (item["fulfillment_channel_code"] == "AMAZON_NA") {
           delete item.quantity;
-        }else{
-          item.quantity = Number(item.quantity)
+        } else {
+          item.quantity = Number(item.quantity);
         }
-      })
+      });
     }
   });
   return transformedSubmitData;
@@ -352,18 +375,18 @@ const submitFormData = () => {
   const formData = getFormDataWithValues();
   let processData = amazonProcessFormData(formData);
   let standardData = standardJsonSchemaDataHandle(processData);
-  
+
   // 输出到控制台
-  console.log('提交的表单数据:', standardData);
-  
+  console.log("提交的表单数据:", standardData);
+
   // 使用layui的弹窗显示提交的数据
   layer.open({
     type: 1,
-    title: '提交的表单数据',
-    content: '<pre>' + JSON.stringify(standardData, null, 2) + '</pre>',
-    area: ['500px', '300px']
+    title: "提交的表单数据",
+    content: "<pre>" + JSON.stringify(standardData, null, 2) + "</pre>",
+    area: ["500px", "300px"],
   });
-  
+
   // 这里可以添加实际的表单提交逻辑，如AJAX请求等
 };
 
@@ -372,120 +395,121 @@ const submitFormData = () => {
  */
 const bindSubmitEvents = () => {
   // 填写必填项按钮事件
-  const fillRequiredBtn = document.getElementById('fillRequiredBtn');
+  const fillRequiredBtn = document.getElementById("fillRequiredBtn");
   if (fillRequiredBtn) {
-    fillRequiredBtn.addEventListener('click', fillRequiredFields);
+    fillRequiredBtn.addEventListener("click", fillRequiredFields);
   }
-  
+
   // 提交表单按钮事件
-  const submitFormBtn = document.getElementById('submitFormBtn');
+  const submitFormBtn = document.getElementById("submitFormBtn");
   if (submitFormBtn) {
-    submitFormBtn.addEventListener('click', submitFormData);
+    submitFormBtn.addEventListener("click", submitFormData);
   }
 };
 
 //添加重量/尺寸处理
 let amazonDefaultAttrValue = {
-    "model_number": [
-        {
-            "value": "--d2--4807",
-            "marketplace_id": "ATVPDKIKX0DER"
-        }
-    ],
-    "model_name": [
-        {
-            "value": "Appliances >> Garbage Disposals & Compactors >> Garbage Disposals",
-            "language_tag": "en_US"
-        }
-    ],
-    "manufacturer": [
-        {
-            "value": "Genenic",
-            "language_tag": "en_US",
-            "marketplace_id": "ATVPDKIKX0DER"
-        }
-    ],
-    "country_of_origin": [
-        {
-            "value": "CN",
-            "marketplace_id": "ATVPDKIKX0DER"
-        }
-    ],
-    "supplier_declared_dg_hz_regulation": [
-        {
-            "value": "not_applicable",
-            "marketplace_id": "ATVPDKIKX0DER"
-        }
-    ],
-    "number_of_boxes": [
-        {
-            "value": "1",
-            "marketplace_id": "ATVPDKIKX0DER"
-        }
-    ],
-    "number_of_items": [
-        {
-            "value": "1",
-            "marketplace_id": "ATVPDKIKX0DER"
-        }
-    ],
-    "unit_count": [
-        {
-            "value": "1",
-            "type": {
-                "value": "Count",
-                "language_tag": "en_US"
-            }
-        }
-    ],
-    "batteries_required": [
-        {
-            "marketplace_id": "ATVPDKIKX0DER",
-            "value": false
-        }
-    ],
-    "import_designation": [
-        {
-            "value": "imported",
-            "language_tag": "en_US",
-            "marketplace_id": "ATVPDKIKX0DER"
-        }
-    ],
-    "cpsia_cautionary_statement": [
-        {
-            "value": "no_warning_applicable",
-            "marketplace_id": "ATVPDKIKX0DER"
-        }
-    ],
-    "item_package_dimensions": [
-        {
-            "height": {
-                "value": 12,
-                "marketplace_id": "ATVPDKIKX0DER"
-            },
-            "length": {
-                "value": 14,
-                "marketplace_id": "ATVPDKIKX0DER"
-            },
-            "width": {
-                "value": 13,
-                "marketplace_id": "ATVPDKIKX0DER"
-            },
-            "marketplace_id": "ATVPDKIKX0DER"
-        }
-    ],
-    "item_package_weight": [
-        {
-            "value": 30,
-            "marketplace_id": "ATVPDKIKX0DER"
-        }
-    ]
-}
+  model_number: [
+    {
+      value: "--d2--4807",
+      marketplace_id: "ATVPDKIKX0DER",
+    },
+  ],
+  model_name: [
+    {
+      value:
+        "Appliances >> Garbage Disposals & Compactors >> Garbage Disposals",
+      language_tag: "en_US",
+    },
+  ],
+  manufacturer: [
+    {
+      value: "Genenic",
+      language_tag: "en_US",
+      marketplace_id: "ATVPDKIKX0DER",
+    },
+  ],
+  country_of_origin: [
+    {
+      value: "CN",
+      marketplace_id: "ATVPDKIKX0DER",
+    },
+  ],
+  supplier_declared_dg_hz_regulation: [
+    {
+      value: "not_applicable",
+      marketplace_id: "ATVPDKIKX0DER",
+    },
+  ],
+  number_of_boxes: [
+    {
+      value: "1",
+      marketplace_id: "ATVPDKIKX0DER",
+    },
+  ],
+  number_of_items: [
+    {
+      value: "1",
+      marketplace_id: "ATVPDKIKX0DER",
+    },
+  ],
+  unit_count: [
+    {
+      value: "1",
+      type: {
+        value: "Count",
+        language_tag: "en_US",
+      },
+    },
+  ],
+  batteries_required: [
+    {
+      marketplace_id: "ATVPDKIKX0DER",
+      value: false,
+    },
+  ],
+  import_designation: [
+    {
+      value: "imported",
+      language_tag: "en_US",
+      marketplace_id: "ATVPDKIKX0DER",
+    },
+  ],
+  cpsia_cautionary_statement: [
+    {
+      value: "no_warning_applicable",
+      marketplace_id: "ATVPDKIKX0DER",
+    },
+  ],
+  item_package_dimensions: [
+    {
+      height: {
+        value: 12,
+        marketplace_id: "ATVPDKIKX0DER",
+      },
+      length: {
+        value: 14,
+        marketplace_id: "ATVPDKIKX0DER",
+      },
+      width: {
+        value: 13,
+        marketplace_id: "ATVPDKIKX0DER",
+      },
+      marketplace_id: "ATVPDKIKX0DER",
+    },
+  ],
+  item_package_weight: [
+    {
+      value: 30,
+      marketplace_id: "ATVPDKIKX0DER",
+    },
+  ],
+};
 
-
-console.log('amazonDefaultAttrValue',amazonParseFormDataToString(amazonDefaultAttrValue));
-
-
+console.log(
+  "amazonDefaultAttrValue",
+  amazonParseFormDataToString(amazonDefaultAttrValue)
+);
 
 // 导出函数供外部使用
 window.schemaFormUtils = {
@@ -495,5 +519,5 @@ window.schemaFormUtils = {
   fillRequiredFields,
   submitFormData,
   bindToggleEvents,
-  bindSubmitEvents
+  bindSubmitEvents,
 };
