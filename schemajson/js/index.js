@@ -257,8 +257,19 @@ const getFormDataWithValues = () => {
         formData[input.name] = input.value;
       }
     });
+    //获取到所有inputs的class
+    const inputClasses = [...inputs].map(input => input.classList.value);
+    //遍历classes,如果class不为空,且包含.required字符串,就返回
+    const requiredClasses = inputClasses.filter(cls => cls !== '' && cls.indexOf('.') !== -1);
+    //获取到requiredClasses中class元素对应的值,同时组成class:value形式对象,存到数组中
+    const requiredClassesWithValue = requiredClasses.map(cls => ({
+      [cls]: formElement.querySelector(`.${cls}`).value().trim()
+    }));
+
+    console.log('requiredClasses',requiredClasses, requiredClassesWithValue);
+
   }
-  
+  console.log('getFormDataWithValues',formData);
   return formData;
 };
 
