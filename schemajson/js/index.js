@@ -112,6 +112,14 @@ function bindMaxUniqueItemsBtnsEvents() {
     // 提取并克隆模板组
     const $templateGroup = $items.slice(0, childrenLength).clone();
     $templateGroup.find('input, select').val(''); // 清空克隆项的值
+    //为克隆项中的input,select添加类名=input,select的name,同时移除name
+    $templateGroup.find('input, select').each(function() {
+      const $input = $(this);
+      const name = $input.attr('name');
+      $input.addClass(name).removeAttr('name');
+    });
+
+
 
     // 将克隆组添加到按钮组之前
     $buttonGroup.before($templateGroup);
