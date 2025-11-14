@@ -688,6 +688,43 @@
         }
       });
 
+      //单独处理formDta.classValue
+      if(formData.classValue && formData.classValue.length > 0){
+          // 临时分组对象
+          const tempGroup = {};
+          formData.classValue.forEach(item => {
+            Object.entries(item).forEach(([dotKey, rawVal]) => {
+              // 尝试转换为数字
+              const parsedVal = isNaN(Number(rawVal)) ? rawVal : Number(rawVal);
+              if (dotKey.endsWith('.value')) {
+                const arrKey = dotKey.replace('.value', '');
+                if (!result[arrKey]) result[arrKey] = [];
+                result[arrKey].push({ value: parsedVal });
+              } else if (dotKey.includes('.')) {
+                const [arrKey, propKey] = dotKey.split('.');
+                if (!tempGroup[arrKey]) tempGroup[arrKey] = [];
+                // 合并到同一个对象（每两个属性合并为一个对象）
+                let lastObj = tempGroup[arrKey][tempGroup[arrKey].length - 1];
+                if (!lastObj || lastObj[propKey] !== undefined) {
+                  lastObj = {};
+                  tempGroup[arrKey].push(lastObj);
+                }
+                lastObj[propKey] = parsedVal;
+              }
+            });
+          });
+
+          // 合并分组结果到 result
+          Object.entries(tempGroup).forEach(([arrKey, arrVal]) => {
+            if (!result[arrKey]) result[arrKey] = [];
+            result[arrKey] = result[arrKey].concat(arrVal);
+          });
+      }
+
+      if (result.classValue) {
+        delete result.classValue;
+      }
+
       return result;
     },
 

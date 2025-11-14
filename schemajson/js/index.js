@@ -267,20 +267,24 @@ const getFormDataWithValues = () => {
     const requiredClasses = inputClasses.filter(
       (cls) => cls !== "" && cls.indexOf(".") !== -1
     );
+    console.log("requiredClasses", requiredClasses);
     //获取到requiredClasses中class元素对应的值,同时组成class:value形式对象,存到数组中
     const classCountMap = {}; // 记录每个类名已取的次数
 
     const requiredClassesWithValue = requiredClasses
       .map((cls) => {
-        const escapedCls = cls.replace(/\./g, "\\.");
+        //先使用空格分割cls,取最后一个作为需要的类名
+        const requiredCls = cls.split(" ")[cls.split(" ").length - 1];
+        const escapedCls = requiredCls.replace(/\./g, "\\.");
+        console.log('escapedCls', escapedCls);
         const elements = formElement.querySelectorAll(`.${escapedCls}`);
         // 计数器：如果没有则初始化为0
-        classCountMap[cls] = classCountMap[cls] || 0;
-        const element = elements[classCountMap[cls]];
-        classCountMap[cls]++; // 下次遇到同名类，计数器+1
+        classCountMap[requiredCls] = classCountMap[requiredCls] || 0;
+        const element = elements[classCountMap[requiredCls]];
+        classCountMap[requiredCls]++; // 下次遇到同名类，计数器+1
         const value = element ? element.value.trim() : "";
         if (value !== "") {
-          return { [cls]: value };
+          return { [requiredCls]: value };
         }
       })
       .filter(Boolean); // 过滤掉 undefined
@@ -324,6 +328,7 @@ const fillRequiredFields = () => {
 };
 
 function standardJsonSchemaDataHandle(submitData) {
+  console.log("submitData", submitData);
   let parseProperties = amazonParseSchemaProperties(amazonUtils._schemaData);
   let convertProperties = amazonConvertToObjectArray(parseProperties);
   //获取到convertProperties中和submitData的key相同项并打印
@@ -373,6 +378,7 @@ function standardJsonSchemaDataHandle(submitData) {
 const submitFormData = () => {
   // 获取只有值的表单数据
   const formData = getFormDataWithValues();
+  console.log("formData", formData);
   let processData = amazonProcessFormData(formData);
   let standardData = standardJsonSchemaDataHandle(processData);
 
@@ -505,11 +511,6 @@ let amazonDefaultAttrValue = {
     },
   ],
 };
-
-console.log(
-  "amazonDefaultAttrValue",
-  amazonParseFormDataToString(amazonDefaultAttrValue)
-);
 
 // 导出函数供外部使用
 window.schemaFormUtils = {
