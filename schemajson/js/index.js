@@ -251,38 +251,62 @@ document.addEventListener("DOMContentLoaded", () => {
  */
 const getFormDataWithValues = () => {
   const formData = {};
-  const formElement = document.querySelector("#form-container .layui-form");
+  const $formElement = $("#form-container .layui-form");
 
-  if (formElement) {
-    const inputs = formElement.querySelectorAll("input, select, textarea");
-    inputs.forEach((input) => {
-      // 只收集有值的字段
-      if (input.name && input.value.trim() !== "") {
-        formData[input.name] = input.value;
+  if ($formElement.length) {
+    // 使用jQuery获取所有input、select、textarea元素
+    const $inputs = $formElement.find("input, select, textarea");
+
+    // 收集有值的字段
+    $inputs.each(function () {
+      const $input = $(this);
+      const name = $input.attr("name");
+      const value = $input.val();
+
+      // 只收集有值的字段，且父元素未被隐藏
+      if (name && value && value.trim() !== "") {
+        // 检查父元素的显示状态
+        const $parent = $input.parent().parent();
+        const isVisible = $parent.css("display") !== "none";
+
+        if (isVisible) {
+          formData[name] = value;
+        }
       }
     });
-    //获取到所有inputs的class
-    const inputClasses = [...inputs].map((input) => input.classList.value);
-    //遍历classes,如果class不为空,且包含.required字符串,就返回
+
+    // 获取所有inputs的class
+    const inputClasses = $inputs
+      .map(function () {
+        return $(this).attr("class") || "";
+      })
+      .get();
+
+    // 过滤出包含"."的class
     const requiredClasses = inputClasses.filter(
       (cls) => cls !== "" && cls.indexOf(".") !== -1
     );
     console.log("requiredClasses", requiredClasses);
-    //获取到requiredClasses中class元素对应的值,同时组成class:value形式对象,存到数组中
+
+    // 获取requiredClasses中class元素对应的值，组成class:value形式对象
     const classCountMap = {}; // 记录每个类名已取的次数
 
     const requiredClassesWithValue = requiredClasses
       .map((cls) => {
-        //先使用空格分割cls,取最后一个作为需要的类名
+        // 先使用空格分割cls，取最后一个作为需要的类名
         const requiredCls = cls.split(" ")[cls.split(" ").length - 1];
         const escapedCls = requiredCls.replace(/\./g, "\\.");
-        console.log('escapedCls', escapedCls);
-        const elements = formElement.querySelectorAll(`.${escapedCls}`);
+        console.log("escapedCls", escapedCls);
+
+        // 使用jQuery查找元素
+        const $elements = $formElement.find(`.${escapedCls}`);
+
         // 计数器：如果没有则初始化为0
         classCountMap[requiredCls] = classCountMap[requiredCls] || 0;
-        const element = elements[classCountMap[requiredCls]];
+        const $element = $elements.eq(classCountMap[requiredCls]);
         classCountMap[requiredCls]++; // 下次遇到同名类，计数器+1
-        const value = element ? element.value.trim() : "";
+
+        const value = $element.length ? $element.val().trim() : "";
         if (value !== "") {
           return { [requiredCls]: value };
         }
