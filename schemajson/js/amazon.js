@@ -361,7 +361,7 @@
         Object.entries(schema.properties).forEach(function ([key, value]) {
           // 跳过隐藏字段和引用字段
           if (value.hidden || isRefField(value, key) || isFilteredField(key))
-            return;       
+            return;
 
           // 基础字段信息
           const field = {
@@ -689,36 +689,36 @@
       });
 
       //单独处理formDta.classValue
-      if(formData.classValue && formData.classValue.length > 0){
-          // 临时分组对象
-          const tempGroup = {};
-          formData.classValue.forEach(item => {
-            Object.entries(item).forEach(([dotKey, rawVal]) => {
-              // 尝试转换为数字
-              const parsedVal = isNaN(Number(rawVal)) ? rawVal : Number(rawVal);
-              if (dotKey.endsWith('.value')) {
-                const arrKey = dotKey.replace('.value', '');
-                if (!result[arrKey]) result[arrKey] = [];
-                result[arrKey].push({ value: parsedVal });
-              } else if (dotKey.includes('.')) {
-                const [arrKey, propKey] = dotKey.split('.');
-                if (!tempGroup[arrKey]) tempGroup[arrKey] = [];
-                // 合并到同一个对象（每两个属性合并为一个对象）
-                let lastObj = tempGroup[arrKey][tempGroup[arrKey].length - 1];
-                if (!lastObj || lastObj[propKey] !== undefined) {
-                  lastObj = {};
-                  tempGroup[arrKey].push(lastObj);
-                }
-                lastObj[propKey] = parsedVal;
+      if (formData.classValue && formData.classValue.length > 0) {
+        // 临时分组对象
+        const tempGroup = {};
+        formData.classValue.forEach((item) => {
+          Object.entries(item).forEach(([dotKey, rawVal]) => {
+            // 尝试转换为数字
+            const parsedVal = isNaN(Number(rawVal)) ? rawVal : Number(rawVal);
+            if (dotKey.endsWith(".value")) {
+              const arrKey = dotKey.replace(".value", "");
+              if (!result[arrKey]) result[arrKey] = [];
+              result[arrKey].push({ value: parsedVal });
+            } else if (dotKey.includes(".")) {
+              const [arrKey, propKey] = dotKey.split(".");
+              if (!tempGroup[arrKey]) tempGroup[arrKey] = [];
+              // 合并到同一个对象（每两个属性合并为一个对象）
+              let lastObj = tempGroup[arrKey][tempGroup[arrKey].length - 1];
+              if (!lastObj || lastObj[propKey] !== undefined) {
+                lastObj = {};
+                tempGroup[arrKey].push(lastObj);
               }
-            });
+              lastObj[propKey] = parsedVal;
+            }
           });
+        });
 
-          // 合并分组结果到 result
-          Object.entries(tempGroup).forEach(([arrKey, arrVal]) => {
-            if (!result[arrKey]) result[arrKey] = [];
-            result[arrKey] = result[arrKey].concat(arrVal);
-          });
+        // 合并分组结果到 result
+        Object.entries(tempGroup).forEach(([arrKey, arrVal]) => {
+          if (!result[arrKey]) result[arrKey] = [];
+          result[arrKey] = result[arrKey].concat(arrVal);
+        });
       }
 
       if (result.classValue) {
@@ -811,6 +811,7 @@
       const pairs = dataString.split("#,#");
       const parsedData = {};
       const formData = {};
+      const classValue = [];
 
       // 解析每个键值对
       pairs.forEach((pair) => {
@@ -832,13 +833,26 @@
 
       // 处理解析后的数据为表单可用格式
       Object.entries(parsedData).forEach(([key, value]) => {
+        if (value.length > 1) {
+          value.forEach((item, index) => {
+            if (index === 0) return;
+            Object.keys(item).forEach(subKey => {
+              // 排除 marketplace_id、language_tag 等你不需要的字段（如需全部保留可去掉此判断）
+              if (subKey !== 'marketplace_id' && subKey !== 'language_tag') {
+                let newObj = {};
+                newObj[`${key}.${subKey}`] = item[subKey];
+                classValue.push(newObj);
+              }
+            });
+          });
+        }
         // 提取数组中的数据对象
         const dataObj = amazonUtils.extractArrayData(value);
-
         // 扁平化对象
         amazonUtils.flattenObject(dataObj, key, formData);
       });
 
+      formData.classValue = classValue;
       return formData;
     },
     /**
@@ -846,7 +860,7 @@
      * @param {Object} formData - 表单数据对象
      * @return {String} 转换后的亚马逊数据字符串
      */
-    parseAmazonDataToString: function(formData) {
+    parseAmazonDataToString: function (formData) {
       if (!formData || typeof formData !== "object") {
         console.error("传入的formData无效");
         return "";
@@ -1647,7 +1661,7 @@
      * @param {*} obj
      * @param {*} obj.data 属性对象
      * @return {*} 转换后的重量和尺寸对象
-    */
+     */
     convertWeightAndDimension: function (obj) {
       let { data } = obj;
       //需要处理的属性名数组
@@ -1708,12 +1722,14 @@
     global.amazonUtils.transformJsonSchemaToForm;
   global.amazonProcessFormData = global.amazonUtils.processFormData;
   global.amazonParseFormData = global.amazonUtils.parseAmazonData;
-  global.amazonParseFormDataToString = global.amazonUtils.parseAmazonDataToString;
+  global.amazonParseFormDataToString =
+    global.amazonUtils.parseAmazonDataToString;
   global.amazonProcessParseData = global.amazonUtils.processParseData;
   global.amazonParseSchemaProperties = global.amazonUtils.parseSchemaProperties;
   global.amazonConvertToObjectArray = global.amazonUtils.convertToObjectArray;
   global.amazonTransformSubmitDataBySchema =
     global.amazonUtils.transformSubmitDataBySchema;
   global.amazonGetItemNameMaxLength = global.amazonUtils.getItemNameMaxLength;
-  global.amazonConvertWeightAndDimension = global.amazonUtils.convertWeightAndDimension;
+  global.amazonConvertWeightAndDimension =
+    global.amazonUtils.convertWeightAndDimension;
 })(window);

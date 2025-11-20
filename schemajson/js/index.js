@@ -34,6 +34,10 @@ let mustRequire = [
   "specific_uses_for_product",
 ];
 
+let dataStr = `merchant_suggested_asin:[{"value":"示例值","marketplace_id":"ATVPDKIKX0DER"}]#,#item_type_keyword:[{"value":"示例值","marketplace_id":"ATVPDKIKX0DER"}]#,#model_number:[{"value":"示例值","marketplace_id":"ATVPDKIKX0DER"}]#,#model_name:[{"value":"示例值","marketplace_id":"ATVPDKIKX0DER","language_tag":"en_US"}]#,#manufacturer:[{"value":"示例值","marketplace_id":"ATVPDKIKX0DER","language_tag":"en_US"}]#,#fulfillment_availability:[{"fulfillment_channel_code":"AMAZON_NA"}]#,#material:[{"value":"Acrylic","marketplace_id":"ATVPDKIKX0DER","language_tag":"en_US"},{"value":"Alloy Steel","marketplace_id":"ATVPDKIKX0DER","language_tag":"en_US"}]#,#number_of_items:[{"value":"示例值","marketplace_id":"ATVPDKIKX0DER"}]#,#item_shape:[{"value":"Arch & Bow","marketplace_id":"ATVPDKIKX0DER","language_tag":"en_US"}]#,#included_components:[{"value":"Cover","marketplace_id":"ATVPDKIKX0DER","language_tag":"en_US"},{"value":"Installation Hardware","marketplace_id":"ATVPDKIKX0DER","language_tag":"en_US"}]#,#specific_uses_for_product:[{"value":"Beer Keg","marketplace_id":"ATVPDKIKX0DER","language_tag":"en_US"}]#,#indoor_outdoor_usage:[{"value":"indoor","marketplace_id":"ATVPDKIKX0DER"},{"value":"outdoor","marketplace_id":"ATVPDKIKX0DER"}]#,#country_of_origin:[{"value":"AF","marketplace_id":"ATVPDKIKX0DER"}]#,#batteries_required:[{"value":"false","marketplace_id":"ATVPDKIKX0DER"}]#,#supplier_declared_dg_hz_regulation:[{"value":"ghs","marketplace_id":"ATVPDKIKX0DER"},{"value":"other","marketplace_id":"ATVPDKIKX0DER"}]#,#item_package_dimensions:[{"height":{"unit":"inches","value":"示例值"},"length":{"unit":"inches","value":"示例值"},"width":{"unit":"inches","value":"示例值"},"marketplace_id":"ATVPDKIKX0DER"}]#,#item_package_weight:[{"unit":"pounds","value":"示例值","marketplace_id":"ATVPDKIKX0DER"}]#,#num_batteries:[{"quantity":4,"type":"12v","marketplace_id":"ATVPDKIKX0DER"},{"quantity":6,"type":"9v","marketplace_id":"ATVPDKIKX0DER"}]`;
+
+console.log("amazonParseFormData转换", amazonParseFormData(dataStr));
+
 /**
  * 获取JSON Schema数据
  * @return {Promise<Object>} Schema数据对象
