@@ -836,9 +836,9 @@
         if (value.length > 1) {
           value.forEach((item, index) => {
             if (index === 0) return;
-            Object.keys(item).forEach(subKey => {
+            Object.keys(item).forEach((subKey) => {
               // 排除 marketplace_id、language_tag 等你不需要的字段（如需全部保留可去掉此判断）
-              if (subKey !== 'marketplace_id' && subKey !== 'language_tag') {
+              if (subKey !== "marketplace_id" && subKey !== "language_tag") {
                 let newObj = {};
                 newObj[`${key}.${subKey}`] = item[subKey];
                 classValue.push(newObj);
@@ -865,23 +865,208 @@
         console.error("传入的formData无效");
         return "";
       }
+
+      const {
+        marketplaceId: DEFAULT_MARKETPLACE_ID,
+        languageTag: DEFAULT_LANGUAGE_TAG,
+      } = amazonUtils._currentDefaults;
+
+      const result = {};
       const parts = [];
 
-      // 遍历对象的每个键值对
-      for (const key in formData) {
-        if (formData.hasOwnProperty(key)) {
-          // 将值转换为JSON字符串
-          const valueStr = JSON.stringify(formData[key]);
-          // 对双引号添加转义符
-          const escapedValue = valueStr.replace(/"/g, '\\"');
-          // 组合键和值，添加到数组中
-          parts.push(`${key}:${escapedValue}`);
+      // 处理普通键值对和嵌套属性
+      for (const [key, value] of Object.entries(formData)) {
+        if (key === "classValue") continue;
+
+        if (key.includes(".")) {
+          amazonUtils.setNestedProperty(result, key, value);
+        } else {
+          result[key] = value;
         }
       }
 
-      // 用#,#连接所有部分
+      if (formData.classValue && Array.isArray(formData.classValue)) {
+        amazonUtils.mergeClassValueData(result, formData.classValue);
+      }
+
+      // 规范化：为需要的字段补齐默认 marketplace_id / language_tag
+      Object.keys(result).forEach((fieldKey) => {
+        const val = result[fieldKey];
+        if (Array.isArray(val)) {
+          result[fieldKey] = val.map((entry) => {
+            if (typeof entry === "object" && entry !== null) {
+              if (amazonUtils.needsMarketplaceId(fieldKey) && !entry.marketplace_id) {
+                entry.marketplace_id = DEFAULT_MARKETPLACE_ID;
+              }
+              if (amazonUtils.needsLanguageTag(fieldKey) && !entry.language_tag) {
+                entry.language_tag = DEFAULT_LANGUAGE_TAG;
+              }
+            }
+            return entry;
+          });
+        } else if (typeof val === "object" && val !== null) {
+          if (amazonUtils.needsMarketplaceId(fieldKey) && !val.marketplace_id) {
+            val.marketplace_id = DEFAULT_MARKETPLACE_ID;
+          }
+          if (amazonUtils.needsLanguageTag(fieldKey) && !val.language_tag) {
+            val.language_tag = DEFAULT_LANGUAGE_TAG;
+          }
+        }
+      });
+
+      for (const [key, value] of Object.entries(result)) {
+        if (Array.isArray(value)) {
+          const valueStr = JSON.stringify(value);
+          parts.push(`${key}:${valueStr}`);
+        } else if (typeof value === "object" && value !== null) {
+          const arrayValue = [value];
+          const valueStr = JSON.stringify(arrayValue);
+          parts.push(`${key}:${valueStr}`);
+        } else {
+          const arrayValue = [value];
+          const valueStr = JSON.stringify(arrayValue);
+          parts.push(`${key}:${valueStr}`);
+        }
+      }
+
       return parts.join("#,#");
     },
+    /**
+     * 设置嵌套属性值，支持点分隔路径
+     * @param {Object} obj - 目标对象
+     * @param {String} path - 点分隔的路径，如 "item_package_dimensions.height.unit"
+     * @param {*} value - 要设置的值
+     */
+    setNestedProperty: function (obj, path, value) {
+      const pathArray = path.split(".");
+      const fieldName = pathArray[0]; // 如 "item_package_dimensions"
+
+      if (!obj[fieldName]) {
+        obj[fieldName] = [];
+      }
+
+      if (obj[fieldName].length === 0) {
+        obj[fieldName].push({});
+      }
+
+      const targetObj = obj[fieldName][0];
+      let current = targetObj;
+
+      for (let i = 1; i < pathArray.length - 1; i++) {
+        const key = pathArray[i];
+        if (!current[key]) {
+          current[key] = {};
+        }
+        current = current[key];
+      }
+
+      const finalKey = pathArray[pathArray.length - 1];
+      current[finalKey] = value;
+
+      const {
+        marketplaceId: DEFAULT_MARKETPLACE_ID,
+        languageTag: DEFAULT_LANGUAGE_TAG,
+      } = amazonUtils._currentDefaults;
+
+      if (amazonUtils.needsMarketplaceId(fieldName) && !targetObj.marketplace_id) {
+        targetObj.marketplace_id = DEFAULT_MARKETPLACE_ID;
+      }
+      if (amazonUtils.needsLanguageTag(fieldName) && !targetObj.language_tag) {
+        targetObj.language_tag = DEFAULT_LANGUAGE_TAG;
+      }
+    },
+
+    /**
+     * 合并classValue数据到结果对象中
+     * @param {Object} result - 目标结果对象
+     * @param {Array} classValue - classValue数组
+     */
+    mergeClassValueData: function (result, classValue) {
+      const {
+        marketplaceId: DEFAULT_MARKETPLACE_ID,
+        languageTag: DEFAULT_LANGUAGE_TAG,
+      } = amazonUtils._currentDefaults;
+
+      // 按字段名分组
+      const fieldGroups = {};
+
+      classValue.forEach((item) => {
+        Object.entries(item).forEach(([dotKey, rawVal]) => {
+          // 尝试转换为数字
+          const parsedVal = isNaN(Number(rawVal)) ? rawVal : Number(rawVal);
+
+          if (dotKey.endsWith(".value")) {
+            const arrKey = dotKey.replace(".value", "");
+            if (!result[arrKey]) {
+              result[arrKey] = [];
+            }
+            result[arrKey].push({
+              value: parsedVal,
+              marketplace_id: DEFAULT_MARKETPLACE_ID,
+              ...(this.needsLanguageTag(arrKey) && {
+                language_tag: DEFAULT_LANGUAGE_TAG,
+              }),
+            });
+          } else if (dotKey.includes(".")) {
+            const [arrKey, propKey] = dotKey.split(".");
+            if (!fieldGroups[arrKey]) {
+              fieldGroups[arrKey] = [];
+            }
+
+            // 合并到同一个对象（每两个属性合并为一个对象）
+            let lastObj = fieldGroups[arrKey][fieldGroups[arrKey].length - 1];
+            if (!lastObj || lastObj[propKey] !== undefined) {
+              lastObj = {};
+              fieldGroups[arrKey].push(lastObj);
+            }
+
+            // 添加marketplace_id默认值
+            lastObj[propKey] = parsedVal;
+            if (!lastObj.marketplace_id) {
+              lastObj.marketplace_id = DEFAULT_MARKETPLACE_ID;
+            }
+
+            // 对于特定字段添加language_tag
+            if (this.needsLanguageTag(arrKey) && !lastObj.language_tag) {
+              lastObj.language_tag = DEFAULT_LANGUAGE_TAG;
+            }
+          }
+        });
+      });
+
+      // 合并分组结果到 result
+      Object.entries(fieldGroups).forEach(([arrKey, arrVal]) => {
+        if (!result[arrKey]) {
+          result[arrKey] = [];
+        }
+        result[arrKey] = result[arrKey].concat(arrVal);
+      });
+    },
+
+    /**
+     * 判断字段是否需要language_tag
+     * @param {String} fieldName - 字段名
+     * @return {Boolean} 是否需要language_tag
+     */
+    needsLanguageTag: function (fieldName) {
+      const fieldsNeedLanguageTag = [
+        "model_name",
+        "manufacturer",
+        "material",
+        "item_shape",
+        "included_components",
+        "specific_uses_for_product",
+      ];
+      return fieldsNeedLanguageTag.includes(fieldName);
+    },
+
+    needsMarketplaceId: function (fieldName) {
+      const fieldsNoMarketplaceId = [
+        "fulfillment_availability",
+      ];
+      return !fieldsNoMarketplaceId.includes(fieldName);
+    },
+
     /**
      * 处理已解析的数据对象，转换为表单可用格式
      * @param {Object} parseData - 已处理过的解析数据对象
