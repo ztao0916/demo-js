@@ -36,7 +36,57 @@ let mustRequire = [
 
 let dataStr = `merchant_suggested_asin:[{"value":"示例值","marketplace_id":"ATVPDKIKX0DER"}]#,#item_type_keyword:[{"value":"示例值","marketplace_id":"ATVPDKIKX0DER"}]#,#model_number:[{"value":"示例值","marketplace_id":"ATVPDKIKX0DER"}]#,#model_name:[{"value":"示例值","marketplace_id":"ATVPDKIKX0DER","language_tag":"en_US"}]#,#manufacturer:[{"value":"示例值","marketplace_id":"ATVPDKIKX0DER","language_tag":"en_US"}]#,#fulfillment_availability:[{"fulfillment_channel_code":"AMAZON_NA"}]#,#material:[{"value":"Acrylic","marketplace_id":"ATVPDKIKX0DER","language_tag":"en_US"},{"value":"Alloy Steel","marketplace_id":"ATVPDKIKX0DER","language_tag":"en_US"}]#,#number_of_items:[{"value":"示例值","marketplace_id":"ATVPDKIKX0DER"}]#,#item_shape:[{"value":"Arch & Bow","marketplace_id":"ATVPDKIKX0DER","language_tag":"en_US"}]#,#included_components:[{"value":"Cover","marketplace_id":"ATVPDKIKX0DER","language_tag":"en_US"},{"value":"Installation Hardware","marketplace_id":"ATVPDKIKX0DER","language_tag":"en_US"}]#,#specific_uses_for_product:[{"value":"Beer Keg","marketplace_id":"ATVPDKIKX0DER","language_tag":"en_US"}]#,#indoor_outdoor_usage:[{"value":"indoor","marketplace_id":"ATVPDKIKX0DER"},{"value":"outdoor","marketplace_id":"ATVPDKIKX0DER"}]#,#country_of_origin:[{"value":"AF","marketplace_id":"ATVPDKIKX0DER"}]#,#batteries_required:[{"value":"false","marketplace_id":"ATVPDKIKX0DER"}]#,#supplier_declared_dg_hz_regulation:[{"value":"ghs","marketplace_id":"ATVPDKIKX0DER"},{"value":"other","marketplace_id":"ATVPDKIKX0DER"}]#,#item_package_dimensions:[{"height":{"unit":"inches","value":"示例值"},"length":{"unit":"inches","value":"示例值"},"width":{"unit":"inches","value":"示例值"},"marketplace_id":"ATVPDKIKX0DER"}]#,#item_package_weight:[{"unit":"pounds","value":"示例值","marketplace_id":"ATVPDKIKX0DER"}]#,#num_batteries:[{"quantity":4,"type":"12v","marketplace_id":"ATVPDKIKX0DER"},{"quantity":6,"type":"9v","marketplace_id":"ATVPDKIKX0DER"}]`;
 
-console.log("amazonParseFormData转换", amazonParseFormData(dataStr));
+let parseFormData = {
+    "merchant_suggested_asin.value": "示例值",
+    "item_type_keyword.value": "示例值",
+    "model_number.value": "示例值",
+    "model_name.value": "示例值",
+    "manufacturer.value": "示例值",
+    "fulfillment_availability.fulfillment_channel_code": "AMAZON_NA",
+    "material.value": "Acrylic",
+    "number_of_items.value": "示例值",
+    "item_shape.value": "Arch & Bow",
+    "included_components.value": "Cover",
+    "specific_uses_for_product.value": "Beer Keg",
+    "indoor_outdoor_usage.value": "indoor",
+    "country_of_origin.value": "AF",
+    "batteries_required.value": "false",
+    "supplier_declared_dg_hz_regulation.value": "ghs",
+    "item_package_dimensions.height.unit": "inches",
+    "item_package_dimensions.height.value": "示例值",
+    "item_package_dimensions.length.unit": "inches",
+    "item_package_dimensions.length.value": "示例值",
+    "item_package_dimensions.width.unit": "inches",
+    "item_package_dimensions.width.value": "示例值",
+    "item_package_weight.unit": "pounds",
+    "item_package_weight.value": "示例值",
+    "num_batteries.quantity": 4,
+    "num_batteries.type": "12v",
+    "classValue": [
+        {
+            "material.value": "Alloy Steel"
+        },
+        {
+            "included_components.value": "Installation Hardware"
+        },
+        {
+            "indoor_outdoor_usage.value": "outdoor"
+        },
+        {
+            "supplier_declared_dg_hz_regulation.value": "other"
+        },
+        {
+            "num_batteries.quantity": 6
+        },
+        {
+            "num_batteries.type": "9v"
+        }
+    ]
+}
+
+console.log("amazonParseFormData转换-字符串转表单", amazonParseFormData(dataStr));
+
+console.log("amazonParseFormData转换-表单转字符串", amazonParseFormDataToString(parseFormData));
 
 /**
  * 获取JSON Schema数据
