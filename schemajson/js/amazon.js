@@ -1669,13 +1669,16 @@
       let propertiesNameArr = [
         "item_package_dimensions",
         "item_package_weight",
+        "item_dimensions",
+        "item_length_width",
+        "item_weight"
       ];
       //获取data的所有属性名
       let dataPropertiesNameArr = Object.keys(data);
       //遍历dataPropertiesNameArr,如果propertiesNameArr包含,则执行转换
       dataPropertiesNameArr.forEach((item) => {
         if (propertiesNameArr.includes(item)) {
-          if (item == "item_package_dimensions") {
+          if (item == "item_package_dimensions" || item == "item_dimensions" || item == "item_length_width") {
             //尺寸规则
             //currentObj 是一个数组,取第一个对象,遍历内部所有对象,执行cm和inches的转换
             let currentObj = data[item];
@@ -1686,7 +1689,7 @@
                   firstObj[key].value = firstObj[key].value * 0.3937;
                   // 保留四位小数的英寸值
                   firstObj[key].value =
-                    Math.round(firstObj[key].value * 0.3937 * 10000) / 10000;
+                    Math.round(firstObj[key].value * 0.3937 * 100) / 100;
                   firstObj[key].unit = "inches";
                 }
               }
@@ -1694,7 +1697,7 @@
             console.log("尺寸firstObj", firstObj);
             //替换item_package_dimensions
             data[item] = [firstObj];
-          } else if (item == "item_package_weight") {
+          } else if (item == "item_package_weight" || item == "item_weight") {
             //currentObj 是一个数组,取第一个对象,遍历内部所有对象,执行g和pounds的转换
             let currentObj = data[item];
             let firstObj = currentObj[0];
@@ -1703,7 +1706,7 @@
                 if (!firstObj.unit || firstObj.unit == "g") {
                   // 保留四位小数的磅值
                   firstObj.value =
-                    Math.round((firstObj.value / 453.59237) * 10000) / 10000;
+                    Math.round((firstObj.value / 453.59237) * 100) / 100;
                   firstObj.unit = "pounds";
                 }
               }
