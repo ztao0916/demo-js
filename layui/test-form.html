@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>测试form可选可输功能</title>
+    <link rel="stylesheet" href="./css/layui.css" />
+  </head>
+  <body>
+    <div class="layui-container">
+      <div class="layui-row">
+        <div class="layui-col-md6">
+          <h1>测试form可选可输功能</h1>
+          <div class="layui-form">
+            <div class="layui-form-item">
+              <label class="layui-form-label">店铺</label>
+              <div class="layui-input-block">
+                <select
+                  name="shop"
+                  lay-verify="required"
+                  lay-creatable
+                  lay-search
+                >
+                  <option value="">请选择店铺</option>
+                  <option value="1">店铺1</option>
+                  <option value="2">店铺2</option>
+                  <option value="3">店铺3</option>
+                  <option value="4">店铺4</option>
+                  <option value="5">店铺5</option>
+                  <option value="6">店铺6</option>
+                  <option value="7">店铺7</option>
+                  <option value="8">店铺8</option>
+                  <option value="9">店铺9</option>
+                  <option value="10">店铺10</option>
+                  <option value="11">店铺11</option>
+                  <option value="12">店铺12</option>
+                  <option value="13">店铺13</option>
+                  <option value="14">店铺14</option>
+                  <option value="15">店铺15</option>
+                  <option value="16">店铺16</option>
+                  <option value="17">店铺17</option>
+                  <option value="18">店铺18</option>
+                  <option value="19">店铺19</option>
+                  <option value="20">店铺20</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="./js/layui.js"></script>
+  <script>
+    layui.use("form", function () {
+      let form = layui.form;
+      form.render();
+    });
+  </script>
+</html>
