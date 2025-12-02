@@ -61,6 +61,7 @@
                     data-required="{{childItem.required ? 'true' : 'false'}}"
                     name="{{childItem.key}}"
                     lay-filter="{{childItem.label}}"
+                    {{childItem.creatable ? 'lay-creatable="true"' : ''}}
                   >
                     <option value="">请选择</option>
                     {{# layui.each(childItem.options||[], function(cpIndex,
@@ -143,7 +144,7 @@
                     {{childItem.maxLength ?
                     'maxlength="'+childItem.maxLength+'"' : ''}}> {{# }else
                     if(childItem.type == "select"){ }}
-                    <select name="{{childItem.key}}">
+                    <select name="{{childItem.key}}" {{childItem.creatable ? 'lay-creatable="true"' : ''}}>
                       <option value="">请选择</option>
                       {{# layui.each(childItem.options||[], function(cpIndex,
                       cpItem){ }}

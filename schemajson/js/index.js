@@ -85,15 +85,15 @@ layui.use(["form", "laytpl"], function () {
     ],
   };
 
-  console.log(
-    "amazonParseFormData转换-字符串转表单",
-    amazonParseFormData(dataStr)
-  );
+  // console.log(
+  //   "amazonParseFormData转换-字符串转表单",
+  //   amazonParseFormData(dataStr)
+  // );
 
-  console.log(
-    "amazonParseFormData转换-表单转字符串",
-    amazonParseFormDataToString(parseFormData)
-  );
+  // console.log(
+  //   "amazonParseFormData转换-表单转字符串",
+  //   amazonParseFormDataToString(parseFormData)
+  // );
 
   /**
    * 获取JSON Schema数据
@@ -120,13 +120,19 @@ layui.use(["form", "laytpl"], function () {
         console.error("无法获取Schema数据");
         return;
       }
-      console.log(amazonGetItemNameMaxLength(schemaData));
+      // console.log(amazonGetItemNameMaxLength(schemaData));
 
       // 使用transformJsonSchemaToForm函数转换数据
       const formData = amazonUtils.transformJsonSchemaToForm(
         schemaData,
         mustRequire
       );
+      console.log("formData", formData);
+      // 打印包含 creatable 属性的字段
+      const creatableFields = formData.fields
+        .flatMap((field) => field.children || [])
+        .filter((child) => child.creatable);
+      console.log("creatableFields", creatableFields);
 
       // 获取模板
       const templateStr = document.getElementById(
