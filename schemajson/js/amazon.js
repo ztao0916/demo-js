@@ -361,7 +361,7 @@
         Object.entries(schema.properties).forEach(function ([key, value]) {
           // 跳过隐藏字段和引用字段
           if (value.hidden || isRefField(value, key) || isFilteredField(key))
-            return;       
+            return;
 
           // 基础字段信息
           const field = {
@@ -401,6 +401,14 @@
                     : val,
               };
             });
+            // 判断是否可创建新选项：anyOf[0]存在且为string类型（无enum）
+            if (
+              value.anyOf[0] &&
+              value.anyOf[0].type === "string" &&
+              !value.anyOf[0].enum
+            ) {
+              field.creatable = true;
+            }
           }
 
           // 处理数组类型
@@ -533,6 +541,14 @@
                             : val,
                       };
                     });
+                    // 判断是否可创建新选项：anyOf[0]存在且为string类型（无enum）
+                    if (
+                      propValue.anyOf[0] &&
+                      propValue.anyOf[0].type === "string" &&
+                      !propValue.anyOf[0].enum
+                    ) {
+                      fieldObj.creatable = true;
+                    }
                   }
 
                   // 判断是否为叶子节点 - 检查是否有properties或items.properties
@@ -689,36 +705,36 @@
       });
 
       //单独处理formDta.classValue
-      if(formData.classValue && formData.classValue.length > 0){
-          // 临时分组对象
-          const tempGroup = {};
-          formData.classValue.forEach(item => {
-            Object.entries(item).forEach(([dotKey, rawVal]) => {
-              // 尝试转换为数字
-              const parsedVal = isNaN(Number(rawVal)) ? rawVal : Number(rawVal);
-              if (dotKey.endsWith('.value')) {
-                const arrKey = dotKey.replace('.value', '');
-                if (!result[arrKey]) result[arrKey] = [];
-                result[arrKey].push({ value: parsedVal });
-              } else if (dotKey.includes('.')) {
-                const [arrKey, propKey] = dotKey.split('.');
-                if (!tempGroup[arrKey]) tempGroup[arrKey] = [];
-                // 合并到同一个对象（每两个属性合并为一个对象）
-                let lastObj = tempGroup[arrKey][tempGroup[arrKey].length - 1];
-                if (!lastObj || lastObj[propKey] !== undefined) {
-                  lastObj = {};
-                  tempGroup[arrKey].push(lastObj);
-                }
-                lastObj[propKey] = parsedVal;
+      if (formData.classValue && formData.classValue.length > 0) {
+        // 临时分组对象
+        const tempGroup = {};
+        formData.classValue.forEach((item) => {
+          Object.entries(item).forEach(([dotKey, rawVal]) => {
+            // 尝试转换为数字
+            const parsedVal = isNaN(Number(rawVal)) ? rawVal : Number(rawVal);
+            if (dotKey.endsWith(".value")) {
+              const arrKey = dotKey.replace(".value", "");
+              if (!result[arrKey]) result[arrKey] = [];
+              result[arrKey].push({ value: parsedVal });
+            } else if (dotKey.includes(".")) {
+              const [arrKey, propKey] = dotKey.split(".");
+              if (!tempGroup[arrKey]) tempGroup[arrKey] = [];
+              // 合并到同一个对象（每两个属性合并为一个对象）
+              let lastObj = tempGroup[arrKey][tempGroup[arrKey].length - 1];
+              if (!lastObj || lastObj[propKey] !== undefined) {
+                lastObj = {};
+                tempGroup[arrKey].push(lastObj);
               }
-            });
+              lastObj[propKey] = parsedVal;
+            }
           });
+        });
 
-          // 合并分组结果到 result
-          Object.entries(tempGroup).forEach(([arrKey, arrVal]) => {
-            if (!result[arrKey]) result[arrKey] = [];
-            result[arrKey] = result[arrKey].concat(arrVal);
-          });
+        // 合并分组结果到 result
+        Object.entries(tempGroup).forEach(([arrKey, arrVal]) => {
+          if (!result[arrKey]) result[arrKey] = [];
+          result[arrKey] = result[arrKey].concat(arrVal);
+        });
       }
 
       if (result.classValue) {
@@ -836,9 +852,9 @@
         if (value.length > 1) {
           value.forEach((item, index) => {
             if (index === 0) return;
-            Object.keys(item).forEach(subKey => {
+            Object.keys(item).forEach((subKey) => {
               // 排除 marketplace_id、language_tag 等你不需要的字段（如需全部保留可去掉此判断）
-              if (subKey !== 'marketplace_id' && subKey !== 'language_tag') {
+              if (subKey !== "marketplace_id" && subKey !== "language_tag") {
                 let newObj = {};
                 newObj[`${key}.${subKey}`] = item[subKey];
                 classValue.push(newObj);
@@ -861,7 +877,7 @@
      * @param {Object} formData - 表单数据对象
      * @return {String} 转换后的亚马逊数据字符串
      */
-    parseAmazonDataToString: function(formData) {
+    parseAmazonDataToString: function (formData) {
       if (!formData || typeof formData !== "object") {
         console.error("传入的formData无效");
         return "";
@@ -1662,7 +1678,7 @@
      * @param {*} obj
      * @param {*} obj.data 属性对象
      * @return {*} 转换后的重量和尺寸对象
-    */
+     */
     convertWeightAndDimension: function (obj) {
       let { data } = obj;
       //需要处理的属性名数组
@@ -1671,14 +1687,18 @@
         "item_package_weight",
         "item_dimensions",
         "item_length_width",
-        "item_weight"
+        "item_weight",
       ];
       //获取data的所有属性名
       let dataPropertiesNameArr = Object.keys(data);
       //遍历dataPropertiesNameArr,如果propertiesNameArr包含,则执行转换
       dataPropertiesNameArr.forEach((item) => {
         if (propertiesNameArr.includes(item)) {
-          if (item == "item_package_dimensions" || item == "item_dimensions" || item == "item_length_width") {
+          if (
+            item == "item_package_dimensions" ||
+            item == "item_length_width" ||
+            item == "item_dimensions"
+          ) {
             //尺寸规则
             //currentObj 是一个数组,取第一个对象,遍历内部所有对象,执行cm和inches的转换
             let currentObj = data[item];
@@ -1689,7 +1709,7 @@
                   firstObj[key].value = firstObj[key].value * 0.3937;
                   // 保留四位小数的英寸值
                   firstObj[key].value =
-                    Math.round(firstObj[key].value * 0.3937 * 100) / 100;
+                    Math.round(firstObj[key].value * 100) / 100;
                   firstObj[key].unit = "inches";
                 }
               }
@@ -1726,12 +1746,14 @@
     global.amazonUtils.transformJsonSchemaToForm;
   global.amazonProcessFormData = global.amazonUtils.processFormData;
   global.amazonParseFormData = global.amazonUtils.parseAmazonData;
-  global.amazonParseFormDataToString = global.amazonUtils.parseAmazonDataToString;
+  global.amazonParseFormDataToString =
+    global.amazonUtils.parseAmazonDataToString;
   global.amazonProcessParseData = global.amazonUtils.processParseData;
   global.amazonParseSchemaProperties = global.amazonUtils.parseSchemaProperties;
   global.amazonConvertToObjectArray = global.amazonUtils.convertToObjectArray;
   global.amazonTransformSubmitDataBySchema =
     global.amazonUtils.transformSubmitDataBySchema;
   global.amazonGetItemNameMaxLength = global.amazonUtils.getItemNameMaxLength;
-  global.amazonConvertWeightAndDimension = global.amazonUtils.convertWeightAndDimension;
+  global.amazonConvertWeightAndDimension =
+    global.amazonUtils.convertWeightAndDimension;
 })(window);

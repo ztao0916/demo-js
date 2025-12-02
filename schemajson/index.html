@@ -1,145 +1,186 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>schemaJSON</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="stylesheet" href="./css/layui.css" />
+    <link rel="stylesheet" href="./css/index.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>schemaJSON</title>
-  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-  <link rel="stylesheet" href="./css/layui.css" />
-  <link rel="stylesheet" href="./css/index.css" />
-</head>
-
-<body>
-  <h1 class="schema-header">schema-json</h1>
-  <div>
-    <!-- 表单渲染 -->
-    <div id="form-container">
-      <form class="layui-form"></form>
+  <body>
+    <h1 class="schema-header">schema-json</h1>
+    <div>
+      <!-- 表单渲染 -->
+      <div id="form-container">
+        <form class="layui-form"></form>
+      </div>
     </div>
-  </div>
 
-  <!-- 模板引擎 -->
-  <script type="text/html" id="amazonCateSpecificsNewTempV2">
-    <div class="layui-col-md12 amazonCateSpecifics">
-      <div class="layui-card">
-        <div class="layui-card-body layui-row" id="requireValue">
-          <!-- 必填项区域 -->
-          {{# layui.each(d.fields||[], function(index, item){ }}
-            {{# var hasRequiredChildren = false; }}
-            {{# if(item.children){ }}
-              {{# layui.each(item.children||[], function(childIndex, childItem){ }}
-                {{# if(childItem.required){ hasRequiredChildren = true; } }}
-              {{# }); }}
-            {{# } }}
-            
-            {{# if(item.required || hasRequiredChildren){ }}
+    <!-- 模板引擎 -->
+    <script type="text/html" id="amazonCateSpecificsNewTempV2">
+      <div class="layui-col-md12 amazonCateSpecifics">
+        <div class="layui-card">
+          <div class="layui-card-body layui-row" id="requireValue">
+            <!-- 必填项区域 -->
+            {{# layui.each(d.fields||[], function(index, item){ }} {{# var
+            hasRequiredChildren = false; }} {{# if(item.children){ }} {{#
+            layui.each(item.children||[], function(childIndex, childItem){ }}
+            {{# if(childItem.required){ hasRequiredChildren = true; } }} {{# });
+            }} {{# } }} {{# if(item.required || hasRequiredChildren){ }}
             <div class="layui-form-item toggleClass requireEle">
-              {{# if(item.children){ }} 
-              {{# if(item.children.length > 1){ }}
-              <div style="font-weight:700;font-size:18px;" lay-tips="{{item.description}}" class="attrTitle">
+              {{# if(item.children){ }} {{# if(item.children.length > 1){ }}
+              <div
+                style="font-weight:700;font-size:18px;"
+                lay-tips="{{item.description}}"
+                class="attrTitle"
+              >
                 {{item.label}}
               </div>
-              {{# } }} 
-              {{# layui.each(item.children||[], function(childIndex,childItem){ }}
-                {{# if(childItem.required){ }}
+              {{# } }} {{# layui.each(item.children||[],
+              function(childIndex,childItem){ }} {{# if(childItem.required){ }}
+              <div class="attrContent">
+                <label
+                  class="layui-form-label redStar"
+                  data-local="{{childItem.label}}"
+                  data-eng="{{childItem.key}}"
+                  lay-tips="{{childItem.description}}"
+                  >{{childItem.label}}</label
+                >
+                <span class="disN labelField">{{childItem.label}}</span>
+                <div class="layui-input-block">
+                  {{# if(childItem.type == "input"){ }} <input type="text"
+                  class="layui-input" name="{{childItem.key}}"
+                  data-required="{{childItem.required ? 'true' : 'false'}}"
+                  {{childItem.placeholder ?
+                  'placeholder="Example:'+childItem.placeholder+'"' : ''}}
+                  {{childItem.maxLength ? 'maxlength="'+childItem.maxLength+'"'
+                  : ''}}> {{# }else if(childItem.type == "select"){ }}
+                  <select
+                    data-required="{{childItem.required ? 'true' : 'false'}}"
+                    name="{{childItem.key}}"
+                    lay-filter="{{childItem.label}}"
+                  >
+                    <option value="">请选择</option>
+                    {{# layui.each(childItem.options||[], function(cpIndex,
+                    cpItem){ }}
+                    <option value="{{cpItem.value}}">{{cpItem.label}}</option>
+                    {{# }); }}
+                  </select>
+                  {{# } }}
+                </div>
+              </div>
+              {{# } }} {{# }); }} {{# } }} {{# if(item.maxUniqueItems &&
+              item.maxUniqueItems > 1){ }}
+              <div
+                class="maxUniqueItemsBtns"
+                data-max="{{item.maxUniqueItems}}"
+                data-children-length="{{item.children.length}}"
+              >
+                <span
+                  class="layui-btn layui-btn-xs layui-btn-normal addMaxUniqueItemsBtn"
+                  >添加</span
+                >
+                <span
+                  class="layui-btn layui-btn-xs layui-btn-danger disN removeMaxUniqueItemsBtn"
+                  >删除</span
+                >
+              </div>
+              {{# } }}
+            </div>
+            {{# } }} {{# }) }}
+
+            <div>
+              <a class="layui-btn layui-btn-xs" id="publish_moreAttrBtn"
+                >展开分类属性</a
+              >
+              <a
+                class="layui-btn layui-btn-xs layui-btn-normal"
+                id="fillRequiredBtn"
+                >填写必填项</a
+              >
+              <a
+                class="layui-btn layui-btn-xs layui-btn-warm"
+                id="submitFormBtn"
+                >提交表单</a
+              >
+            </div>
+
+            <!-- 非必填项区域 -->
+            <div id="optionValue" class="disN">
+              {{# layui.each(d.fields||[], function(index, item){ }} {{# var
+              hasNonRequiredChildren = false; }} {{# if(item.children){ }} {{#
+              layui.each(item.children||[], function(childIndex, childItem){ }}
+              {{# if(!childItem.required){ hasNonRequiredChildren = true; } }}
+              {{# }); }} {{# } }} {{# if(!item.required ||
+              hasNonRequiredChildren){ }}
+              <div class="layui-form-item">
+                {{# if(item.children){ }} {{# if(item.children.length > 1){ }}
+                <div
+                  style="font-weight:700;font-size:18px;"
+                  lay-tips="{{item.description}}"
+                  class="attrTitle"
+                >
+                  {{item.label}}
+                </div>
+                {{# } }} {{# layui.each(item.children||[], function(childIndex,
+                childItem){ }} {{# if(!childItem.required){ }}
                 <div class="attrContent">
-                  <label class="layui-form-label redStar" data-local="{{childItem.label}}"
-                    data-eng="{{childItem.key}}" lay-tips="{{childItem.description}}">{{childItem.label}}</label>
+                  <label
+                    class="layui-form-label"
+                    data-local="{{childItem.label}}"
+                    data-eng="{{childItem.key}}"
+                    lay-tips="{{childItem.description}}"
+                    >{{childItem.label}}</label
+                  >
                   <span class="disN labelField">{{childItem.label}}</span>
                   <div class="layui-input-block">
-                    {{# if(childItem.type == "input"){ }} <input type="text" class="layui-input" name="{{childItem.key}}"
-                       data-required="{{childItem.required ? 'true' : 'false'}}" {{childItem.placeholder ?
-                       'placeholder="Example:'+childItem.placeholder+'"' : ''}} {{childItem.maxLength ? 'maxlength="'+childItem.maxLength+'"'
-                       : ''}}> {{# }else if(childItem.type == "select"){ }}
-                    <select data-required="{{childItem.required ? 'true' : 'false'}}" name="{{childItem.key}}"
-                      lay-filter="{{childItem.label}}">
+                    {{# if(childItem.type == "input"){ }} <input type="text"
+                    class="layui-input" name="{{childItem.key}}"
+                    {{childItem.placeholder ?
+                    'placeholder="Example:'+childItem.placeholder+'"' : ''}}
+                    {{childItem.maxLength ?
+                    'maxlength="'+childItem.maxLength+'"' : ''}}> {{# }else
+                    if(childItem.type == "select"){ }}
+                    <select name="{{childItem.key}}">
                       <option value="">请选择</option>
                       {{# layui.each(childItem.options||[], function(cpIndex,
-                        cpItem){ }}
+                      cpItem){ }}
                       <option value="{{cpItem.value}}">{{cpItem.label}}</option>
                       {{# }); }}
                     </select>
                     {{# } }}
                   </div>
                 </div>
-                {{# } }}
-              {{# }); }} {{# } }}
-              {{# if(item.maxUniqueItems && item.maxUniqueItems > 1){ }}
-                <div class="maxUniqueItemsBtns" data-max="{{item.maxUniqueItems}}" data-children-length="{{item.children.length}}">
-                  <span class="layui-btn layui-btn-xs layui-btn-normal addMaxUniqueItemsBtn">添加</span>
-                  <span class="layui-btn layui-btn-xs layui-btn-danger disN removeMaxUniqueItemsBtn">删除</span>
-                </div>
-              {{# } }}
-            </div>
-            {{# } }}
-          {{# }) }}
-          
-          <div>
-            <a class="layui-btn layui-btn-xs" id="publish_moreAttrBtn">展开分类属性</a>
-            <a class="layui-btn layui-btn-xs layui-btn-normal" id="fillRequiredBtn">填写必填项</a>
-            <a class="layui-btn layui-btn-xs layui-btn-warm" id="submitFormBtn">提交表单</a>
-          </div>
-          
-          <!-- 非必填项区域 -->
-          <div id="optionValue" class="disN">
-            {{# layui.each(d.fields||[], function(index, item){ }}
-              {{# var hasNonRequiredChildren = false; }}
-              {{# if(item.children){ }}
-                {{# layui.each(item.children||[], function(childIndex, childItem){ }}
-                  {{# if(!childItem.required){ hasNonRequiredChildren = true; } }}
-                {{# }); }}
-              {{# } }}
-              
-              {{# if(!item.required || hasNonRequiredChildren){ }}
-              <div class="layui-form-item">
-                {{# if(item.children){ }} {{# if(item.children.length > 1){ }}
-                <div style="font-weight:700;font-size:18px;" lay-tips="{{item.description}}" class="attrTitle">
-                  {{item.label}}
-                </div>
-                {{# } }} {{# layui.each(item.children||[], function(childIndex,
-                  childItem){ }}
-                  {{# if(!childItem.required){ }}
-                  <div class="attrContent">
-                    <label class="layui-form-label" data-local="{{childItem.label}}" data-eng="{{childItem.key}}"
-                      lay-tips="{{childItem.description}}">{{childItem.label}}</label>
-                    <span class="disN labelField">{{childItem.label}}</span>
-                    <div class="layui-input-block">
-                      {{# if(childItem.type == "input"){ }} <input type="text" class="layui-input" name="{{childItem.key}}" {{childItem.placeholder ?
-                         'placeholder="Example:'+childItem.placeholder+'"' : ''}} {{childItem.maxLength ?
-                         'maxlength="'+childItem.maxLength+'"' : ''}}> {{# }else
-                         if(childItem.type == "select"){ }}
-                      <select name="{{childItem.key}}">
-                        <option value="">请选择</option>
-                        {{# layui.each(childItem.options||[], function(cpIndex,
-                          cpItem){ }}
-                        <option value="{{cpItem.value}}">{{cpItem.label}}</option>
-                        {{# }); }}
-                      </select>
-                      {{# } }}
-                    </div>
-                  </div>
-                  {{# } }}
-                {{# }); }} {{# } }}
-                {{# if(item.maxUniqueItems && item.maxUniqueItems > 1){ }}
-                <div class="maxUniqueItemsBtns" data-max="{{item.maxUniqueItems}}" data-children-length="{{item.children.length}}">
-                  <span class="layui-btn layui-btn-xs layui-btn-normal addMaxUniqueItemsBtn">添加</span>
-                  <span class="layui-btn layui-btn-xs layui-btn-danger removeMaxUniqueItemsBtn">删除</span>
+                {{# } }} {{# }); }} {{# } }} {{# if(item.maxUniqueItems &&
+                item.maxUniqueItems > 1){ }}
+                <div
+                  class="maxUniqueItemsBtns"
+                  data-max="{{item.maxUniqueItems}}"
+                  data-children-length="{{item.children.length}}"
+                >
+                  <span
+                    class="layui-btn layui-btn-xs layui-btn-normal addMaxUniqueItemsBtn"
+                    >添加</span
+                  >
+                  <span
+                    class="layui-btn layui-btn-xs layui-btn-danger removeMaxUniqueItemsBtn"
+                    >删除</span
+                  >
                 </div>
                 {{# } }}
               </div>
-              {{# } }}
-            {{# }) }}
+              {{# } }} {{# }) }}
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </script>
+    </script>
 
-  <!-- 引入所需的JS库 -->
-  <script src="./js/layui.all.js"></script>
-  <script src="./js/amazon.js"></script>
-  <script src="./js/index.js"></script>
-</body>
-
+    <!-- 引入所需的JS库 -->
+    <script src="./js/layui.js"></script>
+    <script src="./js/amazon.js"></script>
+    <script src="./js/index.js"></script>
+  </body>
 </html>
