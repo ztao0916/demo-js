@@ -64,6 +64,44 @@ layui.define("layer", function (exports) {
   Form.prototype.val = function (filter, object) {
     var that = this,
       formElem = $(ELEM + '[lay-filter="' + filter + '"]');
+
+    // 增强：支持直接通过 select 的 lay-filter 赋值
+    if (!formElem[0]) {
+      var selectElem = $('select[lay-filter="' + filter + '"]');
+      if (selectElem[0]) {
+        // 获取 select 的 name 作为 key
+        var selectName = selectElem.attr("name");
+        // 支持传入对象或直接传值
+        var selectValue =
+          typeof object === "object" ? object[selectName] : object;
+
+        if (selectValue !== undefined) {
+          // lay-creatable 支持
+          if (typeof selectElem.attr("lay-creatable") === "string") {
+            if (
+              selectValue &&
+              selectElem.find('option[value="' + selectValue + '"]').length ===
+                0
+            ) {
+              selectElem.append(
+                '<option value="' +
+                  selectValue +
+                  '">' +
+                  selectValue +
+                  "</option>"
+              );
+            }
+          }
+          selectElem.val(selectValue);
+          // 找到最近的 form 容器进行渲染
+          var parentForm = selectElem.closest(ELEM);
+          var parentFilter = parentForm.attr("lay-filter");
+          form.render("select", parentFilter || null);
+        }
+        return that;
+      }
+    }
+
     formElem.each(function (index, item) {
       var itemFrom = $(this);
       layui.each(object, function (key, value) {
@@ -86,6 +124,21 @@ layui.define("layer", function (exports) {
           });
         } else {
           //其它类型的表单
+          // 增强：lay-creatable 的 select 回显支持
+          if (
+            itemElem[0].tagName === "SELECT" &&
+            typeof itemElem.attr("lay-creatable") === "string"
+          ) {
+            // 若值不为空且 option 不存在，则动态创建
+            if (
+              value &&
+              itemElem.find('option[value="' + value + '"]').length === 0
+            ) {
+              itemElem.append(
+                '<option value="' + value + '">' + value + "</option>"
+              );
+            }
+          }
           itemElem.val(value);
         }
       });
@@ -121,8 +174,9 @@ layui.define("layer", function (exports) {
               thatInput = null;
             },
             //各种事件
-            events = function (reElem, disabled, isSearch, isCreatable) {
+            events = function (reElem, disabled, isSearch) {
               var select = $(this),
+                isCreatable = typeof select.attr("lay-creatable") === "string",
                 title = reElem.find("." + TITLE),
                 input = title.find("input"),
                 dl = reElem.find("dl"),
@@ -195,6 +249,59 @@ layui.define("layer", function (exports) {
                   });
                 };
 
+              // [插入在 events 函数内部，建议在 title.on('click') 之前] ------------------
+
+              // 监听动态添加的“创建”选项点击
+              dl.on("click", ".layui-select-create", function () {
+                var othis = $(this),
+                  value = othis.attr("lay-value"),
+                  filter = select.attr("lay-filter");
+
+                // 1. 【底层同步】将新值 append 到原生的 select 标签中
+                // 防止重复添加
+                if (select.find('option[value="' + value + '"]').length === 0) {
+                  select.append(
+                    '<option value="' +
+                      value +
+                      '" selected="selected">' +
+                      value +
+                      "</option>"
+                  );
+                }
+
+                // 2. 【视觉修复】移除“创建并选中”的提示条，换成标准的选项条
+                othis.remove(); // 核心：移除带“创建并选中”文字的临时节点
+
+                // 生成一个新的标准 dd 节点 (模仿 Layui 正常的选项结构)
+                var newDD = $(
+                  '<dd lay-value="' +
+                    value +
+                    '" class="layui-this">' +
+                    value +
+                    "</dd>"
+                );
+                dl.append(newDD); // 追加到列表末尾
+
+                // 3. 【状态更新】更新输入框显示和选中状态
+                input.val(value);
+                initValue = value;
+
+                // 确保只有新添加的项是选中状态 (移除其他项的选中样式)
+                dl.find("dd").not(newDD).removeClass("layui-this");
+
+                // 4. 【触发事件】通知业务层
+                layui.event.call(this, MOD_NAME, "select(" + filter + ")", {
+                  elem: select[0],
+                  value: value,
+                  othis: reElem,
+                  isCreate: true,
+                });
+
+                // 5. 关闭下拉面板
+                hideDown(true);
+                return false;
+              });
+              // ---------------------------------------------------------------------
               //点击标题区域
               title.on("click", function (e) {
                 reElem.hasClass(CLASS + "ed")
@@ -327,34 +434,39 @@ layui.define("layer", function (exports) {
                 notOption(
                   value,
                   function (none) {
+                    // [修改开始] ----------------------------------------------------
                     if (none) {
-                      dl.find("." + NONE + ", .layui-select-create").remove();
+                      // 如果开启了创建模式，且输入不为空
                       if (isCreatable && value) {
-                        // 显示「创建」选项
-                        var escapedValue = value.replace(
-                          /["'<>]/g,
-                          function (m) {
-                            return {
-                              '"': "&quot;",
-                              "'": "&#39;",
-                              "<": "&lt;",
-                              ">": "&gt;",
-                            }[m];
-                          }
-                        );
-                        dl.append(
-                          '<dd class="layui-select-create" lay-value="' +
-                            escapedValue +
-                            '">创建 "' +
-                            escapedValue +
-                            '"</dd>'
-                        );
+                        dl.find("." + NONE).remove(); // 移除"无匹配项"提示
+
+                        // 检查是否已经存在创建按钮，避免重复添加
+                        var createElem = dl.find(".layui-select-create");
+                        if (createElem[0]) {
+                          createElem
+                            .attr("lay-value", value)
+                            .html("创建并选中：" + value);
+                        } else {
+                          // 添加动态创建按钮，注意这里加了 layui-select-create 类名
+                          dl.append(
+                            '<dd lay-value="' +
+                              value +
+                              '" class="layui-select-create">创建并选中：' +
+                              value +
+                              "</dd>"
+                          );
+                        }
                       } else {
-                        dl.append('<p class="' + NONE + '">无匹配项</p>');
+                        // 原有逻辑：显示无匹配项
+                        dl.find(".layui-select-create").remove(); // 移除创建按钮
+                        dl.find("." + NONE)[0] ||
+                          dl.append('<p class="' + NONE + '">无匹配项</p>');
                       }
                     } else {
-                      dl.find("." + NONE + ", .layui-select-create").remove();
+                      dl.find("." + NONE).remove();
+                      dl.find(".layui-select-create").remove();
                     }
+                    // [修改结束] ----------------------------------------------------
                   },
                   "keyup"
                 );
@@ -417,55 +529,6 @@ layui.define("layer", function (exports) {
               });
 
               reElem.find("dl>dt").on("click", function (e) {
-                return false;
-              });
-
-              // 创建新选项事件
-              dl.on("click", ".layui-select-create", function () {
-                var othis = $(this),
-                  newValue = othis.attr("lay-value"),
-                  filter = select.attr("lay-filter");
-
-                // 检查是否已存在相同值
-                var exists = false;
-                select.find("option").each(function () {
-                  if (this.value === newValue) {
-                    exists = true;
-                    return false;
-                  }
-                });
-
-                if (!exists) {
-                  // 添加到原生 select
-                  select.append(
-                    '<option value="' + newValue + '">' + newValue + "</option>"
-                  );
-                  // 插入新的 dd 到列表（在创建按钮之前）
-                  othis.before(
-                    '<dd lay-value="' + newValue + '">' + newValue + "</dd>"
-                  );
-                  // 重新获取 dds 引用
-                  dds = dl.children("dd");
-                }
-
-                // 移除创建按钮和无匹配提示
-                dl.find("." + NONE + ", .layui-select-create").remove();
-
-                // 选中新值
-                var newDd = dl.find('dd[lay-value="' + newValue + '"]');
-                newDd.addClass(THIS).siblings().removeClass(THIS);
-                input.val(newValue);
-                select.val(newValue).removeClass("layui-form-danger");
-
-                // 触发事件，带 isNew 标识
-                layui.event.call(this, MOD_NAME, "select(" + filter + ")", {
-                  elem: select[0],
-                  value: newValue,
-                  othis: reElem,
-                  isNew: !exists,
-                });
-
-                hideDown(true);
                 return false;
               });
 
@@ -546,7 +609,7 @@ layui.define("layer", function (exports) {
             );
             hasRender[0] && hasRender.remove(); //如果已经渲染，则Rerender
             othis.after(reElem);
-            events.call(this, reElem, disabled, isSearch, isCreatable);
+            events.call(this, reElem, disabled, isSearch);
           });
         },
         //复选框/开关

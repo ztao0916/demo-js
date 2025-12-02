@@ -17,6 +17,7 @@
               <div class="layui-input-block">
                 <select
                   name="shop"
+                  lay-filter="shopFilter"
                   lay-verify="required"
                   lay-creatable
                   lay-search
@@ -55,6 +56,7 @@
     layui.use("form", function () {
       let form = layui.form;
       form.render();
+      form.val("shopFilter", { shop: 25 });
     });
   </script>
 </html>
