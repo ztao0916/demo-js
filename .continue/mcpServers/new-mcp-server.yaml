@@ -1,0 +1,72 @@
+name: New MCP server
+version: 0.0.1
+schema: v1
+mcpServers:
+  - name: playwright
+    command: npx
+    args:
+      - -y
+      - "@playwright/mcp@latest"
+
+  - name: context7
+    command: npx
+    args:
+      - -y
+      - "@upstash/context7-mcp"
+      - --api-key
+      - ctx7sk-7d9e6729-5571-4a47-a4a2-356b4e8d5a38
+    disabled: false
+    autoApprove:
+      - resolve-library-id
+      - get-library-docs
+
+  - name: sequential-thinking
+    command: npx
+    args:
+      - -y
+      - "@modelcontextprotocol/server-sequential-thinking"
+    disabled: false
+    autoApprove:
+      - sequentialthinking
+
+  - name: serper
+    command: uvx
+    args:
+      - serper-mcp-server
+    env:
+      SERPER_API_KEY: 8a6a3499d40da2bba2153aa027d734c6891fd630
+
+  - name: tavily-mcp
+    command: npx
+    args:
+      - -y
+      - tavily-mcp@latest
+    env:
+      TAVILY_API_KEY: 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
+    disabled: false
+    autoApprove:
+      - tavily-search
+
+  - name: brave-search
+    command: npx
+    args:
+      - -y
+      - "@brave/brave-search-mcp-server"
+    env:
+      BRAVE_API_KEY: BSAwra_5RGzVvNv6xBbpWa9l84c8re-
+
+  - name: firecrawl-mcp
+    command: npx
+    args:
+      - -y
+      - firecrawl-mcp
+    env:
+      FIRECRAWL_API_KEY: fc-f4fb9adf10c14d8893ab180eb5f0a628
+
+  - name: chrome-devtools
+    type: stdio
+    command: npx
+    args:
+      - -y
+      - chrome-devtools-mcp@latest
+      - --autoConnect
