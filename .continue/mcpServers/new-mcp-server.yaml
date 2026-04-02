@@ -29,32 +29,6 @@ mcpServers:
     autoApprove:
       - sequentialthinking
 
-  - name: serper
-    command: uvx
-    args:
-      - serper-mcp-server
-    env:
-      SERPER_API_KEY: 8a6a3499d40da2bba2153aa027d734c6891fd630
-
-  - name: tavily-mcp
-    command: npx
-    args:
-      - -y
-      - tavily-mcp@latest
-    env:
-      TAVILY_API_KEY: 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
-    disabled: false
-    autoApprove:
-      - tavily-search
-
-  - name: brave-search
-    command: npx
-    args:
-      - -y
-      - "@brave/brave-search-mcp-server"
-    env:
-      BRAVE_API_KEY: BSAwra_5RGzVvNv6xBbpWa9l84c8re-
-
   - name: firecrawl-mcp
     command: npx
     args:
