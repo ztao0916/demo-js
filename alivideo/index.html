@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aidge 视频编辑器调试页</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Segoe UI", Tahoma, sans-serif;
+        background: #f5f7fb;
+        color: #1f2937;
+      }
+
+      .layout {
+        display: grid;
+        grid-template-columns: 380px 1fr;
+        min-height: 100vh;
+      }
+
+      .panel {
+        padding: 24px;
+        border-right: 1px solid #dbe3f0;
+        background: #ffffff;
+      }
+
+      h1 {
+        margin: 0 0 8px;
+        font-size: 24px;
+      }
+
+      p {
+        margin: 0 0 16px;
+        line-height: 1.5;
+        color: #4b5563;
+      }
+
+      .field {
+        margin-bottom: 14px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      input,
+      textarea,
+      select,
+      button {
+        width: 100%;
+        font: inherit;
+      }
+
+      input,
+      textarea,
+      select {
+        padding: 10px 12px;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        background: #fff;
+      }
+
+      textarea {
+        min-height: 120px;
+        resize: vertical;
+      }
+
+      button {
+        margin-top: 10px;
+        padding: 12px 14px;
+        border: 0;
+        border-radius: 8px;
+        background: #2563eb;
+        color: #fff;
+        cursor: pointer;
+      }
+
+      button:disabled {
+        background: #94a3b8;
+        cursor: not-allowed;
+      }
+
+      .meta,
+      .status {
+        margin-top: 16px;
+        padding: 12px;
+        border-radius: 8px;
+        background: #eff6ff;
+        white-space: pre-wrap;
+        word-break: break-all;
+        font-size: 13px;
+      }
+
+      .viewer {
+        padding: 16px;
+      }
+
+      iframe {
+        width: 100%;
+        height: calc(100vh - 32px);
+        border: 1px solid #dbe3f0;
+        border-radius: 12px;
+        background: #fff;
+      }
+
+      .hint {
+        font-size: 12px;
+        color: #64748b;
+      }
+
+      @media (max-width: 960px) {
+        .layout {
+          grid-template-columns: 1fr;
+        }
+
+        .panel {
+          border-right: 0;
+          border-bottom: 1px solid #dbe3f0;
+        }
+
+        iframe {
+          height: 70vh;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="layout">
+      <section class="panel">
+        <h1>Aidge 视频编辑器调试页</h1>
+        <p>本地代理先请求签名接口，再把真实参数拼到 iframe。默认 userId 是 <code>ztt-test</code>。</p>
+
+        <div class="field">
+          <label for="cookie">登录 Cookie</label>
+          <textarea id="cookie" placeholder="把 test.epean.cn 的完整 Cookie 粘贴到这里"></textarea>
+        </div>
+
+        <div class="field">
+          <label for="userId">userId</label>
+          <input id="userId" value="ztt-test" />
+        </div>
+
+        <div class="field">
+          <label for="videoUrl">视频地址</label>
+          <textarea id="videoUrl">https://imgtest.epean.cn/lms/plat/video/ATMA8Q49_1_EN.mp4?t=1776243620617</textarea>
+        </div>
+
+        <div class="field">
+          <label for="lang">语言</label>
+          <select id="lang">
+            <option value="zh">zh</option>
+            <option value="en" selected>en</option>
+            <option value="ja">ja</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="toolPath">编辑器页面</label>
+          <select id="toolPath">
+            <option value="/video/translation" selected>视频翻译</option>
+            <option value="/video/removal">视频消除</option>
+            <option value="/video/">首页</option>
+          </select>
+        </div>
+
+        <button id="loadButton" type="button">获取签名并打开编辑器</button>
+        <div class="hint">Cookie 不落盘，只会随着这次请求发给本地代理，再由代理转发给 test.epean.cn。</div>
+
+        <div id="status" class="status">等待操作</div>
+        <div id="meta" class="meta">尚未请求签名</div>
+      </section>
+
+      <main class="viewer">
+        <iframe id="editorFrame" title="Aidge Editor"></iframe>
+      </main>
+    </div>
+
+    <script>
+      const editorOrigin = "https://manekenai-editor.aidc-ai.com";
+      const state = {
+        loadButton: document.getElementById("loadButton"),
+        cookie: document.getElementById("cookie"),
+        userId: document.getElementById("userId"),
+        videoUrl: document.getElementById("videoUrl"),
+        lang: document.getElementById("lang"),
+        toolPath: document.getElementById("toolPath"),
+        status: document.getElementById("status"),
+        meta: document.getElementById("meta"),
+        editorFrame: document.getElementById("editorFrame"),
+        lastContext: null,
+      };
+
+      function setStatus(message) {
+        state.status.textContent = message;
+      }
+
+      function setMeta(value) {
+        state.meta.textContent = typeof value === "string" ? value : JSON.stringify(value, null, 2);
+      }
+
+      async function requestSign(payload) {
+        const response = await fetch("/api/sign", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        });
+
+        const data = await response.json();
+        if (!response.ok) {
+          throw new Error(data.error || "签名请求失败");
+        }
+        return data;
+      }
+
+      function buildIframeUrl(signData) {
+        const timeStamp = signData.timeStamp || signData.timestamp;
+        const params = new URLSearchParams({
+          ak: signData.appKey,
+          sign: signData.signStr,
+          userId: signData.userId,
+          timeStamp: String(timeStamp),
+          resource: "aidge_video_share",
+          lang: state.lang.value,
+          sourceUrl: state.videoUrl.value.trim(),
+        });
+
+        return `${editorOrigin}${state.toolPath.value}?${params.toString()}`;
+      }
+
+      async function loadEditor(context) {
+        const signData = await requestSign({
+          cookie: context.cookie,
+          userId: context.userId,
+        });
+        const iframeUrl = buildIframeUrl(signData);
+
+        state.lastContext = context;
+        setStatus("签名成功，正在加载 iframe");
+        setMeta({ signData, iframeUrl });
+        state.editorFrame.src = iframeUrl;
+      }
+
+      async function refreshEditorSession(reason) {
+        if (!state.lastContext) {
+          setStatus(`收到 ${reason}，但没有可用的签名上下文`);
+          return;
+        }
+
+        setStatus(`收到 ${reason}，正在重新获取签名...`);
+
+        try {
+          await loadEditor(state.lastContext);
+        } catch (error) {
+          setStatus(`重新获取签名失败: ${error.message}`);
+          setMeta({ action: reason, error: error.message });
+        }
+      }
+
+      function handleEditorMessage(event) {
+        if (event.origin !== editorOrigin || !event.data || typeof event.data !== "object") {
+          return;
+        }
+
+        const { action, payload } = event.data;
+        setMeta({ action, payload });
+
+        if (action === "generateConfirm") {
+          state.editorFrame.contentWindow?.postMessage(
+            {
+              action: "generateConfirm",
+              payload: true,
+            },
+            editorOrigin,
+          );
+          setStatus("已响应 generateConfirm=true");
+          return;
+        }
+
+        if (action === "notLogin") {
+          refreshEditorSession("notLogin");
+          return;
+        }
+
+        if (action === "noResource") {
+          setStatus("编辑器提示资源不足");
+          return;
+        }
+
+        if (action === "uploadVideoUrl") {
+          setStatus("收到 uploadVideoUrl 事件");
+          return;
+        }
+
+        if (action === "taskExecuteResult") {
+          setStatus("收到 taskExecuteResult 事件");
+          return;
+        }
+
+        setStatus(`收到未处理事件: ${action}`);
+      }
+
+      window.addEventListener("message", handleEditorMessage);
+
+      state.loadButton.addEventListener("click", async () => {
+        const cookie = state.cookie.value.trim();
+        const userId = state.userId.value.trim();
+        const sourceUrl = state.videoUrl.value.trim();
+
+        if (!cookie) {
+          setStatus("缺少 Cookie");
+          return;
+        }
+
+        if (!userId) {
+          setStatus("缺少 userId");
+          return;
+        }
+
+        if (!sourceUrl) {
+          setStatus("缺少视频地址");
+          return;
+        }
+
+        state.loadButton.disabled = true;
+        setStatus("正在请求签名...");
+        setMeta("请求中");
+
+        try {
+          await loadEditor({ cookie, userId, sourceUrl });
+        } catch (error) {
+          setStatus(error.message);
+          setMeta({ error: error.message });
+        } finally {
+          state.loadButton.disabled = false;
+        }
+      });
+    </script>
+  </body>
+</html>
