@@ -4,6 +4,8 @@ const path = require("path");
 
 const PORT = Number(process.env.PORT || 8787);
 const SIGN_URL = "https://test.epean.cn/lms/product/createAidgeSignForAiVideo";
+const SESSION_COOKIE =
+  process.env.SESSION_COOKIE || "SESSION=348c01ab-6dbb-42c0-b046-3fa2411c85fe";
 const ROOT_DIR = path.resolve(__dirname, "..");
 const DEFAULT_INDEX = path.join(__dirname, "index.html");
 const TLS_KEY_PATH = path.join(__dirname, "devcert.key");
@@ -25,7 +27,20 @@ const CONTENT_TYPES = {
   ".woff2": "font/woff2",
 };
 
+function setCorsHeaders(req, res) {
+  const origin = req.headers.origin || "*";
+  const requestHeaders =
+    req.headers["access-control-request-headers"] || "Content-Type, X-Requested-With";
+  res.setHeader("Access-Control-Allow-Origin", origin);
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", requestHeaders);
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader("Access-Control-Max-Age", "600");
+  res.setHeader("Vary", "Origin, Access-Control-Request-Headers");
+}
+
 function sendJson(res, statusCode, payload) {
+  setCorsHeaders(res.req, res);
   res.writeHead(statusCode, {
     "Content-Type": "application/json; charset=utf-8",
     "Cache-Control": "no-store",
@@ -36,11 +51,12 @@ function sendJson(res, statusCode, payload) {
 function sendFile(res, filePath) {
   fs.readFile(filePath, (error, content) => {
     if (error) {
-      sendJson(res, 500, { error: "读取文件失败", detail: error.message });
+      sendJson(res, 500, { error: "Failed to read file", detail: error.message });
       return;
     }
 
     const ext = path.extname(filePath).toLowerCase();
+    setCorsHeaders(res.req, res);
     res.writeHead(200, {
       "Content-Type": CONTENT_TYPES[ext] || "application/octet-stream",
       "Cache-Control": "no-store",
@@ -104,15 +120,10 @@ async function readJsonBody(req) {
 
 async function handleSign(req, res) {
   try {
-    const { cookie, userId } = await readJsonBody(req);
-
-    if (!cookie) {
-      sendJson(res, 400, { error: "缺少 cookie" });
-      return;
-    }
+    const { userId } = await readJsonBody(req);
 
     if (!userId) {
-      sendJson(res, 400, { error: "缺少 userId" });
+      sendJson(res, 400, { error: "Missing userId" });
       return;
     }
 
@@ -122,7 +133,7 @@ async function handleSign(req, res) {
     const response = await fetch(SIGN_URL, {
       method: "POST",
       headers: {
-        Cookie: cookie,
+        Cookie: SESSION_COOKIE,
       },
       body: formData,
     });
@@ -134,7 +145,7 @@ async function handleSign(req, res) {
       data = JSON.parse(text);
     } catch (error) {
       sendJson(res, 502, {
-        error: "签名接口返回了非 JSON",
+        error: "Sign API returned non-JSON",
         status: response.status,
         body: text,
       });
@@ -143,7 +154,7 @@ async function handleSign(req, res) {
 
     if (!response.ok) {
       sendJson(res, 502, {
-        error: "签名接口请求失败",
+        error: "Sign API request failed",
         status: response.status,
         data,
       });
@@ -152,7 +163,7 @@ async function handleSign(req, res) {
 
     if (data.code !== "0000" || !data.data) {
       sendJson(res, 502, {
-        error: "签名接口返回业务失败",
+        error: "Sign API business response failed",
         data,
       });
       return;
@@ -161,14 +172,21 @@ async function handleSign(req, res) {
     sendJson(res, 200, data.data);
   } catch (error) {
     sendJson(res, 500, {
-      error: "本地代理异常",
+      error: "Local proxy failed",
       detail: error.message,
     });
   }
 }
 
 const requestHandler = (req, res) => {
+  setCorsHeaders(req, res);
   const url = new URL(req.url, `http://${req.headers.host}`);
+
+  if (req.method === "OPTIONS") {
+    res.writeHead(204);
+    res.end();
+    return;
+  }
 
   if (req.method === "POST" && url.pathname === "/api/sign") {
     handleSign(req, res);

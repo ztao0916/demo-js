@@ -2,15 +2,27 @@ const http = require("http");
 const https = require("https");
 
 const PORT = Number(process.env.PORT || 8788);
-const LOCAL_PATH = "/api/platBase/aiBusinessConfig/list";
 const TARGET_HOST = "test.epean.cn";
-const TARGET_PATH = "/api/platBase/aiBusinessConfig/list";
 const SESSION_COOKIE =
-  process.env.SESSION_COOKIE || "SESSION=348c01ab-6dbb-42c0-b046-3fa2411c85fe";
+  process.env.SESSION_COOKIE ||
+  "JSESSIONID=982981684A9C1F9F5EAF0C0205571A1F;SESSION=348c01ab-6dbb-42c0-b046-3fa2411c85fe";
+const ROUTES = {
+  "/api/platBase/aiBusinessConfig/list": {
+    method: "POST",
+    targetPath: "/api/platBase/aiBusinessConfig/list",
+  },
+  "/api/aiBusinessConfig/batchUpdateSystemPromptByIds": {
+    method: "PUT",
+    targetPath: "/api/aiBusinessConfig/batchUpdateSystemPromptByIds",
+  },
+};
+const ALLOWED_METHODS = `${Array.from(
+  new Set(Object.values(ROUTES).map((route) => route.method).concat("OPTIONS")),
+).join(", ")}`;
 
 function setCorsHeaders(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Methods", ALLOWED_METHODS);
   res.setHeader("Access-Control-Allow-Headers", "*");
 }
 
@@ -26,7 +38,9 @@ function collectBody(req) {
 
 function sendJson(res, statusCode, data) {
   setCorsHeaders(res.req, res);
-  res.writeHead(statusCode, { "Content-Type": "application/json; charset=utf-8" });
+  res.writeHead(statusCode, {
+    "Content-Type": "application/json; charset=utf-8",
+  });
   res.end(JSON.stringify(data));
 }
 
@@ -46,17 +60,19 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  if (requestUrl.pathname !== LOCAL_PATH) {
+  const route = ROUTES[requestUrl.pathname];
+
+  if (!route) {
     sendJson(res, 404, {
       message: "Not Found",
-      availablePath: LOCAL_PATH,
+      availablePaths: Object.keys(ROUTES),
     });
     return;
   }
 
-  if (req.method !== "POST") {
+  if (req.method !== route.method) {
     sendJson(res, 405, {
-      message: "Only POST is supported for this proxy.",
+      message: `Only ${route.method} is supported for this proxy.`,
     });
     return;
   }
@@ -73,8 +89,8 @@ const server = http.createServer(async (req, res) => {
     const upstreamReq = https.request(
       {
         hostname: TARGET_HOST,
-        path: `${TARGET_PATH}${requestUrl.search}`,
-        method: "POST",
+        path: `${route.targetPath}${requestUrl.search}`,
+        method: route.method,
         headers: upstreamHeaders,
         rejectUnauthorized: false,
       },
@@ -85,7 +101,8 @@ const server = http.createServer(async (req, res) => {
         upstreamRes.on("end", () => {
           const responseBody = Buffer.concat(responseChunks);
           let contentType =
-            upstreamRes.headers["content-type"] || "application/json; charset=utf-8";
+            upstreamRes.headers["content-type"] ||
+            "application/json; charset=utf-8";
 
           if (
             typeof contentType === "string" &&
@@ -101,7 +118,7 @@ const server = http.createServer(async (req, res) => {
           });
           res.end(responseBody);
         });
-      }
+      },
     );
 
     upstreamReq.on("error", (error) => {
@@ -126,5 +143,9 @@ const server = http.createServer(async (req, res) => {
 
 server.listen(PORT, "127.0.0.1", () => {
   console.log(`Proxy server is listening on http://127.0.0.1:${PORT}`);
-  console.log(`Forwarding POST ${LOCAL_PATH} -> https://${TARGET_HOST}${TARGET_PATH}`);
+  Object.entries(ROUTES).forEach(([localPath, route]) => {
+    console.log(
+      `Forwarding ${route.method} ${localPath} -> https://${TARGET_HOST}${route.targetPath}`,
+    );
+  });
 });

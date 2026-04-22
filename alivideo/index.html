@@ -146,7 +146,7 @@
             <div class="layui-form-item layui-form-text">
               <label class="layui-form-label">登录 Cookie</label>
               <div class="layui-input-block">
-                <textarea id="cookie" class="layui-textarea" placeholder="把 test.epean.cn 的完整 Cookie 粘贴到这里"></textarea>
+                <textarea id="cookie" class="layui-textarea" placeholder="本地代理已固定 SESSION，无需填写"></textarea>
               </div>
             </div>
 
@@ -320,7 +320,6 @@
 
         async function loadEditor(context) {
           const signData = await requestSign({
-            cookie: context.cookie,
             userId: context.userId,
           });
           const iframeUrl = buildIframeUrl(signData);
@@ -401,15 +400,8 @@
         window.addEventListener("message", handleEditorMessage);
 
         state.openEditorButton.addEventListener("click", async function () {
-          const cookie = state.cookie.value.trim();
           const userId = state.userId.value.trim();
           const sourceUrl = state.videoUrl.value.trim();
-
-          if (!cookie) {
-            setStatus("缺少 Cookie");
-            layer.msg("请先填写 Cookie", { icon: 0 });
-            return;
-          }
 
           if (!userId) {
             setStatus("缺少 userId");
@@ -428,7 +420,7 @@
           setMeta("请求中");
 
           try {
-            await loadEditor({ cookie, userId, sourceUrl });
+            await loadEditor({ userId, sourceUrl });
           } catch (error) {
             setStatus(error.message);
             setMeta({ error: error.message });
