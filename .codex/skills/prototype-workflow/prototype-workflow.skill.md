@@ -86,7 +86,8 @@ AI 应在以下情况下使用此技能：
 - 如果 `manifest.publishTarget` 缺少远程目录名或 HTML 文件名，先提醒产品补充发布归档信息。
 - 使用产品提供的远程目录名和 HTML 文件名拼接远程路径和公开 URL。
 - 按 Profile 中的发布协议发布当前文件。
-- 返回线上访问链接。
+- 返回 HTML、PNG、Notes 的完整线上访问链接。
+- 将完整线上访问链接写入 `manifest.publicUrls`。
 
 限制：
 
@@ -110,6 +111,8 @@ AI 应在以下情况下使用此技能：
 8. 执行 `!发布原型` 时，如果缺少 `publishTarget.remoteDir` 或 `publishTarget.htmlFileName`，必须先向产品询问，不直接发布。
 9. 除非用户明确执行 `!发布原型` 或说“发布/上传/生成线上链接”，否则只生成本地文件。
 10. 发布配置缺失时，保留本地产物并提示缺少哪些环境变量。
+11. 发布成功后必须展示完整公网链接，并回写 `manifest.publicUrls`。
+12. 拼接公网链接时，如果目录名或文件名包含中文，应对 URL 路径片段进行 URL 编码。
 
 ---
 
@@ -163,6 +166,20 @@ manifest.json
 ```
 
 如果产品只提供不带 `.html` 的 HTML 文件名，应自动补全 `.html`。`pngFileName` 默认使用 HTML 文件名去掉 `.html` 后加 `.png`，`notesFileName` 默认使用同名加 `说明.md`。
+
+发布成功后，`publicUrls` 至少应写入：
+
+```json
+{
+  "publicUrls": {
+    "html": "https://rp.epean.cn/Joom%E5%8E%9F%E5%9E%8B/%E5%9C%A8%E7%BA%BF%E5%95%86%E5%93%81.html",
+    "png": "https://rp.epean.cn/Joom%E5%8E%9F%E5%9E%8B/%E5%9C%A8%E7%BA%BF%E5%95%86%E5%93%81.png",
+    "notes": "https://rp.epean.cn/Joom%E5%8E%9F%E5%9E%8B/%E5%9C%A8%E7%BA%BF%E5%95%86%E5%93%81%E8%AF%B4%E6%98%8E.md"
+  }
+}
+```
+
+公网链接必须使用 URL 编码后的目录名和文件名。FTP 远程目录和文件名仍使用产品输入的原始名称。
 
 ## 截图策略
 
@@ -228,7 +245,9 @@ HTML文件名：在线商品.html
 8. 上传本地 `prototype.png` 为远程 `publishTarget.pngFileName`。
 9. 上传本地 `prototype-notes.md` 为远程 `publishTarget.notesFileName`。
 10. 上传 `manifest.json` 为远程 `publishTarget.manifestFileName`。
-11. 返回 `{RP_PUBLIC_BASE_URL}/{urlEncoded(remoteDir)}/{urlEncoded(htmlFileName)}` 和 PNG 链接。
+11. 拼接 HTML、PNG、Notes 的完整公网链接，路径片段使用 URL 编码。
+12. 将完整链接写入 `manifest.publicUrls.html`、`manifest.publicUrls.png`、`manifest.publicUrls.notes`。
+13. 返回 HTML、PNG、Notes 的完整公网链接。
 
 如果 FTP 配置缺失，应输出缺失项，不删除或修改本地产物。
 
@@ -256,9 +275,22 @@ HTML文件名：在线商品.html
 原型已发布：
 - HTML: {publicBaseUrl}/{remoteDir}/{htmlFileName}
 - PNG: {publicBaseUrl}/{remoteDir}/{pngFileName}
+- Notes: {publicBaseUrl}/{remoteDir}/{notesFileName}
 
 远程目录：
 {remoteRoot}/{remoteDir}/
+```
+
+注意：回答中展示的 URL 应使用已 URL 编码的完整公网链接。例如：
+
+```text
+原型已发布：
+- HTML: https://rp.epean.cn/Joom%E5%8E%9F%E5%9E%8B/%E5%9C%A8%E7%BA%BF%E5%95%86%E5%93%81.html
+- PNG: https://rp.epean.cn/Joom%E5%8E%9F%E5%9E%8B/%E5%9C%A8%E7%BA%BF%E5%95%86%E5%93%81.png
+- Notes: https://rp.epean.cn/Joom%E5%8E%9F%E5%9E%8B/%E5%9C%A8%E7%BA%BF%E5%95%86%E5%93%81%E8%AF%B4%E6%98%8E.md
+
+远程目录：
+/Joom原型/
 ```
 
 ### 发布目标缺失时
@@ -320,6 +352,9 @@ output/prototype/{module}/{pageKey}/
 - [ ] 是否检查了发布配置
 - [ ] 是否按 Profile 拼接远程路径和公开链接
 - [ ] 是否将本地 `prototype.html` 映射为产品指定的远程 HTML 文件名
+- [ ] 是否展示 HTML、PNG、Notes 的完整公网链接
+- [ ] 是否将完整公网链接写入 `manifest.publicUrls`
+- [ ] 是否对公网链接中的中文目录名和文件名做了 URL 编码
 - [ ] 是否在失败时保留本地产物
 
 ---

@@ -132,6 +132,8 @@ manifest.json
 prototype-notes.md 线上链接（如果存在）
 ```
 
+返回的线上链接必须是完整公网 URL，并且中文目录名和文件名必须经过 URL 编码。
+
 ### 行为规则
 
 - 只上传当前本地产物。
@@ -142,6 +144,8 @@ prototype-notes.md 线上链接（如果存在）
 - 产品补充远程目录名和 HTML 文件名后，写入 `manifest.publishTarget` 再发布。
 - 发布前检查默认产物是否存在。
 - 发布配置缺失时，保留本地产物并提示缺少哪些环境变量。
+- 发布成功后必须展示 HTML、PNG、Notes 的完整公网链接。
+- 发布成功后必须将完整公网链接写入 `manifest.publicUrls`。
 - 首版只定义 FTP 发布协议，实际 FTP 脚本或工具调用后续实现。
 
 ---
@@ -221,7 +225,8 @@ prototype-notes.md 线上链接（如果存在）
   },
   "publicUrls": {
     "html": "https://rp.epean.cn/Joom%E5%8E%9F%E5%9E%8B/%E5%9C%A8%E7%BA%BF%E5%95%86%E5%93%81.html",
-    "png": "https://rp.epean.cn/Joom%E5%8E%9F%E5%9E%8B/%E5%9C%A8%E7%BA%BF%E5%95%86%E5%93%81.png"
+    "png": "https://rp.epean.cn/Joom%E5%8E%9F%E5%9E%8B/%E5%9C%A8%E7%BA%BF%E5%95%86%E5%93%81.png",
+    "notes": "https://rp.epean.cn/Joom%E5%8E%9F%E5%9E%8B/%E5%9C%A8%E7%BA%BF%E5%95%86%E5%93%81%E8%AF%B4%E6%98%8E.md"
   },
   "updatedAt": "2026-04-30T10:00:00+08:00",
   "publishedAt": null
@@ -232,7 +237,7 @@ prototype-notes.md 线上链接（如果存在）
 
 - `status` 更新为 `published`
 - `publishedAt` 更新为发布时间
-- `publicUrls` 使用实际发布链接
+- `publicUrls` 使用实际发布完整公网链接
 - `publishTarget` 保留产品指定的远程目录和文件名
 
 ---
@@ -283,7 +288,9 @@ FTP 发布步骤：
 8. 上传本地 `prototype.png` 为远程 `publishTarget.pngFileName`。
 9. 上传本地 `prototype-notes.md` 为远程 `publishTarget.notesFileName`。
 10. 上传 `manifest.json` 为远程 `publishTarget.manifestFileName`。
-11. 返回公开访问链接。
+11. 拼接 HTML、PNG、Notes 的完整公网链接，路径片段使用 URL 编码。
+12. 将完整链接写入 `manifest.publicUrls.html`、`manifest.publicUrls.png`、`manifest.publicUrls.notes`。
+13. 返回 HTML、PNG、Notes 的完整公网链接。
 
 文件名派生规则：
 
@@ -291,6 +298,13 @@ FTP 发布步骤：
 - `pngFileName` 默认使用 HTML 基名加 `.png`。
 - `notesFileName` 默认使用 HTML 基名加 `说明.md`。
 - `manifestFileName` 默认使用 `manifest.json`。
+
+公网 URL 拼接规则：
+
+- 使用 `RP_PUBLIC_BASE_URL` 作为根地址。
+- 对 `remoteDir`、`htmlFileName`、`pngFileName`、`notesFileName` 分别做 URL 编码。
+- FTP 远程目录和文件名使用产品输入的原始名称，不使用编码后的名称。
+- 示例：`Joom原型/在线商品.html` 应展示为 `https://rp.epean.cn/Joom%E5%8E%9F%E5%9E%8B/%E5%9C%A8%E7%BA%BF%E5%95%86%E5%93%81.html`。
 
 ---
 

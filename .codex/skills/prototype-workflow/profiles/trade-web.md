@@ -131,6 +131,7 @@ RP_PUBLIC_BASE_URL
 ```text
 {RP_PUBLIC_BASE_URL}/{remoteDir}/{htmlFileName}
 {RP_PUBLIC_BASE_URL}/{remoteDir}/{pngFileName}
+{RP_PUBLIC_BASE_URL}/{remoteDir}/{notesFileName}
 ```
 
 示例：
@@ -138,9 +139,12 @@ RP_PUBLIC_BASE_URL
 ```text
 https://rp.epean.cn/Joom%E5%8E%9F%E5%9E%8B/%E5%9C%A8%E7%BA%BF%E5%95%86%E5%93%81.html
 https://rp.epean.cn/Joom%E5%8E%9F%E5%9E%8B/%E5%9C%A8%E7%BA%BF%E5%95%86%E5%93%81.png
+https://rp.epean.cn/Joom%E5%8E%9F%E5%9E%8B/%E5%9C%A8%E7%BA%BF%E5%95%86%E5%93%81%E8%AF%B4%E6%98%8E.md
 ```
 
 发布目标由 `manifest.publishTarget` 记录。如果缺少 `remoteDir` 或 `htmlFileName`，执行 `!发布原型` 时应先提醒产品输入目录名和 HTML 文件名。
+
+发布成功后必须返回 HTML、PNG、Notes 的完整公网链接，并写入 `manifest.publicUrls`。公网 URL 中的中文目录名和文件名需要 URL 编码。
 
 ---
 

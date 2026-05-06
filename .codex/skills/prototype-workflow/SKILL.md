@@ -30,9 +30,11 @@ Use this skill to generate and publish product prototypes from product-side inpu
 7. Generate `prototype.png` with a deterministic fallback chain. Prefer the in-app browser when available, then browser automation such as Playwright, then any other local browser screenshot method that does not require a dev server.
 8. Treat `!发布原型` as an interactive publish flow. If `manifest.publishTarget.remoteDir` or `manifest.publishTarget.htmlFileName` is missing, ask the user for the remote directory name and HTML file name before uploading.
 9. Keep local artifact names fixed, such as `prototype.html`, but upload them to the user-provided remote file names, such as `在线商品.html`.
-10. Only upload after the user explicitly uses `!发布原型` or clearly asks to publish/upload/create an online link.
-11. Never store FTP credentials, tokens, or passwords in the skill, profile, generated files, or repository. Local `.env.local` files may exist for user-owned environments and must not be committed.
-12. If publish configuration is missing, keep local artifacts and report the missing environment variables.
+10. After a successful publish, display complete public URLs for HTML, PNG, and Notes, and write those URLs to `manifest.publicUrls`.
+11. URL-encode public URL path segments when remote directories or file names contain Chinese or other non-ASCII characters.
+12. Only upload after the user explicitly uses `!发布原型` or clearly asks to publish/upload/create an online link.
+13. Never store FTP credentials, tokens, or passwords in the skill, profile, generated files, or repository. Local `.env.local` files may exist for user-owned environments and must not be committed.
+14. If publish configuration is missing, keep local artifacts and report the missing environment variables.
 
 ## Current Bundle
 
