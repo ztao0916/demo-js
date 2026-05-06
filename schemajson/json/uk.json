@@ -1,7 +1,7 @@
 {
   "$schema": "https://schemas.amazon.com/selling-partners/definitions/product-types/meta-schema/v1",
-  "$id": "https://schemas.amazon.com/selling-partners/definitions/product-types/schema/v1/FOOD_SPATULA",
-  "$comment": "Amazon product type definition for FOOD_SPATULA product type",
+  "$id": "https://schemas.amazon.com/selling-partners/definitions/product-types/schema/v1/TONG_UTENSIL",
+  "$comment": "Amazon product type definition for TONG_UTENSIL product type",
   "$defs": {
     "marketplace_id": {
       "default": "A1F83G8C2ARO7P",
@@ -183,17 +183,19 @@
                 "COLOR/ITEM_PACKAGE_QUANTITY",
                 "COLOR/MATERIAL",
                 "COLOR_NAME",
+                "COLOR_NAME/ITEM_DISPLAY_LENGTH",
                 "COLOR_NAME/ITEM_PACKAGE_QUANTITY",
                 "COLOR_NAME/MATERIAL_TYPE",
                 "COLOR_NAME/NUMBER_OF_ITEMS",
                 "COLOR_NAME/PATTERN_NAME",
                 "COLOR_NAME/SIZE_NAME",
                 "COLOR_NAME/SIZE_NAME/STYLE_NAME",
-                "COLOR_NAME/SIZE_NAME/STYLE_NAME/PATTERN_NAME",
                 "COLOR_NAME/STYLE_NAME",
                 "COLOR_NAME/STYLE_NAME/PATTERN_NAME",
                 "FLAVOR_NAME",
+                "INK_COLOR",
                 "ITEM_DISPLAY_LENGTH",
+                "ITEM_DISPLAY_LENGTH/SIZE_NAME",
                 "ITEM_DISPLAY_WEIGHT",
                 "ITEM_PACKAGE_QUANTITY",
                 "ITEM_PACKAGE_QUANTITY/COLOR",
@@ -203,39 +205,40 @@
                 "ITEM_PACKAGE_QUANTITY/SIZE_NAME",
                 "ITEM_PACKAGE_QUANTITY/STYLE_NAME",
                 "ITEM_SHAPE",
-                "MATERIAL/SIZE",
+                "LENGTH_RANGE",
                 "MATERIAL_TYPE",
+                "MATERIAL_TYPE/COLOR_NAME",
                 "MATERIAL_TYPE/ITEM_DISPLAY_LENGTH",
+                "MATERIAL_TYPE/ITEM_DISPLAY_WIDTH",
                 "MATERIAL_TYPE/SIZE_NAME",
                 "MATERIAL_TYPE/STYLE_NAME",
                 "MODEL",
-                "MODEL/SIZE_NAME",
-                "MODEL_NAME",
                 "MODEL_NUMBER/SIZE",
-                "NUMBER_OF_ITEMS/STYLE_NAME",
                 "PATTERN",
                 "PATTERN_NAME",
-                "PATTERN_NAME/STYLE_NAME",
                 "SCENT_NAME",
                 "SIZE/COLOR",
                 "SIZE/COLOR/NUMBER_OF_ITEMS",
                 "SIZE/MATERIAL",
                 "SIZE_NAME",
                 "SIZE_NAME/COLOR_NAME",
+                "SIZE_NAME/COLOR_NAME/NUMBER_OF_ITEMS",
+                "SIZE_NAME/COLOR_NAME/PATTERN_NAME",
+                "SIZE_NAME/ITEM_DISPLAY_LENGTH",
+                "SIZE_NAME/ITEM_DISPLAY_WIDTH",
                 "SIZE_NAME/MATERIAL_TYPE",
                 "SIZE_NAME/NUMBER_OF_ITEMS",
                 "SIZE_NAME/PATTERN_NAME",
-                "SIZE_NAME/SCENT_NAME",
                 "SIZE_NAME/STYLE_NAME",
                 "SIZE_NAME/STYLE_NAME/COLOR_NAME",
                 "SIZE_NAME/STYLE_NAME/PATTERN_NAME",
-                "SIZE_NAME/UNIT_COUNT",
                 "STYLE_NAME",
                 "STYLE_NAME/COLOR_NAME",
-                "STYLE_NAME/MATERIAL_TYPE",
                 "STYLE_NAME/PATTERN_NAME",
+                "STYLE_NAME/PATTERN_NAME/SIZE_NAME",
                 "STYLE_NAME/SIZE_NAME",
                 "STYLE_NAME/SIZE_NAME/COLOR_NAME",
+                "TEAM_NAME",
                 "TEAM_NAME/SIZE_NAME/COLOR_NAME"
               ]
             },
@@ -254,20 +257,21 @@
               "COLOR/SET_NAME",
               "COLOR/SIZE",
               "COLOR/SIZE/NUMBER_OF_ITEMS",
-              "COLOR/SIZE/ORIENTATION",
               "COLOR",
               "COLOR_NAME",
+              "COLOR_NAME/ITEM_DISPLAY_LENGTH",
               "COLOR_NAME/ITEM_PACKAGE_QUANTITY",
               "COLOR_NAME/MATERIAL_TYPE",
               "COLOR_NAME/NUMBER_OF_ITEMS",
               "COLOR_NAME/PATTERN_NAME",
               "COLOR_NAME/SIZE_NAME",
               "COLOR_NAME/SIZE_NAME/STYLE_NAME",
-              "COLOR_NAME/SIZE_NAME/STYLE_NAME/PATTERN_NAME",
               "COLOR_NAME/STYLE_NAME",
               "COLOR_NAME/STYLE_NAME/PATTERN_NAME",
               "FLAVOR_NAME",
+              "INK_COLOR",
               "ITEM_DISPLAY_LENGTH",
+              "ITEM_DISPLAY_LENGTH/SIZE_NAME",
               "ITEM_DISPLAY_WEIGHT",
               "ITEM_PACKAGE_QUANTITY",
               "ITEM_PACKAGE_QUANTITY/COLOR",
@@ -277,21 +281,18 @@
               "ITEM_PACKAGE_QUANTITY/SIZE_NAME",
               "ITEM_PACKAGE_QUANTITY/STYLE_NAME",
               "ITEM_SHAPE",
-              "MATERIAL/SIZE",
+              "LENGTH_RANGE",
               "MATERIAL_TYPE",
+              "MATERIAL_TYPE/COLOR_NAME",
               "MATERIAL_TYPE/ITEM_DISPLAY_LENGTH",
+              "MATERIAL_TYPE/ITEM_DISPLAY_WIDTH",
               "MATERIAL_TYPE/SIZE_NAME",
               "MATERIAL_TYPE/STYLE_NAME",
               "MODEL",
-              "MODEL/SIZE_NAME",
-              "MODEL_NAME",
               "MODEL_NUMBER/SIZE",
               "NUMBER_OF_ITEMS",
-              "NUMBER_OF_ITEMS/STYLE_NAME",
-              "ORIENTATION",
               "PATTERN",
               "PATTERN_NAME",
-              "PATTERN_NAME/STYLE_NAME",
               "SCENT_NAME",
               "SET_NAME",
               "SIZE",
@@ -302,18 +303,20 @@
               "SIZE/UNIT_COUNT",
               "SIZE_NAME",
               "SIZE_NAME/COLOR_NAME",
+              "SIZE_NAME/COLOR_NAME/NUMBER_OF_ITEMS",
+              "SIZE_NAME/COLOR_NAME/PATTERN_NAME",
+              "SIZE_NAME/ITEM_DISPLAY_LENGTH",
+              "SIZE_NAME/ITEM_DISPLAY_WIDTH",
               "SIZE_NAME/MATERIAL_TYPE",
               "SIZE_NAME/NUMBER_OF_ITEMS",
               "SIZE_NAME/PATTERN_NAME",
-              "SIZE_NAME/SCENT_NAME",
               "SIZE_NAME/STYLE_NAME",
               "SIZE_NAME/STYLE_NAME/COLOR_NAME",
               "SIZE_NAME/STYLE_NAME/PATTERN_NAME",
-              "SIZE_NAME/UNIT_COUNT",
               "STYLE_NAME",
               "STYLE_NAME/COLOR_NAME",
-              "STYLE_NAME/MATERIAL_TYPE",
               "STYLE_NAME/PATTERN_NAME",
+              "STYLE_NAME/PATTERN_NAME/SIZE_NAME",
               "STYLE_NAME/SIZE_NAME",
               "STYLE_NAME/SIZE_NAME/COLOR_NAME",
               "TEAM_NAME",
@@ -328,20 +331,21 @@
               "COLOR/SET_NAME",
               "COLOR/SIZE",
               "COLOR/SIZE/NUMBER_OF_ITEMS",
-              "COLOR/SIZE/ORIENTATION",
               "COLOUR",
               "COLOUR_NAME",
+              "COLOUR_NAME/ITEM_DISPLAY_LENGTH",
               "COLOUR_NAME/ITEM_PACKAGE_QUANTITY",
               "COLOUR_NAME/MATERIAL_TYPE",
               "COLOUR_NAME/NUMBER_OF_ITEMS",
               "COLOUR_NAME/PATTERN_NAME",
               "COLOUR_NAME/SIZE_NAME",
               "COLOUR_NAME/SIZE_NAME/STYLE_NAME",
-              "COLOUR_NAME/SIZE_NAME/STYLE_NAME/PATTERN_NAME",
               "COLOUR_NAME/STYLE_NAME",
               "COLOUR_NAME/STYLE_NAME/PATTERN_NAME",
               "FLAVOUR_NAME",
+              "INK_COLOUR",
               "ITEM_DISPLAY_LENGTH",
+              "ITEM_DISPLAY_LENGTH/SIZE_NAME",
               "ITEM_DISPLAY_WEIGHT",
               "ITEM_PACKAGE_QUANTITY",
               "ITEM_PACKAGE_QUANTITY/COLOR",
@@ -351,21 +355,18 @@
               "ITEM_PACKAGE_QUANTITY/SIZE_NAME",
               "ITEM_PACKAGE_QUANTITY/STYLE_NAME",
               "ITEM_SHAPE",
-              "MATERIAL/SIZE",
+              "LENGTH_RANGE",
               "MATERIAL_TYPE",
+              "MATERIAL_TYPE/COLOUR_NAME",
               "MATERIAL_TYPE/ITEM_DISPLAY_LENGTH",
+              "MATERIAL_TYPE/ITEM_DISPLAY_WIDTH",
               "MATERIAL_TYPE/SIZE_NAME",
               "MATERIAL_TYPE/STYLE_NAME",
               "MODEL",
-              "MODEL/SIZE_NAME",
-              "MODEL_NAME",
               "MODEL_NUMBER/SIZE",
               "NUMBER_OF_ITEMS",
-              "NUMBER_OF_ITEMS/STYLE_NAME",
-              "ORIENTATION",
               "PATTERN",
               "PATTERN_NAME",
-              "PATTERN_NAME/STYLE_NAME",
               "SCENT_NAME",
               "SET_NAME",
               "SIZE",
@@ -376,18 +377,20 @@
               "SIZE/UNIT_COUNT",
               "SIZE_NAME",
               "SIZE_NAME/COLOUR_NAME",
+              "SIZE_NAME/COLOUR_NAME/NUMBER_OF_ITEMS",
+              "SIZE_NAME/COLOUR_NAME/PATTERN_NAME",
+              "SIZE_NAME/ITEM_DISPLAY_LENGTH",
+              "SIZE_NAME/ITEM_DISPLAY_WIDTH",
               "SIZE_NAME/MATERIAL_TYPE",
               "SIZE_NAME/NUMBER_OF_ITEMS",
               "SIZE_NAME/PATTERN_NAME",
-              "SIZE_NAME/SCENT_NAME",
               "SIZE_NAME/STYLE_NAME",
               "SIZE_NAME/STYLE_NAME/COLOUR_NAME",
               "SIZE_NAME/STYLE_NAME/PATTERN_NAME",
-              "SIZE_NAME/UNIT_COUNT",
               "STYLE_NAME",
               "STYLE_NAME/COLOUR_NAME",
-              "STYLE_NAME/MATERIAL_TYPE",
               "STYLE_NAME/PATTERN_NAME",
+              "STYLE_NAME/PATTERN_NAME/SIZE_NAME",
               "STYLE_NAME/SIZE_NAME",
               "STYLE_NAME/SIZE_NAME/COLOUR_NAME",
               "TEAM_NAME",
@@ -656,16 +659,34 @@
               {
                 "type": "string",
                 "enum": [
-                  "49980914031",
-                  "4295685031",
-                  "3000347031",
-                  "3000346031"
+                  "27389872031",
+                  "3187082031",
+                  "30434407031",
+                  "3149336031",
+                  "30434417031",
+                  "3149338031",
+                  "3149341031",
+                  "3149343031",
+                  "6284954031",
+                  "6284955031",
+                  "6284956031",
+                  "4295683031",
+                  "10707741"
                 ],
                 "enumNames": [
-                  "Home & Kitchen > Cooking & Dining > Bakeware > Baking Tools & Accessories > Decorating Tools > Icing & Decorating Spatulas",
-                  "Home & Kitchen > Cooking & Dining > Kitchen Tools & Gadgets > Barbecue Utensils > Barbecue Turners",
-                  "Home & Kitchen > Cooking & Dining > Kitchen Tools & Gadgets > Spatulas & Turners > Cooking Turners",
-                  "Home & Kitchen > Cooking & Dining > Kitchen Tools & Gadgets > Spatulas & Turners > Spatulas"
+                  "Baby Products > Nursing & Feeding > Bottle Feeding > Bottle Tongs",
+                  "Business, Industry & Science > Food Service Equipment & Supplies > Tabletop & Serveware > Bar Equipment > Barware > Ice Buckets & Tongs > Ice Tongs",
+                  "Business, Industry & Science > Food Service Equipment & Supplies > Tabletop & Serveware > Cutlery & Serveware > Serving Tongs",
+                  "Business, Industry & Science > Food Service Equipment & Supplies > Tabletop & Serveware > Cutlery & Serveware > Serving Tongs > Buffet Tongs",
+                  "Business, Industry & Science > Food Service Equipment & Supplies > Tabletop & Serveware > Cutlery & Serveware > Serving Tongs > Pastry Tongs",
+                  "Business, Industry & Science > Food Service Equipment & Supplies > Tabletop & Serveware > Cutlery & Serveware > Serving Tongs > Salad Tongs",
+                  "Business, Industry & Science > Food Service Equipment & Supplies > Tabletop & Serveware > Cutlery & Serveware > Serving Tongs > Spaghetti Tongs",
+                  "Business, Industry & Science > Food Service Equipment & Supplies > Tabletop & Serveware > Cutlery & Serveware > Serving Tongs > Sugar Tongs",
+                  "Business, Industry & Science > Lab & Scientific Products > Lab Supplies & Consumables > Lab Utensils > Lab Tongs",
+                  "Business, Industry & Science > Lab & Scientific Products > Lab Supplies & Consumables > Lab Utensils > Lab Tongs > Beaker Tongs",
+                  "Business, Industry & Science > Lab & Scientific Products > Lab Supplies & Consumables > Lab Utensils > Lab Tongs > Crucible Tongs",
+                  "Home & Kitchen > Cooking & Dining > Kitchen Tools & Gadgets > Barbecue Utensils > Barbecue Tongs",
+                  "Home & Kitchen > Cooking & Dining > Kitchen Tools & Gadgets > Spatulas & Turners > Cooking Tongs"
                 ]
               }
             ]
@@ -808,49 +829,6 @@
             "minLength": 0,
             "maxLength": 40,
             "maxUtf8ByteLength": 40
-          },
-          "marketplace_id": {
-            "$ref": "#/$defs/marketplace_id"
-          }
-        },
-        "additionalProperties": false
-      }
-    },
-    "model_name": {
-      "title": "Model Name",
-      "description": "Specify the model name of the product as defined by the manufacturer or brand excluding item type, colour, brand or size",
-      "examples": [
-        "Juliet, MacBook Pro, Rebel, iPhone, Xbox One"
-      ],
-      "type": "array",
-      "minItems": 1,
-      "minUniqueItems": 1,
-      "maxUniqueItems": 1,
-      "selectors": [
-        "marketplace_id",
-        "language_tag"
-      ],
-      "items": {
-        "type": "object",
-        "required": [
-          "language_tag",
-          "value"
-        ],
-        "properties": {
-          "value": {
-            "title": "Model Name",
-            "description": "Specify the model name of the product as defined by the manufacturer or brand excluding item type, colour, brand or size",
-            "editable": true,
-            "hidden": false,
-            "examples": [
-              "Juliet, MacBook Pro, Rebel, iPhone, Xbox One"
-            ],
-            "type": "string",
-            "minLength": 0,
-            "maxLength": 120
-          },
-          "language_tag": {
-            "$ref": "#/$defs/language_tag"
           },
           "marketplace_id": {
             "$ref": "#/$defs/marketplace_id"
@@ -1450,8 +1428,8 @@
       }
     },
     "style": {
-      "title": "Style Name",
-      "description": "The style of the item",
+      "title": "Product Style",
+      "description": "Provide the design aesthetic or visual theme that characterizes the appearance, such as modern, traditional, or decorative.",
       "examples": [
         "Mission; Art Deco; Jack Purcell"
       ],
@@ -1472,7 +1450,7 @@
         "properties": {
           "value": {
             "title": "Style",
-            "description": "Provide the style of the product. Style refers to the aesthetic choices of a person or a group of people. It describes the distinctive visual representation of a product",
+            "description": "Provide the design aesthetic or visual theme that characterizes the appearance, such as modern, traditional, or decorative.",
             "editable": true,
             "hidden": false,
             "examples": [
@@ -1530,78 +1508,76 @@
               {
                 "type": "string",
                 "enum": [
-                  "Acacia",
+                  "Acacia Wood",
                   "Acrylic",
-                  "Alloy Steel",
+                  "Acrylonitrile Butadiene Styrene (ABS)",
                   "Aluminium",
+                  "Ash Wood",
                   "Bamboo",
-                  "Beech",
-                  "Birch",
-                  "Bloodwood",
+                  "Beechwood",
+                  "Birch Wood",
+                  "Brass",
                   "Cherry Wood",
                   "Copper",
+                  "Fibreglass",
                   "Iron",
+                  "Mango Wood",
                   "Maple Wood",
-                  "Melamine",
                   "Metal",
-                  "Neem",
+                  "Nickel",
                   "Nylon",
+                  "Oak Wood",
                   "Olivewood",
-                  "Pine",
+                  "Pewter",
                   "Plastic",
-                  "Polycarbonate",
-                  "Polyethylene",
-                  "Polypropylene",
-                  "Polystyrene",
+                  "Polycarbonate (PC)",
+                  "Polypropylene (PP)",
                   "Rosewood",
                   "Rubber",
-                  "Rubberwood",
-                  "Sheesham",
                   "Silicone",
                   "Stainless Steel",
-                  "Teak",
-                  "Thermoplastic Polyurethane",
-                  "Vinyl",
-                  "Walnut",
+                  "Teak Wood",
+                  "Titanium",
+                  "Walnut Wood",
                   "Wood",
-                  "Wrought Iron"
+                  "Wrought Iron",
+                  "Zinc"
                 ],
                 "enumNames": [
-                  "Acacia",
+                  "Acacia Wood",
                   "Acrylic",
-                  "Alloy Steel",
+                  "Acrylonitrile Butadiene Styrene (ABS)",
                   "Aluminium",
+                  "Ash Wood",
                   "Bamboo",
-                  "Beech",
-                  "Birch",
-                  "Bloodwood",
+                  "Beechwood",
+                  "Birch Wood",
+                  "Brass",
                   "Cherry Wood",
                   "Copper",
+                  "Fibreglass",
                   "Iron",
+                  "Mango Wood",
                   "Maple Wood",
-                  "Melamine",
                   "Metal",
-                  "Neem",
+                  "Nickel",
                   "Nylon",
+                  "Oak Wood",
                   "Olivewood",
-                  "Pine",
+                  "Pewter",
                   "Plastic",
-                  "Polycarbonate",
-                  "Polyethylene",
-                  "Polypropylene",
-                  "Polystyrene",
+                  "Polycarbonate (PC)",
+                  "Polypropylene (PP)",
                   "Rosewood",
                   "Rubber",
-                  "Rubberwood",
-                  "Sheesham",
                   "Silicone",
                   "Stainless Steel",
-                  "Teak",
-                  "Thermoplastic Polyurethane",
-                  "Vinyl",
-                  "Walnut",
+                  "Teak Wood",
+                  "Titanium",
+                  "Walnut Wood",
                   "Wood",
-                  "Wrought Iron"
+                  "Wrought Iron",
+                  "Zinc"
                 ]
               }
             ]
@@ -1710,7 +1686,7 @@
         "properties": {
           "standardized_values": {
             "title": "Colour Map",
-            "description": "Provide the most dominant color of the food spatula. This describes the main visible color of the kitchen utensil.",
+            "description": "Provide the most dominant color of the tong utensil. This describes the main visible color that appears on the product.",
             "editable": true,
             "hidden": false,
             "examples": [
@@ -3645,6 +3621,87 @@
         "additionalProperties": false
       }
     },
+    "finish_type": {
+      "title": "Finish Type",
+      "description": "Indicate the external appearance of the product once applied. This attribute is mostly used for cosmetics and facial or body creams.",
+      "type": "array",
+      "minItems": 1,
+      "minUniqueItems": 1,
+      "maxUniqueItems": 1,
+      "selectors": [
+        "marketplace_id",
+        "language_tag"
+      ],
+      "items": {
+        "type": "object",
+        "required": [
+          "language_tag",
+          "value"
+        ],
+        "properties": {
+          "value": {
+            "title": "Finish Type",
+            "description": "Specify the finish of the product's exterior surface",
+            "editable": true,
+            "hidden": false,
+            "examples": [
+              "Ceramic, Antique Nickel, Enamel"
+            ],
+            "type": "string",
+            "maxLength": 5118,
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "Accent Pewter",
+                  "Brass",
+                  "Bronze",
+                  "Brushed",
+                  "Chrome",
+                  "Clear Cut",
+                  "Enamel",
+                  "Etched",
+                  "Hand Painted",
+                  "Lacquered",
+                  "Mirror Satin",
+                  "Nickel",
+                  "Non Stick",
+                  "Painted",
+                  "Sealed"
+                ],
+                "enumNames": [
+                  "Accent Pewter",
+                  "Brass",
+                  "Bronze",
+                  "Brushed",
+                  "Chrome",
+                  "Clear Cut",
+                  "Enamel",
+                  "Etched",
+                  "Hand Painted",
+                  "Lacquered",
+                  "Mirror Satin",
+                  "Nickel",
+                  "Non Stick",
+                  "Painted",
+                  "Sealed"
+                ]
+              }
+            ]
+          },
+          "language_tag": {
+            "$ref": "#/$defs/language_tag"
+          },
+          "marketplace_id": {
+            "$ref": "#/$defs/marketplace_id"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
     "unit_count": {
       "title": "Unit Count",
       "description": "Specify the number of units and the unit type of the product",
@@ -3661,7 +3718,6 @@
       "items": {
         "type": "object",
         "required": [
-          "type",
           "value"
         ],
         "properties": {
@@ -3696,12 +3752,6 @@
                   "Ounces"
                 ],
                 "type": "string",
-                "enum": [
-                  "count"
-                ],
-                "enumNames": [
-                  "count"
-                ],
                 "maxLength": 100,
                 "maxUtf8ByteLength": 20
               },
@@ -3914,7 +3964,7 @@
     },
     "team_name": {
       "title": "Team Name",
-      "description": "Provide the sports team name represented on the spatula, indicating which team is featured on the kitchen tool's design.",
+      "description": "Provide the sports team name featured on the product, indicating branded kitchen items with official team branding or colors.",
       "examples": [
         "Manchester city"
       ],
@@ -3935,7 +3985,7 @@
         "properties": {
           "value": {
             "title": "Team Name",
-            "description": "Provide the sports team name featured on the spatula, indicating the branded or licensed design on the kitchen tool.",
+            "description": "Provide the name of a sports team associated with the product, such as for themed or licensed merchandise.",
             "editable": true,
             "hidden": false,
             "examples": [
@@ -7523,74 +7573,6 @@
         "additionalProperties": false
       }
     },
-    "recommended_uses_for_product": {
-      "title": "Recommended Uses For Product",
-      "description": "Specify the recommended uses for the product",
-      "examples": [
-        "Cycling, Indoor, Water"
-      ],
-      "type": "array",
-      "minItems": 1,
-      "minUniqueItems": 1,
-      "maxUniqueItems": 11,
-      "selectors": [
-        "marketplace_id",
-        "language_tag"
-      ],
-      "items": {
-        "type": "object",
-        "required": [
-          "language_tag",
-          "value"
-        ],
-        "properties": {
-          "value": {
-            "title": "Recommended Uses For Product",
-            "description": "Specify the recommended uses for the product",
-            "editable": true,
-            "hidden": false,
-            "examples": [
-              "Cycling, Indoor, Water"
-            ],
-            "type": "string",
-            "maxLength": 2329,
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "Baking",
-                  "Cooking",
-                  "Flipping",
-                  "Lifting",
-                  "Mixing",
-                  "Serving",
-                  "Spreading"
-                ],
-                "enumNames": [
-                  "Baking",
-                  "Cooking",
-                  "Flipping",
-                  "Lifting",
-                  "Mixing",
-                  "Serving",
-                  "Spreading"
-                ]
-              }
-            ]
-          },
-          "language_tag": {
-            "$ref": "#/$defs/language_tag"
-          },
-          "marketplace_id": {
-            "$ref": "#/$defs/marketplace_id"
-          }
-        },
-        "additionalProperties": false
-      }
-    },
     "scent": {
       "title": "Scent Name",
       "description": "Provide a description of the scent of the item",
@@ -7630,50 +7612,102 @@
         "additionalProperties": false
       }
     },
-    "control_method": {
-      "title": "Control Method",
-      "description": "Provide the mechanism used to control the item for standard operations.",
+    "ink": {
+      "title": "Ink",
+      "description": "The attribute indicates Ink of the product",
       "examples": [
-        "App"
+        "Multicolor"
       ],
       "type": "array",
       "minItems": 1,
       "minUniqueItems": 1,
-      "maxUniqueItems": 4,
+      "maxUniqueItems": 1,
       "selectors": [
         "marketplace_id"
       ],
       "items": {
         "type": "object",
+        "required": [],
+        "properties": {
+          "color": {
+            "title": "Ink Colour",
+            "description": "Provide the colour if the item's ink",
+            "examples": [
+              "Blue, Red, Black"
+            ],
+            "type": "array",
+            "minItems": 1,
+            "minUniqueItems": 1,
+            "maxUniqueItems": 1,
+            "selectors": [
+              "language_tag"
+            ],
+            "items": {
+              "type": "object",
+              "required": [
+                "language_tag",
+                "value"
+              ],
+              "properties": {
+                "value": {
+                  "title": "Ink Colour",
+                  "description": "Provide the colour if the item's ink",
+                  "editable": true,
+                  "hidden": false,
+                  "examples": [
+                    "Blue, Red, Black"
+                  ],
+                  "type": "string",
+                  "maxUtf8ByteLength": 5000
+                },
+                "language_tag": {
+                  "$ref": "#/$defs/language_tag"
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "marketplace_id": {
+            "$ref": "#/$defs/marketplace_id"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "length_range": {
+      "title": "Length Range",
+      "description": "Length range for blinds",
+      "examples": [
+        "24-60\" long"
+      ],
+      "type": "array",
+      "minItems": 1,
+      "minUniqueItems": 1,
+      "maxUniqueItems": 1000,
+      "selectors": [
+        "marketplace_id",
+        "language_tag"
+      ],
+      "items": {
+        "type": "object",
         "required": [
+          "language_tag",
           "value"
         ],
         "properties": {
           "value": {
-            "title": "Control Method",
-            "description": "Provide the mechanism used to control the item for standard operations.",
+            "title": "Length Range",
+            "description": "Length range for blinds",
             "editable": true,
             "hidden": false,
             "examples": [
-              "App"
+              "24-60\" long"
             ],
             "type": "string",
-            "enum": [
-              "application",
-              "gesture",
-              "push_button",
-              "remote",
-              "touch",
-              "voice"
-            ],
-            "enumNames": [
-              "App",
-              "Gesture",
-              "Push Button",
-              "Remote",
-              "Touch",
-              "Voice"
-            ]
+            "maxUtf8ByteLength": 20
+          },
+          "language_tag": {
+            "$ref": "#/$defs/language_tag"
           },
           "marketplace_id": {
             "$ref": "#/$defs/marketplace_id"
@@ -7684,7 +7718,7 @@
     },
     "item_length_width": {
       "title": "Item Dimensions L x W",
-      "description": "Provide the measurement of the length and width of the item in ready to use condition",
+      "description": "Provide the length and width of the item when ready to use, like a fully rolled out rug or blanket.",
       "examples": [
         "40 Inches"
       ],
@@ -11462,7 +11496,7 @@
           },
           "unit": {
             "title": "Item Weight Unit",
-            "description": "Provide the corresponding unit used to designate the weight measurement, such as pounds or grams.",
+            "description": "Select the corresponding unit",
             "editable": true,
             "hidden": false,
             "examples": [
@@ -13129,8 +13163,7 @@
                         "name": {
                           "enum": [
                             "MODEL_NUMBER/SIZE",
-                            "MODEL",
-                            "MODEL/SIZE_NAME"
+                            "MODEL"
                           ]
                         }
                       }
@@ -13147,75 +13180,6 @@
           }
         }
       ]
-    },
-    {
-      "if": {
-        "allOf": [
-          {
-            "required": [
-              "child_parent_sku_relationship"
-            ],
-            "properties": {
-              "child_parent_sku_relationship": {
-                "items": {
-                  "required": [
-                    "parent_sku"
-                  ]
-                }
-              }
-            }
-          },
-          {
-            "not": {
-              "required": [
-                "parentage_level"
-              ],
-              "properties": {
-                "parentage_level": {
-                  "contains": {
-                    "required": [
-                      "value"
-                    ],
-                    "properties": {
-                      "value": {
-                        "enum": [
-                          "parent"
-                        ]
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          {
-            "required": [
-              "variation_theme"
-            ],
-            "properties": {
-              "variation_theme": {
-                "contains": {
-                  "required": [
-                    "name"
-                  ],
-                  "properties": {
-                    "name": {
-                      "enum": [
-                        "MODEL_NAME"
-                      ]
-                    }
-                  }
-                }
-              }
-            }
-          }
-        ]
-      },
-      "then": {
-        "required": [
-          "model_name"
-        ]
-      }
     },
     {
       "if": {
@@ -13321,22 +13285,19 @@
                     "name": {
                       "enum": [
                         "STYLE_NAME/SIZE_NAME/COLOR_NAME",
-                        "STYLE_NAME/SIZE_NAME",
-                        "PATTERN_NAME/STYLE_NAME",
-                        "NUMBER_OF_ITEMS/STYLE_NAME",
+                        "STYLE_NAME/PATTERN_NAME/SIZE_NAME",
+                        "MATERIAL_TYPE/STYLE_NAME",
+                        "STYLE_NAME/COLOR_NAME",
+                        "SIZE_NAME/STYLE_NAME/PATTERN_NAME",
                         "COLOR_NAME/SIZE_NAME/STYLE_NAME",
+                        "SIZE_NAME/STYLE_NAME/COLOR_NAME",
                         "STYLE_NAME",
-                        "COLOR_NAME/STYLE_NAME/PATTERN_NAME",
+                        "SIZE_NAME/STYLE_NAME",
                         "STYLE_NAME/PATTERN_NAME",
+                        "COLOR_NAME/STYLE_NAME/PATTERN_NAME",
                         "COLOR_NAME/STYLE_NAME",
                         "ITEM_PACKAGE_QUANTITY/STYLE_NAME",
-                        "SIZE_NAME/STYLE_NAME/COLOR_NAME",
-                        "STYLE_NAME/MATERIAL_TYPE",
-                        "SIZE_NAME/STYLE_NAME/PATTERN_NAME",
-                        "STYLE_NAME/COLOR_NAME",
-                        "MATERIAL_TYPE/STYLE_NAME",
-                        "SIZE_NAME/STYLE_NAME",
-                        "COLOR_NAME/SIZE_NAME/STYLE_NAME/PATTERN_NAME"
+                        "STYLE_NAME/SIZE_NAME"
                       ]
                     }
                   }
@@ -13458,16 +13419,16 @@
                         "name": {
                           "enum": [
                             "COLOR/MATERIAL",
-                            "MATERIAL/SIZE",
                             "SIZE/MATERIAL",
+                            "MATERIAL_TYPE/SIZE_NAME",
                             "ITEM_PACKAGE_QUANTITY/MATERIAL_TYPE",
-                            "COLOR_NAME/MATERIAL_TYPE",
-                            "MATERIAL_TYPE/ITEM_DISPLAY_LENGTH",
-                            "SIZE_NAME/MATERIAL_TYPE",
-                            "MATERIAL_TYPE",
-                            "STYLE_NAME/MATERIAL_TYPE",
                             "MATERIAL_TYPE/STYLE_NAME",
-                            "MATERIAL_TYPE/SIZE_NAME"
+                            "MATERIAL_TYPE",
+                            "SIZE_NAME/MATERIAL_TYPE",
+                            "MATERIAL_TYPE/COLOR_NAME",
+                            "MATERIAL_TYPE/ITEM_DISPLAY_LENGTH",
+                            "MATERIAL_TYPE/ITEM_DISPLAY_WIDTH",
+                            "COLOR_NAME/MATERIAL_TYPE"
                           ]
                         }
                       }
@@ -13540,12 +13501,12 @@
                       "enum": [
                         "COLOR/SIZE/NUMBER_OF_ITEMS",
                         "SIZE/COLOR/NUMBER_OF_ITEMS",
-                        "COLOR/NUMBER_OF_ITEMS",
                         "SIZE/NUMBER_OF_ITEMS",
-                        "NUMBER_OF_ITEMS/STYLE_NAME",
-                        "COLOR_NAME/NUMBER_OF_ITEMS",
+                        "SIZE_NAME/COLOR_NAME/NUMBER_OF_ITEMS",
+                        "NUMBER_OF_ITEMS",
                         "SIZE_NAME/NUMBER_OF_ITEMS",
-                        "NUMBER_OF_ITEMS"
+                        "COLOR/NUMBER_OF_ITEMS",
+                        "COLOR_NAME/NUMBER_OF_ITEMS"
                       ]
                     }
                   }
@@ -13615,14 +13576,14 @@
                     "name": {
                       "enum": [
                         "COLOR_NAME/ITEM_PACKAGE_QUANTITY",
-                        "ITEM_PACKAGE_QUANTITY/SIZE_NAME",
                         "ITEM_PACKAGE_QUANTITY/MATERIAL_TYPE",
-                        "ITEM_PACKAGE_QUANTITY",
                         "ITEM_PACKAGE_QUANTITY/SIZE",
                         "ITEM_PACKAGE_QUANTITY/COLOR",
                         "ITEM_PACKAGE_QUANTITY/COLOR_NAME",
+                        "ITEM_PACKAGE_QUANTITY/STYLE_NAME",
                         "COLOR/ITEM_PACKAGE_QUANTITY",
-                        "ITEM_PACKAGE_QUANTITY/STYLE_NAME"
+                        "ITEM_PACKAGE_QUANTITY/SIZE_NAME",
+                        "ITEM_PACKAGE_QUANTITY"
                       ]
                     }
                   }
@@ -13716,34 +13677,36 @@
                   "properties": {
                     "name": {
                       "enum": [
+                        "COLOR/ORIENTATION",
                         "COLOR/SIZE/NUMBER_OF_ITEMS",
                         "COLOR/SET_NAME",
-                        "COLOR/ORIENTATION",
-                        "COLOR/SIZE/ORIENTATION",
                         "COLOR/MATERIAL",
                         "SIZE/COLOR/NUMBER_OF_ITEMS",
                         "TEAM_NAME/SIZE_NAME/COLOR_NAME",
+                        "SIZE_NAME/COLOR_NAME",
+                        "SIZE_NAME/COLOR_NAME/NUMBER_OF_ITEMS",
+                        "COLOR_NAME",
                         "STYLE_NAME/SIZE_NAME/COLOR_NAME",
                         "COLOR_NAME/ITEM_PACKAGE_QUANTITY",
+                        "COLOR_NAME/SIZE_NAME",
+                        "COLOR_NAME/PATTERN_NAME",
                         "COLOR/NUMBER_OF_ITEMS",
-                        "SIZE_NAME/COLOR_NAME",
+                        "STYLE_NAME/COLOR_NAME",
                         "COLOR/SIZE",
                         "SIZE/COLOR",
                         "COLOR_NAME/SIZE_NAME/STYLE_NAME",
-                        "COLOR_NAME/NUMBER_OF_ITEMS",
-                        "COLOR_NAME/SIZE_NAME",
-                        "COLOR_NAME/MATERIAL_TYPE",
                         "ITEM_PACKAGE_QUANTITY/COLOR",
-                        "ITEM_PACKAGE_QUANTITY/COLOR_NAME",
-                        "COLOR_NAME",
-                        "COLOR_NAME/STYLE_NAME/PATTERN_NAME",
-                        "COLOR/ITEM_PACKAGE_QUANTITY",
-                        "COLOR_NAME/STYLE_NAME",
-                        "COLOR_NAME/PATTERN_NAME",
                         "SIZE_NAME/STYLE_NAME/COLOR_NAME",
                         "COLOR",
-                        "STYLE_NAME/COLOR_NAME",
-                        "COLOR_NAME/SIZE_NAME/STYLE_NAME/PATTERN_NAME"
+                        "MATERIAL_TYPE/COLOR_NAME",
+                        "COLOR_NAME/NUMBER_OF_ITEMS",
+                        "SIZE_NAME/COLOR_NAME/PATTERN_NAME",
+                        "COLOR_NAME/ITEM_DISPLAY_LENGTH",
+                        "COLOR_NAME/STYLE_NAME/PATTERN_NAME",
+                        "ITEM_PACKAGE_QUANTITY/COLOR_NAME",
+                        "COLOR_NAME/STYLE_NAME",
+                        "COLOR_NAME/MATERIAL_TYPE",
+                        "COLOR/ITEM_PACKAGE_QUANTITY"
                       ]
                     }
                   }
@@ -13813,36 +13776,36 @@
                     "name": {
                       "enum": [
                         "COLOR/SIZE/NUMBER_OF_ITEMS",
-                        "COLOR/SIZE/ORIENTATION",
-                        "MATERIAL/SIZE",
                         "MODEL_NUMBER/SIZE",
                         "SIZE/COLOR/NUMBER_OF_ITEMS",
                         "SIZE/MATERIAL",
                         "TEAM_NAME/SIZE_NAME/COLOR_NAME",
-                        "STYLE_NAME/SIZE_NAME/COLOR_NAME",
-                        "ITEM_PACKAGE_QUANTITY/SIZE_NAME",
-                        "STYLE_NAME/SIZE_NAME",
-                        "SIZE_NAME",
                         "SIZE_NAME/COLOR_NAME",
-                        "COLOR/SIZE",
-                        "SIZE/COLOR",
                         "SIZE/NUMBER_OF_ITEMS",
-                        "COLOR_NAME/SIZE_NAME/STYLE_NAME",
-                        "ITEM_PACKAGE_QUANTITY/SIZE",
+                        "SIZE_NAME/COLOR_NAME/NUMBER_OF_ITEMS",
+                        "SIZE_NAME/ITEM_DISPLAY_WIDTH",
+                        "SIZE_NAME/ITEM_DISPLAY_LENGTH",
+                        "SIZE_NAME",
+                        "STYLE_NAME/SIZE_NAME/COLOR_NAME",
+                        "MATERIAL_TYPE/SIZE_NAME",
+                        "STYLE_NAME/PATTERN_NAME/SIZE_NAME",
                         "COLOR_NAME/SIZE_NAME",
                         "SIZE_NAME/NUMBER_OF_ITEMS",
-                        "SIZE_NAME/SCENT_NAME",
-                        "SIZE_NAME/UNIT_COUNT",
-                        "SIZE",
                         "SIZE/UNIT_COUNT",
-                        "SIZE_NAME/MATERIAL_TYPE",
-                        "MODEL/SIZE_NAME",
-                        "SIZE_NAME/STYLE_NAME/COLOR_NAME",
+                        "ITEM_PACKAGE_QUANTITY/SIZE",
                         "SIZE_NAME/STYLE_NAME/PATTERN_NAME",
-                        "SIZE_NAME/STYLE_NAME",
-                        "COLOR_NAME/SIZE_NAME/STYLE_NAME/PATTERN_NAME",
+                        "COLOR/SIZE",
+                        "SIZE/COLOR",
+                        "SIZE",
+                        "COLOR_NAME/SIZE_NAME/STYLE_NAME",
+                        "SIZE_NAME/STYLE_NAME/COLOR_NAME",
                         "SIZE_NAME/PATTERN_NAME",
-                        "MATERIAL_TYPE/SIZE_NAME"
+                        "ITEM_DISPLAY_LENGTH/SIZE_NAME",
+                        "SIZE_NAME/MATERIAL_TYPE",
+                        "SIZE_NAME/STYLE_NAME",
+                        "SIZE_NAME/COLOR_NAME/PATTERN_NAME",
+                        "STYLE_NAME/SIZE_NAME",
+                        "ITEM_PACKAGE_QUANTITY/SIZE_NAME"
                       ]
                     }
                   }
@@ -13980,8 +13943,13 @@
                   "properties": {
                     "name": {
                       "enum": [
+                        "SIZE_NAME/ITEM_DISPLAY_WIDTH",
+                        "SIZE_NAME/ITEM_DISPLAY_LENGTH",
+                        "ITEM_DISPLAY_LENGTH",
+                        "ITEM_DISPLAY_LENGTH/SIZE_NAME",
+                        "COLOR_NAME/ITEM_DISPLAY_LENGTH",
                         "MATERIAL_TYPE/ITEM_DISPLAY_LENGTH",
-                        "ITEM_DISPLAY_LENGTH"
+                        "MATERIAL_TYPE/ITEM_DISPLAY_WIDTH"
                       ]
                     }
                   }
@@ -14119,9 +14087,7 @@
                   "properties": {
                     "name": {
                       "enum": [
-                        "ORIENTATION",
-                        "COLOR/ORIENTATION",
-                        "COLOR/SIZE/ORIENTATION"
+                        "COLOR/ORIENTATION"
                       ]
                     }
                   }
@@ -14190,15 +14156,15 @@
                   "properties": {
                     "name": {
                       "enum": [
-                        "PATTERN_NAME/STYLE_NAME",
-                        "COLOR_NAME/STYLE_NAME/PATTERN_NAME",
-                        "STYLE_NAME/PATTERN_NAME",
-                        "PATTERN",
-                        "PATTERN_NAME",
+                        "STYLE_NAME/PATTERN_NAME/SIZE_NAME",
                         "COLOR_NAME/PATTERN_NAME",
+                        "PATTERN_NAME",
                         "SIZE_NAME/STYLE_NAME/PATTERN_NAME",
-                        "COLOR_NAME/SIZE_NAME/STYLE_NAME/PATTERN_NAME",
-                        "SIZE_NAME/PATTERN_NAME"
+                        "SIZE_NAME/PATTERN_NAME",
+                        "SIZE_NAME/COLOR_NAME/PATTERN_NAME",
+                        "STYLE_NAME/PATTERN_NAME",
+                        "COLOR_NAME/STYLE_NAME/PATTERN_NAME",
+                        "PATTERN"
                       ]
                     }
                   }
@@ -14215,128 +14181,73 @@
       }
     },
     {
-      "allOf": [
-        {
-          "if": {
-            "allOf": [
-              {
-                "required": [
-                  "child_parent_sku_relationship"
-                ],
-                "properties": {
-                  "child_parent_sku_relationship": {
-                    "items": {
-                      "required": [
-                        "parent_sku"
-                      ]
-                    }
-                  }
-                }
-              },
-              {
-                "not": {
+      "if": {
+        "allOf": [
+          {
+            "required": [
+              "child_parent_sku_relationship"
+            ],
+            "properties": {
+              "child_parent_sku_relationship": {
+                "items": {
                   "required": [
-                    "parentage_level"
-                  ],
-                  "properties": {
-                    "parentage_level": {
-                      "contains": {
-                        "required": [
-                          "value"
-                        ],
-                        "properties": {
-                          "value": {
-                            "enum": [
-                              "parent"
-                            ]
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              {
-                "required": [
-                  "variation_theme"
-                ],
-                "properties": {
-                  "variation_theme": {
-                    "contains": {
-                      "required": [
-                        "name"
-                      ],
-                      "properties": {
-                        "name": {
-                          "enum": [
-                            "SIZE_NAME/UNIT_COUNT",
-                            "SIZE/UNIT_COUNT"
-                          ]
-                        }
-                      }
-                    }
-                  }
+                    "parent_sku"
+                  ]
                 }
               }
-            ]
+            }
           },
-          "then": {
-            "required": [
-              "unit_count"
-            ]
-          }
-        },
-        {
-          "if": {
-            "anyOf": [
-              {
-                "not": {
-                  "required": [
-                    "parentage_level"
-                  ],
-                  "properties": {
-                    "parentage_level": {
-                      "items": {
-                        "required": [
-                          "value"
+          {
+            "not": {
+              "required": [
+                "parentage_level"
+              ],
+              "properties": {
+                "parentage_level": {
+                  "contains": {
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "enum": [
+                          "parent"
                         ]
                       }
                     }
                   }
                 }
-              },
-              {
-                "not": {
+              }
+            }
+          },
+          {
+            "required": [
+              "variation_theme"
+            ],
+            "properties": {
+              "variation_theme": {
+                "contains": {
                   "required": [
-                    "parentage_level"
+                    "name"
                   ],
                   "properties": {
-                    "parentage_level": {
-                      "contains": {
-                        "required": [
-                          "value"
-                        ],
-                        "properties": {
-                          "value": {
-                            "enum": [
-                              "parent"
-                            ]
-                          }
-                        }
-                      }
+                    "name": {
+                      "enum": [
+                        "SIZE/UNIT_COUNT"
+                      ]
                     }
                   }
                 }
               }
-            ]
-          },
-          "then": {
-            "required": [
-              "unit_count"
-            ]
+            }
           }
-        }
-      ]
+        ]
+      },
+      "then": {
+        "required": [
+          "unit_count"
+        ]
+      }
     },
     {
       "if": {
@@ -18365,8 +18276,8 @@
                   "properties": {
                     "name": {
                       "enum": [
-                        "TEAM_NAME/SIZE_NAME/COLOR_NAME",
-                        "TEAM_NAME"
+                        "TEAM_NAME",
+                        "TEAM_NAME/SIZE_NAME/COLOR_NAME"
                       ]
                     }
                   }
@@ -18435,7 +18346,6 @@
                   "properties": {
                     "name": {
                       "enum": [
-                        "SIZE_NAME/SCENT_NAME",
                         "SCENT_NAME"
                       ]
                     }
@@ -18449,6 +18359,153 @@
       "then": {
         "required": [
           "scent"
+        ]
+      }
+    },
+    {
+      "if": {
+        "allOf": [
+          {
+            "required": [
+              "child_parent_sku_relationship"
+            ],
+            "properties": {
+              "child_parent_sku_relationship": {
+                "items": {
+                  "required": [
+                    "parent_sku"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "not": {
+              "required": [
+                "parentage_level"
+              ],
+              "properties": {
+                "parentage_level": {
+                  "contains": {
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "enum": [
+                          "parent"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "required": [
+              "variation_theme"
+            ],
+            "properties": {
+              "variation_theme": {
+                "contains": {
+                  "required": [
+                    "name"
+                  ],
+                  "properties": {
+                    "name": {
+                      "enum": [
+                        "INK_COLOR"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "then": {
+        "required": [
+          "ink"
+        ],
+        "properties": {
+          "ink": {
+            "items": {
+              "required": [
+                "color"
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "allOf": [
+          {
+            "required": [
+              "child_parent_sku_relationship"
+            ],
+            "properties": {
+              "child_parent_sku_relationship": {
+                "items": {
+                  "required": [
+                    "parent_sku"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "not": {
+              "required": [
+                "parentage_level"
+              ],
+              "properties": {
+                "parentage_level": {
+                  "contains": {
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "enum": [
+                          "parent"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "required": [
+              "variation_theme"
+            ],
+            "properties": {
+              "variation_theme": {
+                "contains": {
+                  "required": [
+                    "name"
+                  ],
+                  "properties": {
+                    "name": {
+                      "enum": [
+                        "LENGTH_RANGE"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "then": {
+        "required": [
+          "length_range"
         ]
       }
     },

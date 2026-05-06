@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>诊断列表筛选区原型</title>
+  <style>
+    :root {
+      --bg-page: #f5f7fa;
+      --bg-card: #ffffff;
+      --border: #dcdfe6;
+      --border-light: #ebeef5;
+      --text-primary: #303133;
+      --text-secondary: #606266;
+      --text-muted: #909399;
+      --primary: #0f9d8a;
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+      --radius: 2px;
+      --control-height: 32px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+      background: var(--bg-page);
+      color: var(--text-primary);
+    }
+
+    .page {
+      min-height: 100vh;
+      padding: 8px 0 0;
+    }
+
+    .search_card_new {
+      background: var(--bg-card);
+      border-top: 1px solid var(--border-light);
+      border-bottom: 1px solid var(--border-light);
+      box-shadow: var(--shadow);
+      padding: 14px 28px 26px;
+    }
+
+    .search_form_new {
+      display: grid;
+      gap: 14px 24px;
+    }
+
+    .row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px 22px;
+    }
+
+    .row.status-row {
+      gap: 12px 34px;
+    }
+
+    .field {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 210px;
+    }
+
+    .field.compact {
+      min-width: 170px;
+    }
+
+    .field.wide {
+      min-width: 300px;
+    }
+
+    .status-row .field {
+      min-width: 0;
+      gap: 6px;
+    }
+
+    .status-row .field.reason {
+      margin-left: 2px;
+    }
+
+    .label {
+      min-width: 38px;
+      color: var(--text-secondary);
+      font-size: 13px;
+      line-height: var(--control-height);
+      white-space: nowrap;
+    }
+
+    input[type="text"],
+    select {
+      height: var(--control-height);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: #fff;
+      color: var(--text-primary);
+      padding: 0 10px;
+      font-size: 13px;
+      min-width: 210px;
+      outline: none;
+    }
+
+    input::placeholder {
+      color: var(--text-muted);
+    }
+
+    select.placeholder {
+      color: var(--text-muted);
+    }
+
+    .small-select {
+      min-width: 88px;
+      width: 88px;
+      padding-right: 8px;
+    }
+
+    .mid-select {
+      min-width: 120px;
+      width: 120px;
+    }
+
+    .long-input {
+      min-width: 240px;
+      width: 240px;
+    }
+
+    .wide-input {
+      min-width: 280px;
+      width: 280px;
+    }
+
+    .check_group {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      height: var(--control-height);
+      padding-top: 1px;
+    }
+
+    .check_group label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-secondary);
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    .check_group input {
+      width: 13px;
+      height: 13px;
+      accent-color: #67c23a;
+    }
+
+    .actions {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-left: -4px;
+    }
+
+    .btn {
+      min-width: 40px;
+      height: var(--control-height);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text-secondary);
+      font-size: 12px;
+      padding: 0 14px;
+      cursor: default;
+    }
+
+    .btn.primary {
+      border-color: var(--primary);
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .divider {
+      height: 76px;
+      border-top: 1px solid var(--border-light);
+      background: linear-gradient(to bottom, #fafafa 0, #fafafa 8px, var(--bg-page) 8px, var(--bg-page) 100%);
+    }
+
+    @media (max-width: 1280px) {
+      .search_card_new {
+        padding-right: 18px;
+        padding-left: 18px;
+      }
+
+      .field,
+      .field.wide {
+        min-width: 0;
+      }
+
+      input[type="text"],
+      select,
+      .wide-input,
+      .long-input {
+        width: 100%;
+        min-width: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <section class="search_card_new">
+      <div class="search_form_new">
+        <div class="row">
+          <div class="field">
+            <span class="label">部门</span>
+            <select class="placeholder">
+              <option>请选择</option>
+            </select>
+          </div>
+          <div class="field wide">
+            <span class="label">销售人员</span>
+            <select>
+              <option>陈雪</option>
+            </select>
+          </div>
+          <div class="field wide">
+            <span class="label">店铺</span>
+            <select class="placeholder">
+              <option>请选择</option>
+            </select>
+          </div>
+          <div class="field">
+            <span class="label">销售类型</span>
+            <select class="placeholder">
+              <option>请选择</option>
+            </select>
+          </div>
+          <div class="field wide" style="min-width: 420px;">
+            <span class="label">审核状态</span>
+            <div class="check_group">
+              <label><input type="checkbox" checked>已审核</label>
+              <label><input type="checkbox" checked>审核中</label>
+              <label><input type="checkbox">被拒绝</label>
+            </div>
+            <div class="actions">
+              <button class="btn primary">搜索</button>
+              <button class="btn">清空</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <span class="label">产品ID</span>
+            <input type="text" aria-label="产品ID">
+          </div>
+          <div class="field wide">
+            <span class="label">产品标题</span>
+            <input class="wide-input" type="text" placeholder="默认模糊查询" aria-label="产品标题">
+            <select class="mid-select">
+              <option>分词全模糊</option>
+            </select>
+          </div>
+          <div class="field compact">
+            <select class="small-select">
+              <option>商品</option>
+            </select>
+          </div>
+          <div class="field compact">
+            <input class="long-input" type="text" aria-label="商品关键字">
+          </div>
+          <div class="field">
+            <span class="label">排序类型</span>
+            <select class="placeholder">
+              <option>请选择</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row status-row" style="padding-top: 2px;">
+          <div class="field">
+            <span class="label">状态</span>
+            <select style="width: 204px;">
+              <option>多选，可全选</option>
+            </select>
+          </div>
+          <div class="field">
+            <span class="label">是否活性</span>
+            <select class="placeholder" style="width: 206px;">
+              <option>请选择</option>
+            </select>
+          </div>
+          <div class="field reason">
+            <span class="label">诊断原因</span>
+            <select style="width: 168px;">
+              <option>多选，支持全选，可搜索</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="divider"></div>
+  </div>
+</body>
+</html>

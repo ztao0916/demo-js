@@ -1,0 +1,20 @@
+{
+  "module": "sales",
+  "pageKey": "diagnosis-filter-search",
+  "title": "诊断列表筛选区原型",
+  "status": "draft",
+  "localDir": "output/prototype/sales/diagnosis-filter-search",
+  "remoteDir": null,
+  "files": [
+    "prototype.html",
+    "prototype.png",
+    "prototype-notes.md",
+    "manifest.json"
+  ],
+  "publicUrls": {
+    "html": null,
+    "png": null
+  },
+  "updatedAt": "2026-04-30T08:00:19.360Z",
+  "publishedAt": null
+}
