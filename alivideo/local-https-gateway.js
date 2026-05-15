@@ -80,21 +80,6 @@ function readBody(req) {
   });
 }
 
-async function readJsonBody(req) {
-  const rawBody = await readBody(req);
-  if (rawBody.length === 0) {
-    return {};
-  }
-
-  try {
-    return JSON.parse(rawBody.toString("utf8"));
-  } catch (error) {
-    const parseError = new Error("Invalid JSON body");
-    parseError.cause = error;
-    throw parseError;
-  }
-}
-
 function getStaticPath(pathname) {
   if (!(pathname === STATIC_PREFIX || pathname.startsWith(`${STATIC_PREFIX}/`))) {
     return null;
@@ -253,23 +238,25 @@ function proxyHttpRequest(req, res) {
 
 async function handleSign(req, res) {
   try {
-    const body = await readJsonBody(req);
-    const userId = typeof body.userId === "string" ? body.userId.trim() : "";
-
-    if (!userId) {
-      sendJson(req, res, 400, { error: "Missing userId" });
+    const contentType = req.headers["content-type"] || "";
+    if (!contentType.toLowerCase().startsWith("multipart/form-data")) {
+      sendJson(req, res, 400, { error: "Content-Type must be multipart/form-data" });
       return;
     }
 
-    const formData = new FormData();
-    formData.append("userId", userId);
+    const body = await readBody(req);
+    if (body.length === 0) {
+      sendJson(req, res, 400, { error: "Missing form-data body" });
+      return;
+    }
 
     const upstreamRes = await fetch(SIGN_URL, {
       method: "POST",
       headers: {
         Cookie: SESSION_COOKIE,
+        "Content-Type": contentType,
       },
-      body: formData,
+      body,
     });
 
     const responseText = await upstreamRes.text();
@@ -305,9 +292,8 @@ async function handleSign(req, res) {
 
     sendJson(req, res, 200, data.data);
   } catch (error) {
-    const statusCode = error.message === "Invalid JSON body" ? 400 : 500;
-    sendJson(req, res, statusCode, {
-      error: statusCode === 400 ? "Invalid JSON body" : "Local gateway failed",
+    sendJson(req, res, 500, {
+      error: "Local gateway failed",
       detail: error.message,
     });
   }

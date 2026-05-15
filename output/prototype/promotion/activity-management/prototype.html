@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>促销活动管理原型</title>
+  <style>
+    :root {
+      --bg-page: #f5f7fa;
+      --bg-card: #ffffff;
+      --border: #dcdfe6;
+      --border-light: #ebeef5;
+      --text-primary: #303133;
+      --text-secondary: #606266;
+      --text-muted: #909399;
+      --primary: #0f9d8a;
+      --primary-dark: #087d6d;
+      --success: #67c23a;
+      --warning: #e6a23c;
+      --danger: #f56c6c;
+      --radius: 2px;
+      --control-height: 32px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg-page);
+      color: var(--text-primary);
+      font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+      font-size: 13px;
+    }
+
+    .page {
+      min-width: 1200px;
+      padding: 12px;
+    }
+
+    .page-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 40px;
+      padding: 0 4px;
+      margin-bottom: 8px;
+    }
+
+    .page-title h1 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .page-title .hint {
+      color: var(--text-muted);
+    }
+
+    .search_card_new,
+    .list_card,
+    .operation_card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius);
+      margin-bottom: 12px;
+    }
+
+    .search_card_new {
+      padding: 14px 16px;
+    }
+
+    .search_form_new {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px 22px;
+    }
+
+    .field {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .label {
+      min-width: 56px;
+      color: var(--text-secondary);
+      line-height: var(--control-height);
+      white-space: nowrap;
+    }
+
+    input,
+    select {
+      height: var(--control-height);
+      min-width: 180px;
+      padding: 0 10px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: #fff;
+      color: var(--text-primary);
+      font-size: 13px;
+      outline: none;
+    }
+
+    input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .date-range {
+      min-width: 260px;
+    }
+
+    .btn {
+      height: var(--control-height);
+      padding: 0 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: #fff;
+      color: var(--text-secondary);
+      font-size: 12px;
+      cursor: default;
+      white-space: nowrap;
+    }
+
+    .btn.primary {
+      border-color: var(--primary);
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .btn.primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn.danger {
+      border-color: #fbc4c4;
+      color: var(--danger);
+      background: #fef0f0;
+    }
+
+    .btn.text {
+      height: 24px;
+      padding: 0 8px;
+      color: var(--primary);
+      border-color: #cce8e2;
+      background: #f2fbf9;
+    }
+
+    .tools_btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .tools-left,
+    .tools-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .summary-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .summary-item {
+      background: #fff;
+      border: 1px solid var(--border-light);
+      border-left: 3px solid var(--primary);
+      border-radius: var(--radius);
+      padding: 12px 14px;
+    }
+
+    .summary-item .name {
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .summary-item .value {
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .operation-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .operation-item {
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius);
+      background: #fbfcfd;
+      padding: 12px 14px;
+    }
+
+    .operation-item .title {
+      color: var(--text-primary);
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .operation-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .table-wrap {
+      padding: 0 16px 14px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    th,
+    td {
+      height: 40px;
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--border-light);
+      text-align: left;
+      vertical-align: middle;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    th {
+      background: #f7f9fb;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      height: 22px;
+      padding: 0 8px;
+      border-radius: var(--radius);
+      font-size: 12px;
+    }
+
+    .status.active {
+      color: var(--success);
+      background: #f0f9eb;
+    }
+
+    .status.pending {
+      color: var(--warning);
+      background: #fdf6ec;
+    }
+
+    .status.closed {
+      color: var(--text-muted);
+      background: #f4f4f5;
+    }
+
+    .pagination {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+      padding-top: 12px;
+      color: var(--text-muted);
+    }
+
+    .dialog-layer {
+      margin-top: 12px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius);
+    }
+
+    .dialog-header {
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 14px;
+      border-bottom: 1px solid var(--border-light);
+      font-weight: 600;
+    }
+
+    .dialog-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+      padding: 14px;
+    }
+
+    .dialog-panel {
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius);
+      padding: 12px;
+      min-height: 118px;
+    }
+
+    .dialog-panel h3 {
+      margin: 0 0 10px;
+      font-size: 13px;
+    }
+
+    .dialog-panel ul {
+      margin: 0;
+      padding-left: 16px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+    }
+
+    .dialog-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      padding: 10px 14px 14px;
+    }
+
+    .dialog-footer .btn {
+      height: 24px;
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="page-title">
+      <h1>促销活动管理</h1>
+    </header>
+
+    <section class="search_card_new">
+      <div class="search_form_new">
+        <div class="field">
+          <span class="label">平台</span>
+          <select>
+            <option>Joom</option>
+          </select>
+        </div>
+        <div class="field">
+          <span class="label">店铺</span>
+          <select>
+            <option>全部店铺</option>
+          </select>
+        </div>
+        <div class="field">
+          <span class="label">活动状态</span>
+          <select>
+            <option>全部状态</option>
+          </select>
+        </div>
+        <div class="field">
+          <span class="label">活动时间</span>
+          <input class="date-range" type="text" value="2026-05-01 至 2026-05-31" aria-label="活动时间">
+        </div>
+        <div class="field">
+          <span class="label">活动名称</span>
+          <input type="text" placeholder="请输入活动名称">
+        </div>
+        <button class="btn primary">搜索</button>
+        <button class="btn">重置</button>
+      </div>
+    </section>
+
+    <section class="summary-strip">
+      <div class="summary-item">
+        <div class="name">待同步活动</div>
+        <div class="value">8</div>
+      </div>
+      <div class="summary-item">
+        <div class="name">进行中活动</div>
+        <div class="value">24</div>
+      </div>
+      <div class="summary-item">
+        <div class="name">待调整商品</div>
+        <div class="value">136</div>
+      </div>
+      <div class="summary-item">
+        <div class="name">连续活动模板</div>
+        <div class="value">5</div>
+      </div>
+    </section>
+
+    <section class="operation_card">
+      <div class="section-title">
+        <span>快捷操作</span>
+        <button class="btn primary">活动同步</button>
+      </div>
+      <div class="operation-grid">
+        <div class="operation-item">
+          <div class="title">活动维护</div>
+          <div class="operation-actions">
+            <button class="btn">活动同步</button>
+            <button class="btn">同步记录</button>
+          </div>
+        </div>
+        <div class="operation-item">
+          <div class="title">商品导入导出</div>
+          <div class="operation-actions">
+            <button class="btn">导入商品</button>
+            <button class="btn">导出商品</button>
+          </div>
+        </div>
+        <div class="operation-item">
+          <div class="title">商品批量处理</div>
+          <div class="operation-actions">
+            <button class="btn">批量加入</button>
+            <button class="btn danger">批量移除</button>
+          </div>
+        </div>
+        <div class="operation-item">
+          <div class="title">卖家活动</div>
+          <div class="operation-actions">
+            <button class="btn primary">创建活动</button>
+            <button class="btn">连续活动</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="list_card">
+      <div class="tools_btn">
+        <div class="tools-left">
+          <button class="btn primary">创建卖家活动</button>
+          <button class="btn">导入活动商品</button>
+          <button class="btn">导出活动商品</button>
+          <button class="btn">批量加入商品</button>
+          <button class="btn danger">批量移除商品</button>
+        </div>
+        <div class="tools-right">
+          <button class="btn">同步记录</button>
+          <button class="btn">操作日志</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 48px;"><input type="checkbox" aria-label="全选"></th>
+              <th>活动名称</th>
+              <th style="width: 120px;">店铺</th>
+              <th style="width: 120px;">活动类型</th>
+              <th style="width: 120px;">状态</th>
+              <th style="width: 170px;">活动时间</th>
+              <th style="width: 110px;">商品数</th>
+              <th style="width: 120px;">同步状态</th>
+              <th style="width: 240px;">操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><input type="checkbox" aria-label="选择"></td>
+              <td>Joom 夏季促销活动</td>
+              <td>Joom-US</td>
+              <td>平台活动</td>
+              <td><span class="status active">进行中</span></td>
+              <td>05-01 至 05-15</td>
+              <td>428</td>
+              <td><span class="status active">已同步</span></td>
+              <td>
+                <button class="btn text">商品管理</button>
+                <button class="btn text">小批量调整</button>
+                <button class="btn text">查看</button>
+              </td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" aria-label="选择"></td>
+              <td>连续活动 - 家居类目</td>
+              <td>Joom-EU</td>
+              <td>卖家活动</td>
+              <td><span class="status pending">待开始</span></td>
+              <td>05-16 至 05-31</td>
+              <td>96</td>
+              <td><span class="status pending">待同步</span></td>
+              <td>
+                <button class="btn text">商品管理</button>
+                <button class="btn text">编辑活动</button>
+                <button class="btn text">同步</button>
+              </td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" aria-label="选择"></td>
+              <td>清仓折扣活动</td>
+              <td>Joom-CN</td>
+              <td>卖家活动</td>
+              <td><span class="status closed">已结束</span></td>
+              <td>04-01 至 04-20</td>
+              <td>213</td>
+              <td><span class="status active">已同步</span></td>
+              <td>
+                <button class="btn text">导出商品</button>
+                <button class="btn text">复制创建</button>
+                <button class="btn text">查看</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="pagination">
+          <span>共 38 条</span>
+          <button class="btn">上一页</button>
+          <button class="btn primary">1</button>
+          <button class="btn">2</button>
+          <button class="btn">下一页</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="dialog-layer">
+      <div class="dialog-header">
+        <span>批量管理活动商品弹窗示意</span>
+        <span>小批量调整</span>
+      </div>
+      <div class="dialog-body">
+        <div class="dialog-panel">
+          <h3>导入 / 导出</h3>
+          <ul>
+            <li>下载导入模板</li>
+            <li>上传活动商品文件</li>
+            <li>导出当前活动商品</li>
+          </ul>
+        </div>
+        <div class="dialog-panel">
+          <h3>加入 / 移除</h3>
+          <ul>
+            <li>按商品 ID 批量加入</li>
+            <li>按勾选商品批量移除</li>
+            <li>展示处理成功和失败数量</li>
+          </ul>
+        </div>
+        <div class="dialog-panel">
+          <h3>小批量调整</h3>
+          <ul>
+            <li>调整折扣、库存和参与状态</li>
+            <li>支持勾选后批量保存</li>
+            <li>保存后回到活动商品列表</li>
+          </ul>
+        </div>
+      </div>
+      <div class="dialog-footer">
+        <button class="btn">取消</button>
+        <button class="btn primary">保存调整</button>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

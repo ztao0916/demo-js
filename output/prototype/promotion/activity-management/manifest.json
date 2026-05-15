@@ -1,0 +1,28 @@
+{
+  "module": "promotion",
+  "pageKey": "activity-management",
+  "title": "促销活动管理原型",
+  "status": "draft",
+  "localDir": "output/prototype/promotion/activity-management",
+  "remoteDir": null,
+  "files": [
+    "prototype.html",
+    "prototype.png",
+    "prototype-notes.md",
+    "manifest.json"
+  ],
+  "publishTarget": {
+    "remoteDir": null,
+    "htmlFileName": null,
+    "pngFileName": null,
+    "notesFileName": null,
+    "manifestFileName": "manifest.json"
+  },
+  "publicUrls": {
+    "html": null,
+    "png": null,
+    "notes": null
+  },
+  "updatedAt": "2026-05-06T14:21:32+08:00",
+  "publishedAt": null
+}
